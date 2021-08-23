@@ -72,34 +72,6 @@ struct ContentView: View {
     }
 }
 
-struct filledButton: ButtonStyle {
-    func makeBody(configuration: Configuration) -> some View {
-        configuration.label
-            .background(
-                RoundedRectangle(cornerRadius: 8, style: .continuous)
-                    .fill(Color.blue)
-                    .opacity(0.05)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 8, style: .continuous)
-                                .stroke(Color.blue)
-                        )
-            )
-            .foregroundColor(/*@START_MENU_TOKEN@*/.blue/*@END_MENU_TOKEN@*/)
-            .opacity(configuration.isPressed ? 0.6 : 1)
-    }
-}
-
-extension View {
-    @ViewBuilder func isHidden(_ hidden: Bool, remove: Bool = false) -> some View {
-        if hidden {
-            if !remove {
-                self.hidden()
-            }
-        } else {
-            self
-        }
-    }
-}
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
