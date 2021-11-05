@@ -96,7 +96,13 @@
 		AC2551D5272A887500E1C593 /* Calendar */ = {
 			isa = PBXGroup;
 			children = (
-				ACF4E405272DB126002D2797 /* Manager */,
+				ACCBA995272B1DA300D785F6 /* RKViewController.swift */,
+				ACF4E407272DB126002D2797 /* RKManager.swift */,
+				ACF4E408272DB126002D2797 /* RKWeekdayHeader.swift */,
+				ACF4E409272DB126002D2797 /* RKMonth.swift */,
+				ACF4E40A272DB126002D2797 /* RKCell.swift */,
+				ACF4E40B272DB126002D2797 /* RKColorSettings.swift */,
+				ACF4E40C272DB126002D2797 /* RKDate.swift */,
 			);
 			path = Calendar;
 			sourceTree = "<group>";
@@ -158,20 +164,6 @@
 				AC2603262690691F00C4A520 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
-			sourceTree = "<group>";
-		};
-		ACF4E405272DB126002D2797 /* Manager */ = {
-			isa = PBXGroup;
-			children = (
-				ACCBA995272B1DA300D785F6 /* RKViewController.swift */,
-				ACF4E407272DB126002D2797 /* RKManager.swift */,
-				ACF4E408272DB126002D2797 /* RKWeekdayHeader.swift */,
-				ACF4E409272DB126002D2797 /* RKMonth.swift */,
-				ACF4E40A272DB126002D2797 /* RKCell.swift */,
-				ACF4E40B272DB126002D2797 /* RKColorSettings.swift */,
-				ACF4E40C272DB126002D2797 /* RKDate.swift */,
-			);
-			path = Manager;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
