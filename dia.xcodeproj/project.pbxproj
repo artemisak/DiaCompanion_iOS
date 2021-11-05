@@ -93,12 +93,12 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		AC2551D5272A887500E1C593 /* RKCalendar */ = {
+		AC2551D5272A887500E1C593 /* Calendar */ = {
 			isa = PBXGroup;
 			children = (
 				ACF4E405272DB126002D2797 /* Manager */,
 			);
-			path = RKCalendar;
+			path = Calendar;
 			sourceTree = "<group>";
 		};
 		AC2603132690691E00C4A520 = {
@@ -126,7 +126,7 @@
 				ACC3798526ECFA7E00E0729E /* massa.swift */,
 				ACD284FE26DF8DD40003F1FD /* export.swift */,
 				ACF2F0A926DEA8300066753D /* history.swift */,
-				AC2551D5272A887500E1C593 /* RKCalendar */,
+				AC2551D5272A887500E1C593 /* Calendar */,
 				AC7A53F626DBF77B00FE65E7 /* enterAct.swift */,
 				ACD86E8026DE820B0027B8ED /* sugarChange.swift */,
 				ACF2F0A726DE9A1D0066753D /* inject.swift */,
