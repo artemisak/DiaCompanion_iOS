@@ -23,6 +23,7 @@ struct enterFood: View {
     @State private var date = Date()
     @State private var foodn: String = ""
     @State private var i: Int = 0
+    @State private var isSheetShown = false
     var body: some View {
         Form {
             Section(header: Text("Общая информация")){
@@ -64,21 +65,24 @@ struct enterFood: View {
             }
             Section(header: Text("Потребленные продукты")){
                 Button(action:{
-                    let index = oceans.firstIndex(where: { $0.name == "" })
-                    if (index != nil){
-                        oceans[index!] = Ocean(name: "Блюдо \(i)")
-                        i += 1
-                    } else {
-                        oceans.append(Ocean(name: "Блюдо \(i)"))
-                        i += 1
-                    }
-                    
+                    isSheetShown.toggle()
+//                    let index = oceans.firstIndex(where: { $0.name == "" })
+//                    if (index != nil){
+//                        oceans[index!] = Ocean(name: "Блюдо \(i)")
+//                        i += 1
+//                    } else {
+//                        oceans.append(Ocean(name: "Блюдо \(i)"))
+//                        i += 1
+//                    }
                 }, label:{
                     HStack{
                         Text("Добавить")
                         Image(systemName: "folder.badge.plus")
                     }
                 })
+                    .sheet(isPresented: $isSheetShown){
+                        addFoodButton()
+                    }
             }
             if (oceans.count != 0){
                 Section(){
