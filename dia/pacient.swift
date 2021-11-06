@@ -73,7 +73,9 @@ struct pacient: View {
             if !bHeight {
                 pHeight(bHeight: $bHeight, txt: $txt)
             }
-        }.navigationBarTitle("Персональная карта")
+        }
+        .navigationBarTitle("Персональная карта")
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
 

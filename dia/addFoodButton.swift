@@ -12,35 +12,31 @@ struct addFoodButton: View {
     @State private var txt: String = ""
     var body: some View {
         NavigationView {
-            Form {
+            List {
                 Section(header: Text("Поиск по слову")){TextField("Введние название блюда", text: $txt)}
                 Section(header: Text("Поиск по категории")){
                     ForEach(FillFoodCategoryList(), id:\.self){i in
-                        NavigationLink(destination: GetFoodItemsView(category: "\(i.name)")) {
+                        NavigationLink(destination: GetFoodCategoryItemsView(category: "\(i.name)")) {
                             Text("\(i.name)")
                         }.foregroundColor(.black)
                     }
                 }
             }
             .navigationTitle("Добавить блюдо")
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarLeading){
-                    Button(action:{
-                        presentationMode.wrappedValue.dismiss()
-                    }){
-                        Image(systemName: "chevron.backward")
-                        Text("Назад")
-                    }
+        }
+    }
+    func GetFoodCategoryItemsView(category: String) -> some View {
+        List {
+            Section {
+                ForEach(GetFoodCategoryItems(_category: category), id:\.self){i in
+                    Button(action: {}){Text("\(i.name)")}
                 }
             }
         }
+        .listStyle(.plain)
+        .navigationTitle(category)
+        .navigationBarTitleDisplayMode(.inline)
         .interactiveDismissDisabled()
-    }
-    func GetFoodItemsView(category: String) -> some View {
-        ScrollView{
-            
-        }
     }
 }
 

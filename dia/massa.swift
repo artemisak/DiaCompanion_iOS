@@ -34,7 +34,8 @@ struct massa: View {
                 }.frame(maxWidth: .infinity)
             }
         }
-        .navigationTitle(Text("Уровень кетонурии"))
+        .navigationTitle(Text("Измерение веса"))
+        .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItemGroup(){
                 Button(action: {

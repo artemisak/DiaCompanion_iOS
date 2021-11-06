@@ -6,7 +6,7 @@ struct mainPage: View {
     var body: some View {
         NavigationView {
             GeometryReader { geom in
-                ScrollView{
+                ScrollView {
                     HStack {
                         VStack {
                             NavigationLink(destination: sugarChange()) {
@@ -57,7 +57,8 @@ struct mainPage: View {
                                 }
                             }
                         }
-                    }.position(x: geom.size.width/2, y: geom.size.height/2)
+                    }
+                    .position(x: geom.size.width/2, y: geom.size.height/2)
                 }
             }
             .navigationBarTitle("Диа Компаньон")

@@ -15,6 +15,12 @@ struct FoodCategory: Identifiable, Hashable {
 }
 var FoodList: [FoodCategory] = []
 
+struct FoodCategoryItem: Identifiable, Hashable {
+    let name: String
+    let id = UUID()
+}
+var FoodItems: [FoodCategoryItem] = []
+
 func FillFoodCategoryList() -> [FoodCategory] {
     do {
         let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
@@ -34,3 +40,23 @@ func FillFoodCategoryList() -> [FoodCategory] {
     return FoodList
 }
 
+func GetFoodCategoryItems(_category: String) -> [FoodCategoryItem] {
+    do {
+        let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
+        let path = documents + "/diacompanion.db"
+        let sourcePath = Bundle.main.path(forResource: "diacompanion", ofType: "db")!
+        _=copyDatabaseIfNeeded(sourcePath: sourcePath)
+        let db = try Connection(path)
+        let foodItems = Table("food")
+        let food = Expression<String>("name")
+        let categoryRow = Expression<String>("category")
+        FoodItems.removeAll()
+        for i in try db.prepare(foodItems.select(food).filter(categoryRow == _category)){
+            FoodItems.append(FoodCategoryItem(name: "\(i[food])"))
+        }
+    }
+    catch {
+        print(error)
+    }
+    return FoodItems
+}

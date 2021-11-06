@@ -25,7 +25,7 @@ struct ModalView: View {
                         Button("Отметить полные дни", action: {})
                     }.foregroundColor(.black)
                     Button("Обучение", action: {})
-                    .foregroundColor(.black)
+                        .foregroundColor(.black)
                     Button("Помощь", action: {})
                     .foregroundColor(.black)
                 }

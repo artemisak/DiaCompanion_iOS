@@ -35,6 +35,7 @@ struct ketonur: View {
             }
         }
         .navigationTitle(Text("Уровень кетонурии"))
+        .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItemGroup(){
                 Button(action: {

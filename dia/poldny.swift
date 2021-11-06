@@ -15,7 +15,8 @@ struct poldny: View {
         RKViewController(isPresented: self.$multipleIsPresented, rkManager: self.rkManager3)
             .interactiveDismissDisabled()
             .onAppear(perform: startUp)
-            .navigationTitle("Отметить полные дни")
+            .navigationTitle("Выбрать дни")
+            .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItemGroup(placement: .navigationBarTrailing){
                     Button(action: {
