@@ -43,6 +43,7 @@
 		ACF4E411272DB126002D2797 /* RKCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF4E40A272DB126002D2797 /* RKCell.swift */; };
 		ACF4E412272DB126002D2797 /* RKColorSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF4E40B272DB126002D2797 /* RKColorSettings.swift */; };
 		ACF4E413272DB126002D2797 /* RKDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF4E40C272DB126002D2797 /* RKDate.swift */; };
+		ACF7E7C32736F12C0027DD11 /* addSreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF7E7C22736F12C0027DD11 /* addSreenView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -83,6 +84,7 @@
 		ACF4E40A272DB126002D2797 /* RKCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RKCell.swift; sourceTree = "<group>"; };
 		ACF4E40B272DB126002D2797 /* RKColorSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RKColorSettings.swift; sourceTree = "<group>"; };
 		ACF4E40C272DB126002D2797 /* RKDate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RKDate.swift; sourceTree = "<group>"; };
+		ACF7E7C22736F12C0027DD11 /* addSreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = addSreenView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -144,6 +146,7 @@
 				AC3B847A26EBA8FA00E98681 /* Localizable.strings */,
 				AC3C959A26D1B570005B1393 /* enterFood.swift */,
 				AC2D32E1273594630022AFD9 /* addFoodButton.swift */,
+				ACF7E7C22736F12C0027DD11 /* addSreenView.swift */,
 				AC2D32E327359EC50022AFD9 /* FillFoodCategoryList.swift */,
 				AC631E0E26CEA90D0033CCFF /* ModalView.swift */,
 				AC2C506027289C360009E8EE /* poldny.swift */,
@@ -264,6 +267,7 @@
 				ACF2F0AA26DEA8300066753D /* history.swift in Sources */,
 				ACCC5C2E2702190B0057CA7C /* pacientButton.swift in Sources */,
 				AC32A68427260602001DDB9F /* pWeight.swift in Sources */,
+				ACF7E7C32736F12C0027DD11 /* addSreenView.swift in Sources */,
 				ACF2F0A826DE9A1D0066753D /* inject.swift in Sources */,
 				ACC3798626ECFA7E00E0729E /* massa.swift in Sources */,
 				AC2D32E2273594630022AFD9 /* addFoodButton.swift in Sources */,

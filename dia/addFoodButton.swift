@@ -10,6 +10,7 @@ import SwiftUI
 struct addFoodButton: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @State private var txt: String = ""
+    @State public var addScreen: Bool = true
     var body: some View {
         NavigationView {
             List {
@@ -26,11 +27,16 @@ struct addFoodButton: View {
         }
     }
     func GetFoodCategoryItemsView(category: String) -> some View {
-        List {
-            Section {
-                ForEach(GetFoodCategoryItems(_category: category), id:\.self){i in
-                    Button(action: {}){Text("\(i.name)")}
+        ZStack{
+            List {
+                Section {
+                    ForEach(GetFoodCategoryItems(_category: category), id:\.self){i in
+                        Button(action: {addScreen.toggle()}){Text("\(i.name)")}
+                    }
                 }
+            }
+            if !addScreen {
+                addSreenView(addScreen: $addScreen, txt: $txt)
             }
         }
         .listStyle(.plain)
