@@ -11,14 +11,16 @@ struct addFoodButton: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @State public var gramm: String = ""
     @State public var addScreen: Bool = true
+    @State private var addSreen1: Bool = true
     @State public var selectedFood: String = ""
+    
     var body: some View {
         NavigationView {
             List {
                 Section(header: Text("Поиск по слову")){
                     TextField("Введние название блюда", text: $selectedFood)
                         .onSubmit {
-                            print(selectedFood)
+                            addSreen1.toggle()
                         }
                 }
                 Section(header: Text("Поиск по категории")){
@@ -50,6 +52,27 @@ struct addFoodButton: View {
         }
         .listStyle(.plain)
         .navigationTitle(category)
+        .navigationBarTitleDisplayMode(.inline)
+        .interactiveDismissDisabled()
+    }
+    func GetFoodByNameView(name: String) -> some View {
+        ZStack{
+            List {
+                Section {
+                    ForEach(GetFoodCategoryItemsByName(_name: name), id:\.self){i in
+                        Button(action: {
+                            selectedFood = i.name
+                            addScreen.toggle()
+                        }){Text("\(i.name)")}
+                    }
+                }
+            }
+            if !addScreen {
+                addSreenView(addScreen: $addScreen, gramm: $gramm, selectedFood: $selectedFood)
+            }
+        }
+        .listStyle(.plain)
+        .navigationTitle("Поиск по: \(name)")
         .navigationBarTitleDisplayMode(.inline)
         .interactiveDismissDisabled()
     }
