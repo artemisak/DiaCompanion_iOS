@@ -9,7 +9,8 @@ import SwiftUI
 
 struct addSreenView: View {
     @Binding var addScreen: Bool
-    @Binding var txt: String
+    @Binding var gramm: String
+    @Binding var selectedFood: String
     var body: some View {
         ZStack{
             Color(.black)
@@ -21,7 +22,7 @@ struct addSreenView: View {
                     .padding()
                 Divider()
                 VStack(){
-                    TextField("Вес, в граммах", text: $txt)
+                    TextField("Вес, в граммах", text: $gramm)
                         .padding(.leading, 16)
                         .padding(.trailing, 16)
                     Rectangle()
@@ -33,8 +34,9 @@ struct addSreenView: View {
                 Divider()
                 HStack(){
                     Button(action: {
-//                        addName(pName: txt)
-                        txt = ""
+                        addFood(foodName: selectedFood, g: gramm)
+                        gramm = ""
+                        selectedFood = ""
                         addScreen.toggle()
                     }){
                         Text("Сохранить")
@@ -44,7 +46,8 @@ struct addSreenView: View {
                     .frame(maxWidth: .infinity)
                     Divider()
                     Button(action: {
-                        txt = ""
+                        gramm = ""
+                        selectedFood = ""
                         addScreen.toggle()
                     }){
                         Text("Отменить")
@@ -58,4 +61,9 @@ struct addSreenView: View {
             .frame(maxWidth: 350)
         }
     }
+}
+
+func addFood(foodName: String, g: String){
+    print(foodName)
+    print(g)
 }
