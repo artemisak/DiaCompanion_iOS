@@ -99,7 +99,7 @@ func GetFoodCategoryItemsByName(_name: String) -> [FoodCategoryItemByName] {
         let foodItems = Table("food")
         let food = Expression<String>("name")
         FoodItemsByName.removeAll()
-        for i in try db.prepare(foodItems.select(food).filter(food.like(_name))){
+        for i in try db.prepare(foodItems.select(food).filter(food.like("%\(_name)%"))){
             FoodItemsByName.append(FoodCategoryItemByName(name: "\(i[food])"))
         }
     }
