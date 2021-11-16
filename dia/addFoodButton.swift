@@ -12,7 +12,9 @@ struct addFoodButton: View {
     @State public var gramm: String = ""
     @State public var addScreen: Bool = true
     @State private var searchByWordView = false
-    @State public var selectedFood: String = ""
+    @State private var searchByWordCategoryView = false
+    @State private var selectedFood: String = ""
+    @State private var selectedFoodCategory: String = ""
     @State private var FFCT = FillFoodCategoryList()
     
     var body: some View {
@@ -29,18 +31,16 @@ struct addFoodButton: View {
                                 }
                             })
                     }
-                    
                     if searchByWordView {
                         Section(header: Text("Поиск по слову")){
                             ForEach(GetFoodCategoryItemsByName(_name: selectedFood), id:\.self){i in
                                 Button(action: {
                                     selectedFood = i.name
                                     addScreen.toggle()
-                                }){Text("\(i.name)")}
+                                }){Text("\(i.name)")}.foregroundColor(.black)
                             }
                         }
                     }
-                    
                     if !searchByWordView {
                         Section(header: Text("Поиск по категории")){
                             ForEach(FFCT, id:\.self){i in
@@ -63,16 +63,39 @@ struct addFoodButton: View {
         ZStack{
             List {
                 Section {
+                    TextField("Поиск по слову", text: $selectedFoodCategory)
+                        .onChange(of: selectedFoodCategory, perform: {i in
+                            if selectedFoodCategory == "" {
+                                searchByWordCategoryView = false
+                            } else {
+                                searchByWordCategoryView = true
+                            }
+                        })
+                }
+                if searchByWordCategoryView{
+                    let itemsArray = GetFoodCategoryItems(_category: category)
+                    Section {
+                        ForEach(itemsArray.filter{$0.name.contains(selectedFoodCategory)}, id:\.self){i in
+                            Button(action: {
+                                selectedFoodCategory = i.name
+                                addScreen.toggle()
+                            }){Text("\(i.name)")}
+                        }
+                    }
+                }
+                if !searchByWordCategoryView{
+                Section {
                     ForEach(GetFoodCategoryItems(_category: category), id:\.self){i in
                         Button(action: {
-                            selectedFood = i.name
+                            selectedFoodCategory = i.name
                             addScreen.toggle()
                         }){Text("\(i.name)")}
                     }
                 }
+                }
             }
             if !addScreen {
-                addSreenView(addScreen: $addScreen, gramm: $gramm, selectedFood: $selectedFood)
+                addSreenView(addScreen: $addScreen, gramm: $gramm, selectedFood: $selectedFoodCategory)
             }
         }
         .listStyle(.plain)
@@ -81,7 +104,6 @@ struct addFoodButton: View {
         .interactiveDismissDisabled()
     }
 }
-
 
 struct addFoodButton_Previews: PreviewProvider {
     static var previews: some View {
