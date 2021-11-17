@@ -15,8 +15,10 @@ struct addFoodButton: View {
     @State private var searchByWordCategoryView = false
     @State private var selectedFood: String = ""
     @State private var selectedFoodCategory: String = ""
+    @State private var selectedFoodTemp = ""
+    @State private var selectedFoodCategoryTemp = ""
     @State private var FFCT = FillFoodCategoryList()
-    
+    @Binding var foodItems: [String]
     var body: some View {
         NavigationView {
             ZStack{
@@ -35,7 +37,7 @@ struct addFoodButton: View {
                         Section(header: Text("Поиск по слову")){
                             ForEach(GetFoodCategoryItemsByName(_name: selectedFood), id:\.self){i in
                                 Button(action: {
-                                    selectedFood = i.name
+                                    selectedFoodTemp = i.name
                                     addScreen.toggle()
                                 }){Text("\(i.name)")}.foregroundColor(.black)
                             }
@@ -52,7 +54,7 @@ struct addFoodButton: View {
                     }
                 }.listStyle(.insetGrouped)
                 if !addScreen {
-                    addSreenView(addScreen: $addScreen, gramm: $gramm, selectedFood: $selectedFood)
+                    addSreenView(addScreen: $addScreen, gramm: $gramm, selectedFood: $selectedFoodTemp, foodItems: $foodItems)
                 }
             }
             .navigationTitle("Добавить блюдо")
@@ -77,7 +79,7 @@ struct addFoodButton: View {
                     Section {
                         ForEach(itemsArray.filter{$0.name.contains(selectedFoodCategory)}, id:\.self){i in
                             Button(action: {
-                                selectedFoodCategory = i.name
+                                selectedFoodCategoryTemp = i.name
                                 addScreen.toggle()
                             }){Text("\(i.name)")}
                         }
@@ -87,7 +89,7 @@ struct addFoodButton: View {
                 Section {
                     ForEach(GetFoodCategoryItems(_category: category), id:\.self){i in
                         Button(action: {
-                            selectedFoodCategory = i.name
+                            selectedFoodCategoryTemp = i.name
                             addScreen.toggle()
                         }){Text("\(i.name)")}
                     }
@@ -95,7 +97,7 @@ struct addFoodButton: View {
                 }
             }
             if !addScreen {
-                addSreenView(addScreen: $addScreen, gramm: $gramm, selectedFood: $selectedFoodCategory)
+                addSreenView(addScreen: $addScreen, gramm: $gramm, selectedFood: $selectedFoodCategoryTemp, foodItems: $foodItems)
             }
         }
         .listStyle(.plain)
@@ -105,8 +107,8 @@ struct addFoodButton: View {
     }
 }
 
-struct addFoodButton_Previews: PreviewProvider {
-    static var previews: some View {
-        addFoodButton()
-    }
-}
+//struct addFoodButton_Previews: PreviewProvider {
+//    static var previews: some View {
+//        addFoodButton()
+//    }
+//}

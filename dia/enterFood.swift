@@ -20,6 +20,7 @@ struct enterFood: View {
     @State private var foodn: String = ""
     @State private var i: Int = 0
     @State private var isSheetShown = false
+    @State public var foodItems: [String] = []
     
     var body: some View {
         Form {
@@ -70,18 +71,17 @@ struct enterFood: View {
                     }
                 })
                     .sheet(isPresented: $isSheetShown){
-                        addFoodButton()
+                        addFoodButton(foodItems: $foodItems)
                     }
             }
-            if !isSheetShown && foodItems.count != 0 {
-                Section(){
-                    ForEach(foodItems, id: \.self) {
-                        Text($0)
-                    }
-                    .onDelete(perform: removeRows)
+            Section(){
+                ForEach(foodItems, id: \.self) {
+                    Text($0)
                 }
+                .onDelete(perform: removeRows)
             }
         }
+        
         .navigationTitle("Приемы пищи")
         .toolbar {
             Button(action: {
@@ -96,8 +96,8 @@ struct enterFood: View {
     }
 }
 
-struct enterFood_Previews: PreviewProvider {
-    static var previews: some View {
-        enterFood()
-    }
-}
+//struct enterFood_Previews: PreviewProvider {
+//    static var previews: some View {
+//        enterFood()
+//    }
+//}

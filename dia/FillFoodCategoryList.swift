@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 import SQLite
-public var foodItems: [String] = []
+
 struct FoodCategory: Identifiable, Hashable {
     let name: String
     let id = UUID()
@@ -26,7 +26,6 @@ struct FoodCategoryItemByName: Identifiable, Hashable {
     let id = UUID()
 }
 var FoodItemsByName: [FoodCategoryItemByName] = []
-var ItemsArray: [String] = []
 
 func FillFoodCategoryList() -> [FoodCategory] {
     do {
@@ -68,7 +67,7 @@ func GetFoodCategoryItems(_category: String) -> [FoodCategoryItem] {
     return FoodItems
 }
 
-func addFood(FoodName: String, gramm: String) {
+func addFoodToDiary(FoodName: String, gramm: String) {
     do {
         let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
         let path = documents + "/diacompanion.db"
@@ -84,8 +83,6 @@ func addFood(FoodName: String, gramm: String) {
         dateFormatter.setLocalizedDateFormatFromTemplate("dd.MM.yyyy HH:mm")
         let DateTime = dateFormatter.string(from: Date.now)
         try db.run(diary.insert(foodName <- FoodName, g <- gramm, dateTime <- DateTime))
-        foodItems.append(FoodName)
-        
     }
     catch {
         print(error)
@@ -112,23 +109,3 @@ func GetFoodCategoryItemsByName(_name: String) -> [FoodCategoryItemByName] {
     return FoodItemsByName
 }
 
-//func GetNameToMainAddSreen() -> [String] {
-//    do {
-//        let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
-//        let path = documents + "/diacompanion.db"
-//        let sourcePath = Bundle.main.path(forResource: "diacompanion", ofType: "db")!
-//        _=copyDatabaseIfNeeded(sourcePath: sourcePath)
-//        let db = try Connection(path)
-//        let tempFood = Table("diary")
-//        let foodName = Expression<String>("foodName")
-//        ItemsArray.removeAll()
-//        for i in try db.prepare(tempFood.select(foodName)) {
-//            ItemsArray.append("\(i[foodName])")
-//        }
-//
-//    }
-//    catch{
-//        print(error)
-//    }
-//    return ItemsArray
-//}

@@ -11,6 +11,8 @@ struct addSreenView: View {
     @Binding var addScreen: Bool
     @Binding var gramm: String
     @Binding var selectedFood: String
+    @Binding var foodItems: [String]
+    
     var body: some View {
         ZStack{
             Color(.black)
@@ -34,7 +36,7 @@ struct addSreenView: View {
                 Divider()
                 HStack(){
                     Button(action: {
-                        addFood(FoodName: selectedFood, gramm: gramm)
+                        foodItems.append("\(selectedFood), \(gramm) г.")
                         gramm = ""
                         selectedFood = ""
                         addScreen.toggle()
