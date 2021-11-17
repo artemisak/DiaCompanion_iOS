@@ -8,11 +8,7 @@
 import SwiftUI
 
 struct enterFood: View {
-    struct Ocean: Identifiable, Hashable {
-        let name: String
-        let id = UUID()
-    }
-    @State var oceans: [Ocean] = []
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @State private var multiSelection = Set<UUID>()
     @State private var previewIndex = 1
     @State private var enabled : Bool = false
@@ -24,6 +20,7 @@ struct enterFood: View {
     @State private var foodn: String = ""
     @State private var i: Int = 0
     @State private var isSheetShown = false
+    
     var body: some View {
         Form {
             Section(header: Text("Общая информация")){
@@ -66,14 +63,6 @@ struct enterFood: View {
             Section(header: Text("Потребленные продукты")){
                 Button(action:{
                     isSheetShown.toggle()
-//                    let index = oceans.firstIndex(where: { $0.name == "" })
-//                    if (index != nil){
-//                        oceans[index!] = Ocean(name: "Блюдо \(i)")
-//                        i += 1
-//                    } else {
-//                        oceans.append(Ocean(name: "Блюдо \(i)"))
-//                        i += 1
-//                    }
                 }, label:{
                     HStack{
                         Text("Добавить")
@@ -84,10 +73,10 @@ struct enterFood: View {
                         addFoodButton()
                     }
             }
-            if (oceans.count != 0){
+            if !isSheetShown && foodItems.count != 0 {
                 Section(){
-                    ForEach(oceans) {
-                        Text($0.name)
+                    ForEach(foodItems, id: \.self) {
+                        Text($0)
                     }
                     .onDelete(perform: removeRows)
                 }
@@ -96,14 +85,14 @@ struct enterFood: View {
         .navigationTitle("Приемы пищи")
         .toolbar {
             Button(action: {
-                
+                self.presentationMode.wrappedValue.dismiss()
             }) {
                 Text("Сохранить")
             }
         }
     }
     func removeRows(at offsets: IndexSet){
-        oceans.remove(atOffsets: offsets)
+        foodItems.remove(atOffsets: offsets)
     }
 }
 

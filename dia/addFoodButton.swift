@@ -50,7 +50,7 @@ struct addFoodButton: View {
                             }
                         }
                     }
-                }
+                }.listStyle(.insetGrouped)
                 if !addScreen {
                     addSreenView(addScreen: $addScreen, gramm: $gramm, selectedFood: $selectedFood)
                 }
