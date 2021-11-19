@@ -9,7 +9,7 @@ import SwiftUI
 
 struct addSreenView: View {
     @Binding var addScreen: Bool
-    @Binding var gramm: String
+    @Binding var gram: String
     @Binding var selectedFood: String
     @Binding var foodItems: [String]
     
@@ -20,11 +20,11 @@ struct addSreenView: View {
                 .ignoresSafeArea()
                 .onTapGesture{withAnimation(.linear){addScreen.toggle()}}
             VStack(spacing:0){
-                Text("Добавить блюдо / продукт")
+                Text("Add a dish/meal")
                     .padding()
                 Divider()
                 VStack(){
-                    TextField("Вес, в граммах", text: $gramm)
+                    TextField("Weight, in gram", text: $gram)
                         .padding(.leading, 16)
                         .padding(.trailing, 16)
                     Rectangle()
@@ -36,23 +36,23 @@ struct addSreenView: View {
                 Divider()
                 HStack(){
                     Button(action: {
-                        foodItems.append("\(selectedFood), \(gramm) г.")
-                        gramm = ""
+                        foodItems.append("\(selectedFood), \(gram) g.")
+                        gram = ""
                         selectedFood = ""
                         addScreen.toggle()
                     }){
-                        Text("Сохранить")
+                        Text("Save")
                             .frame(maxWidth: .infinity)
                             .foregroundColor(.black)
                     }
                     .frame(maxWidth: .infinity)
                     Divider()
                     Button(action: {
-                        gramm = ""
+                        gram = ""
                         selectedFood = ""
                         addScreen.toggle()
                     }){
-                        Text("Отменить")
+                        Text("Cancel")
                             .frame(maxWidth: .infinity)
                             .foregroundColor(.black)
                     }

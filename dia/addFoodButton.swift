@@ -12,7 +12,7 @@ struct addFoodButton: View {
     @State public var addScreen: Bool = true
     @State private var searchByWordView: Bool = true
     @State private var searchByWordCategoryView: Bool = true
-    @State public var gramm: String = ""
+    @State public var gram: String = ""
     @State private var selectedFood: String = ""
     @State private var selectedFoodCategoryItem: String = ""
     @State private var selectedFoodTemp: String = ""
@@ -52,7 +52,7 @@ struct addFoodButton: View {
                         
                     }
                 if !addScreen {
-                    addSreenView(addScreen: $addScreen, gramm: $gramm, selectedFood: $selectedFoodTemp, foodItems: $foodItems)
+                    addSreenView(addScreen: $addScreen, gram: $gram, selectedFood: $selectedFoodTemp, foodItems: $foodItems)
                 }
             }
             .searchable(
@@ -107,7 +107,7 @@ struct addFoodButton: View {
                 }
             }
             if !addScreen {
-                addSreenView(addScreen: $addScreen, gramm: $gramm, selectedFood: $selectedFoodCategoryTemp, foodItems: $foodItems)
+                addSreenView(addScreen: $addScreen, gram: $gram, selectedFood: $selectedFoodCategoryTemp, foodItems: $foodItems)
             }
         }
         .searchable(
