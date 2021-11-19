@@ -31,9 +31,9 @@ struct addFoodButton: View {
                                     selectedFoodTemp = i.name
                                     addScreen.toggle()
                                 }){Text("\(i.name)")}.foregroundColor(.black)
-                            }                        }
-                    }
-                    if searchByWordView {
+                            }
+                        }
+                    } else {
                         Section {
                             ForEach(FoodCList, id:\.self){i in
                                 NavigationLink(destination: GetFoodCategoryItemsView(category: "\(i.name)")) {
@@ -55,22 +55,8 @@ struct addFoodButton: View {
                     addSreenView(addScreen: $addScreen, gram: $gram, selectedFood: $selectedFoodTemp, foodItems: $foodItems)
                 }
             }
-            .searchable(
-                text: $selectedFood,
-                placement: .navigationBarDrawer(displayMode: .always),
-                prompt:  "Search by word"
-            )
-            .onChange(of: selectedFood, perform: {i in
-                if i.isEmpty {
-                    searchByWordView = true
-                } else {
-                    searchByWordView = false
-                    Task {
-                        FoodList = try await GetFoodItemsByName(_name: selectedFood)
-                    }
-                }
-            })
             .navigationTitle("Add the dish")
+            .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 Button(action: {
                     self.presentationMode.wrappedValue.dismiss()
@@ -78,9 +64,23 @@ struct addFoodButton: View {
                     Text("Close")
                 }
             }
-            .navigationBarTitleDisplayMode(.inline)
             .interactiveDismissDisabled()
         }
+        .searchable(
+            text: $selectedFood,
+            placement: .navigationBarDrawer(displayMode: .always),
+            prompt:  "Search by word"
+        )
+        .onChange(of: selectedFood, perform: {i in
+            if i.isEmpty {
+                searchByWordView = true
+            } else {
+                searchByWordView = false
+                Task {
+                    FoodList = try await GetFoodItemsByName(_name: selectedFood)
+                }
+            }
+        })
     }
     
     func GetFoodCategoryItemsView(category: String) -> some View {
