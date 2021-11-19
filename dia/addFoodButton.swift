@@ -20,13 +20,14 @@ struct addFoodButton: View {
     @State private var FoodCList: [FoodCategory] = []
     @State private var FoodList: [FoodItemByName] = []
     @Binding var foodItems: [String]
+    @MainActor
     var body: some View {
         NavigationView {
             ZStack {
                 List {
                     if !searchByWordView {
                         Section {
-                            ForEach(FoodList, id:\.self){i in
+                            ForEach(FoodList, id:\.name){i in
                                 Button(action: {
                                     selectedFoodTemp = i.name
                                     addScreen.toggle()
@@ -35,7 +36,7 @@ struct addFoodButton: View {
                         }
                     } else {
                         Section {
-                            ForEach(FoodCList, id:\.self){i in
+                            ForEach(FoodCList, id:\.name){i in
                                 NavigationLink(destination: GetFoodCategoryItemsView(category: "\(i.name)")) {
                                     Text("\(i.name)")
                                 }.foregroundColor(.black)
@@ -45,11 +46,7 @@ struct addFoodButton: View {
                 }
                 .listStyle(.plain)
                 .task{
-                    do {
-                        FoodCList = try await FillFoodCategoryList()
-                    } catch {
-                        print(error)
-                    }
+                    FoodCList = await FillFoodCategoryList()
                 }
                 if !addScreen {
                     addSreenView(addScreen: $addScreen, gram: $gram, selectedFood: $selectedFoodTemp, foodItems: $foodItems)
@@ -77,7 +74,7 @@ struct addFoodButton: View {
             } else {
                 searchByWordView = false
                 Task {
-                    FoodList = try await GetFoodItemsByName(_name: selectedFood)
+                    FoodList = await GetFoodItemsByName(_name: selectedFood)
                 }
             }
         })

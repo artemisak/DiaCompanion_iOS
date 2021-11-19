@@ -14,7 +14,7 @@ struct FoodCategory: Identifiable, Hashable {
     let id = UUID()
 }
 
-func FillFoodCategoryList() async throws -> [FoodCategory] {
+func FillFoodCategoryList() async -> [FoodCategory] {
     var catList: [FoodCategory] = []
     do {
         catList.removeAll()
@@ -40,7 +40,7 @@ struct FoodItemByName: Identifiable, Hashable {
     let id = UUID()
 }
 
-func GetFoodItemsByName(_name: String) async throws-> [FoodItemByName] {
+func GetFoodItemsByName(_name: String) async -> [FoodItemByName] {
     var foodItemsByName: [FoodItemByName] = []
     do {
         let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
