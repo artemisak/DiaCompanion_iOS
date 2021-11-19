@@ -42,15 +42,15 @@ struct addFoodButton: View {
                             }
                         }
                     }
-                }.listStyle(.plain)
-                    .task{
-                        do {
-                            FoodCList = try await FillFoodCategoryList()
-                        } catch {
-                            print(error)
-                        }
-                        
+                }
+                .listStyle(.plain)
+                .task{
+                    do {
+                        FoodCList = try await FillFoodCategoryList()
+                    } catch {
+                        print(error)
                     }
+                }
                 if !addScreen {
                     addSreenView(addScreen: $addScreen, gram: $gram, selectedFood: $selectedFoodTemp, foodItems: $foodItems)
                 }
