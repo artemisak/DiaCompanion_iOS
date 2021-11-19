@@ -85,6 +85,7 @@ struct enterFood: View {
         .navigationTitle("Приемы пищи")
         .toolbar {
             Button(action: {
+                SaveToDB(FoodName: "Test", gramm: "0")
                 self.presentationMode.wrappedValue.dismiss()
             }) {
                 Text("Сохранить")
@@ -95,9 +96,3 @@ struct enterFood: View {
         foodItems.remove(atOffsets: offsets)
     }
 }
-
-//struct enterFood_Previews: PreviewProvider {
-//    static var previews: some View {
-//        enterFood()
-//    }
-//}

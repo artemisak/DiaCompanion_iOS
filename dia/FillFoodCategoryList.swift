@@ -13,22 +13,11 @@ struct FoodCategory: Identifiable, Hashable {
     let name: String
     let id = UUID()
 }
-var FoodList: [FoodCategory] = []
 
-struct FoodCategoryItem: Identifiable, Hashable {
-    let name: String
-    let id = UUID()
-}
-var FoodItems: [FoodCategoryItem] = []
-
-struct FoodCategoryItemByName: Identifiable, Hashable {
-    let name: String
-    let id = UUID()
-}
-var FoodItemsByName: [FoodCategoryItemByName] = []
-
-func FillFoodCategoryList() -> [FoodCategory] {
+func FillFoodCategoryList() async throws -> [FoodCategory] {
+    var catList: [FoodCategory] = []
     do {
+        catList.removeAll()
         let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
         let path = documents + "/diacompanion.db"
         let sourcePath = Bundle.main.path(forResource: "diacompanion", ofType: "db")!
@@ -37,16 +26,48 @@ func FillFoodCategoryList() -> [FoodCategory] {
         let food = Table("foodGroups")
         let category = Expression<String>("category")
         for i in try db.prepare(food.select(category)){
-            FoodList.append(FoodCategory(name: "\(i[category])"))
+            catList.append(FoodCategory(name: "\(i[category])"))
         }
     }
     catch {
         print(error)
     }
-    return FoodList
+    return catList
+}
+
+struct FoodItemByName: Identifiable, Hashable {
+    let name: String
+    let id = UUID()
+}
+
+func GetFoodItemsByName(_name: String) async throws-> [FoodItemByName] {
+    var foodItemsByName: [FoodItemByName] = []
+    do {
+        let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
+        let path = documents + "/diacompanion.db"
+        let sourcePath = Bundle.main.path(forResource: "diacompanion", ofType: "db")!
+        _=copyDatabaseIfNeeded(sourcePath: sourcePath)
+        let db = try Connection(path)
+        let foodItems = Table("food")
+        let food = Expression<String>("name")
+        foodItemsByName.removeAll()
+        for i in try db.prepare(foodItems.select(food).filter(food.like("%\(_name)%")).order(food)){
+            foodItemsByName.append(FoodItemByName(name: "\(i[food])"))
+        }
+    }
+    catch {
+        print(error)
+    }
+    return foodItemsByName
+}
+
+struct FoodCategoryItem: Identifiable, Hashable {
+    let name: String
+    let id = UUID()
 }
 
 func GetFoodCategoryItems(_category: String) -> [FoodCategoryItem] {
+    var foodCategoryItems: [FoodCategoryItem] = []
     do {
         let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
         let path = documents + "/diacompanion.db"
@@ -56,18 +77,18 @@ func GetFoodCategoryItems(_category: String) -> [FoodCategoryItem] {
         let foodItems = Table("food")
         let food = Expression<String>("name")
         let categoryRow = Expression<String>("category")
-        FoodItems.removeAll()
+        foodCategoryItems.removeAll()
         for i in try db.prepare(foodItems.select(food).filter(categoryRow == _category)){
-            FoodItems.append(FoodCategoryItem(name: "\(i[food])"))
+            foodCategoryItems.append(FoodCategoryItem(name: "\(i[food])"))
         }
     }
     catch {
         print(error)
     }
-    return FoodItems
+    return foodCategoryItems
 }
 
-func addFoodToDiary(FoodName: String, gramm: String) {
+func SaveToDB(FoodName: String, gramm: String) {
     do {
         let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
         let path = documents + "/diacompanion.db"
@@ -88,24 +109,3 @@ func addFoodToDiary(FoodName: String, gramm: String) {
         print(error)
     }
 }
-
-func GetFoodCategoryItemsByName(_name: String) -> [FoodCategoryItemByName] {
-    do {
-        let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
-        let path = documents + "/diacompanion.db"
-        let sourcePath = Bundle.main.path(forResource: "diacompanion", ofType: "db")!
-        _=copyDatabaseIfNeeded(sourcePath: sourcePath)
-        let db = try Connection(path)
-        let foodItems = Table("food")
-        let food = Expression<String>("name")
-        FoodItemsByName.removeAll()
-        for i in try db.prepare(foodItems.select(food).filter(food.like("%\(_name)%")).order(food)){
-            FoodItemsByName.append(FoodCategoryItemByName(name: "\(i[food])"))
-        }
-    }
-    catch {
-        print(error)
-    }
-    return FoodItemsByName
-}
-
