@@ -26,7 +26,7 @@ struct addFoodButton: View {
             ZStack {
                 List {
                     if !searchByWordView {
-                        Section {
+                        Section(header: Text("Поиск по слову")) {
                             ForEach(FoodList){i in
                                 Button(action: {
                                     selectedFoodTemp = i.name
@@ -35,7 +35,7 @@ struct addFoodButton: View {
                             }
                         }
                     } else {
-                        Section {
+                        Section(header: Text("Поиск по категории")) {
                             ForEach(FoodCList){i in
                                 NavigationLink(destination: GetFoodCategoryItemsView(category: "\(i.name)")) {
                                     Text("\(i.name)")
@@ -69,10 +69,11 @@ struct addFoodButton: View {
             prompt:  "Поиск по слову"
         )
         .onChange(of: selectedFood, perform: {i in
-            Task {
-                if i.isEmpty {
-                    searchByWordView = true
-                } else {
+            
+            if i.isEmpty {
+                searchByWordView = true
+            } else {
+                Task {
                     FoodList = await GetFoodItemsByName(_name: selectedFood)
                     searchByWordView = false
                 }
