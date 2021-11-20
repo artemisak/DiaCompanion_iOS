@@ -17,7 +17,7 @@ struct addFoodButton: View {
     @State private var selectedFoodCategoryItem: String = ""
     @State private var selectedFoodTemp: String = ""
     @State private var selectedFoodCategoryTemp: String = ""
-    @State private var FoodCList: [FoodCategory] = []
+    @State private var FoodCList: [FoodCategory] = FillFoodCategoryList()
     @State private var FoodList: [FoodItemByName] = []
     @Binding var foodItems: [String]
     @MainActor
@@ -27,7 +27,7 @@ struct addFoodButton: View {
                 List {
                     if !searchByWordView {
                         Section {
-                            ForEach(FoodList, id:\.name){i in
+                            ForEach(FoodList){i in
                                 Button(action: {
                                     selectedFoodTemp = i.name
                                     addScreen.toggle()
@@ -36,7 +36,7 @@ struct addFoodButton: View {
                         }
                     } else {
                         Section {
-                            ForEach(FoodCList, id:\.name){i in
+                            ForEach(FoodCList){i in
                                 NavigationLink(destination: GetFoodCategoryItemsView(category: "\(i.name)")) {
                                     Text("\(i.name)")
                                 }.foregroundColor(.black)
@@ -45,9 +45,6 @@ struct addFoodButton: View {
                     }
                 }
                 .listStyle(.plain)
-                .task{
-                    FoodCList = await FillFoodCategoryList()
-                }
                 if !addScreen {
                     addSreenView(addScreen: $addScreen, gram: $gram, selectedFood: $selectedFoodTemp, foodItems: $foodItems)
                 }
@@ -69,12 +66,12 @@ struct addFoodButton: View {
             prompt:  "Search by word"
         )
         .onChange(of: selectedFood, perform: {i in
-            if i.isEmpty {
-                searchByWordView = true
-            } else {
-                searchByWordView = false
-                Task {
+            Task {
+                if i.isEmpty {
+                    searchByWordView = true
+                } else {
                     FoodList = await GetFoodItemsByName(_name: selectedFood)
+                    searchByWordView = false
                 }
             }
         })
@@ -83,23 +80,12 @@ struct addFoodButton: View {
     func GetFoodCategoryItemsView(category: String) -> some View {
         ZStack {
             List {
-                if !searchByWordCategoryView {
-                    Section {
-                        ForEach(GetFoodCategoryItems(_category: category).filter{$0.name.contains(selectedFoodCategoryItem)}, id:\.self){i in
-                            Button(action: {
-                                selectedFoodCategoryTemp = i.name
-                                addScreen.toggle()
-                            }){Text("\(i.name)")}
-                        }
-                    }
-                } else {
-                    Section {
-                        ForEach(GetFoodCategoryItems(_category: category), id:\.self){i in
-                            Button(action: {
-                                selectedFoodCategoryTemp = i.name
-                                addScreen.toggle()
-                            }){Text("\(i.name)")}
-                        }
+                Section {
+                    ForEach(searchByWordCategoryView ? GetFoodCategoryItems(_category: category):GetFoodCategoryItems(_category: category).filter{$0.name.contains(selectedFoodCategoryItem)}){i in
+                        Button(action: {
+                            selectedFoodCategoryTemp = i.name
+                            addScreen.toggle()
+                        }){Text("\(i.name)")}
                     }
                 }
             }
@@ -113,11 +99,7 @@ struct addFoodButton: View {
             prompt: "Search by word"
         )
         .onChange(of: selectedFoodCategoryItem, perform: {i in
-            if i.isEmpty {
-                searchByWordCategoryView = true
-            } else {
-                searchByWordCategoryView = false
-            }
+            searchByWordCategoryView = i.isEmpty ? true : false
         })
         .listStyle(.plain)
         .navigationTitle(category)
