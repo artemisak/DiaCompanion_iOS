@@ -40,7 +40,7 @@ struct FoodItemByName: Identifiable, Hashable {
     let id = UUID()
 }
 
-func GetFoodItemsByName(_name: String) async -> [FoodItemByName] {
+func GetFoodItemsByName(_name: String) async throws -> [FoodItemByName] {
     var foodItemsByName: [FoodItemByName] = []
     do {
         if _name.isEmpty {

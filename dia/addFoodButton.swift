@@ -20,23 +20,21 @@ struct addFoodButton: View {
     @State private var FoodCList: [FoodCategory] = []
     @State private var FoodList: [FoodItemByName] = []
     @Binding var foodItems: [String]
-    @MainActor
+    
     var body: some View {
         NavigationView {
             ZStack {
                 List {
-                    if !searchByWordView {
-                        Section(header: Text("Поиск по слову")) {
-                            ForEach(FoodList){i in
+                    Section {
+                        if !searchByWordView {
+                            ForEach(FoodList, id: \.id){i in
                                 Button(action: {
                                     selectedFoodTemp = i.name
                                     addScreen.toggle()
                                 }){Text("\(i.name)")}.foregroundColor(.black)
                             }
-                        }
-                    } else {
-                        Section(header: Text("Поиск по категории")) {
-                            ForEach(FoodCList){i in
+                        } else {
+                            ForEach(FoodCList, id: \.id){i in
                                 NavigationLink(destination: GetFoodCategoryItemsView(category: "\(i.name)")) {
                                     Text("\(i.name)")
                                 }.foregroundColor(.black)
@@ -69,12 +67,11 @@ struct addFoodButton: View {
             prompt:  "Поиск по слову"
         )
         .onChange(of: selectedFood, perform: {i in
-            
             if i.isEmpty {
                 searchByWordView = true
             } else {
                 Task {
-                    FoodList = await GetFoodItemsByName(_name: selectedFood)
+                    FoodList = try await GetFoodItemsByName(_name: selectedFood)
                     searchByWordView = false
                 }
             }
