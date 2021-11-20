@@ -17,7 +17,7 @@ struct addFoodButton: View {
     @State private var selectedFoodCategoryItem: String = ""
     @State private var selectedFoodTemp: String = ""
     @State private var selectedFoodCategoryTemp: String = ""
-    @State private var FoodCList: [FoodCategory] = FillFoodCategoryList()
+    @State private var FoodCList: [FoodCategory] = []
     @State private var FoodList: [FoodItemByName] = []
     @Binding var foodItems: [String]
     @MainActor
@@ -44,18 +44,21 @@ struct addFoodButton: View {
                         }
                     }
                 }
+                .task {
+                    FoodCList = await FillFoodCategoryList()
+                }
                 .listStyle(.plain)
                 if !addScreen {
                     addSreenView(addScreen: $addScreen, gram: $gram, selectedFood: $selectedFoodTemp, foodItems: $foodItems)
                 }
             }
-            .navigationTitle("Add the dish")
+            .navigationTitle("Добавить блюдо")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 Button(action: {
                     self.presentationMode.wrappedValue.dismiss()
                 }) {
-                    Text("Close")
+                    Text("Закрыть")
                 }
             }
             .interactiveDismissDisabled()
@@ -63,7 +66,7 @@ struct addFoodButton: View {
         .searchable(
             text: $selectedFood,
             placement: .navigationBarDrawer(displayMode: .always),
-            prompt:  "Search by word"
+            prompt:  "Поиск по слову"
         )
         .onChange(of: selectedFood, perform: {i in
             Task {
@@ -77,6 +80,7 @@ struct addFoodButton: View {
         })
     }
     
+    @ViewBuilder
     func GetFoodCategoryItemsView(category: String) -> some View {
         ZStack {
             List {
@@ -96,7 +100,7 @@ struct addFoodButton: View {
         .searchable(
             text: $selectedFoodCategoryItem,
             placement: .navigationBarDrawer(displayMode: .always),
-            prompt: "Search by word"
+            prompt: "Поиск по слову"
         )
         .onChange(of: selectedFoodCategoryItem, perform: {i in
             searchByWordCategoryView = i.isEmpty ? true : false
