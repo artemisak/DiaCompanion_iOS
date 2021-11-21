@@ -14,7 +14,7 @@ struct FoodList: Identifiable, Hashable {
     let id = UUID()
 }
 
-func FillFoodCategoryList() -> [FoodList] {
+func FillFoodCategoryList() async -> [FoodList] {
     do {
         var catList: [FoodList] = []
         catList.removeAll()
@@ -36,7 +36,7 @@ func FillFoodCategoryList() -> [FoodList] {
     }
 }
 
-func GetFoodItemsByName(_name: String) -> [FoodList] {
+func GetFoodItemsByName(_name: String) async -> [FoodList] {
     do {
         var foodItemsByName: [FoodList] = []
         foodItemsByName.removeAll()

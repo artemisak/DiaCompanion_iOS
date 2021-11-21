@@ -28,11 +28,17 @@ struct addFoodButton: View {
                         .padding(.vertical, 10)
                         .onChange(of: selectedFood, perform: {selectedFood in
                             if !selectedFood.isEmpty {
-                                    FoodList = GetFoodItemsByName(_name: selectedFood)
+                                Task {
+                                    FoodList = await GetFoodItemsByName(_name: selectedFood)
                                     searchByWordView = false
+                                }
+                                
                             } else {
-                                    FoodList = FillFoodCategoryList()
+                                Task{
+                                    FoodList = await FillFoodCategoryList()
                                     searchByWordView = true
+                                }
+                                
                             }
                         })
                     Divider()
@@ -53,7 +59,9 @@ struct addFoodButton: View {
             }
         }
         .onAppear(perform: {
-            FoodList = FillFoodCategoryList()
+            Task{
+                FoodList = await FillFoodCategoryList()
+            }
         })
         .navigationTitle("Добавить блюдо")
         .navigationBarTitleDisplayMode(.inline)
