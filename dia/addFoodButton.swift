@@ -32,13 +32,11 @@ struct addFoodButton: View {
                                     FoodList = await GetFoodItemsByName(_name: selectedFood)
                                     searchByWordView = false
                                 }
-                                
                             } else {
                                 Task{
                                     FoodList = await FillFoodCategoryList()
                                     searchByWordView = true
                                 }
-                                
                             }
                         })
                     Divider()
@@ -53,16 +51,14 @@ struct addFoodButton: View {
                     }
                 }.padding(.leading, 20)
             }
+            .task {
+                    FoodList = await FillFoodCategoryList()
+                }
             .listStyle(.plain)
             if !addScreen {
                 addSreenView(addScreen: $addScreen, gram: $gram, selectedFood: $selectedFoodTemp, foodItems: $foodItems)
             }
         }
-        .onAppear(perform: {
-            Task{
-                FoodList = await FillFoodCategoryList()
-            }
-        })
         .navigationTitle("Добавить блюдо")
         .navigationBarTitleDisplayMode(.inline)
     }
@@ -82,6 +78,7 @@ struct addFoodButton: View {
     func DoLink(dish: FoodList) -> some View {
         NavigationLink(destination: GetFoodCategoryItemsView(category: "\(dish.name)")) {
             Text("\(dish.name)")
+                .multilineTextAlignment(.leading)
         }
         .foregroundColor(.black)
         .padding(.vertical, 10)

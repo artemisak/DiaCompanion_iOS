@@ -38,6 +38,7 @@ func FillFoodCategoryList() async -> [FoodList] {
 
 func GetFoodItemsByName(_name: String) async -> [FoodList] {
     do {
+        if _name != "" {
         var foodItemsByName: [FoodList] = []
         foodItemsByName.removeAll()
         let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
@@ -50,7 +51,11 @@ func GetFoodItemsByName(_name: String) async -> [FoodList] {
         for i in try db.prepare(foodItems.select(food).filter(food.like("%\(_name)%")).order(food)){
             foodItemsByName.append(FoodList(name: "\(i[food])"))
         }
-        return foodItemsByName
+            return foodItemsByName
+        } else {
+            return []
+        }
+        
     }
     catch {
         print(error)
