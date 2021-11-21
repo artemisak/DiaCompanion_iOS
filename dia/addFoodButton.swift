@@ -23,6 +23,18 @@ struct addFoodButton: View {
         ZStack {
             List {
                 Section {
+                    TextField("Поиск по слову", text: $selectedFood)
+                        .onChange(of: selectedFood, perform: {selectedFood in
+                            if !selectedFood.isEmpty {
+                                FoodList = GetFoodItemsByName(_name: selectedFood)
+                                searchByWordView = false
+                            } else {
+                                FoodList = FillFoodCategoryList()
+                                searchByWordView = true
+                            }
+                        })
+                }
+                Section {
                     ForEach(FoodList){dish in
                         if !searchByWordView {
                             DoButton(dish: dish)
@@ -43,38 +55,38 @@ struct addFoodButton: View {
         }
         .navigationTitle("Добавить блюдо")
         .navigationBarTitleDisplayMode(.inline)
-        .searchable(
-            text: $selectedFood,
-            placement: .navigationBarDrawer(displayMode: .always),
-            prompt:  "Поиск по слову"
-        )
-        .onChange(of: selectedFood, perform: {selectedFood in
-            if !selectedFood.isEmpty {
-                FoodList = GetFoodItemsByName(_name: selectedFood)
-                searchByWordView = false
-            } else {
-                FoodList = FillFoodCategoryList()
-                searchByWordView = true
-            }
-        })
     }
     
     func DoButton(dish: FoodList) -> some View {
-        Button(action: {
-            selectedFoodCategoryTemp = dish.name
-            addScreen.toggle()
-        }){Text("\(dish.name)")}
+        HStack{
+            Button(action: {
+                selectedFoodCategoryTemp = dish.name
+                addScreen.toggle()
+            }){Text("\(dish.name)")}
+        }
     }
     
     func DoLink(dish: FoodList) -> some View {
-        NavigationLink(destination: GetFoodCategoryItemsView(category: "\(dish.name)")) {
-            Text("\(dish.name)")
-        }.foregroundColor(.black)
+        HStack{
+            NavigationLink(destination: GetFoodCategoryItemsView(category: "\(dish.name)")) {
+                Text("\(dish.name)")
+            }.foregroundColor(.black)
+        }
     }
     
     func GetFoodCategoryItemsView(category: String) -> some View {
         ZStack {
             List {
+                Section{
+                    TextField("Поиск по слову", text: $selectedFoodCategoryItem)
+                        .onChange(of: selectedFoodCategoryItem, perform: {i in
+                            if !i.isEmpty{
+                                FoodList2 = GetFoodCategoryItems(_category: category).filter{$0.name.contains(selectedFoodCategoryItem)}
+                            } else {
+                                FoodList2 = GetFoodCategoryItems(_category: category)
+                            }
+                        })
+                }
                 Section {
                     ForEach(FoodList2){dish in
                         DoButton(dish: dish)
@@ -87,18 +99,6 @@ struct addFoodButton: View {
         }
         .onAppear(perform:{
             FoodList2 = GetFoodCategoryItems(_category: category)
-        })
-        .searchable(
-            text: $selectedFoodCategoryItem,
-            placement: .navigationBarDrawer(displayMode: .always),
-            prompt: "Поиск по слову"
-        )
-        .onChange(of: selectedFoodCategoryItem, perform: {i in
-            if !i.isEmpty{
-                FoodList2 = GetFoodCategoryItems(_category: category).filter{$0.name.contains(selectedFoodCategoryItem)}
-            } else {
-                FoodList2 = GetFoodCategoryItems(_category: category)
-            }
         })
         .listStyle(.plain)
         .navigationTitle(category)

@@ -38,7 +38,7 @@ func FillFoodCategoryList() -> [FoodList] {
 
 func GetFoodItemsByName(_name: String) -> [FoodList] {
     do {
-        if !_name.isEmpty {
+        if _name != " " {
             var foodItemsByName: [FoodList] = []
             foodItemsByName.removeAll()
             let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
