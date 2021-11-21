@@ -38,23 +38,19 @@ func FillFoodCategoryList() -> [FoodList] {
 
 func GetFoodItemsByName(_name: String) -> [FoodList] {
     do {
-        if _name != " " {
-            var foodItemsByName: [FoodList] = []
-            foodItemsByName.removeAll()
-            let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
-            let path = documents + "/diacompanion.db"
-            let sourcePath = Bundle.main.path(forResource: "diacompanion", ofType: "db")!
-            _=copyDatabaseIfNeeded(sourcePath: sourcePath)
-            let db = try Connection(path)
-            let foodItems = Table("food")
-            let food = Expression<String>("name")
-            for i in try db.prepare(foodItems.select(food).filter(food.like("%\(_name)%")).order(food)){
-                foodItemsByName.append(FoodList(name: "\(i[food])"))
-            }
-            return foodItemsByName
-        } else {
-            return []
+        var foodItemsByName: [FoodList] = []
+        foodItemsByName.removeAll()
+        let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
+        let path = documents + "/diacompanion.db"
+        let sourcePath = Bundle.main.path(forResource: "diacompanion", ofType: "db")!
+        _=copyDatabaseIfNeeded(sourcePath: sourcePath)
+        let db = try Connection(path)
+        let foodItems = Table("food")
+        let food = Expression<String>("name")
+        for i in try db.prepare(foodItems.select(food).filter(food.like("%\(_name)%")).order(food)){
+            foodItemsByName.append(FoodList(name: "\(i[food])"))
         }
+        return foodItemsByName
     }
     catch {
         print(error)

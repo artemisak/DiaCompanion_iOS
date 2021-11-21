@@ -71,9 +71,6 @@ struct enterFood: View {
                         Image(systemName: "folder.badge.plus")
                     }
                 })
-//                    .sheet(isPresented: $isSheetShown){
-//                        addFoodButton(foodItems: $foodItems)
-//                    }
             }
             Section(){
                 ForEach(foodItems, id: \.self) {

@@ -21,85 +21,81 @@ struct addFoodButton: View {
     @State private var FoodList2: [FoodList] = []
     var body: some View {
         ZStack {
-            List {
-                Section {
+            ScrollView {
+                VStack(alignment: .leading, spacing: 0){
+                    Divider()
                     TextField("Поиск по слову", text: $selectedFood)
+                        .padding(.vertical, 10)
                         .onChange(of: selectedFood, perform: {selectedFood in
                             if !selectedFood.isEmpty {
-                                FoodList = GetFoodItemsByName(_name: selectedFood)
-                                searchByWordView = false
+                                    FoodList = GetFoodItemsByName(_name: selectedFood)
+                                    searchByWordView = false
                             } else {
-                                FoodList = FillFoodCategoryList()
-                                searchByWordView = true
+                                    FoodList = FillFoodCategoryList()
+                                    searchByWordView = true
                             }
                         })
-                }
-                Section {
+                    Divider()
                     ForEach(FoodList){dish in
                         if !searchByWordView {
                             DoButton(dish: dish)
+                            Divider()
                         } else {
                             DoLink(dish: dish)
+                            Divider()
                         }
                     }
-                }
+                }.padding(.leading, 20)
             }
-            .onAppear(perform: {
-                FoodList = FillFoodCategoryList()
-                
-            })
             .listStyle(.plain)
             if !addScreen {
                 addSreenView(addScreen: $addScreen, gram: $gram, selectedFood: $selectedFoodTemp, foodItems: $foodItems)
             }
         }
+        .onAppear(perform: {
+            FoodList = FillFoodCategoryList()
+        })
         .navigationTitle("Добавить блюдо")
         .navigationBarTitleDisplayMode(.inline)
     }
     
     func DoButton(dish: FoodList) -> some View {
-        HStack{
-            Button(action: {
-                selectedFoodCategoryTemp = dish.name
-                addScreen.toggle()
-            }){Text("\(dish.name)")}
+        Button(action: {
+            selectedFoodCategoryTemp = dish.name
+            addScreen.toggle()
+        }){
+            Text("\(dish.name)")
+                .multilineTextAlignment(.leading)
         }
+        .foregroundColor(.black)
+        .padding(.vertical, 10)
     }
     
     func DoLink(dish: FoodList) -> some View {
-        HStack{
-            NavigationLink(destination: GetFoodCategoryItemsView(category: "\(dish.name)")) {
-                Text("\(dish.name)")
-            }.foregroundColor(.black)
+        NavigationLink(destination: GetFoodCategoryItemsView(category: "\(dish.name)")) {
+            Text("\(dish.name)")
         }
+        .foregroundColor(.black)
+        .padding(.vertical, 10)
     }
     
     func GetFoodCategoryItemsView(category: String) -> some View {
         ZStack {
-            List {
-                Section{
-                    TextField("Поиск по слову", text: $selectedFoodCategoryItem)
-                        .onChange(of: selectedFoodCategoryItem, perform: {i in
-                            if !i.isEmpty{
-                                FoodList2 = GetFoodCategoryItems(_category: category).filter{$0.name.contains(selectedFoodCategoryItem)}
-                            } else {
-                                FoodList2 = GetFoodCategoryItems(_category: category)
-                            }
-                        })
-                }
-                Section {
-                    ForEach(FoodList2){dish in
+            ScrollView {
+                VStack(alignment: .leading, spacing: 0){
+                    Divider()
+                    TextField("Поиск по слову", text: $selectedFoodCategoryItem).padding(.vertical, 10)
+                    Divider()
+                    ForEach(GetFoodCategoryItems(_category: category).filter{$0.name.contains(selectedFoodCategoryItem) || selectedFoodCategoryItem.isEmpty}){dish in
                         DoButton(dish: dish)
+                        Divider()
                     }
-                }
+                }.padding(.leading, 20)
             }
             if !addScreen {
                 addSreenView(addScreen: $addScreen, gram: $gram, selectedFood: $selectedFoodCategoryTemp, foodItems: $foodItems)
             }
         }
-        .onAppear(perform:{
-            FoodList2 = GetFoodCategoryItems(_category: category)
-        })
         .listStyle(.plain)
         .navigationTitle(category)
         .navigationBarTitleDisplayMode(.inline)
