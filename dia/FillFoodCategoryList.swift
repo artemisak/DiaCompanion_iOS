@@ -14,8 +14,7 @@ struct FoodList: Identifiable, Hashable {
     let id = UUID()
 }
 
-func FillFoodCategoryList() async -> [FoodList] {
-    
+func FillFoodCategoryList() -> [FoodList] {
     do {
         var catList: [FoodList] = []
         catList.removeAll()
@@ -37,10 +36,10 @@ func FillFoodCategoryList() async -> [FoodList] {
     }
 }
 
-func GetFoodItemsByName(_name: String) async -> [FoodList] {
+func GetFoodItemsByName(_name: String) -> [FoodList] {
     do {
-        var foodItemsByName: [FoodList] = []
-        if _name != ""{
+        if !_name.isEmpty {
+            var foodItemsByName: [FoodList] = []
             foodItemsByName.removeAll()
             let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
             let path = documents + "/diacompanion.db"
@@ -52,20 +51,21 @@ func GetFoodItemsByName(_name: String) async -> [FoodList] {
             for i in try db.prepare(foodItems.select(food).filter(food.like("%\(_name)%")).order(food)){
                 foodItemsByName.append(FoodList(name: "\(i[food])"))
             }
+            return foodItemsByName
+        } else {
+            return []
         }
-        return foodItemsByName
-        
     }
     catch {
         print(error)
         return []
     }
-    
 }
 
 func GetFoodCategoryItems(_category: String) -> [FoodList] {
-    var foodCategoryItems: [FoodList] = []
     do {
+        var foodCategoryItems: [FoodList] = []
+        foodCategoryItems.removeAll()
         let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
         let path = documents + "/diacompanion.db"
         let sourcePath = Bundle.main.path(forResource: "diacompanion", ofType: "db")!
@@ -78,11 +78,12 @@ func GetFoodCategoryItems(_category: String) -> [FoodList] {
         for i in try db.prepare(foodItems.select(food).filter(categoryRow == _category)){
             foodCategoryItems.append(FoodList(name: "\(i[food])"))
         }
+        return foodCategoryItems
     }
     catch {
         print(error)
+        return []
     }
-    return foodCategoryItems
 }
 
 func SaveToDB(FoodName: String, gramm: String) {

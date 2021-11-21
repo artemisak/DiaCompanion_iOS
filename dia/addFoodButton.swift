@@ -8,84 +8,76 @@
 import SwiftUI
 
 struct addFoodButton: View {
-    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    @Binding var foodItems: [String]
     @State public var addScreen: Bool = true
-    @State private var searchByWordView: Bool = true
-    @State private var searchByWordCategoryView: Bool = true
+    @State public var selectedFoodTemp: String = ""
+    @State public var selectedFoodCategoryTemp: String = ""
     @State public var gram: String = ""
     @State private var selectedFood: String = ""
     @State private var selectedFoodCategoryItem: String = ""
-    @State private var selectedFoodTemp: String = ""
-    @State private var selectedFoodCategoryTemp: String = ""
-    @State private var FoodCList: [FoodList] = []
+    @State private var searchByWordView: Bool = true
+    @State private var searchByWordCategoryView: Bool = true
     @State private var FoodList: [FoodList] = []
-    @Binding var foodItems: [String]
-    
+    @State private var FoodList2: [FoodList] = []
     var body: some View {
-        NavigationView {
-            ZStack {
-                List {
-                    Section {
-                        ForEach(searchByWordView ? FoodCList:FoodList){i in
-                            if !searchByWordView {
-                                Button(action: {
-                                    selectedFoodTemp = i.name
-                                    addScreen.toggle()
-                                }){Text("\(i.name)")}.foregroundColor(.black)
-                            } else {
-                                NavigationLink(destination: GetFoodCategoryItemsView(category: "\(i.name)")) {
-                                    Text("\(i.name)")
-                                }.foregroundColor(.black)
-                            }
+        ZStack {
+            List {
+                Section {
+                    ForEach(FoodList){dish in
+                        if !searchByWordView {
+                            DoButton(dish: dish)
+                        } else {
+                            DoLink(dish: dish)
                         }
                     }
                 }
-                .task{
-                    FoodCList = await FillFoodCategoryList()
-                }
-                .listStyle(.plain)
-                if !addScreen {
-                    addSreenView(addScreen: $addScreen, gram: $gram, selectedFood: $selectedFoodTemp, foodItems: $foodItems)
-                }
             }
-            .navigationTitle("Добавить блюдо")
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                Button(action: {
-                    self.presentationMode.wrappedValue.dismiss()
-                }) {
-                    Text("Закрыть")
-                }
+            .onAppear(perform: {
+                FoodList = FillFoodCategoryList()
+                
+            })
+            .listStyle(.plain)
+            if !addScreen {
+                addSreenView(addScreen: $addScreen, gram: $gram, selectedFood: $selectedFoodTemp, foodItems: $foodItems)
             }
-            .interactiveDismissDisabled()
         }
+        .navigationTitle("Добавить блюдо")
+        .navigationBarTitleDisplayMode(.inline)
         .searchable(
             text: $selectedFood,
             placement: .navigationBarDrawer(displayMode: .always),
             prompt:  "Поиск по слову"
         )
         .onChange(of: selectedFood, perform: {selectedFood in
-            if selectedFood.isEmpty {
-                searchByWordView = true
+            if !selectedFood.isEmpty {
+                FoodList = GetFoodItemsByName(_name: selectedFood)
+                searchByWordView = false
             } else {
-                Task {
-                    FoodList = await GetFoodItemsByName(_name: selectedFood)
-                    searchByWordView = false
-                }
+                FoodList = FillFoodCategoryList()
+                searchByWordView = true
             }
         })
     }
     
-    @ViewBuilder
+    func DoButton(dish: FoodList) -> some View {
+        Button(action: {
+            selectedFoodCategoryTemp = dish.name
+            addScreen.toggle()
+        }){Text("\(dish.name)")}
+    }
+    
+    func DoLink(dish: FoodList) -> some View {
+        NavigationLink(destination: GetFoodCategoryItemsView(category: "\(dish.name)")) {
+            Text("\(dish.name)")
+        }.foregroundColor(.black)
+    }
+    
     func GetFoodCategoryItemsView(category: String) -> some View {
         ZStack {
             List {
                 Section {
-                    ForEach(searchByWordCategoryView ? GetFoodCategoryItems(_category: category):GetFoodCategoryItems(_category: category).filter{$0.name.contains(selectedFoodCategoryItem)}){i in
-                        Button(action: {
-                            selectedFoodCategoryTemp = i.name
-                            addScreen.toggle()
-                        }){Text("\(i.name)")}
+                    ForEach(FoodList2){dish in
+                        DoButton(dish: dish)
                     }
                 }
             }
@@ -93,18 +85,24 @@ struct addFoodButton: View {
                 addSreenView(addScreen: $addScreen, gram: $gram, selectedFood: $selectedFoodCategoryTemp, foodItems: $foodItems)
             }
         }
+        .onAppear(perform:{
+            FoodList2 = GetFoodCategoryItems(_category: category)
+        })
         .searchable(
             text: $selectedFoodCategoryItem,
             placement: .navigationBarDrawer(displayMode: .always),
             prompt: "Поиск по слову"
         )
         .onChange(of: selectedFoodCategoryItem, perform: {i in
-            searchByWordCategoryView = i.isEmpty ? true : false
+            if !i.isEmpty{
+                FoodList2 = GetFoodCategoryItems(_category: category).filter{$0.name.contains(selectedFoodCategoryItem)}
+            } else {
+                FoodList2 = GetFoodCategoryItems(_category: category)
+            }
         })
         .listStyle(.plain)
         .navigationTitle(category)
         .navigationBarTitleDisplayMode(.inline)
-        .interactiveDismissDisabled()
     }
 }
 
