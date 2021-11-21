@@ -9,14 +9,15 @@ import Foundation
 import SwiftUI
 import SQLite
 
-struct FoodCategory: Identifiable, Hashable {
+struct FoodList: Identifiable, Hashable {
     let name: String
     let id = UUID()
 }
 
-func FillFoodCategoryList() async -> [FoodCategory] {
-    var catList: [FoodCategory] = []
+func FillFoodCategoryList() async -> [FoodList] {
+    
     do {
+        var catList: [FoodList] = []
         catList.removeAll()
         let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
         let path = documents + "/diacompanion.db"
@@ -26,26 +27,20 @@ func FillFoodCategoryList() async -> [FoodCategory] {
         let food = Table("foodGroups")
         let category = Expression<String>("category")
         for i in try db.prepare(food.select(category)){
-            catList.append(FoodCategory(name: "\(i[category])"))
+            catList.append(FoodList(name: "\(i[category])"))
         }
+        return catList
     }
     catch {
         print(error)
+        return []
     }
-    return catList
 }
 
-struct FoodItemByName: Identifiable, Hashable {
-    let name: String
-    let id = UUID()
-}
-
-func GetFoodItemsByName(_name: String) async throws -> [FoodItemByName] {
-    var foodItemsByName: [FoodItemByName] = []
+func GetFoodItemsByName(_name: String) async -> [FoodList] {
     do {
-        if _name.isEmpty {
-            foodItemsByName.removeAll()
-        } else {
+        var foodItemsByName: [FoodList] = []
+        if _name != ""{
             foodItemsByName.removeAll()
             let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
             let path = documents + "/diacompanion.db"
@@ -55,23 +50,21 @@ func GetFoodItemsByName(_name: String) async throws -> [FoodItemByName] {
             let foodItems = Table("food")
             let food = Expression<String>("name")
             for i in try db.prepare(foodItems.select(food).filter(food.like("%\(_name)%")).order(food)){
-                foodItemsByName.append(FoodItemByName(name: "\(i[food])"))
+                foodItemsByName.append(FoodList(name: "\(i[food])"))
             }
         }
+        return foodItemsByName
+        
     }
     catch {
         print(error)
+        return []
     }
-    return foodItemsByName
+    
 }
 
-struct FoodCategoryItem: Identifiable, Hashable {
-    let name: String
-    let id = UUID()
-}
-
-func GetFoodCategoryItems(_category: String) -> [FoodCategoryItem] {
-    var foodCategoryItems: [FoodCategoryItem] = []
+func GetFoodCategoryItems(_category: String) -> [FoodList] {
+    var foodCategoryItems: [FoodList] = []
     do {
         let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
         let path = documents + "/diacompanion.db"
@@ -83,7 +76,7 @@ func GetFoodCategoryItems(_category: String) -> [FoodCategoryItem] {
         let categoryRow = Expression<String>("category")
         foodCategoryItems.removeAll()
         for i in try db.prepare(foodItems.select(food).filter(categoryRow == _category)){
-            foodCategoryItems.append(FoodCategoryItem(name: "\(i[food])"))
+            foodCategoryItems.append(FoodList(name: "\(i[food])"))
         }
     }
     catch {

@@ -17,8 +17,8 @@ struct addFoodButton: View {
     @State private var selectedFoodCategoryItem: String = ""
     @State private var selectedFoodTemp: String = ""
     @State private var selectedFoodCategoryTemp: String = ""
-    @State private var FoodCList: [FoodCategory] = []
-    @State private var FoodList: [FoodItemByName] = []
+    @State private var FoodCList: [FoodList] = []
+    @State private var FoodList: [FoodList] = []
     @Binding var foodItems: [String]
     
     var body: some View {
@@ -26,15 +26,13 @@ struct addFoodButton: View {
             ZStack {
                 List {
                     Section {
-                        if !searchByWordView {
-                            ForEach(FoodList, id: \.id){i in
+                        ForEach(searchByWordView ? FoodCList:FoodList){i in
+                            if !searchByWordView {
                                 Button(action: {
                                     selectedFoodTemp = i.name
                                     addScreen.toggle()
                                 }){Text("\(i.name)")}.foregroundColor(.black)
-                            }
-                        } else {
-                            ForEach(FoodCList, id: \.id){i in
+                            } else {
                                 NavigationLink(destination: GetFoodCategoryItemsView(category: "\(i.name)")) {
                                     Text("\(i.name)")
                                 }.foregroundColor(.black)
@@ -42,7 +40,7 @@ struct addFoodButton: View {
                         }
                     }
                 }
-                .task {
+                .task{
                     FoodCList = await FillFoodCategoryList()
                 }
                 .listStyle(.plain)
@@ -66,12 +64,12 @@ struct addFoodButton: View {
             placement: .navigationBarDrawer(displayMode: .always),
             prompt:  "Поиск по слову"
         )
-        .onChange(of: selectedFood, perform: {i in
-            if i.isEmpty {
+        .onChange(of: selectedFood, perform: {selectedFood in
+            if selectedFood.isEmpty {
                 searchByWordView = true
             } else {
                 Task {
-                    FoodList = try await GetFoodItemsByName(_name: selectedFood)
+                    FoodList = await GetFoodItemsByName(_name: selectedFood)
                     searchByWordView = false
                 }
             }
