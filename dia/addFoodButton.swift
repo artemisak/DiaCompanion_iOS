@@ -65,7 +65,7 @@ struct addFoodButton: View {
     
     func DoButton(dish: FoodList) -> some View {
         Button(action: {
-            selectedFoodCategoryTemp = dish.name
+            selectedFoodTemp = dish.name
             addScreen.toggle()
         }){
             Text("\(dish.name)")
@@ -98,7 +98,7 @@ struct addFoodButton: View {
                 }.padding(.leading, 20)
             }
             if !addScreen {
-                addSreenView(addScreen: $addScreen, gram: $gram, selectedFood: $selectedFoodCategoryTemp, foodItems: $foodItems)
+                addSreenView(addScreen: $addScreen, gram: $gram, selectedFood: $selectedFoodTemp, foodItems: $foodItems)
             }
         }
         .listStyle(.plain)

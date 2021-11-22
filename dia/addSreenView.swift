@@ -20,11 +20,11 @@ struct addSreenView: View {
                 .ignoresSafeArea()
                 .onTapGesture{withAnimation(.linear){addScreen.toggle()}}
             VStack(spacing:0){
-                Text("Add a dish/meal")
+                Text("Добавить блюдо/продукт")
                     .padding()
                 Divider()
                 VStack(){
-                    TextField("Weight, in gram", text: $gram)
+                    TextField("Вес, в граммах", text: $gram)
                         .padding(.leading, 16)
                         .padding(.trailing, 16)
                     Rectangle()
@@ -36,12 +36,12 @@ struct addSreenView: View {
                 Divider()
                 HStack(){
                     Button(action: {
-                        foodItems.append("\(selectedFood), \(gram) g.")
+                        foodItems.append("\(selectedFood), \(gram) г.")
                         gram = ""
                         selectedFood = ""
                         addScreen.toggle()
                     }){
-                        Text("Save")
+                        Text("Сохранить")
                             .frame(maxWidth: .infinity)
                             .foregroundColor(.black)
                     }
@@ -52,7 +52,7 @@ struct addSreenView: View {
                         selectedFood = ""
                         addScreen.toggle()
                     }){
-                        Text("Cancel")
+                        Text("Назад")
                             .frame(maxWidth: .infinity)
                             .foregroundColor(.black)
                     }
