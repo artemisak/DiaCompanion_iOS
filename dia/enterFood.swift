@@ -23,7 +23,6 @@ struct enterFood: View {
     @State public var foodItems: [String] = []
     
     var body: some View {
-        NavigationLink(isActive: $isSheetShown, destination: {addFoodButton(foodItems: $foodItems)}, label: {})
         Form {
             Section(header: Text("Общая информация")){
                 Picker(selection: $previewIndex, label: Text("Прием пищи")) {
@@ -71,6 +70,9 @@ struct enterFood: View {
                         Image(systemName: "folder.badge.plus")
                     }
                 })
+                    .sheet(isPresented: $isSheetShown) {
+                        addFoodButton(foodItems: $foodItems)
+                    }
             }
             Section(){
                 ForEach(foodItems, id: \.self) {

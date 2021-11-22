@@ -20,6 +20,7 @@ struct addFoodButton: View {
     @State private var FoodList: [FoodList] = []
     @State private var FoodList2: [FoodList] = []
     var body: some View {
+        NavigationView{
         ZStack {
             ScrollView {
                 VStack(alignment: .leading, spacing: 0){
@@ -29,12 +30,12 @@ struct addFoodButton: View {
                         .onChange(of: selectedFood, perform: {selectedFood in
                             if !selectedFood.isEmpty {
                                 Task {
-                                    FoodList = await GetFoodItemsByName(_name: selectedFood)
+                                    FoodList = try await GetFoodItemsByName(_name: selectedFood)
                                     searchByWordView = false
                                 }
                             } else {
                                 Task{
-                                    FoodList = await FillFoodCategoryList()
+                                    FoodList = try await FillFoodCategoryList()
                                     searchByWordView = true
                                 }
                             }
@@ -52,15 +53,19 @@ struct addFoodButton: View {
                 }.padding(.leading, 20)
             }
             .task {
-                    FoodList = await FillFoodCategoryList()
+                Task{
+                    FoodList = try await FillFoodCategoryList()
                 }
+            }
             .listStyle(.plain)
             if !addScreen {
                 addSreenView(addScreen: $addScreen, gram: $gram, selectedFood: $selectedFoodTemp, foodItems: $foodItems)
             }
         }
         .navigationTitle("Добавить блюдо")
-        .navigationBarTitleDisplayMode(.inline)
+        .navigationBarTitleDisplayMode(.large)
+        .interactiveDismissDisabled()
+        }
     }
     
     func DoButton(dish: FoodList) -> some View {
