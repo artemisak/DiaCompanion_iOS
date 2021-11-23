@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+
 struct addFoodButton: View {
     @Binding var foodItems: [String]
     @State public var addScreen: Bool = true
@@ -17,57 +18,56 @@ struct addFoodButton: View {
     @State private var selectedFoodCategoryItem: String = ""
     @State private var searchByWordView: Bool = true
     @State private var searchByWordCategoryView: Bool = true
-    @State private var FoodList: [FoodList] = []
-    @State private var FoodList2: [FoodList] = []
+    @StateObject var items = Food()
     var body: some View {
-        NavigationView{
-        ZStack {
-            ScrollView {
-                VStack(alignment: .leading, spacing: 0){
-                    Divider()
-                    TextField("Поиск по слову", text: $selectedFood)
-                        .padding(.vertical, 10)
-                        .onChange(of: selectedFood, perform: {selectedFood in
-                            if !selectedFood.isEmpty {
-                                Task {
-                                    FoodList = try await GetFoodItemsByName(_name: selectedFood)
-                                    searchByWordView = false
+        NavigationView {
+            ZStack {
+                ScrollView {
+                    VStack(alignment: .leading, spacing: 0){
+                        Divider()
+                        TextField("Поиск по слову", text: $selectedFood)
+                            .padding(.vertical, 10)
+                            .onChange(of: selectedFood, perform: {selectedFood in
+                                if !selectedFood.isEmpty {
+                                    Task {
+                                        await items.GetFoodItemsByName(_name: selectedFood)
+                                        searchByWordView = false
+                                    }
+                                    
+                                } else {
+                                    Task {
+                                        await items.FillFoodCategoryList()
+                                        searchByWordView = true
+                                    }
                                 }
+                            })
+                        Divider()
+                        ForEach(items.FoodObj){dish in
+                            if !searchByWordView {
+                                DoButton(dish: dish)
+                                Divider()
                             } else {
-                                Task{
-                                    FoodList = try await FillFoodCategoryList()
-                                    searchByWordView = true
-                                }
+                                DoLink(dish: dish)
+                                Divider()
                             }
-                        })
-                    Divider()
-                    ForEach(FoodList){dish in
-                        if !searchByWordView {
-                            DoButton(dish: dish)
-                            Divider()
-                        } else {
-                            DoLink(dish: dish)
-                            Divider()
                         }
                     }
-                }.padding(.leading, 20)
-            }
-            .task {
-                Task{
-                    FoodList = try await FillFoodCategoryList()
+                    .padding(.horizontal, 20)
+                }
+                .task {
+                    await items.FillFoodCategoryList()
+                }
+                if !addScreen {
+                    addSreenView(addScreen: $addScreen, gram: $gram, selectedFood: $selectedFoodTemp, foodItems: $foodItems)
                 }
             }
-            .listStyle(.plain)
-            if !addScreen {
-                addSreenView(addScreen: $addScreen, gram: $gram, selectedFood: $selectedFoodTemp, foodItems: $foodItems)
-            }
-        }
-        .navigationTitle("Добавить блюдо")
-        .navigationBarTitleDisplayMode(.large)
-        .interactiveDismissDisabled()
+            .navigationTitle("Добавить блюдо")
+            .navigationBarTitleDisplayMode(.large)
+            .interactiveDismissDisabled()
         }
     }
     
+    @ViewBuilder
     func DoButton(dish: FoodList) -> some View {
         Button(action: {
             selectedFoodTemp = dish.name
@@ -80,6 +80,7 @@ struct addFoodButton: View {
         .padding(.vertical, 10)
     }
     
+    @ViewBuilder
     func DoLink(dish: FoodList) -> some View {
         NavigationLink(destination: GetFoodCategoryItemsView(category: "\(dish.name)")) {
             Text("\(dish.name)")
@@ -89,6 +90,7 @@ struct addFoodButton: View {
         .padding(.vertical, 10)
     }
     
+    @ViewBuilder
     func GetFoodCategoryItemsView(category: String) -> some View {
         ZStack {
             ScrollView {
@@ -100,7 +102,7 @@ struct addFoodButton: View {
                         DoButton(dish: dish)
                         Divider()
                     }
-                }.padding(.leading, 20)
+                }.padding(.horizontal, 20)
             }
             if !addScreen {
                 addSreenView(addScreen: $addScreen, gram: $gram, selectedFood: $selectedFoodTemp, foodItems: $foodItems)
