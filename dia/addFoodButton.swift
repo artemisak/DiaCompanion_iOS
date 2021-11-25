@@ -30,7 +30,7 @@ struct addFoodButton: View {
                             .onChange(of: selectedFood, perform: {selectedFood in
                                 if !selectedFood.isEmpty {
                                     Task {
-                                        await items.GetFoodItemsByName(_name: selectedFood)
+                                        try await items.GetFoodItemsByName(_name: selectedFood)
                                         searchByWordView = false
                                     }
                                     
@@ -42,7 +42,7 @@ struct addFoodButton: View {
                                 }
                             })
                         Divider()
-                        ForEach(items.FoodObj){dish in
+                        ForEach(items.FoodObj, id: \.id){dish in
                             if !searchByWordView {
                                 DoButton(dish: dish)
                                 Divider()
@@ -98,10 +98,10 @@ struct addFoodButton: View {
                     Divider()
                     TextField("Поиск по слову", text: $selectedFoodCategoryItem).padding(.vertical, 10)
                     Divider()
-                    ForEach(GetFoodCategoryItems(_category: category).filter{$0.name.contains(selectedFoodCategoryItem) || selectedFoodCategoryItem.isEmpty}){dish in
+                    ForEach(GetFoodCategoryItems(_category: category).filter{$0.name.contains(selectedFoodCategoryItem) || selectedFoodCategoryItem.isEmpty}, id: \.id){dish in
                         DoButton(dish: dish)
                         Divider()
-                    }
+                    }.id(UUID())
                 }.padding(.horizontal, 20)
             }
             if !addScreen {

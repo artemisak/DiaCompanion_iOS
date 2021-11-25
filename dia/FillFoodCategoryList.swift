@@ -17,7 +17,7 @@ struct FoodList: Identifiable, Hashable {
 class Food: ObservableObject {
     @Published var FoodObj = [FoodList]()
         
-    func GetFoodItemsByName(_name: String) async -> Void {
+    func GetFoodItemsByName(_name: String) async throws -> Void {
         do {
             var Food1 = [FoodList]()
             let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
@@ -27,7 +27,7 @@ class Food: ObservableObject {
             let db = try Connection(path)
             let foodItems = Table("food")
             let food = Expression<String>("name")
-            for i in try db.prepare(foodItems.select(food).filter(food.like("\(_name)%")).order(food)){
+            for i in try db.prepare(foodItems.select(food).filter(food.like("%\(_name)%")).order(food).limit(30)){
                 Food1.append(FoodList(name: "\(i[food])"))
             }
             self.FoodObj = Food1
@@ -56,7 +56,6 @@ class Food: ObservableObject {
             print(error)
         }
     }
-    
 }
 
 func GetFoodCategoryItems(_category: String) -> [FoodList] {
