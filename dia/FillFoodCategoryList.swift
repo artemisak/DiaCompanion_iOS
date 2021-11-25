@@ -17,7 +17,7 @@ struct FoodList: Identifiable, Hashable {
 class Food: ObservableObject {
     @Published var FoodObj = [FoodList]()
         
-    func GetFoodItemsByName(_name: String) async throws -> Void {
+    func GetFoodItemsByName(_name: String) -> Void {
         do {
             var Food1 = [FoodList]()
             let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!

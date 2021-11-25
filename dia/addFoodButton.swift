@@ -23,17 +23,14 @@ struct addFoodButton: View {
         NavigationView {
             ZStack {
                 ScrollView {
-                    VStack(alignment: .leading, spacing: 0){
+                    LazyVStack(alignment: .leading, spacing: 0){
                         Divider()
                         TextField("Поиск по слову", text: $selectedFood)
                             .padding(.vertical, 10)
                             .onChange(of: selectedFood, perform: {selectedFood in
                                 if !selectedFood.isEmpty {
-                                    Task {
-                                        try await items.GetFoodItemsByName(_name: selectedFood)
+                                        items.GetFoodItemsByName(_name: selectedFood)
                                         searchByWordView = false
-                                    }
-                                    
                                 } else {
                                     Task {
                                         await items.FillFoodCategoryList()
@@ -94,14 +91,14 @@ struct addFoodButton: View {
     func GetFoodCategoryItemsView(category: String) -> some View {
         ZStack {
             ScrollView {
-                VStack(alignment: .leading, spacing: 0){
+                LazyVStack(alignment: .leading, spacing: 0){
                     Divider()
                     TextField("Поиск по слову", text: $selectedFoodCategoryItem).padding(.vertical, 10)
                     Divider()
                     ForEach(GetFoodCategoryItems(_category: category).filter{$0.name.contains(selectedFoodCategoryItem) || selectedFoodCategoryItem.isEmpty}, id: \.id){dish in
                         DoButton(dish: dish)
                         Divider()
-                    }.id(UUID())
+                    }
                 }.padding(.horizontal, 20)
             }
             if !addScreen {
