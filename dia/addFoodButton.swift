@@ -19,6 +19,7 @@ struct addFoodButton: View {
     @State private var searchByWordView: Bool = true
     @State private var searchByWordCategoryView: Bool = true
     @StateObject var items = Food()
+    @MainActor
     var body: some View {
         NavigationView {
             ZStack {
@@ -29,8 +30,8 @@ struct addFoodButton: View {
                             .padding(.vertical, 10)
                             .onChange(of: selectedFood, perform: {selectedFood in
                                 if !selectedFood.isEmpty {
-                                        items.GetFoodItemsByName(_name: selectedFood)
-                                        searchByWordView = false
+                                    items.GetFoodItemsByName(_name: selectedFood)
+                                    searchByWordView = false
                                 } else {
                                     Task {
                                         await items.FillFoodCategoryList()
@@ -72,6 +73,7 @@ struct addFoodButton: View {
         }){
             Text("\(dish.name)")
                 .multilineTextAlignment(.leading)
+            Spacer()
         }
         .foregroundColor(.black)
         .padding(.vertical, 10)
@@ -82,6 +84,7 @@ struct addFoodButton: View {
         NavigationLink(destination: GetFoodCategoryItemsView(category: "\(dish.name)")) {
             Text("\(dish.name)")
                 .multilineTextAlignment(.leading)
+            Spacer()
         }
         .foregroundColor(.black)
         .padding(.vertical, 10)
@@ -95,7 +98,7 @@ struct addFoodButton: View {
                     Divider()
                     TextField("Поиск по слову", text: $selectedFoodCategoryItem).padding(.vertical, 10)
                     Divider()
-                    ForEach(GetFoodCategoryItems(_category: category).filter{$0.name.contains(selectedFoodCategoryItem) || selectedFoodCategoryItem.isEmpty}, id: \.id){dish in
+                    ForEach(items.GetFoodCategoryItems(_category: category).filter{$0.name.contains(selectedFoodCategoryItem) || selectedFoodCategoryItem.isEmpty}, id: \.id){dish in
                         DoButton(dish: dish)
                         Divider()
                     }

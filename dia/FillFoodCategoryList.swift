@@ -16,7 +16,7 @@ struct FoodList: Identifiable, Hashable {
 
 class Food: ObservableObject {
     @Published var FoodObj = [FoodList]()
-        
+    
     func GetFoodItemsByName(_name: String) -> Void {
         do {
             var Food1 = [FoodList]()
@@ -56,28 +56,28 @@ class Food: ObservableObject {
             print(error)
         }
     }
-}
-
-func GetFoodCategoryItems(_category: String) -> [FoodList] {
-    do {
-        var FoodObj = [FoodList]()
-        FoodObj.removeAll()
-        let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
-        let path = documents + "/diacompanion.db"
-        let sourcePath = Bundle.main.path(forResource: "diacompanion", ofType: "db")!
-        _=copyDatabaseIfNeeded(sourcePath: sourcePath)
-        let db = try Connection(path)
-        let foodItems = Table("food")
-        let food = Expression<String>("name")
-        let categoryRow = Expression<String>("category")
-        for i in try db.prepare(foodItems.select(food).filter(categoryRow == _category)){
-            FoodObj.append(FoodList(name: "\(i[food])"))
+    
+    func GetFoodCategoryItems(_category: String) -> [FoodList] {
+        do {
+            var FoodObj = [FoodList]()
+            FoodObj.removeAll()
+            let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
+            let path = documents + "/diacompanion.db"
+            let sourcePath = Bundle.main.path(forResource: "diacompanion", ofType: "db")!
+            _=copyDatabaseIfNeeded(sourcePath: sourcePath)
+            let db = try Connection(path)
+            let foodItems = Table("food")
+            let food = Expression<String>("name")
+            let categoryRow = Expression<String>("category")
+            for i in try db.prepare(foodItems.select(food).filter(categoryRow == _category)){
+                FoodObj.append(FoodList(name: "\(i[food])"))
+            }
+            return FoodObj
         }
-        return FoodObj
-    }
-    catch {
-        print(error)
-        return []
+        catch {
+            print(error)
+            return []
+        }
     }
 }
 
