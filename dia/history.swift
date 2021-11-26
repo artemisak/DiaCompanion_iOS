@@ -8,8 +8,10 @@
 import SwiftUI
 
 struct history: View {
+    
     @State private var multiSelection = Set<UUID>()
     @StateObject var hList = historyList()
+    
     var body: some View {
         List() {
             ForEach(hList.histList, id: \.id){
@@ -26,12 +28,18 @@ struct history: View {
                 .environment(\.locale, Locale.init(identifier: "ru"))
         }
     }
+    
     func move(from source: IndexSet, to destination: Int) {
         hList.histList.move(fromOffsets: source, toOffset: destination)
         }
-    func removeRows(at offsets: IndexSet){
+    
+    func removeRows(at offsets: IndexSet) {
+        offsets.sorted(by: > ).forEach {i in
+            hList.updateDB(element: hList.histList[i].name)
+        }
         hList.histList.remove(atOffsets: offsets)
     }
+    
 }
 
 struct history_Previews: PreviewProvider {
