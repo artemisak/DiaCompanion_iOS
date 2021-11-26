@@ -9,6 +9,7 @@ import SwiftUI
 
 
 struct addFoodButton: View {
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @Binding var foodItems: [String]
     @State public var addScreen: Bool = true
     @State public var selectedFoodTemp: String = ""
@@ -62,6 +63,13 @@ struct addFoodButton: View {
             .navigationTitle("Добавить блюдо")
             .navigationBarTitleDisplayMode(.large)
             .interactiveDismissDisabled()
+            .toolbar {
+                Button(action: {
+                    self.presentationMode.wrappedValue.dismiss()
+                }) {
+                    Text("Закрыть")
+                }
+            }
         }
     }
     

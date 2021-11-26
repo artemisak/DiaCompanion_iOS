@@ -14,7 +14,7 @@
 		AC2C506127289C360009E8EE /* poldny.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2C506027289C360009E8EE /* poldny.swift */; };
 		AC2C506427289D730009E8EE /* SQLite in Frameworks */ = {isa = PBXBuildFile; productRef = AC2C506327289D730009E8EE /* SQLite */; };
 		AC2D32E2273594630022AFD9 /* addFoodButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2D32E1273594630022AFD9 /* addFoodButton.swift */; };
-		AC2D32E427359EC50022AFD9 /* FillFoodCategoryList.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2D32E327359EC50022AFD9 /* FillFoodCategoryList.swift */; };
+		AC2D32E427359EC50022AFD9 /* diaryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2D32E327359EC50022AFD9 /* diaryManager.swift */; };
 		AC32A68227260081001DDB9F /* pid.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC32A68127260081001DDB9F /* pid.swift */; };
 		AC32A68427260602001DDB9F /* pWeight.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC32A68327260602001DDB9F /* pWeight.swift */; };
 		AC32A6862726060D001DDB9F /* pHeight.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC32A6852726060D001DDB9F /* pHeight.swift */; };
@@ -28,7 +28,7 @@
 		ACC3798626ECFA7E00E0729E /* massa.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACC3798526ECFA7E00E0729E /* massa.swift */; };
 		ACC3798826EE0E1400E0729E /* pacient.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACC3798726EE0E1400E0729E /* pacient.swift */; };
 		ACCBA996272B1DA300D785F6 /* RKViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACCBA995272B1DA300D785F6 /* RKViewController.swift */; };
-		ACCC5C2E2702190B0057CA7C /* pacientButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACCC5C2D2702190B0057CA7C /* pacientButton.swift */; };
+		ACCC5C2E2702190B0057CA7C /* pacientManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACCC5C2D2702190B0057CA7C /* pacientManager.swift */; };
 		ACD284FF26DF8DD40003F1FD /* export.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD284FE26DF8DD40003F1FD /* export.swift */; };
 		ACD86E8126DE820B0027B8ED /* sugarChange.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD86E8026DE820B0027B8ED /* sugarChange.swift */; };
 		ACEDB47D2721A19400DBB67C /* dStart.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACEDB47C2721A19400DBB67C /* dStart.swift */; };
@@ -55,7 +55,7 @@
 		AC2603282690691F00C4A520 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AC2C506027289C360009E8EE /* poldny.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = poldny.swift; sourceTree = "<group>"; };
 		AC2D32E1273594630022AFD9 /* addFoodButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = addFoodButton.swift; sourceTree = "<group>"; };
-		AC2D32E327359EC50022AFD9 /* FillFoodCategoryList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FillFoodCategoryList.swift; sourceTree = "<group>"; };
+		AC2D32E327359EC50022AFD9 /* diaryManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = diaryManager.swift; sourceTree = "<group>"; };
 		AC32A68127260081001DDB9F /* pid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = pid.swift; sourceTree = "<group>"; };
 		AC32A68327260602001DDB9F /* pWeight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = pWeight.swift; sourceTree = "<group>"; };
 		AC32A6852726060D001DDB9F /* pHeight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = pHeight.swift; sourceTree = "<group>"; };
@@ -69,7 +69,7 @@
 		ACC3798526ECFA7E00E0729E /* massa.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = massa.swift; sourceTree = "<group>"; };
 		ACC3798726EE0E1400E0729E /* pacient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = pacient.swift; sourceTree = "<group>"; };
 		ACCBA995272B1DA300D785F6 /* RKViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RKViewController.swift; sourceTree = "<group>"; };
-		ACCC5C2D2702190B0057CA7C /* pacientButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = pacientButton.swift; sourceTree = "<group>"; };
+		ACCC5C2D2702190B0057CA7C /* pacientManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = pacientManager.swift; sourceTree = "<group>"; };
 		ACD284FE26DF8DD40003F1FD /* export.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = export.swift; sourceTree = "<group>"; };
 		ACD86E8026DE820B0027B8ED /* sugarChange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = sugarChange.swift; sourceTree = "<group>"; };
 		ACEDB47C2721A19400DBB67C /* dStart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dStart.swift; sourceTree = "<group>"; };
@@ -147,7 +147,7 @@
 				AC3C959A26D1B570005B1393 /* enterFood.swift */,
 				AC2D32E1273594630022AFD9 /* addFoodButton.swift */,
 				ACF7E7C22736F12C0027DD11 /* addSreenView.swift */,
-				AC2D32E327359EC50022AFD9 /* FillFoodCategoryList.swift */,
+				AC2D32E327359EC50022AFD9 /* diaryManager.swift */,
 				AC631E0E26CEA90D0033CCFF /* ModalView.swift */,
 				AC2C506027289C360009E8EE /* poldny.swift */,
 				ACC3798726EE0E1400E0729E /* pacient.swift */,
@@ -159,7 +159,7 @@
 				ACEDB47E2721A7E400DBB67C /* bday.swift */,
 				ACEDB47C2721A19400DBB67C /* dStart.swift */,
 				AC71760527204582000376FD /* currentV.swift */,
-				ACCC5C2D2702190B0057CA7C /* pacientButton.swift */,
+				ACCC5C2D2702190B0057CA7C /* pacientManager.swift */,
 				AC2603232690691F00C4A520 /* Assets.xcassets */,
 				AC2603282690691F00C4A520 /* Info.plist */,
 				AC2603252690691F00C4A520 /* Preview Content */,
@@ -261,11 +261,11 @@
 				ACF4E412272DB126002D2797 /* RKColorSettings.swift in Sources */,
 				ACEDB4832721BD0600DBB67C /* weekS.swift in Sources */,
 				AC7A53F726DBF77B00FE65E7 /* enterAct.swift in Sources */,
-				AC2D32E427359EC50022AFD9 /* FillFoodCategoryList.swift in Sources */,
+				AC2D32E427359EC50022AFD9 /* diaryManager.swift in Sources */,
 				AC2603222690691E00C4A520 /* mainPage.swift in Sources */,
 				ACD86E8126DE820B0027B8ED /* sugarChange.swift in Sources */,
 				ACF2F0AA26DEA8300066753D /* history.swift in Sources */,
-				ACCC5C2E2702190B0057CA7C /* pacientButton.swift in Sources */,
+				ACCC5C2E2702190B0057CA7C /* pacientManager.swift in Sources */,
 				AC32A68427260602001DDB9F /* pWeight.swift in Sources */,
 				ACF7E7C32736F12C0027DD11 /* addSreenView.swift in Sources */,
 				ACF2F0A826DE9A1D0066753D /* inject.swift in Sources */,

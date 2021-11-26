@@ -36,7 +36,7 @@ struct addSreenView: View {
                 Divider()
                 HStack(){
                     Button(action: {
-                        foodItems.append("\(selectedFood), \(gram) г.")
+                        foodItems.append("\(selectedFood)//\(gram)")
                         gram = ""
                         selectedFood = ""
                         addScreen.toggle()

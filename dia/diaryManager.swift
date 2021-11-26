@@ -81,7 +81,7 @@ class Food: ObservableObject {
     }
 }
 
-func SaveToDB(FoodName: String, gramm: String) {
+func SaveToDB(FoodName: String, gram: String, selectedDate: Date) {
     do {
         let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
         let path = documents + "/diacompanion.db"
@@ -92,11 +92,13 @@ func SaveToDB(FoodName: String, gramm: String) {
         let foodName = Expression<String>("foodName")
         let g = Expression<String>("g")
         let dateTime = Expression<String>("dateTime")
+        let timeStamp = Expression<String>("timeStamp")
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "ru_RU")
         dateFormatter.setLocalizedDateFormatFromTemplate("dd.MM.yyyy HH:mm")
-        let DateTime = dateFormatter.string(from: Date.now)
-        try db.run(diary.insert(foodName <- FoodName, g <- gramm, dateTime <- DateTime))
+        let realDateTime = dateFormatter.string(from: Date.now)
+        let selectedDate = dateFormatter.string(from: selectedDate)
+        try db.run(diary.insert(foodName <- FoodName, g <- gram, dateTime <- selectedDate, timeStamp <- realDateTime))
     }
     catch {
         print(error)

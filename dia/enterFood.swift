@@ -75,8 +75,9 @@ struct enterFood: View {
                     }
             }
             Section(){
-                ForEach(foodItems, id: \.self) {
-                    Text($0)
+                ForEach(foodItems, id: \.self) {i in
+                    let arg = "\(i)".components(separatedBy: "//")
+                    Text("\(arg[0]), \(arg[1]) г.")
                 }
                 .onDelete(perform: removeRows)
             }
@@ -85,7 +86,10 @@ struct enterFood: View {
         .navigationTitle("Приемы пищи")
         .toolbar {
             Button(action: {
-                SaveToDB(FoodName: "Test", gramm: "0")
+                for i in foodItems {
+                    let arg = "\(i)".components(separatedBy: "//")
+                    SaveToDB(FoodName: arg[0], gram: arg[1], selectedDate: date)
+                }
                 self.presentationMode.wrappedValue.dismiss()
             }) {
                 Text("Сохранить")
