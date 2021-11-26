@@ -9,24 +9,16 @@ import SwiftUI
 
 struct history: View {
     @State private var multiSelection = Set<UUID>()
-    struct Food: Identifiable, Hashable {
-        let name: String
-        let id = UUID()
-    }
-    @State private var FoodN = [Food(name: "Пиво"),
-                        Food(name: "Рыба"),
-                        Food(name: "Колбаса"),
-                        Food(name: "Сыр"),
-                        Food(name: "Виноград"),
-                        Food(name: "Овощи"),
-                        Food(name: "Фрукты")
-    ]
+    @StateObject var hList = historyList()
     var body: some View {
         List() {
-            ForEach(FoodN, id: \.id){
+            ForEach(hList.histList, id: \.id){
                 Text("\($0.name)")
             }.onDelete(perform: removeRows)
              .onMove(perform: move)
+        }
+        .task {
+            await hList.FillHistoryList()
         }
         .navigationTitle("История записей")
         .toolbar {
@@ -35,10 +27,10 @@ struct history: View {
         }
     }
     func move(from source: IndexSet, to destination: Int) {
-            FoodN.move(fromOffsets: source, toOffset: destination)
+        hList.histList.move(fromOffsets: source, toOffset: destination)
         }
     func removeRows(at offsets: IndexSet){
-        FoodN.remove(atOffsets: offsets)
+        hList.histList.remove(atOffsets: offsets)
     }
 }
 

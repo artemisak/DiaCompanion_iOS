@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import SwiftUI
 import SQLite
 
 struct FoodList: Identifiable, Hashable {

@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import SwiftUI
 import SQLite
 
 func addName(pName: String){
