@@ -8,8 +8,7 @@
 import SwiftUI
 
 struct history: View {
-    
-    @State private var multiSelection = Set<UUID>()
+
     @StateObject var hList = historyList()
     
     var body: some View {
@@ -19,6 +18,7 @@ struct history: View {
             }.onDelete(perform: removeRows)
              .onMove(perform: move)
         }
+        .listStyle(.plain)
         .task {
             await hList.FillHistoryList()
         }
