@@ -7,17 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3B05578E973CCDE20BFE40EF /* Pods_dia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79ABB2C8E7FEDB4601383025 /* Pods_dia.framework */; };
 		AC2603202690691E00C4A520 /* diaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC26031F2690691E00C4A520 /* diaApp.swift */; };
 		AC2603222690691E00C4A520 /* mainPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2603212690691E00C4A520 /* mainPage.swift */; };
 		AC2603242690691F00C4A520 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AC2603232690691F00C4A520 /* Assets.xcassets */; };
 		AC2603272690691F00C4A520 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AC2603262690691F00C4A520 /* Preview Assets.xcassets */; };
 		AC2C506127289C360009E8EE /* poldny.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2C506027289C360009E8EE /* poldny.swift */; };
-		AC2C506427289D730009E8EE /* SQLite in Frameworks */ = {isa = PBXBuildFile; productRef = AC2C506327289D730009E8EE /* SQLite */; };
 		AC2D32E2273594630022AFD9 /* addFoodButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2D32E1273594630022AFD9 /* addFoodButton.swift */; };
 		AC2D32E427359EC50022AFD9 /* diaryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2D32E327359EC50022AFD9 /* diaryManager.swift */; };
 		AC32A68227260081001DDB9F /* pid.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC32A68127260081001DDB9F /* pid.swift */; };
 		AC32A68427260602001DDB9F /* pWeight.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC32A68327260602001DDB9F /* pWeight.swift */; };
 		AC32A6862726060D001DDB9F /* pHeight.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC32A6852726060D001DDB9F /* pHeight.swift */; };
+		AC37A67B276147AF00558E55 /* test.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC37A67A276147AF00558E55 /* test.swift */; };
 		AC3B847526EBA1F200E98681 /* ketonur.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3B847426EBA1F200E98681 /* ketonur.swift */; };
 		AC3B847826EBA8FA00E98681 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = AC3B847A26EBA8FA00E98681 /* Localizable.strings */; };
 		AC3C959B26D1B570005B1393 /* enterFood.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3C959A26D1B570005B1393 /* enterFood.swift */; };
@@ -25,6 +26,7 @@
 		AC6327022751012C00C25E23 /* historyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6327012751012C00C25E23 /* historyManager.swift */; };
 		AC71760627204582000376FD /* currentV.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC71760527204582000376FD /* currentV.swift */; };
 		AC71760827209863000376FD /* diacompanion.db in Resources */ = {isa = PBXBuildFile; fileRef = AC71760727209863000376FD /* diacompanion.db */; };
+		AC75C3612762140500FFB5F8 /* SQLite in Frameworks */ = {isa = PBXBuildFile; productRef = AC75C3602762140500FFB5F8 /* SQLite */; };
 		AC7A53F726DBF77B00FE65E7 /* enterAct.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC7A53F626DBF77B00FE65E7 /* enterAct.swift */; };
 		ACC3798626ECFA7E00E0729E /* massa.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACC3798526ECFA7E00E0729E /* massa.swift */; };
 		ACC3798826EE0E1400E0729E /* pacient.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACC3798726EE0E1400E0729E /* pacient.swift */; };
@@ -48,6 +50,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6756C4284FFEB7FB4B0213EC /* Pods-dia.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-dia.release.xcconfig"; path = "Target Support Files/Pods-dia/Pods-dia.release.xcconfig"; sourceTree = "<group>"; };
+		79ABB2C8E7FEDB4601383025 /* Pods_dia.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_dia.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8C33F5C3B6834976195D4CF9 /* Pods-dia.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-dia.debug.xcconfig"; path = "Target Support Files/Pods-dia/Pods-dia.debug.xcconfig"; sourceTree = "<group>"; };
 		AC26031C2690691E00C4A520 /* dia.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = dia.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AC26031F2690691E00C4A520 /* diaApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = diaApp.swift; sourceTree = "<group>"; };
 		AC2603212690691E00C4A520 /* mainPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = mainPage.swift; sourceTree = "<group>"; };
@@ -60,6 +65,7 @@
 		AC32A68127260081001DDB9F /* pid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = pid.swift; sourceTree = "<group>"; };
 		AC32A68327260602001DDB9F /* pWeight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = pWeight.swift; sourceTree = "<group>"; };
 		AC32A6852726060D001DDB9F /* pHeight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = pHeight.swift; sourceTree = "<group>"; };
+		AC37A67A276147AF00558E55 /* test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = test.swift; sourceTree = "<group>"; };
 		AC3B847426EBA1F200E98681 /* ketonur.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ketonur.swift; sourceTree = "<group>"; };
 		AC3B847926EBA8FA00E98681 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		AC3C959A26D1B570005B1393 /* enterFood.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = enterFood.swift; sourceTree = "<group>"; };
@@ -94,13 +100,31 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AC2C506427289D730009E8EE /* SQLite in Frameworks */,
+				AC75C3612762140500FFB5F8 /* SQLite in Frameworks */,
+				3B05578E973CCDE20BFE40EF /* Pods_dia.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		07A08C8512D0A83170AD9A53 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				8C33F5C3B6834976195D4CF9 /* Pods-dia.debug.xcconfig */,
+				6756C4284FFEB7FB4B0213EC /* Pods-dia.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		314C8BEFB2F2EEB94178A338 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				79ABB2C8E7FEDB4601383025 /* Pods_dia.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		AC2551D5272A887500E1C593 /* Calendar */ = {
 			isa = PBXGroup;
 			children = (
@@ -121,6 +145,8 @@
 				AC71760727209863000376FD /* diacompanion.db */,
 				AC26031E2690691E00C4A520 /* dia */,
 				AC26031D2690691E00C4A520 /* Products */,
+				07A08C8512D0A83170AD9A53 /* Pods */,
+				314C8BEFB2F2EEB94178A338 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -139,6 +165,7 @@
 				AC2603212690691E00C4A520 /* mainPage.swift */,
 				ACC3798526ECFA7E00E0729E /* massa.swift */,
 				ACD284FE26DF8DD40003F1FD /* export.swift */,
+				AC37A67A276147AF00558E55 /* test.swift */,
 				ACF2F0A926DEA8300066753D /* history.swift */,
 				AC6327012751012C00C25E23 /* historyManager.swift */,
 				AC2551D5272A887500E1C593 /* Calendar */,
@@ -185,9 +212,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = AC26032B2690691F00C4A520 /* Build configuration list for PBXNativeTarget "dia" */;
 			buildPhases = (
+				FDFE39D307C5692F332292F6 /* [CP] Check Pods Manifest.lock */,
 				AC2603182690691E00C4A520 /* Sources */,
 				AC2603192690691E00C4A520 /* Frameworks */,
 				AC26031A2690691E00C4A520 /* Resources */,
+				8DDBF9F4DF95077F1A3D3452 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -195,7 +224,7 @@
 			);
 			name = dia;
 			packageProductDependencies = (
-				AC2C506327289D730009E8EE /* SQLite */,
+				AC75C3602762140500FFB5F8 /* SQLite */,
 			);
 			productName = dia;
 			productReference = AC26031C2690691E00C4A520 /* dia.app */;
@@ -212,6 +241,7 @@
 				TargetAttributes = {
 					AC26031B2690691E00C4A520 = {
 						CreatedOnToolsVersion = 12.5.1;
+						LastSwiftMigration = 1310;
 					};
 				};
 			};
@@ -226,7 +256,7 @@
 			);
 			mainGroup = AC2603132690691E00C4A520;
 			packageReferences = (
-				AC2C506227289D730009E8EE /* XCRemoteSwiftPackageReference "SQLite.swift" */,
+				AC75C35F2762140500FFB5F8 /* XCRemoteSwiftPackageReference "SQLite.swift" */,
 			);
 			productRefGroup = AC26031D2690691E00C4A520 /* Products */;
 			projectDirPath = "";
@@ -251,12 +281,55 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		8DDBF9F4DF95077F1A3D3452 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-dia/Pods-dia-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-dia/Pods-dia-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-dia/Pods-dia-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		FDFE39D307C5692F332292F6 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-dia-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		AC2603182690691E00C4A520 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				ACF4E410272DB126002D2797 /* RKMonth.swift in Sources */,
+				AC37A67B276147AF00558E55 /* test.swift in Sources */,
 				ACCBA996272B1DA300D785F6 /* RKViewController.swift in Sources */,
 				AC631E0F26CEA90D0033CCFF /* ModalView.swift in Sources */,
 				ACF4E40E272DB126002D2797 /* RKManager.swift in Sources */,
@@ -421,6 +494,7 @@
 				KEEP_PRIVATE_EXTERNS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
@@ -430,9 +504,11 @@
 		};
 		AC26032C2690691F00C4A520 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8C33F5C3B6834976195D4CF9 /* Pods-dia.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"dia/Preview Content\"";
 				DEVELOPMENT_TEAM = A73KYTXV9C;
@@ -446,6 +522,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = app.dia;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -453,9 +530,11 @@
 		};
 		AC26032D2690691F00C4A520 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6756C4284FFEB7FB4B0213EC /* Pods-dia.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"dia/Preview Content\"";
 				DEVELOPMENT_TEAM = A73KYTXV9C;
@@ -498,7 +577,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		AC2C506227289D730009E8EE /* XCRemoteSwiftPackageReference "SQLite.swift" */ = {
+		AC75C35F2762140500FFB5F8 /* XCRemoteSwiftPackageReference "SQLite.swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/stephencelis/SQLite.swift.git";
 			requirement = {
@@ -509,9 +588,9 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		AC2C506327289D730009E8EE /* SQLite */ = {
+		AC75C3602762140500FFB5F8 /* SQLite */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = AC2C506227289D730009E8EE /* XCRemoteSwiftPackageReference "SQLite.swift" */;
+			package = AC75C35F2762140500FFB5F8 /* XCRemoteSwiftPackageReference "SQLite.swift" */;
 			productName = SQLite;
 		};
 /* End XCSwiftPackageProductDependency section */

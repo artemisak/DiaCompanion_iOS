@@ -8,11 +8,15 @@
 import SwiftUI
 
 struct export: View {
+    var anatomy = Anatomy()
     var body: some View {
         ScrollView{
             VStack{
                 HStack {
-                    Button(action:{}){
+                    Button(action:{
+                        let path = anatomy.generate()
+                        print("\(path)")
+                    }){
                         VStack{
                             Image("menu_xlsx")
                             Text("Показать данные в \n таблице").foregroundColor(Color.black).multilineTextAlignment(.center)

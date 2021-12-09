@@ -24,7 +24,8 @@ struct ModalView: View {
                     NavigationLink(destination: poldny()) {
                         Button("Отметить полные дни", action: {})
                     }.foregroundColor(.black)
-                    Button("Обучение", action: {})
+                    Button("Обучение", action: {
+                    })
                         .foregroundColor(.black)
                     Button("Помощь", action: {})
                     .foregroundColor(.black)
