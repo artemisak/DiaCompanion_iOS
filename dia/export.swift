@@ -9,7 +9,7 @@ import SwiftUI
 struct export: View {
     @State private var isPres: Bool = false
     @State private var isLoad: Bool = true
-    @State private var path: [Any] = [NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!]
+    @State private var path: [Any] = []
     var anatomy = Anatomy()
     var body: some View {
         ZStack {
