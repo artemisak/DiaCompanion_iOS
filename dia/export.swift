@@ -5,12 +5,11 @@
 //  Created by Артем  on 01.09.2021.
 //
 import SwiftUI
-import UIKit
 
 struct export: View {
     @State private var isPres: Bool = false
     @State private var isLoad: Bool = true
-    @State private var path: [Any] = []
+    @State private var path: [Any] = [NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!]
     var anatomy = Anatomy()
     var body: some View {
         ZStack {
@@ -25,8 +24,8 @@ struct export: View {
                                 DispatchQueue.main.asyncAfter(deadline: .now()) {
                                     isLoad.toggle()
                                 }
+                                isPres.toggle()
                             }
-                            isPres.toggle()
                         }){
                             VStack{
                                 Image("menu_xlsx")
@@ -74,11 +73,5 @@ fileprivate struct ShareSheet: UIViewControllerRepresentable {
     }
     
     func updateUIViewController(_ uiViewController: UIActivityViewController, context: Context) {
-    }
-}
-
-struct export_Previews: PreviewProvider {
-    static var previews: some View {
-        export()
     }
 }
