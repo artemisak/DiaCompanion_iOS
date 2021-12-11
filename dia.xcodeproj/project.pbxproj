@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3B05578E973CCDE20BFE40EF /* Pods_dia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79ABB2C8E7FEDB4601383025 /* Pods_dia.framework */; };
+		AC161D3227640B39002E9D0E /* SQLite in Frameworks */ = {isa = PBXBuildFile; productRef = AC161D3127640B39002E9D0E /* SQLite */; };
 		AC2603202690691E00C4A520 /* diaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC26031F2690691E00C4A520 /* diaApp.swift */; };
 		AC2603222690691E00C4A520 /* mainPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2603212690691E00C4A520 /* mainPage.swift */; };
 		AC2603242690691F00C4A520 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AC2603232690691F00C4A520 /* Assets.xcassets */; };
@@ -18,7 +19,7 @@
 		AC32A68227260081001DDB9F /* pid.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC32A68127260081001DDB9F /* pid.swift */; };
 		AC32A68427260602001DDB9F /* pWeight.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC32A68327260602001DDB9F /* pWeight.swift */; };
 		AC32A6862726060D001DDB9F /* pHeight.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC32A6852726060D001DDB9F /* pHeight.swift */; };
-		AC37A67B276147AF00558E55 /* test.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC37A67A276147AF00558E55 /* test.swift */; };
+		AC37A67B276147AF00558E55 /* foodTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC37A67A276147AF00558E55 /* foodTable.swift */; };
 		AC3B847526EBA1F200E98681 /* ketonur.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3B847426EBA1F200E98681 /* ketonur.swift */; };
 		AC3B847826EBA8FA00E98681 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = AC3B847A26EBA8FA00E98681 /* Localizable.strings */; };
 		AC3C959B26D1B570005B1393 /* enterFood.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3C959A26D1B570005B1393 /* enterFood.swift */; };
@@ -26,7 +27,6 @@
 		AC6327022751012C00C25E23 /* historyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6327012751012C00C25E23 /* historyManager.swift */; };
 		AC71760627204582000376FD /* currentV.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC71760527204582000376FD /* currentV.swift */; };
 		AC71760827209863000376FD /* diacompanion.db in Resources */ = {isa = PBXBuildFile; fileRef = AC71760727209863000376FD /* diacompanion.db */; };
-		AC75C3612762140500FFB5F8 /* SQLite in Frameworks */ = {isa = PBXBuildFile; productRef = AC75C3602762140500FFB5F8 /* SQLite */; };
 		AC7A53F726DBF77B00FE65E7 /* enterAct.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC7A53F626DBF77B00FE65E7 /* enterAct.swift */; };
 		ACC3798626ECFA7E00E0729E /* massa.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACC3798526ECFA7E00E0729E /* massa.swift */; };
 		ACC3798826EE0E1400E0729E /* pacient.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACC3798726EE0E1400E0729E /* pacient.swift */; };
@@ -65,7 +65,7 @@
 		AC32A68127260081001DDB9F /* pid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = pid.swift; sourceTree = "<group>"; };
 		AC32A68327260602001DDB9F /* pWeight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = pWeight.swift; sourceTree = "<group>"; };
 		AC32A6852726060D001DDB9F /* pHeight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = pHeight.swift; sourceTree = "<group>"; };
-		AC37A67A276147AF00558E55 /* test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = test.swift; sourceTree = "<group>"; };
+		AC37A67A276147AF00558E55 /* foodTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = foodTable.swift; sourceTree = "<group>"; };
 		AC3B847426EBA1F200E98681 /* ketonur.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ketonur.swift; sourceTree = "<group>"; };
 		AC3B847926EBA8FA00E98681 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		AC3C959A26D1B570005B1393 /* enterFood.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = enterFood.swift; sourceTree = "<group>"; };
@@ -100,7 +100,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AC75C3612762140500FFB5F8 /* SQLite in Frameworks */,
+				AC161D3227640B39002E9D0E /* SQLite in Frameworks */,
 				3B05578E973CCDE20BFE40EF /* Pods_dia.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -165,7 +165,7 @@
 				AC2603212690691E00C4A520 /* mainPage.swift */,
 				ACC3798526ECFA7E00E0729E /* massa.swift */,
 				ACD284FE26DF8DD40003F1FD /* export.swift */,
-				AC37A67A276147AF00558E55 /* test.swift */,
+				AC37A67A276147AF00558E55 /* foodTable.swift */,
 				ACF2F0A926DEA8300066753D /* history.swift */,
 				AC6327012751012C00C25E23 /* historyManager.swift */,
 				AC2551D5272A887500E1C593 /* Calendar */,
@@ -224,7 +224,7 @@
 			);
 			name = dia;
 			packageProductDependencies = (
-				AC75C3602762140500FFB5F8 /* SQLite */,
+				AC161D3127640B39002E9D0E /* SQLite */,
 			);
 			productName = dia;
 			productReference = AC26031C2690691E00C4A520 /* dia.app */;
@@ -256,7 +256,7 @@
 			);
 			mainGroup = AC2603132690691E00C4A520;
 			packageReferences = (
-				AC75C35F2762140500FFB5F8 /* XCRemoteSwiftPackageReference "SQLite.swift" */,
+				AC161D3027640B39002E9D0E /* XCRemoteSwiftPackageReference "SQLite.swift" */,
 			);
 			productRefGroup = AC26031D2690691E00C4A520 /* Products */;
 			projectDirPath = "";
@@ -329,7 +329,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				ACF4E410272DB126002D2797 /* RKMonth.swift in Sources */,
-				AC37A67B276147AF00558E55 /* test.swift in Sources */,
+				AC37A67B276147AF00558E55 /* foodTable.swift in Sources */,
 				ACCBA996272B1DA300D785F6 /* RKViewController.swift in Sources */,
 				AC631E0F26CEA90D0033CCFF /* ModalView.swift in Sources */,
 				ACF4E40E272DB126002D2797 /* RKManager.swift in Sources */,
@@ -577,20 +577,20 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		AC75C35F2762140500FFB5F8 /* XCRemoteSwiftPackageReference "SQLite.swift" */ = {
+		AC161D3027640B39002E9D0E /* XCRemoteSwiftPackageReference "SQLite.swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/stephencelis/SQLite.swift.git";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.9.2;
+				branch = master;
+				kind = branch;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		AC75C3602762140500FFB5F8 /* SQLite */ = {
+		AC161D3127640B39002E9D0E /* SQLite */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = AC75C35F2762140500FFB5F8 /* XCRemoteSwiftPackageReference "SQLite.swift" */;
+			package = AC161D3027640B39002E9D0E /* XCRemoteSwiftPackageReference "SQLite.swift" */;
 			productName = SQLite;
 		};
 /* End XCSwiftPackageProductDependency section */

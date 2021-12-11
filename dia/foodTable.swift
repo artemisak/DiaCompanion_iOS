@@ -8,7 +8,7 @@ import Foundation
 import xlsxwriter
 
 class Anatomy{
-    func generate() -> URL {
+    func generate() async throws -> URL {
         let documentDirectory = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor:nil, create:false)
         let fileURL = documentDirectory.appendingPathComponent("anatomy.xlsx")
         
@@ -16,7 +16,7 @@ class Anatomy{
         //Ditch first 6 characters, because they are of the form file://
         let workbook = workbook_new((fileURL.absoluteString.dropFirst(6) as NSString).fileSystemRepresentation)
         //Add a worksheet with a user defined sheet name.
-        let worksheet1 = workbook_add_worksheet(workbook, "Demo")
+        let worksheet1 = workbook_add_worksheet(workbook, "\(Int.random(in: 1..<100))")
         //Add a worksheet with Excel's default sheet name: Sheet2.
         let worksheet2 = workbook_add_worksheet(workbook, nil)
         //Add some cell formats.
