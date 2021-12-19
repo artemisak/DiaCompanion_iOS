@@ -3,12 +3,10 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3B05578E973CCDE20BFE40EF /* Pods_dia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79ABB2C8E7FEDB4601383025 /* Pods_dia.framework */; };
-		AC161D3227640B39002E9D0E /* SQLite in Frameworks */ = {isa = PBXBuildFile; productRef = AC161D3127640B39002E9D0E /* SQLite */; };
 		AC2603202690691E00C4A520 /* diaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC26031F2690691E00C4A520 /* diaApp.swift */; };
 		AC2603222690691E00C4A520 /* mainPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2603212690691E00C4A520 /* mainPage.swift */; };
 		AC2603242690691F00C4A520 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AC2603232690691F00C4A520 /* Assets.xcassets */; };
@@ -47,12 +45,12 @@
 		ACF4E412272DB126002D2797 /* RKColorSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF4E40B272DB126002D2797 /* RKColorSettings.swift */; };
 		ACF4E413272DB126002D2797 /* RKDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF4E40C272DB126002D2797 /* RKDate.swift */; };
 		ACF7E7C32736F12C0027DD11 /* addSreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF7E7C22736F12C0027DD11 /* addSreenView.swift */; };
+		B6912DAD4F48C528A582AA10 /* Pods_dia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C02743FFD40C5E72C5C050B /* Pods_dia.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		6756C4284FFEB7FB4B0213EC /* Pods-dia.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-dia.release.xcconfig"; path = "Target Support Files/Pods-dia/Pods-dia.release.xcconfig"; sourceTree = "<group>"; };
-		79ABB2C8E7FEDB4601383025 /* Pods_dia.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_dia.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		8C33F5C3B6834976195D4CF9 /* Pods-dia.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-dia.debug.xcconfig"; path = "Target Support Files/Pods-dia/Pods-dia.debug.xcconfig"; sourceTree = "<group>"; };
+		6C02743FFD40C5E72C5C050B /* Pods_dia.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_dia.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A316D5BECBE459250AC4A311 /* Pods-dia.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-dia.debug.xcconfig"; path = "Target Support Files/Pods-dia/Pods-dia.debug.xcconfig"; sourceTree = "<group>"; };
 		AC26031C2690691E00C4A520 /* dia.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = dia.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AC26031F2690691E00C4A520 /* diaApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = diaApp.swift; sourceTree = "<group>"; };
 		AC2603212690691E00C4A520 /* mainPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = mainPage.swift; sourceTree = "<group>"; };
@@ -93,6 +91,7 @@
 		ACF4E40B272DB126002D2797 /* RKColorSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RKColorSettings.swift; sourceTree = "<group>"; };
 		ACF4E40C272DB126002D2797 /* RKDate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RKDate.swift; sourceTree = "<group>"; };
 		ACF7E7C22736F12C0027DD11 /* addSreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = addSreenView.swift; sourceTree = "<group>"; };
+		D9CF9E9E4A8A53525B5C38B0 /* Pods-dia.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-dia.release.xcconfig"; path = "Target Support Files/Pods-dia/Pods-dia.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,27 +99,17 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AC161D3227640B39002E9D0E /* SQLite in Frameworks */,
-				3B05578E973CCDE20BFE40EF /* Pods_dia.framework in Frameworks */,
+				B6912DAD4F48C528A582AA10 /* Pods_dia.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		07A08C8512D0A83170AD9A53 /* Pods */ = {
+		13C4373BC6F7F4C1D646F05D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				8C33F5C3B6834976195D4CF9 /* Pods-dia.debug.xcconfig */,
-				6756C4284FFEB7FB4B0213EC /* Pods-dia.release.xcconfig */,
-			);
-			path = Pods;
-			sourceTree = "<group>";
-		};
-		314C8BEFB2F2EEB94178A338 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				79ABB2C8E7FEDB4601383025 /* Pods_dia.framework */,
+				6C02743FFD40C5E72C5C050B /* Pods_dia.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -145,8 +134,8 @@
 				AC71760727209863000376FD /* diacompanion.db */,
 				AC26031E2690691E00C4A520 /* dia */,
 				AC26031D2690691E00C4A520 /* Products */,
-				07A08C8512D0A83170AD9A53 /* Pods */,
-				314C8BEFB2F2EEB94178A338 /* Frameworks */,
+				C0D553CA378A488FD7608214 /* Pods */,
+				13C4373BC6F7F4C1D646F05D /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -205,6 +194,15 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
+		C0D553CA378A488FD7608214 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				A316D5BECBE459250AC4A311 /* Pods-dia.debug.xcconfig */,
+				D9CF9E9E4A8A53525B5C38B0 /* Pods-dia.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -216,16 +214,13 @@
 				AC2603182690691E00C4A520 /* Sources */,
 				AC2603192690691E00C4A520 /* Frameworks */,
 				AC26031A2690691E00C4A520 /* Resources */,
-				8DDBF9F4DF95077F1A3D3452 /* [CP] Embed Pods Frameworks */,
+				9EF3E0E76E863B9BFA4C5F44 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			name = dia;
-			packageProductDependencies = (
-				AC161D3127640B39002E9D0E /* SQLite */,
-			);
 			productName = dia;
 			productReference = AC26031C2690691E00C4A520 /* dia.app */;
 			productType = "com.apple.product-type.application";
@@ -255,9 +250,6 @@
 				ru,
 			);
 			mainGroup = AC2603132690691E00C4A520;
-			packageReferences = (
-				AC161D3027640B39002E9D0E /* XCRemoteSwiftPackageReference "SQLite.swift" */,
-			);
 			productRefGroup = AC26031D2690691E00C4A520 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -282,7 +274,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		8DDBF9F4DF95077F1A3D3452 /* [CP] Embed Pods Frameworks */ = {
+		9EF3E0E76E863B9BFA4C5F44 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -504,7 +496,7 @@
 		};
 		AC26032C2690691F00C4A520 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8C33F5C3B6834976195D4CF9 /* Pods-dia.debug.xcconfig */;
+			baseConfigurationReference = A316D5BECBE459250AC4A311 /* Pods-dia.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -530,7 +522,7 @@
 		};
 		AC26032D2690691F00C4A520 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6756C4284FFEB7FB4B0213EC /* Pods-dia.release.xcconfig */;
+			baseConfigurationReference = D9CF9E9E4A8A53525B5C38B0 /* Pods-dia.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -575,25 +567,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		AC161D3027640B39002E9D0E /* XCRemoteSwiftPackageReference "SQLite.swift" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/stephencelis/SQLite.swift.git";
-			requirement = {
-				branch = master;
-				kind = branch;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		AC161D3127640B39002E9D0E /* SQLite */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = AC161D3027640B39002E9D0E /* XCRemoteSwiftPackageReference "SQLite.swift" */;
-			productName = SQLite;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = AC2603142690691E00C4A520 /* Project object */;
 }
