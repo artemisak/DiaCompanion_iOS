@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A7230C7F27705AED00B68244 /* excelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7230C7E27705AED00B68244 /* excelManager.swift */; };
 		AC2603202690691E00C4A520 /* diaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC26031F2690691E00C4A520 /* diaApp.swift */; };
 		AC2603222690691E00C4A520 /* mainPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2603212690691E00C4A520 /* mainPage.swift */; };
 		AC2603242690691F00C4A520 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AC2603232690691F00C4A520 /* Assets.xcassets */; };
@@ -51,6 +52,7 @@
 /* Begin PBXFileReference section */
 		6C02743FFD40C5E72C5C050B /* Pods_dia.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_dia.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A316D5BECBE459250AC4A311 /* Pods-dia.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-dia.debug.xcconfig"; path = "Target Support Files/Pods-dia/Pods-dia.debug.xcconfig"; sourceTree = "<group>"; };
+		A7230C7E27705AED00B68244 /* excelManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = excelManager.swift; sourceTree = "<group>"; };
 		AC26031C2690691E00C4A520 /* dia.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = dia.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AC26031F2690691E00C4A520 /* diaApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = diaApp.swift; sourceTree = "<group>"; };
 		AC2603212690691E00C4A520 /* mainPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = mainPage.swift; sourceTree = "<group>"; };
@@ -157,6 +159,7 @@
 				AC37A67A276147AF00558E55 /* foodTable.swift */,
 				ACF2F0A926DEA8300066753D /* history.swift */,
 				AC6327012751012C00C25E23 /* historyManager.swift */,
+				A7230C7E27705AED00B68244 /* excelManager.swift */,
 				AC2551D5272A887500E1C593 /* Calendar */,
 				AC7A53F626DBF77B00FE65E7 /* enterAct.swift */,
 				ACD86E8026DE820B0027B8ED /* sugarChange.swift */,
@@ -338,6 +341,7 @@
 				ACF7E7C32736F12C0027DD11 /* addSreenView.swift in Sources */,
 				ACF2F0A826DE9A1D0066753D /* inject.swift in Sources */,
 				ACC3798626ECFA7E00E0729E /* massa.swift in Sources */,
+				A7230C7F27705AED00B68244 /* excelManager.swift in Sources */,
 				AC2D32E2273594630022AFD9 /* addFoodButton.swift in Sources */,
 				ACF4E40F272DB126002D2797 /* RKWeekdayHeader.swift in Sources */,
 				ACEDB47D2721A19400DBB67C /* dStart.swift in Sources */,

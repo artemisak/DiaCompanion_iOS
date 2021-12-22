@@ -35,7 +35,9 @@ struct export: View {
                         .sheet(isPresented: $isPres) {
                             ShareSheet(activityItems: path)
                         }
-                        Button(action:{}){
+                        Button(action:{
+                            getFoodRecords()
+                        }){
                             VStack{
                                 Image("menu_mail")
                                 Text("Отправить данные \n врачу").foregroundColor(Color.black).multilineTextAlignment(.center)
