@@ -5,6 +5,7 @@
 //  Created by Артем  on 01.09.2021.
 //
 import SwiftUI
+import UIKit
 
 struct export: View {
     @State private var isPres: Bool = false
@@ -36,7 +37,7 @@ struct export: View {
                             ShareSheet(activityItems: path)
                         }
                         Button(action:{
-                            getFoodRecords()
+                            _=getFoodRecords()
                         }){
                             VStack{
                                 Image("menu_mail")
@@ -57,7 +58,7 @@ struct export: View {
     }
 }
 
-fileprivate struct ShareSheet: UIViewControllerRepresentable {
+struct ShareSheet: UIViewControllerRepresentable {
     typealias Callback = (_ activityType: UIActivity.ActivityType?, _ completed: Bool, _ returnedItems: [Any]?, _ error: Error?) -> Void
 
     let activityItems: [Any]

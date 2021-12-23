@@ -22,7 +22,6 @@ class Anatomy{
         
         //Write some unformatted data.
         let tbl = getFoodRecords()
-        print(tbl)
         let formater = DateFormatter()
         formater.dateFormat = "dd.MM.yyyy"
         let formater1 = DateFormatter()
@@ -42,6 +41,16 @@ class Anatomy{
                 worksheet_write_string(worksheet1, lxw_row_t(r), 3, Array(tbl[i].food.joined())[j], nil)
                 worksheet_write_string(worksheet1, lxw_row_t(r), 4, Array(tbl[i].g.joined())[j], nil)
                 r += 1
+            }
+        }
+        var listOfIndex: [Int] = []
+        for i in 0..<tbl.count {
+            listOfIndex.append(tbl[i].food.joined().count)
+        }
+        var listOfIndex1: [Int] = []
+        for i in 0..<tbl.count {
+            for i1 in 0..<tbl[i].foodType.count{
+                listOfIndex1.append(tbl[i].food[i1].count)
             }
         }
         //Close the workbook, save the file and free any memory.

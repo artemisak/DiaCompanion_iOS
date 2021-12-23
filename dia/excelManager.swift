@@ -46,10 +46,13 @@ func getFoodRecords() -> [TableRecord] {
         let dateFormatter1 = DateFormatter()
         dateFormatter1.locale = Locale(identifier: "ru_RU")
         dateFormatter1.setLocalizedDateFormatFromTemplate("HH:mm")
+        
         for i in try db.prepare(foodTable.select(day,time,foodType,foodName,gram)){
             record.append(FoodRecord(day: dateFormatter.date(from: i[day])!, time: dateFormatter1.date(from: i[time])!,foodType: i[foodType], food: [i[foodName]], g: [i[gram]]))
         }
+        
         record = record.sorted(by: {($0.day, $0.time, $0.foodType) < ($1.day, $1.time, $1.foodType)})
+        
         var i = 1
         while i < record.count {
             if record[i].day == record[i-1].day && record[i].time == record[i-1].time && record[i].foodType == record[i-1].foodType {
@@ -61,18 +64,19 @@ func getFoodRecords() -> [TableRecord] {
             }
         }
         
-        i = 1
         table.append(TableRecord(day: record[0].day, time: [record[0].time], foodType: [record[0].foodType], food: [record[0].food], g: [record[0].g]))
-        while i < record.count {
-            if record[i].day == table[i-1].day {
-                table[i-1].time.append(record[i].time)
-                table[i-1].foodType.append(record[i].foodType)
-                table[i-1].food.append(record[i].food)
-                table[i-1].g.append(record[i].g)
-                record.remove(at: i)
+        record.remove(at: 0)
+        
+        while (record.count>0) {
+            if record[0].day == table[table.endIndex-1].day {
+                table[table.endIndex-1].time.append(record[0].time)
+                table[table.endIndex-1].foodType.append(record[0].foodType)
+                table[table.endIndex-1].food.append(record[0].food)
+                table[table.endIndex-1].g.append(record[0].g)
+                record.remove(at: 0)
             } else {
-                table.append(TableRecord(day: record[i].day, time:[record[i].time], foodType: [record[i].foodType], food:[record[i].food], g:[record[i].g]))
-                i += 1
+                table.append(TableRecord(day: record[0].day, time:[record[0].time], foodType: [record[0].foodType], food:[record[0].food], g:[record[0].g]))
+                record.remove(at: 0)
             }
         }
         record.removeAll()
@@ -82,3 +86,20 @@ func getFoodRecords() -> [TableRecord] {
     }
     return table
 }
+
+// Помойка кода
+//        i = 1
+//        table.append(TableRecord(day: record[0].day, time: [record[0].time], foodType: [record[0].foodType], food: [record[0].food], g: [record[0].g]))
+//        while i < record.count {
+//            if record[i].day == table[i-1].day {
+//                table[i-1].time.append(record[i].time)
+//                table[i-1].foodType.append(record[i].foodType)
+//                table[i-1].food.append(record[i].food)
+//                table[i-1].g.append(record[i].g)
+//                record.remove(at: i)
+//            } else {
+//                table.append(TableRecord(day: record[i].day, time:[record[i].time], foodType: [record[i].foodType], food:[record[i].food], g:[record[i].g]))
+//                i += 1
+//            }
+//        }
+//        record.removeAll()
