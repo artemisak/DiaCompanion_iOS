@@ -16,52 +16,66 @@ class Anatomy {
         let workbook = workbook_new((fileURL.absoluteString.dropFirst(6) as NSString).fileSystemRepresentation)
         let worksheet1 = workbook_add_worksheet(workbook, "Приемы пищи")
         
-        // зеленый
+        let merge_f = workbook_add_format(workbook);
+        format_set_border(merge_f, UInt8(LXW_BORDER_DOTTED.rawValue))
+        
+        // зеленый - 0xF0FFF0
+        // синий - 0xF0F8FF
+        
         let merge_format = workbook_add_format(workbook);
         format_set_align(merge_format, UInt8(LXW_ALIGN_VERTICAL_CENTER.rawValue))
         format_set_bg_color(merge_format, 0xF0FFF0)
-        format_set_border(merge_format, UInt8(LXW_BORDER_DASHED.rawValue))
+        format_set_border(merge_format, UInt8(LXW_BORDER_DOTTED.rawValue))
         
-        // синий
         let merge_format_alt = workbook_add_format(workbook);
         format_set_align(merge_format_alt, UInt8(LXW_ALIGN_VERTICAL_CENTER.rawValue))
         format_set_bg_color(merge_format_alt, 0xF0F8FF)
-        format_set_border(merge_format_alt, UInt8(LXW_BORDER_DASHED.rawValue))
+        format_set_border(merge_format_alt, UInt8(LXW_BORDER_DOTTED.rawValue))
 
         let merge_format1 = workbook_add_format(workbook);
         format_set_align(merge_format1, UInt8(LXW_ALIGN_CENTER.rawValue))
         format_set_align(merge_format1, UInt8(LXW_ALIGN_VERTICAL_CENTER.rawValue))
         format_set_bg_color(merge_format1, 0xF0FFF0)
-        format_set_border(merge_format1, UInt8(LXW_BORDER_DASHED.rawValue))
+        format_set_border(merge_format1, UInt8(LXW_BORDER_DOTTED.rawValue))
         
         let merge_format_alt1 = workbook_add_format(workbook);
         format_set_align(merge_format_alt1, UInt8(LXW_ALIGN_CENTER.rawValue))
         format_set_align(merge_format_alt1, UInt8(LXW_ALIGN_VERTICAL_CENTER.rawValue))
         format_set_bg_color(merge_format_alt1, 0xF0F8FF)
-        format_set_border(merge_format_alt1, UInt8(LXW_BORDER_DASHED.rawValue))
+        format_set_border(merge_format_alt1, UInt8(LXW_BORDER_DOTTED.rawValue))
 
         let merge_format2 = workbook_add_format(workbook);
         format_set_align(merge_format2, UInt8(LXW_ALIGN_DISTRIBUTED.rawValue))
         format_set_align(merge_format2, UInt8(LXW_ALIGN_VERTICAL_CENTER.rawValue))
         format_set_bg_color(merge_format2, 0xF0FFF0)
-        format_set_border(merge_format2, UInt8(LXW_BORDER_DASHED.rawValue))
+        format_set_border(merge_format2, UInt8(LXW_BORDER_DOTTED.rawValue))
         
         let merge_format_alt2 = workbook_add_format(workbook);
         format_set_align(merge_format_alt2, UInt8(LXW_ALIGN_DISTRIBUTED.rawValue))
         format_set_align(merge_format_alt2, UInt8(LXW_ALIGN_VERTICAL_CENTER.rawValue))
         format_set_bg_color(merge_format_alt2, 0xF0F8FF)
-        format_set_border(merge_format_alt2, UInt8(LXW_BORDER_DASHED.rawValue))
+        format_set_border(merge_format_alt2, UInt8(LXW_BORDER_DOTTED.rawValue))
         
         let merge_format3 = workbook_add_format(workbook)
-        format_set_border(merge_format3, UInt8(LXW_BORDER_DASHED.rawValue))
+        format_set_border(merge_format3, UInt8(LXW_BORDER_DOTTED.rawValue))
         format_set_bg_color(merge_format3, 0xFAFAD2)
         format_set_align(merge_format3, UInt8(LXW_ALIGN_LEFT.rawValue))
+        format_set_bold(merge_format3)
         
+        worksheet_set_column(worksheet1, 0, 0, 30, nil);
         worksheet_set_column(worksheet1, 1, 1, 10, nil);
+        worksheet_set_column(worksheet1, 2, 2, 10, nil);
+        worksheet_set_column(worksheet1, 3, 3, 12.5, nil);
         worksheet_set_column(worksheet1, 4, 4, 30, nil);
-        
-        let merge_f = workbook_add_format(workbook);
-        format_set_border(merge_f, UInt8(LXW_BORDER_DASHED.rawValue))
+        worksheet_set_column(worksheet1, 5, 5, 12.5, nil);
+        worksheet_set_column(worksheet1, 6, 9, 12.5, nil);
+        worksheet_set_column(worksheet1, 10, 11, 21.5, nil);
+        worksheet_set_column(worksheet1, 12, 13, 12.5, nil);
+        worksheet_set_column(worksheet1, 14, 15, 19.5, nil);
+        worksheet_set_column(worksheet1, 16, 24, 12.5, nil);
+        worksheet_set_column(worksheet1, 25, 26, 19.5, nil);
+        worksheet_set_column(worksheet1, 27, 27, 21.5, nil);
+        worksheet_set_column(worksheet1, 28, 34, 19.5, nil);
         
         let tbl = getFoodRecords()
         
@@ -81,11 +95,6 @@ class Anatomy {
             }
         }
   
-        var d = 0
-        var r = 0
-        var r1 = 0
-        var rr = 0
-        var kk = 0
         worksheet_write_string(worksheet1, 2, 1, "Дата", merge_format3)
         worksheet_write_string(worksheet1, 2, 2, "Время", merge_format3)
         worksheet_write_string(worksheet1, 2, 3, "Прием пищи", merge_format3)
@@ -120,6 +129,12 @@ class Anatomy {
         worksheet_write_string(worksheet1, 2, 32, "Токоферол. экв., в мг.", merge_format3)
         worksheet_write_string(worksheet1, 2, 33, "Органическая кисл., в г.", merge_format3)
         worksheet_write_string(worksheet1, 2, 34, "Ниациновый экв., в мг.", merge_format3)
+        
+        var d = 0
+        var r = 0
+        var r1 = 0
+        var rr = 0
+        var kk = 0
         
         for i in 0..<tbl.count {
             worksheet_merge_range(worksheet1, lxw_row_t(listOfIndex[0..<i+1].reduce(0,+)-listOfIndex[i]+3), 1, lxw_row_t(listOfIndex[0..<i+1].reduce(0,+)-1+3), 1, nil, merge_f);
