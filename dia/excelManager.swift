@@ -268,3 +268,26 @@ func getFoodRecords() -> [TableRecord] {
     }
     return table
 }
+
+func getName() -> String {
+    var fio: String = ""
+    do {
+        let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
+        let path = documents + "/diacompanion.db"
+        let sourcePath = Bundle.main.path(forResource: "diacompanion", ofType: "db")!
+        _=copyDatabaseIfNeeded(sourcePath: sourcePath)
+        let db = try Connection(path)
+        let foodTable = Table("usermac")
+        let userName = Expression<String>("fio")
+        for i in try db.prepare(foodTable.select(userName)){
+            fio = i[userName]
+        }
+        if fio == "" {
+            fio = "Новый пользователь 1"
+        }
+    }
+    catch {
+        print(error)
+    }
+    return fio
+}

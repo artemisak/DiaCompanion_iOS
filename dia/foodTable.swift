@@ -62,7 +62,7 @@ class Anatomy {
         format_set_align(merge_format3, UInt8(LXW_ALIGN_LEFT.rawValue))
         format_set_bold(merge_format3)
         
-        worksheet_set_column(worksheet1, 0, 0, 30, nil);
+        worksheet_set_column(worksheet1, 0, 0, 20, nil);
         worksheet_set_column(worksheet1, 1, 1, 10, nil);
         worksheet_set_column(worksheet1, 2, 2, 10, nil);
         worksheet_set_column(worksheet1, 3, 3, 12.5, nil);
@@ -78,6 +78,7 @@ class Anatomy {
         worksheet_set_column(worksheet1, 28, 34, 19.5, nil);
         
         let tbl = getFoodRecords()
+        let userName = getName()
         
         let formater = DateFormatter()
         formater.dateFormat = "dd.MM.yyyy"
@@ -94,7 +95,9 @@ class Anatomy {
                 listOfIndex1.append(tbl[i].food[i1].count)
             }
         }
-  
+
+        worksheet_merge_range(worksheet1, 0, 0, 0, 34, userName, nil);
+        worksheet_merge_range(worksheet1, 1, 0, 1, 34, "Приемы пищи", merge_format3);
         worksheet_write_string(worksheet1, 2, 1, "Дата", merge_format3)
         worksheet_write_string(worksheet1, 2, 2, "Время", merge_format3)
         worksheet_write_string(worksheet1, 2, 3, "Прием пищи", merge_format3)
@@ -229,6 +232,74 @@ class Anatomy {
                 }
                 r += 1
             }
+        }
+                
+        worksheet_write_string(worksheet1, lxw_row_t(3+r1+1), 0, "Среднее по дням", merge_format3)
+        worksheet_write_string(worksheet1, lxw_row_t(3+r1+2), 1, "Дата", merge_format3)
+        worksheet_merge_range(worksheet1, lxw_row_t(3+r1+2), 2, lxw_row_t(3+r1+2), 4, nil, merge_format3);
+        worksheet_write_string(worksheet1, lxw_row_t(3+r1+2), 5, "Масса, гр.", merge_format3)
+        worksheet_write_string(worksheet1, lxw_row_t(3+r1+2), 6, "Углеводы, гр.", merge_format3)
+        worksheet_write_string(worksheet1, lxw_row_t(3+r1+2), 7, "Белки, гр.", merge_format3)
+        worksheet_write_string(worksheet1, lxw_row_t(3+r1+2), 8, "Жиры, гр.", merge_format3)
+        worksheet_write_string(worksheet1, lxw_row_t(3+r1+2), 9, "ККал", merge_format3)
+        worksheet_write_string(worksheet1, lxw_row_t(3+r1+2), 10, "Гликемический индекс", merge_format3)
+        worksheet_write_string(worksheet1, lxw_row_t(3+r1+2), 11, nil, nil)
+        worksheet_write_string(worksheet1, lxw_row_t(3+r1+2), 12, "Вода, в г.", merge_format3)
+        worksheet_write_string(worksheet1, lxw_row_t(3+r1+2), 13, "НЖК, в г.", merge_format3)
+        worksheet_write_string(worksheet1, lxw_row_t(3+r1+2), 14, "Холестерин, в мг.", merge_format3)
+        worksheet_write_string(worksheet1, lxw_row_t(3+r1+2), 15, "Пищевые волокна, в г.", merge_format3)
+        worksheet_write_string(worksheet1, lxw_row_t(3+r1+2), 16, "Зола, в г.", merge_format3)
+        worksheet_write_string(worksheet1, lxw_row_t(3+r1+2), 17, "Натрий, в мг.", merge_format3)
+        worksheet_write_string(worksheet1, lxw_row_t(3+r1+2), 18, "Калий, в мг.", merge_format3)
+        worksheet_write_string(worksheet1, lxw_row_t(3+r1+2), 19, "Кальций, в мг.", merge_format3)
+        worksheet_write_string(worksheet1, lxw_row_t(3+r1+2), 20, "Магний, в мг.", merge_format3)
+        worksheet_write_string(worksheet1, lxw_row_t(3+r1+2), 21, "Фосфор, в мг.", merge_format3)
+        worksheet_write_string(worksheet1, lxw_row_t(3+r1+2), 22, "Железо, в мг.", merge_format3)
+        worksheet_write_string(worksheet1, lxw_row_t(3+r1+2), 23, "Ретинол, в мг.", merge_format3)
+        worksheet_write_string(worksheet1, lxw_row_t(3+r1+2), 24, "Тиамин, в мг.", merge_format3)
+        worksheet_write_string(worksheet1, lxw_row_t(3+r1+2), 25, "Рибофлавин, в мг.", merge_format3)
+        worksheet_write_string(worksheet1, lxw_row_t(3+r1+2), 26, "Ниацин, в мг.", merge_format3)
+        worksheet_write_string(worksheet1, lxw_row_t(3+r1+2), 27, "Аскорбиновая кисл., в мг.", merge_format3)
+        worksheet_write_string(worksheet1, lxw_row_t(3+r1+2), 28, "Ретин. экв., в мкг.", merge_format3)
+        worksheet_write_string(worksheet1, lxw_row_t(3+r1+2), 29, "Каротин, в мкг.", merge_format3)
+        worksheet_write_string(worksheet1, lxw_row_t(3+r1+2), 30, "МДС, в г.", merge_format3)
+        worksheet_write_string(worksheet1, lxw_row_t(3+r1+2), 31, "Крахмал, в г.", merge_format3)
+        worksheet_write_string(worksheet1, lxw_row_t(3+r1+2), 32, "Токоферол. экв., в мг.", merge_format3)
+        worksheet_write_string(worksheet1, lxw_row_t(3+r1+2), 33, "Органическая кисл., в г.", merge_format3)
+        worksheet_write_string(worksheet1, lxw_row_t(3+r1+2), 34, "Ниациновый экв., в мг.", merge_format3)
+        
+        for i in 0..<tbl.count {
+            worksheet_write_string(worksheet1, lxw_row_t(3+r1+3+i), 1, formater.string(from: tbl[i].day), nil)
+            worksheet_write_string(worksheet1, lxw_row_t(3+r1+3+i), 5, "\(Array(tbl[i].g.joined()).compactMap(Double.init).reduce(0,+)/Double(tbl[i].g.joined().count))", nil)
+            worksheet_write_string(worksheet1, lxw_row_t(3+r1+3+i), 6, "\(Array(tbl[i].carbo.joined()).compactMap(Double.init).reduce(0,+)/Double(tbl[i].carbo.joined().count))", nil)
+            worksheet_write_string(worksheet1, lxw_row_t(3+r1+3+i), 7, "\(Array(tbl[i].prot.joined()).compactMap(Double.init).reduce(0,+)/Double(tbl[i].prot.joined().count))", nil)
+            worksheet_write_string(worksheet1, lxw_row_t(3+r1+3+i), 8, "\(Array(tbl[i].fat.joined()).compactMap(Double.init).reduce(0,+)/Double(tbl[i].fat.joined().count))", nil)
+            worksheet_write_string(worksheet1, lxw_row_t(3+r1+3+i), 9, "\(Array(tbl[i].ec.joined()).compactMap(Double.init).reduce(0,+)/Double(tbl[i].ec.joined().count))", nil)
+            worksheet_write_string(worksheet1, lxw_row_t(3+r1+3+i), 10, "\(Array(tbl[i].gi.joined()).compactMap(Double.init).reduce(0,+)/Double(tbl[i].gi.joined().count))", nil)
+            worksheet_write_string(worksheet1, lxw_row_t(3+r1+3+i), 11, nil, nil)
+            worksheet_write_string(worksheet1, lxw_row_t(3+r1+3+i), 12, "\(Array(tbl[i].water.joined()).compactMap(Double.init).reduce(0,+)/Double(tbl[i].water.joined().count))", nil)
+            worksheet_write_string(worksheet1, lxw_row_t(3+r1+3+i), 13, "\(Array(tbl[i].nzhk.joined()).compactMap(Double.init).reduce(0,+)/Double(tbl[i].nzhk.joined().count))", nil)
+            worksheet_write_string(worksheet1, lxw_row_t(3+r1+3+i), 14, "\(Array(tbl[i].hol.joined()).compactMap(Double.init).reduce(0,+)/Double(tbl[i].hol.joined().count))", nil)
+            worksheet_write_string(worksheet1, lxw_row_t(3+r1+3+i), 15, "\(Array(tbl[i].pv.joined()).compactMap(Double.init).reduce(0,+)/Double(tbl[i].pv.joined().count))", nil)
+            worksheet_write_string(worksheet1, lxw_row_t(3+r1+3+i), 16, "\(Array(tbl[i].zola.joined()).compactMap(Double.init).reduce(0,+)/Double(tbl[i].zola.joined().count))", nil)
+            worksheet_write_string(worksheet1, lxw_row_t(3+r1+3+i), 17, "\(Array(tbl[i].na.joined()).compactMap(Double.init).reduce(0,+)/Double(tbl[i].na.joined().count))", nil)
+            worksheet_write_string(worksheet1, lxw_row_t(3+r1+3+i), 18, "\(Array(tbl[i].k.joined()).compactMap(Double.init).reduce(0,+)/Double(tbl[i].k.joined().count))", nil)
+            worksheet_write_string(worksheet1, lxw_row_t(3+r1+3+i), 19, "\(Array(tbl[i].ca.joined()).compactMap(Double.init).reduce(0,+)/Double(tbl[i].ca.joined().count))", nil)
+            worksheet_write_string(worksheet1, lxw_row_t(3+r1+3+i), 20, "\(Array(tbl[i].mg.joined()).compactMap(Double.init).reduce(0,+)/Double(tbl[i].mg.joined().count))", nil)
+            worksheet_write_string(worksheet1, lxw_row_t(3+r1+3+i), 21, "\(Array(tbl[i].p.joined()).compactMap(Double.init).reduce(0,+)/Double(tbl[i].p.joined().count))", nil)
+            worksheet_write_string(worksheet1, lxw_row_t(3+r1+3+i), 22, "\(Array(tbl[i].fe.joined()).compactMap(Double.init).reduce(0,+)/Double(tbl[i].fe.joined().count))", nil)
+            worksheet_write_string(worksheet1, lxw_row_t(3+r1+3+i), 23, "\(Array(tbl[i].a.joined()).compactMap(Double.init).reduce(0,+)/Double(tbl[i].a.joined().count))", nil)
+            worksheet_write_string(worksheet1, lxw_row_t(3+r1+3+i), 24, "\(Array(tbl[i].b1.joined()).compactMap(Double.init).reduce(0,+)/Double(tbl[i].b1.joined().count))", nil)
+            worksheet_write_string(worksheet1, lxw_row_t(3+r1+3+i), 25, "\(Array(tbl[i].b2.joined()).compactMap(Double.init).reduce(0,+)/Double(tbl[i].b2.joined().count))", nil)
+            worksheet_write_string(worksheet1, lxw_row_t(3+r1+3+i), 26, "\(Array(tbl[i].rr.joined()).compactMap(Double.init).reduce(0,+)/Double(tbl[i].rr.joined().count))", nil)
+            worksheet_write_string(worksheet1, lxw_row_t(3+r1+3+i), 27, "\(Array(tbl[i].c.joined()).compactMap(Double.init).reduce(0,+)/Double(tbl[i].c.joined().count))", nil)
+            worksheet_write_string(worksheet1, lxw_row_t(3+r1+3+i), 28, "\(Array(tbl[i].re.joined()).compactMap(Double.init).reduce(0,+)/Double(tbl[i].re.joined().count))", nil)
+            worksheet_write_string(worksheet1, lxw_row_t(3+r1+3+i), 29, "\(Array(tbl[i].kar.joined()).compactMap(Double.init).reduce(0,+)/Double(tbl[i].kar.joined().count))", nil)
+            worksheet_write_string(worksheet1, lxw_row_t(3+r1+3+i), 30, "\(Array(tbl[i].mds.joined()).compactMap(Double.init).reduce(0,+)/Double(tbl[i].mds.joined().count))", nil)
+            worksheet_write_string(worksheet1, lxw_row_t(3+r1+3+i), 31, "\(Array(tbl[i].kr.joined()).compactMap(Double.init).reduce(0,+)/Double(tbl[i].kr.joined().count))", nil)
+            worksheet_write_string(worksheet1, lxw_row_t(3+r1+3+i), 32, "\(Array(tbl[i].te.joined()).compactMap(Double.init).reduce(0,+)/Double(tbl[i].te.joined().count))", nil)
+            worksheet_write_string(worksheet1, lxw_row_t(3+r1+3+i), 33, "\(Array(tbl[i].ok.joined()).compactMap(Double.init).reduce(0,+)/Double(tbl[i].ok.joined().count))", nil)
+            worksheet_write_string(worksheet1, lxw_row_t(3+r1+3+i), 34, "\(Array(tbl[i].ne.joined()).compactMap(Double.init).reduce(0,+)/Double(tbl[i].ne.joined().count))", nil)
         }
         
         worksheet_protect(worksheet1, "pass123", nil)
