@@ -270,9 +270,9 @@ class Anatomy {
         
         for i in 0..<tbl.count {
             worksheet_write_string(worksheet1, lxw_row_t(3+r1+3+i), 1, formater.string(from: tbl[i].day), nil)
-            worksheet_write_string(worksheet1, lxw_row_t(3+r1+3+i), 5, "\(Array(tbl[i].g.joined()).compactMap(Double.init).reduce(0,+)/Double(tbl[i].g.joined().count))", nil)
-            worksheet_write_string(worksheet1, lxw_row_t(3+r1+3+i), 6, "\(Array(tbl[i].carbo.joined()).compactMap(Double.init).reduce(0,+)/Double(tbl[i].carbo.joined().count))", nil)
-            worksheet_write_string(worksheet1, lxw_row_t(3+r1+3+i), 7, "\(Array(tbl[i].prot.joined()).compactMap(Double.init).reduce(0,+)/Double(tbl[i].prot.joined().count))", nil)
+            worksheet_write_string(worksheet1, lxw_row_t(3+r1+3+i), 5, "\(round(Array(tbl[i].g.joined()).compactMap(Double.init).reduce(0,+)/Double(tbl[i].g.joined().count)*100)/100)", nil)
+            worksheet_write_string(worksheet1, lxw_row_t(3+r1+3+i), 6, "\(round(Array(tbl[i].carbo.joined()).compactMap(Double.init).reduce(0,+)/Double(tbl[i].carbo.joined().count)*100)/100)", nil)
+            worksheet_write_string(worksheet1, lxw_row_t(3+r1+3+i), 7, "\(round(Array(tbl[i].prot.joined()).compactMap(Double.init).reduce(0,+)/Double(tbl[i].prot.joined().count)*100)/100)", nil)
             worksheet_write_string(worksheet1, lxw_row_t(3+r1+3+i), 8, "\(Array(tbl[i].fat.joined()).compactMap(Double.init).reduce(0,+)/Double(tbl[i].fat.joined().count))", nil)
             worksheet_write_string(worksheet1, lxw_row_t(3+r1+3+i), 9, "\(Array(tbl[i].ec.joined()).compactMap(Double.init).reduce(0,+)/Double(tbl[i].ec.joined().count))", nil)
             worksheet_write_string(worksheet1, lxw_row_t(3+r1+3+i), 10, "\(Array(tbl[i].gi.joined()).compactMap(Double.init).reduce(0,+)/Double(tbl[i].gi.joined().count))", nil)
