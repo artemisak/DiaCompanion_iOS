@@ -291,3 +291,133 @@ func getName() -> String {
     }
     return fio
 }
+
+struct sugarlvl {
+    var date: String
+    var natoshak: [[String]]
+    var zavtrak: [[String]]
+    var obed: [[String]]
+    var yzin: [[String]]
+    var dop: [[String]]
+    var rodi: [[String]]
+}
+
+struct recordRow {
+    var date: Date
+    var time: Date
+    var lvl: Double
+    var period: String
+}
+
+func getSugarRecords() -> [sugarlvl] {
+    var sugarRecords = [sugarlvl]()
+    var record = [recordRow]()
+    do {
+        let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
+        let path = documents + "/diacompanion.db"
+        let sourcePath = Bundle.main.path(forResource: "diacompanion", ofType: "db")!
+        _=copyDatabaseIfNeeded(sourcePath: sourcePath)
+        let db = try Connection(path)
+        let sugarChange = Table("sugarChange")
+        let lvl = Expression<Double>("lvl")
+        let period = Expression<String>("period")
+        let time = Expression<String>("time")
+        
+        let dateFormatter = DateFormatter()
+//        dateFormatter.locale = Locale(identifier: "ru_RU")
+        dateFormatter.dateFormat = "dd.MM.yyyy"
+//        dateFormatter.setLocalizedDateFormatFromTemplate("dd.MM.yyyy")
+        let dateFormatter1 = DateFormatter()
+//        dateFormatter1.locale = Locale(identifier: "ru_RU")
+        dateFormatter1.dateFormat = "HH:mm"
+//        dateFormatter1.setLocalizedDateFormatFromTemplate("HH:mm")
+        
+        for i in try db.prepare(sugarChange.select(lvl,period,time)) {
+            record.append(recordRow(date: dateFormatter.date(from: i[time][0..<10])! , time: dateFormatter1.date(from: i[time][12..<17])!, lvl: i[lvl], period: i[period]))
+        }
+        if record.count > 0 {
+            record = record.sorted(by: {($0.date, $0.time) < ($1.date, $1.time)})
+            print(record)
+            var unique: [Date] = []
+            var i1 = 0
+            for i in 0..<record.count {
+                if !unique.contains(record[i].date) {
+                    unique.append(record[i].date)
+                    sugarRecords.append(sugarlvl(date: dateFormatter.string(from: record[i].date), natoshak: [], zavtrak: [], obed: [], yzin: [], dop: [], rodi: []))
+                }
+                if record[i].date == unique[i1] {
+                    print(record[i].period)
+                    if record[i].period == "Натощак" {
+                        sugarRecords[i1].natoshak.append([String(record[i].lvl), dateFormatter1.string(from: record[i].time)])
+                    }
+                    if record[i].period == "После завтрака" {
+                        sugarRecords[i1].zavtrak.append([String(record[i].lvl), dateFormatter1.string(from: record[i].time)])
+                    }
+                    if record[i].period == "После обеда" {
+                        sugarRecords[i1].obed.append([String(record[i].lvl), dateFormatter1.string(from: record[i].time)])
+                    }
+                    if record[i].period == "После ужина" {
+                        sugarRecords[i1].yzin.append([String(record[i].lvl), dateFormatter1.string(from: record[i].time)])
+                    }
+                    if record[i].period == "Дополнительно" {
+                        sugarRecords[i1].dop.append([String(record[i].lvl), dateFormatter1.string(from: record[i].time)])
+                    }
+                    if record[i].period == "При родах" {
+                        sugarRecords[i1].rodi.append([String(record[i].lvl), dateFormatter1.string(from: record[i].time)])
+                    }
+                } else {
+                    i1 += 1
+                    if record[i].period == "Натощак" {
+                        sugarRecords[i1].natoshak.append([String(record[i].lvl), dateFormatter1.string(from: record[i].time)])
+                    }
+                    if record[i].period == "После завтрака" {
+                        sugarRecords[i1].zavtrak.append([String(record[i].lvl), dateFormatter1.string(from: record[i].time)])
+                    }
+                    if record[i].period == "После обеда" {
+                        sugarRecords[i1].obed.append([String(record[i].lvl), dateFormatter1.string(from: record[i].time)])
+                    }
+                    if record[i].period == "После ужина" {
+                        sugarRecords[i1].yzin.append([String(record[i].lvl), dateFormatter1.string(from: record[i].time)])
+                    }
+                    if record[i].period == "Дополнительно" {
+                        sugarRecords[i1].dop.append([String(record[i].lvl), dateFormatter1.string(from: record[i].time)])
+                    }
+                    if record[i].period == "При родах" {
+                        sugarRecords[i1].rodi.append([String(record[i].lvl), dateFormatter1.string(from: record[i].time)])
+                    }
+                }
+            }
+        }
+    }
+    catch {
+        print(error)
+    }
+    return sugarRecords
+}
+
+extension String {
+
+    var length: Int {
+        return count
+    }
+
+    subscript (i: Int) -> String {
+        return self[i ..< i + 1]
+    }
+
+    func substring(fromIndex: Int) -> String {
+        return self[min(fromIndex, length) ..< length]
+    }
+
+    func substring(toIndex: Int) -> String {
+        return self[0 ..< max(0, toIndex)]
+    }
+
+    subscript (r: Range<Int>) -> String {
+        let range = Range(uncheckedBounds: (lower: max(0, min(length, r.lowerBound)),
+                                            upper: min(length, max(0, r.upperBound))))
+        let start = index(startIndex, offsetBy: range.lowerBound)
+        let end = index(start, offsetBy: range.upperBound - range.lowerBound)
+        return String(self[start ..< end])
+    }
+}

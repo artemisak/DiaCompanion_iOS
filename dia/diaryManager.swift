@@ -95,7 +95,7 @@ func SaveToDB(FoodName: String, gram: String, selectedDate: Date) {
         let timeStamp = Expression<String>("timeStamp")
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "ru_RU")
-        dateFormatter.setLocalizedDateFormatFromTemplate("dd.MM.yyyy")
+        dateFormatter.setLocalizedDateFormatFromTemplate("dd.MM.yyyy HH:mm")
         let realDateTime = dateFormatter.string(from: Date.now)
         let selectDate = dateFormatter.string(from: selectedDate)
         dateFormatter.setLocalizedDateFormatFromTemplate("HH:mm")

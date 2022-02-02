@@ -302,6 +302,7 @@ class Anatomy {
             worksheet_write_string(worksheet1, lxw_row_t(3+r1+3+i), 34, "\(round(Array(tbl[i].ne.joined()).compactMap(Double.init).reduce(0,+)/Double(tbl[i].ne.joined().count)*100)/100)", nil)
         }
         
+        _=getSugarRecords()
         worksheet_protect(worksheet1, "pass123", nil)
         let error = workbook_close(workbook)
         
