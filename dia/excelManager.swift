@@ -324,20 +324,19 @@ func getSugarRecords() -> [sugarlvl] {
         let time = Expression<String>("time")
         
         let dateFormatter = DateFormatter()
-//        dateFormatter.locale = Locale(identifier: "ru_RU")
-        dateFormatter.dateFormat = "dd.MM.yyyy"
-//        dateFormatter.setLocalizedDateFormatFromTemplate("dd.MM.yyyy")
+        dateFormatter.locale = Locale(identifier: "ru_RU")
+//        dateFormatter.dateFormat = "dd.MM.yyyy"
+        dateFormatter.setLocalizedDateFormatFromTemplate("dd.MM.yyyy")
         let dateFormatter1 = DateFormatter()
-//        dateFormatter1.locale = Locale(identifier: "ru_RU")
-        dateFormatter1.dateFormat = "HH:mm"
-//        dateFormatter1.setLocalizedDateFormatFromTemplate("HH:mm")
+        dateFormatter1.locale = Locale(identifier: "ru_RU")
+//        dateFormatter1.dateFormat = "HH:mm"
+        dateFormatter1.setLocalizedDateFormatFromTemplate("HH:mm")
         
         for i in try db.prepare(sugarChange.select(lvl,period,time)) {
             record.append(recordRow(date: dateFormatter.date(from: i[time][0..<10])! , time: dateFormatter1.date(from: i[time][12..<17])!, lvl: i[lvl], period: i[period]))
         }
         if record.count > 0 {
             record = record.sorted(by: {($0.date, $0.time) < ($1.date, $1.time)})
-            print(record)
             var unique: [Date] = []
             var i1 = 0
             for i in 0..<record.count {
@@ -346,7 +345,6 @@ func getSugarRecords() -> [sugarlvl] {
                     sugarRecords.append(sugarlvl(date: dateFormatter.string(from: record[i].date), natoshak: [], zavtrak: [], obed: [], yzin: [], dop: [], rodi: []))
                 }
                 if record[i].date == unique[i1] {
-                    print(record[i].period)
                     if record[i].period == "Натощак" {
                         sugarRecords[i1].natoshak.append([String(record[i].lvl), dateFormatter1.string(from: record[i].time)])
                     }

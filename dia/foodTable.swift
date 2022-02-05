@@ -15,6 +15,7 @@ class Anatomy {
         
         let workbook = workbook_new((fileURL.absoluteString.dropFirst(6) as NSString).fileSystemRepresentation)
         let worksheet1 = workbook_add_worksheet(workbook, "Приемы пищи")
+        let worksheet2 = workbook_add_worksheet(workbook, "Изменения сахара")
         
         let merge_f = workbook_add_format(workbook);
         format_set_border(merge_f, UInt8(LXW_BORDER_DOTTED.rawValue))
@@ -61,6 +62,13 @@ class Anatomy {
         format_set_bg_color(merge_format3, 0xFAFAD2)
         format_set_align(merge_format3, UInt8(LXW_ALIGN_LEFT.rawValue))
         format_set_bold(merge_format3)
+        
+        let merge_format4 = workbook_add_format(workbook)
+        format_set_align(merge_format4, UInt8(LXW_ALIGN_DISTRIBUTED.rawValue))
+        format_set_align(merge_format4, UInt8(LXW_ALIGN_VERTICAL_TOP.rawValue))
+        format_set_bg_color(merge_format4, 0xFAFAD2)
+        format_set_border(merge_format4, UInt8(LXW_BORDER_DOTTED.rawValue))
+        format_set_bold(merge_format4)
         
         worksheet_set_column(worksheet1, 0, 0, 20, nil);
         worksheet_set_column(worksheet1, 1, 1, 10, nil);
@@ -302,7 +310,79 @@ class Anatomy {
             worksheet_write_string(worksheet1, lxw_row_t(3+r1+3+i), 34, "\(round(Array(tbl[i].ne.joined()).compactMap(Double.init).reduce(0,+)/Double(tbl[i].ne.joined().count)*100)/100)", nil)
         }
         
-        _=getSugarRecords()
+        let tbl2 = getSugarRecords()
+        var i1 = 0
+        for i in 0..<tbl2.count {
+            worksheet_write_string(worksheet2, lxw_row_t(i1+3), 1, tbl2[i].date, nil)
+            // Натощак
+            var natoshak_lvl: [String] = []
+            for i2 in 0..<tbl2[i].natoshak.count {
+                natoshak_lvl.append(tbl2[i].natoshak[i2][0]+"\t")
+            }
+            worksheet_write_string(worksheet2, lxw_row_t(i1+3), 2, natoshak_lvl.joined(separator: "\n") , merge_format4)
+            var natoshak_time: [String] = []
+            for i2 in 0..<tbl2[i].natoshak.count {
+                natoshak_time.append(tbl2[i].natoshak[i2][1]+"\t")
+            }
+            worksheet_write_string(worksheet2, lxw_row_t(i1+3), 3, natoshak_time.joined(separator: "\n") , merge_format4)
+            // После завтрака
+            var zavtrak_lvl: [String] = []
+            for i2 in 0..<tbl2[i].zavtrak.count {
+                zavtrak_lvl.append(tbl2[i].zavtrak[i2][0]+"\t")
+            }
+            worksheet_write_string(worksheet2, lxw_row_t(i1+3), 4, zavtrak_lvl.joined(separator: "\n") , merge_format4)
+            var zavtrak_time: [String] = []
+            for i2 in 0..<tbl2[i].zavtrak.count {
+                zavtrak_time.append(tbl2[i].zavtrak[i2][1]+"\t")
+            }
+            worksheet_write_string(worksheet2, lxw_row_t(i1+3), 5, zavtrak_time.joined(separator: "\n") , merge_format4)
+            // После обеда
+            var obed_lvl: [String] = []
+            for i2 in 0..<tbl2[i].obed.count {
+                obed_lvl.append(tbl2[i].obed[i2][0]+"\t")
+            }
+            worksheet_write_string(worksheet2, lxw_row_t(i1+3), 6, obed_lvl.joined(separator: "\n") , merge_format4)
+            var obed_time: [String] = []
+            for i2 in 0..<tbl2[i].obed.count {
+                obed_time.append(tbl2[i].obed[i2][1]+"\t")
+            }
+            worksheet_write_string(worksheet2, lxw_row_t(i1+3), 7, obed_time.joined(separator: "\n") , merge_format4)
+            // После ужина
+            var yzin_lvl: [String] = []
+            for i2 in 0..<tbl2[i].yzin.count {
+                yzin_lvl.append(tbl2[i].yzin[i2][0]+"\t")
+            }
+            worksheet_write_string(worksheet2, lxw_row_t(i1+3), 8, yzin_lvl.joined(separator: "\n") , merge_format4)
+            var yzin_time: [String] = []
+            for i2 in 0..<tbl2[i].yzin.count {
+                yzin_time.append(tbl2[i].yzin[i2][1]+"\t")
+            }
+            worksheet_write_string(worksheet2, lxw_row_t(i1+3), 9, yzin_time.joined(separator: "\n") , merge_format4)
+            // Дополнительно
+            var dop_lvl: [String] = []
+            for i2 in 0..<tbl2[i].dop.count {
+                dop_lvl.append(tbl2[i].dop[i2][0]+"\t")
+            }
+            worksheet_write_string(worksheet2, lxw_row_t(i1+3), 10, dop_lvl.joined(separator: "\n") , merge_format4)
+            var dop_time: [String] = []
+            for i2 in 0..<tbl2[i].dop.count {
+                dop_time.append(tbl2[i].dop[i2][1]+"\t")
+            }
+            worksheet_write_string(worksheet2, lxw_row_t(i1+3), 11, dop_time.joined(separator: "\n") , merge_format4)
+            // При родах
+            var rodi_lvl: [String] = []
+            for i2 in 0..<tbl2[i].rodi.count {
+                rodi_lvl.append(tbl2[i].rodi[i2][0]+"\t")
+            }
+            worksheet_write_string(worksheet2, lxw_row_t(i1+3), 12, rodi_lvl.joined(separator: "\n") , merge_format4)
+            var rodi_time: [String] = []
+            for i2 in 0..<tbl2[i].rodi.count {
+                rodi_time.append(tbl2[i].rodi[i2][1]+"\t")
+            }
+            worksheet_write_string(worksheet2, lxw_row_t(i1+3), 13, rodi_time.joined(separator: "\n") , merge_format4)
+            i1 += 1
+        }
+        
         worksheet_protect(worksheet1, "pass123", nil)
         let error = workbook_close(workbook)
         
