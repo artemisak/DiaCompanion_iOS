@@ -114,6 +114,9 @@ class Anatomy {
         worksheet_set_column(worksheet1, 27, 27, 21.5, nil);
         worksheet_set_column(worksheet1, 28, 34, 19.5, nil);
         
+        worksheet_set_column(worksheet2, 0, 0, 20, nil);
+        worksheet_set_column(worksheet2, 1, 1, 10, nil);
+        
         let tbl = getFoodRecords()
         let userName = getName()
         
@@ -381,7 +384,11 @@ class Anatomy {
             for i2 in 0..<tbl2[i].natoshak.count {
                 natoshak_time.append(tbl2[i].natoshak[i2][1]+"\t")
             }
-            worksheet_write_string(worksheet2, lxw_row_t(i1+3), 3, natoshak_time.joined(separator: "\n") , merge_format42)
+            if natoshak_time.isEmpty {
+                worksheet_write_string(worksheet2, lxw_row_t(i1+3), 3, natoshak_time.joined(separator: "\n"), nil)
+            } else {
+                worksheet_write_string(worksheet2, lxw_row_t(i1+3), 3, natoshak_time.joined(separator: "\n"), merge_format42)
+            }
             // После завтрака
             if (!tbl2[i].zavtrak.isEmpty) && (Double(tbl2[i].zavtrak[0][0])! >= 7.0) {
                 par = 1
@@ -409,7 +416,11 @@ class Anatomy {
             for i2 in 0..<tbl2[i].zavtrak.count {
                 zavtrak_time.append(tbl2[i].zavtrak[i2][1]+"\t")
             }
-            worksheet_write_string(worksheet2, lxw_row_t(i1+3), 5, zavtrak_time.joined(separator: "\n") , merge_format42)
+            if zavtrak_time.isEmpty {
+                worksheet_write_string(worksheet2, lxw_row_t(i1+3), 5, zavtrak_time.joined(separator: "\n") , nil)
+            } else {
+                worksheet_write_string(worksheet2, lxw_row_t(i1+3), 5, zavtrak_time.joined(separator: "\n") , merge_format42)
+            }
             // После обеда
             if (!tbl2[i].obed.isEmpty) && (Double(tbl2[i].obed[0][0])! >= 7.0) {
                 par = 1
@@ -437,7 +448,11 @@ class Anatomy {
             for i2 in 0..<tbl2[i].obed.count {
                 obed_time.append(tbl2[i].obed[i2][1]+"\t")
             }
-            worksheet_write_string(worksheet2, lxw_row_t(i1+3), 7, obed_time.joined(separator: "\n") , merge_format42)
+            if obed_time.isEmpty {
+                worksheet_write_string(worksheet2, lxw_row_t(i1+3), 7, obed_time.joined(separator: "\n") , nil)
+            } else {
+                worksheet_write_string(worksheet2, lxw_row_t(i1+3), 7, obed_time.joined(separator: "\n") , merge_format42)
+            }
             // После ужина
             if (!tbl2[i].yzin.isEmpty) && (Double(tbl2[i].yzin[0][0])! >= 7.0) {
                 par = 1
@@ -465,7 +480,11 @@ class Anatomy {
             for i2 in 0..<tbl2[i].yzin.count {
                 yzin_time.append(tbl2[i].yzin[i2][1]+"\t")
             }
-            worksheet_write_string(worksheet2, lxw_row_t(i1+3), 9, yzin_time.joined(separator: "\n") , merge_format42)
+            if yzin_time.isEmpty {
+                worksheet_write_string(worksheet2, lxw_row_t(i1+3), 9, yzin_time.joined(separator: "\n") , nil)
+            } else {
+                worksheet_write_string(worksheet2, lxw_row_t(i1+3), 9, yzin_time.joined(separator: "\n") , merge_format42)
+            }
             // Дополнительно
             if (!tbl2[i].dop.isEmpty) && (Double(tbl2[i].dop[0][0])! >= 7.0) {
                 par = 1
@@ -493,7 +512,11 @@ class Anatomy {
             for i2 in 0..<tbl2[i].dop.count {
                 dop_time.append(tbl2[i].dop[i2][1]+"\t")
             }
-            worksheet_write_string(worksheet2, lxw_row_t(i1+3), 11, dop_time.joined(separator: "\n") , merge_format42)
+            if dop_lvl.isEmpty {
+                worksheet_write_string(worksheet2, lxw_row_t(i1+3), 11, dop_time.joined(separator: "\n") , nil)
+            } else {
+                worksheet_write_string(worksheet2, lxw_row_t(i1+3), 11, dop_time.joined(separator: "\n") , merge_format42)
+            }
             // При родах
             if (!tbl2[i].rodi.isEmpty) && (Double(tbl2[i].rodi[0][0])! >= 7.0) {
                 par = 1
@@ -521,7 +544,11 @@ class Anatomy {
             for i2 in 0..<tbl2[i].rodi.count {
                 rodi_time.append(tbl2[i].rodi[i2][1]+"\t")
             }
-            worksheet_write_string(worksheet2, lxw_row_t(i1+3), 13, rodi_time.joined(separator: "\n") , merge_format42)
+            if rodi_time.isEmpty {
+                worksheet_write_string(worksheet2, lxw_row_t(i1+3), 13, rodi_time.joined(separator: "\n") , nil)
+            } else {
+                worksheet_write_string(worksheet2, lxw_row_t(i1+3), 13, rodi_time.joined(separator: "\n") , merge_format42)
+            }
             i1 += 1
         }
         
