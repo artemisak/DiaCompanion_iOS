@@ -70,6 +70,35 @@ class Anatomy {
         format_set_border(merge_format4, UInt8(LXW_BORDER_DOTTED.rawValue))
         format_set_bold(merge_format4)
         
+        let merge_format41 = workbook_add_format(workbook)
+        format_set_align(merge_format41, UInt8(LXW_ALIGN_LEFT.rawValue))
+        format_set_align(merge_format41, UInt8(LXW_ALIGN_VERTICAL_TOP.rawValue))
+        format_set_bg_color(merge_format41, 0xFAFAD2)
+        format_set_border(merge_format41, UInt8(LXW_BORDER_DOTTED.rawValue))
+        format_set_bold(merge_format41)
+        
+        let merge_format42 = workbook_add_format(workbook)
+        format_set_align(merge_format42, UInt8(LXW_ALIGN_DISTRIBUTED.rawValue))
+        format_set_align(merge_format42, UInt8(LXW_ALIGN_VERTICAL_TOP.rawValue))
+        format_set_border(merge_format42, UInt8(LXW_BORDER_DOTTED.rawValue))
+        
+        let merge_format4_blue = workbook_add_format(workbook)
+        format_set_align(merge_format4_blue, UInt8(LXW_ALIGN_DISTRIBUTED.rawValue))
+        format_set_align(merge_format4_blue, UInt8(LXW_ALIGN_VERTICAL_TOP.rawValue))
+        format_set_bg_color(merge_format4_blue, 0xF1F8FD)
+        format_set_font_color(merge_format4_blue, 0x0000F5)
+        format_set_border(merge_format4_blue, UInt8(LXW_BORDER_DOTTED.rawValue))
+        format_set_bold(merge_format4_blue)
+        
+        let merge_format4_red = workbook_add_format(workbook)
+        format_set_align(merge_format4_red, UInt8(LXW_ALIGN_DISTRIBUTED.rawValue))
+        format_set_align(merge_format4_red, UInt8(LXW_ALIGN_VERTICAL_TOP.rawValue))
+        format_set_bg_color(merge_format4_red, 0xFCF0F5)
+        format_set_font_color(merge_format4_red, 0xEA3424)
+        format_set_border(merge_format4_red, UInt8(LXW_BORDER_DOTTED.rawValue))
+        format_set_bold(merge_format4_red)
+        
+        
         worksheet_set_column(worksheet1, 0, 0, 20, nil);
         worksheet_set_column(worksheet1, 1, 1, 10, nil);
         worksheet_set_column(worksheet1, 2, 2, 10, nil);
@@ -311,75 +340,188 @@ class Anatomy {
         }
         
         let tbl2 = getSugarRecords()
+        
+        worksheet_merge_range(worksheet2, 0, 0, 0, 13, userName, nil);
+        worksheet_merge_range(worksheet2, 1, 0, 1, 13, "Измерение сахара", merge_format41);
+        worksheet_write_string(worksheet2, 2, 1, "Дата", merge_format41);
+        worksheet_merge_range(worksheet2, 2, 2, 2, 3, "Натощак", merge_format41);
+        worksheet_merge_range(worksheet2, 2, 4, 2, 5, "После завтрака", merge_format41);
+        worksheet_merge_range(worksheet2, 2, 6, 2, 7, "После обеда", merge_format41);
+        worksheet_merge_range(worksheet2, 2, 8, 2, 9, "После ужина", merge_format41);
+        worksheet_merge_range(worksheet2, 2, 10, 2, 11, "Дополнительно", merge_format41);
+        worksheet_merge_range(worksheet2, 2, 12, 2, 13, "При родах", merge_format41);
         var i1 = 0
         for i in 0..<tbl2.count {
             worksheet_write_string(worksheet2, lxw_row_t(i1+3), 1, tbl2[i].date, nil)
             // Натощак
+            var par = 0
+            if (!tbl2[i].natoshak.isEmpty) && (Double(tbl2[i].natoshak[0][0])! >= 7.0) {
+                par = 1
+            } else if (!tbl2[i].natoshak.isEmpty) && (Double(tbl2[i].natoshak[0][0])! < 7.0) && (Double(tbl2[i].natoshak[0][0])! > 4.0) {
+                par = 2
+            } else if (!tbl2[i].natoshak.isEmpty) && (Double(tbl2[i].natoshak[0][0])! < 4.0) && (Double(tbl2[i].natoshak[0][0])! > 0.0) {
+                par = 3
+            } else {
+                par = 4
+            }
             var natoshak_lvl: [String] = []
             for i2 in 0..<tbl2[i].natoshak.count {
                 natoshak_lvl.append(tbl2[i].natoshak[i2][0]+"\t")
             }
-            worksheet_write_string(worksheet2, lxw_row_t(i1+3), 2, natoshak_lvl.joined(separator: "\n") , merge_format4)
+            if  par == 1 {
+                worksheet_write_string(worksheet2, lxw_row_t(i1+3), 2, natoshak_lvl.joined(separator: "\n") , merge_format4_red)
+            } else if par == 2 {
+                worksheet_write_string(worksheet2, lxw_row_t(i1+3), 2, natoshak_lvl.joined(separator: "\n") , merge_format4)
+            } else if par == 3 {
+                worksheet_write_string(worksheet2, lxw_row_t(i1+3), 2, natoshak_lvl.joined(separator: "\n") , merge_format4_blue)
+            } else {
+                worksheet_write_string(worksheet2, lxw_row_t(i1+3), 2, natoshak_lvl.joined(separator: "\n") , nil)
+            }
             var natoshak_time: [String] = []
             for i2 in 0..<tbl2[i].natoshak.count {
                 natoshak_time.append(tbl2[i].natoshak[i2][1]+"\t")
             }
-            worksheet_write_string(worksheet2, lxw_row_t(i1+3), 3, natoshak_time.joined(separator: "\n") , merge_format4)
+            worksheet_write_string(worksheet2, lxw_row_t(i1+3), 3, natoshak_time.joined(separator: "\n") , merge_format42)
             // После завтрака
+            if (!tbl2[i].zavtrak.isEmpty) && (Double(tbl2[i].zavtrak[0][0])! >= 7.0) {
+                par = 1
+            } else if (!tbl2[i].zavtrak.isEmpty) && (Double(tbl2[i].zavtrak[0][0])! < 7.0) && (Double(tbl2[i].zavtrak[0][0])! > 4.0) {
+                par = 2
+            } else if (!tbl2[i].zavtrak.isEmpty) && (Double(tbl2[i].zavtrak[0][0])! < 4.0) && (Double(tbl2[i].zavtrak[0][0])! > 0.0) {
+                par = 3
+            } else {
+                par = 4
+            }
             var zavtrak_lvl: [String] = []
             for i2 in 0..<tbl2[i].zavtrak.count {
                 zavtrak_lvl.append(tbl2[i].zavtrak[i2][0]+"\t")
             }
-            worksheet_write_string(worksheet2, lxw_row_t(i1+3), 4, zavtrak_lvl.joined(separator: "\n") , merge_format4)
+            if  par == 1 {
+                worksheet_write_string(worksheet2, lxw_row_t(i1+3), 4, zavtrak_lvl.joined(separator: "\n") , merge_format4_red)
+            } else if par == 2 {
+                worksheet_write_string(worksheet2, lxw_row_t(i1+3), 4, zavtrak_lvl.joined(separator: "\n") , merge_format4)
+            } else if par == 3 {
+                worksheet_write_string(worksheet2, lxw_row_t(i1+3), 4, zavtrak_lvl.joined(separator: "\n") , merge_format4_blue)
+            } else {
+                worksheet_write_string(worksheet2, lxw_row_t(i1+3), 4, zavtrak_lvl.joined(separator: "\n") , nil)
+            }
             var zavtrak_time: [String] = []
             for i2 in 0..<tbl2[i].zavtrak.count {
                 zavtrak_time.append(tbl2[i].zavtrak[i2][1]+"\t")
             }
-            worksheet_write_string(worksheet2, lxw_row_t(i1+3), 5, zavtrak_time.joined(separator: "\n") , merge_format4)
+            worksheet_write_string(worksheet2, lxw_row_t(i1+3), 5, zavtrak_time.joined(separator: "\n") , merge_format42)
             // После обеда
+            if (!tbl2[i].obed.isEmpty) && (Double(tbl2[i].obed[0][0])! >= 7.0) {
+                par = 1
+            } else if (!tbl2[i].obed.isEmpty) && (Double(tbl2[i].obed[0][0])! < 7.0) && (Double(tbl2[i].obed[0][0])! > 4.0) {
+                par = 2
+            } else if (!tbl2[i].obed.isEmpty) && (Double(tbl2[i].obed[0][0])! < 4.0) && (Double(tbl2[i].obed[0][0])! > 0.0) {
+                par = 3
+            } else {
+                par = 4
+            }
             var obed_lvl: [String] = []
             for i2 in 0..<tbl2[i].obed.count {
                 obed_lvl.append(tbl2[i].obed[i2][0]+"\t")
             }
-            worksheet_write_string(worksheet2, lxw_row_t(i1+3), 6, obed_lvl.joined(separator: "\n") , merge_format4)
+            if  par == 1 {
+                worksheet_write_string(worksheet2, lxw_row_t(i1+3), 6, obed_lvl.joined(separator: "\n") , merge_format4_red)
+            } else if par == 2 {
+                worksheet_write_string(worksheet2, lxw_row_t(i1+3), 6, obed_lvl.joined(separator: "\n") , merge_format4)
+            } else if par == 3 {
+                worksheet_write_string(worksheet2, lxw_row_t(i1+3), 6, obed_lvl.joined(separator: "\n") , merge_format4_blue)
+            } else {
+                worksheet_write_string(worksheet2, lxw_row_t(i1+3), 6, obed_lvl.joined(separator: "\n") , nil)
+            }
             var obed_time: [String] = []
             for i2 in 0..<tbl2[i].obed.count {
                 obed_time.append(tbl2[i].obed[i2][1]+"\t")
             }
-            worksheet_write_string(worksheet2, lxw_row_t(i1+3), 7, obed_time.joined(separator: "\n") , merge_format4)
+            worksheet_write_string(worksheet2, lxw_row_t(i1+3), 7, obed_time.joined(separator: "\n") , merge_format42)
             // После ужина
+            if (!tbl2[i].yzin.isEmpty) && (Double(tbl2[i].yzin[0][0])! >= 7.0) {
+                par = 1
+            } else if (!tbl2[i].yzin.isEmpty) && (Double(tbl2[i].yzin[0][0])! < 7.0) && (Double(tbl2[i].yzin[0][0])! > 4.0) {
+                par = 2
+            } else if (!tbl2[i].yzin.isEmpty) && (Double(tbl2[i].yzin[0][0])! < 4.0) && (Double(tbl2[i].yzin[0][0])! > 0.0) {
+                par = 3
+            } else {
+                par = 4
+            }
             var yzin_lvl: [String] = []
             for i2 in 0..<tbl2[i].yzin.count {
                 yzin_lvl.append(tbl2[i].yzin[i2][0]+"\t")
             }
-            worksheet_write_string(worksheet2, lxw_row_t(i1+3), 8, yzin_lvl.joined(separator: "\n") , merge_format4)
+            if  par == 1 {
+                worksheet_write_string(worksheet2, lxw_row_t(i1+3), 8, yzin_lvl.joined(separator: "\n") , merge_format4_red)
+            } else if par == 2 {
+                worksheet_write_string(worksheet2, lxw_row_t(i1+3), 8, yzin_lvl.joined(separator: "\n") , merge_format4)
+            } else if par == 3 {
+                worksheet_write_string(worksheet2, lxw_row_t(i1+3), 8, yzin_lvl.joined(separator: "\n") , merge_format4_blue)
+            } else {
+                worksheet_write_string(worksheet2, lxw_row_t(i1+3), 8, yzin_lvl.joined(separator: "\n") , nil)
+            }
             var yzin_time: [String] = []
             for i2 in 0..<tbl2[i].yzin.count {
                 yzin_time.append(tbl2[i].yzin[i2][1]+"\t")
             }
-            worksheet_write_string(worksheet2, lxw_row_t(i1+3), 9, yzin_time.joined(separator: "\n") , merge_format4)
+            worksheet_write_string(worksheet2, lxw_row_t(i1+3), 9, yzin_time.joined(separator: "\n") , merge_format42)
             // Дополнительно
+            if (!tbl2[i].dop.isEmpty) && (Double(tbl2[i].dop[0][0])! >= 7.0) {
+                par = 1
+            } else if (!tbl2[i].dop.isEmpty) && (Double(tbl2[i].dop[0][0])! < 7.0) && (Double(tbl2[i].dop[0][0])! > 4.0) {
+                par = 2
+            } else if (!tbl2[i].dop.isEmpty) && (Double(tbl2[i].dop[0][0])! < 4.0) && (Double(tbl2[i].dop[0][0])! > 0.0) {
+                par = 3
+            } else {
+                par = 4
+            }
             var dop_lvl: [String] = []
             for i2 in 0..<tbl2[i].dop.count {
                 dop_lvl.append(tbl2[i].dop[i2][0]+"\t")
             }
-            worksheet_write_string(worksheet2, lxw_row_t(i1+3), 10, dop_lvl.joined(separator: "\n") , merge_format4)
+            if  par == 1 {
+                worksheet_write_string(worksheet2, lxw_row_t(i1+3), 10, dop_lvl.joined(separator: "\n") , merge_format4_red)
+            } else if par == 2 {
+                worksheet_write_string(worksheet2, lxw_row_t(i1+3), 10, dop_lvl.joined(separator: "\n") , merge_format4)
+            } else if par == 3 {
+                worksheet_write_string(worksheet2, lxw_row_t(i1+3), 10, dop_lvl.joined(separator: "\n") , merge_format4_blue)
+            } else {
+                worksheet_write_string(worksheet2, lxw_row_t(i1+3), 10, dop_lvl.joined(separator: "\n") , nil)
+            }
             var dop_time: [String] = []
             for i2 in 0..<tbl2[i].dop.count {
                 dop_time.append(tbl2[i].dop[i2][1]+"\t")
             }
-            worksheet_write_string(worksheet2, lxw_row_t(i1+3), 11, dop_time.joined(separator: "\n") , merge_format4)
+            worksheet_write_string(worksheet2, lxw_row_t(i1+3), 11, dop_time.joined(separator: "\n") , merge_format42)
             // При родах
+            if (!tbl2[i].rodi.isEmpty) && (Double(tbl2[i].rodi[0][0])! >= 7.0) {
+                par = 1
+            } else if (!tbl2[i].rodi.isEmpty) && (Double(tbl2[i].rodi[0][0])! < 7.0) && (Double(tbl2[i].rodi[0][0])! > 4.0) {
+                par = 2
+            } else if (!tbl2[i].rodi.isEmpty) && (Double(tbl2[i].rodi[0][0])! < 4.0) && (Double(tbl2[i].rodi[0][0])! > 0.0) {
+                par = 3
+            } else {
+                par = 4
+            }
             var rodi_lvl: [String] = []
             for i2 in 0..<tbl2[i].rodi.count {
                 rodi_lvl.append(tbl2[i].rodi[i2][0]+"\t")
             }
-            worksheet_write_string(worksheet2, lxw_row_t(i1+3), 12, rodi_lvl.joined(separator: "\n") , merge_format4)
+            if  par == 1 {
+                worksheet_write_string(worksheet2, lxw_row_t(i1+3), 12, rodi_lvl.joined(separator: "\n") , merge_format4_red)
+            } else if par == 2 {
+                worksheet_write_string(worksheet2, lxw_row_t(i1+3), 12, rodi_lvl.joined(separator: "\n") , merge_format4)
+            } else if par == 3 {
+                worksheet_write_string(worksheet2, lxw_row_t(i1+3), 12, rodi_lvl.joined(separator: "\n") , merge_format4_blue)
+            } else {
+                worksheet_write_string(worksheet2, lxw_row_t(i1+3), 12, rodi_lvl.joined(separator: "\n") , nil)
+            }
             var rodi_time: [String] = []
             for i2 in 0..<tbl2[i].rodi.count {
                 rodi_time.append(tbl2[i].rodi[i2][1]+"\t")
             }
-            worksheet_write_string(worksheet2, lxw_row_t(i1+3), 13, rodi_time.joined(separator: "\n") , merge_format4)
+            worksheet_write_string(worksheet2, lxw_row_t(i1+3), 13, rodi_time.joined(separator: "\n") , merge_format42)
             i1 += 1
         }
         
