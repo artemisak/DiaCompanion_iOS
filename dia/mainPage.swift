@@ -63,6 +63,7 @@ struct mainPage: View {
             }
             .navigationBarTitle("Диа Компаньон")
             .navigationBarTitleDisplayMode(.inline)
+//            .navigationBarBackButtonHidden(true)
             .toolbar {
                 ToolbarItemGroup(placement: .navigationBarTrailing){
                     Button(action: {showModal.toggle()}){

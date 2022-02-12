@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		A7230C7F27705AED00B68244 /* excelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7230C7E27705AED00B68244 /* excelManager.swift */; };
+		A74A33D027B7E833003D2EBD /* login.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74A33CF27B7E833003D2EBD /* login.swift */; };
 		AC2603202690691E00C4A520 /* diaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC26031F2690691E00C4A520 /* diaApp.swift */; };
 		AC2603222690691E00C4A520 /* mainPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2603212690691E00C4A520 /* mainPage.swift */; };
 		AC2603242690691F00C4A520 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AC2603232690691F00C4A520 /* Assets.xcassets */; };
@@ -53,6 +54,7 @@
 		6C02743FFD40C5E72C5C050B /* Pods_dia.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_dia.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A316D5BECBE459250AC4A311 /* Pods-dia.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-dia.debug.xcconfig"; path = "Target Support Files/Pods-dia/Pods-dia.debug.xcconfig"; sourceTree = "<group>"; };
 		A7230C7E27705AED00B68244 /* excelManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = excelManager.swift; sourceTree = "<group>"; };
+		A74A33CF27B7E833003D2EBD /* login.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = login.swift; sourceTree = "<group>"; };
 		AC26031C2690691E00C4A520 /* dia.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = dia.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AC26031F2690691E00C4A520 /* diaApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = diaApp.swift; sourceTree = "<group>"; };
 		AC2603212690691E00C4A520 /* mainPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = mainPage.swift; sourceTree = "<group>"; };
@@ -154,6 +156,7 @@
 			children = (
 				AC26031F2690691E00C4A520 /* diaApp.swift */,
 				AC2603212690691E00C4A520 /* mainPage.swift */,
+				A74A33CF27B7E833003D2EBD /* login.swift */,
 				ACC3798526ECFA7E00E0729E /* massa.swift */,
 				ACD284FE26DF8DD40003F1FD /* export.swift */,
 				AC37A67A276147AF00558E55 /* foodTable.swift */,
@@ -354,6 +357,7 @@
 				ACEDB4812721AA7F00DBB67C /* fio.swift in Sources */,
 				ACF4E411272DB126002D2797 /* RKCell.swift in Sources */,
 				ACC3798826EE0E1400E0729E /* pacient.swift in Sources */,
+				A74A33D027B7E833003D2EBD /* login.swift in Sources */,
 				AC32A6862726060D001DDB9F /* pHeight.swift in Sources */,
 				AC3B847526EBA1F200E98681 /* ketonur.swift in Sources */,
 				ACEDB47F2721A7E400DBB67C /* bday.swift in Sources */,

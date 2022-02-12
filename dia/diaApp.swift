@@ -11,7 +11,7 @@ import SwiftUI
 struct diaApp: App {
     var body: some Scene {
         WindowGroup {
-            mainPage()
+            login()
         }
     }
 }
