@@ -4,7 +4,6 @@ import SwiftUI
 struct mainPage: View {
     @State private var showModal: Bool = false
     var body: some View {
-        NavigationView {
             GeometryReader { geom in
                 ScrollView {
                     HStack {
@@ -40,14 +39,14 @@ struct mainPage: View {
                                     Image("menu_syringe")
                                     Text("Введение инсулина").foregroundColor(Color.black).multilineTextAlignment(.center)
                                 }
-                                
+
                             }
                             NavigationLink(destination: enterAct()) {
                                 VStack {
                                     Image("menu_sleep")
                                     Text("Физическая \n активность и сон").foregroundColor(Color.black).multilineTextAlignment(.center)
                                 }
-                                
+
                             }
                             .padding(.top, 26.3)
                             NavigationLink(destination: export()) {
@@ -63,7 +62,7 @@ struct mainPage: View {
             }
             .navigationBarTitle("Диа Компаньон")
             .navigationBarTitleDisplayMode(.inline)
-//            .navigationBarBackButtonHidden(true)
+            .navigationBarBackButtonHidden(true)
             .toolbar {
                 ToolbarItemGroup(placement: .navigationBarTrailing){
                     Button(action: {showModal.toggle()}){
@@ -74,7 +73,5 @@ struct mainPage: View {
                     }
                 }
             }
-        }
-        .navigationViewStyle(StackNavigationViewStyle())
     }
 }

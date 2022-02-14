@@ -10,11 +10,14 @@ import SwiftUI
 struct login: View {
     @State private var login: String = ""
     @State private var pass: String = ""
+    @State private var istrue = false
+    @StateObject var islogin = check()
     var body: some View {
         NavigationView {
             GeometryReader { g in
                 ScrollView(.vertical, showsIndicators: false) {
                     VStack {
+                        NavigationLink(isActive: $istrue, destination: {mainPage()}, label:{ EmptyView()})
                         VStack(alignment: .leading, spacing: 8) {
                             Text("Логин")
                                 .fontWeight(.bold)
@@ -34,7 +37,12 @@ struct login: View {
                             Divider()
                         }
                         .padding(.top, 20)
-                        Button(action: {}, label: {
+                        Button(action: {
+                            istrue = true
+                            Task {
+                                await islogin.setlogged(upass: pass, ulogin: login)
+                            }
+                        }, label: {
                             Text("Войти")
                                 .frame(maxWidth: .infinity)
                                 .frame(height: 50)
@@ -62,6 +70,12 @@ struct login: View {
                     }
                 }
             }
+        }
+        .navigationViewStyle(StackNavigationViewStyle())
+        .task {
+            await islogin.checklog()
+            istrue = islogin.login
+
         }
     }
 }

@@ -26,7 +26,7 @@ struct sugarChange: View {
     }
     @State private var previewIndex = selectedvar.natoshak
     var body: some View {
-        Form{
+        Form {
             Section(header: Text("Общая информация")){
                 TextField("Уровень сахара в крови, ммоль/л", text: $t)
                     .keyboardType(.decimalPad)
@@ -80,8 +80,8 @@ struct sugarChange: View {
     }
 }
 
-struct sugarChange_Previews: PreviewProvider {
-    static var previews: some View {
-        sugarChange()
-    }
-}
+//struct sugarChange_Previews: PreviewProvider {
+//    static var previews: some View {
+//        sugarChange()
+//    }
+//}
