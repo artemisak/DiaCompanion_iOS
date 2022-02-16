@@ -10,51 +10,50 @@ import SwiftUI
 struct login: View {
     @State private var login: String = ""
     @State private var pass: String = ""
-    @State private var istrue = false
     @StateObject var islogin = check()
     var body: some View {
         NavigationView {
             GeometryReader { g in
                 ScrollView(.vertical, showsIndicators: false) {
-                    VStack {
-                        NavigationLink(isActive: $istrue, destination: {mainPage()}, label:{ EmptyView()})
-                        VStack(alignment: .leading, spacing: 8) {
-                            Text("Логин")
-                                .fontWeight(.bold)
-                                .foregroundColor(.gray)
-                            TextField("email@gmail.com", text: $login)
-                                .font(.system(size: 20))
-                                .padding(.top, 5)
-                            Divider()
-                        }
-                        VStack(alignment: .leading, spacing: 8) {
-                            Text("Пароль")
-                                .fontWeight(.bold)
-                                .foregroundColor(.gray)
-                            SecureField("password", text: $pass)
-                                .font(.system(size: 20))
-                                .padding(.top, 5)
-                            Divider()
-                        }
-                        .padding(.top, 20)
-                        Button(action: {
-                            istrue = true
-                            Task {
-                                await islogin.setlogged(upass: pass, ulogin: login)
+
+                        VStack {
+                            NavigationLink(isActive: $islogin.istrue, destination: {mainPage()}, label:{ EmptyView()})
+                            VStack(alignment: .leading, spacing: 8) {
+                                Text("Логин")
+                                    .fontWeight(.bold)
+                                    .foregroundColor(.gray)
+                                TextField("email@gmail.com", text: $login)
+                                    .textInputAutocapitalization(.never)
+                                    .disableAutocorrection(true)
+                                    .font(.system(size: 20))
+                                    .padding(.top, 5)
+                                Divider()
                             }
-                        }, label: {
-                            Text("Войти")
-                                .frame(maxWidth: .infinity)
-                                .frame(height: 50)
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 8)
-                                        .stroke(Color.blue, lineWidth: 1)
-                                )
-                        })
+                            VStack(alignment: .leading, spacing: 8) {
+                                Text("Пароль")
+                                    .fontWeight(.bold)
+                                    .foregroundColor(.gray)
+                                SecureField("password", text: $pass)
+                                    .textInputAutocapitalization(.never)
+                                    .disableAutocorrection(true)
+                                    .font(.system(size: 20))
+                                    .padding(.top, 5)
+                                Divider()
+                            }
                             .padding(.top, 20)
-                    }
-                    .padding()
-                    .frame(minHeight: g.size.height)
+                            Button(action: {
+                                Task {
+                                    await islogin.setlogged(upass: pass, ulogin: login)
+                                }
+                            }, label: {
+                                Text("Войти")
+                            })
+                                .padding(.top, 20)
+                                .buttonStyle(RoundedRectangleButtonStyle())
+                        }
+                        .padding()
+                        .frame(minHeight: g.size.height)
+                    
                 }
             }
             .ignoresSafeArea()
@@ -62,6 +61,7 @@ struct login: View {
                 ToolbarItem(placement: .principal) {
                     HStack{
                         Text("Dia ID")
+                            .foregroundColor(Color.black)
                             .font(.title)
                             .fontWeight(.bold)
                         Image("ofIcon")
@@ -74,10 +74,22 @@ struct login: View {
         .navigationViewStyle(StackNavigationViewStyle())
         .task {
             await islogin.checklog()
-            istrue = islogin.login
-
         }
+        .preferredColorScheme(.light)
     }
+}
+
+struct RoundedRectangleButtonStyle: ButtonStyle {
+  func makeBody(configuration: Configuration) -> some View {
+    HStack {
+      Spacer()
+      configuration.label.foregroundColor(.white)
+      Spacer()
+    }
+    .padding()
+    .background(Color.blue.cornerRadius(8))
+    .scaleEffect(configuration.isPressed ? 0.95 : 1)
+  }
 }
 
 struct login_Previews: PreviewProvider {

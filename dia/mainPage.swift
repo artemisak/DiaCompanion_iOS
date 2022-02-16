@@ -73,5 +73,6 @@ struct mainPage: View {
                     }
                 }
             }
+            .preferredColorScheme(.light)
     }
 }

@@ -10,6 +10,7 @@ import SQLite
 
 class check: ObservableObject {
     @Published var login = false
+    @Published var istrue = false
     func checklog() async -> Void {
         do {
             let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
@@ -21,6 +22,7 @@ class check: ObservableObject {
             let log = Expression<Int64>("loggedin")
             for i in try db.prepare(tb.select(log)){
                 self.login = (i[log] != 0)
+                self.istrue = self.login
             }
         }
         catch {
@@ -38,6 +40,7 @@ class check: ObservableObject {
             let log = Expression<Int64>("loggedin")
             if (upass == "pass123") && (ulogin == "almazov") {
                 try db.run(tb.update(log <- 1))
+                self.istrue = true
             }
         }
         catch {
