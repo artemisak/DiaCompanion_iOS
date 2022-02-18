@@ -9,9 +9,10 @@ import Foundation
 import SQLite
 
 class check: ObservableObject {
-    @Published var login = false
+    
     @Published var istrue = false
-    func checklog() async -> Void {
+    
+    func checklog() {
         do {
             let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
             let path = documents + "/diacompanion.db"
@@ -21,15 +22,15 @@ class check: ObservableObject {
             let tb = Table("usermac")
             let log = Expression<Int64>("loggedin")
             for i in try db.prepare(tb.select(log)){
-                self.login = (i[log] != 0)
-                self.istrue = self.login
+                self.istrue = (i[log] != 0)
             }
         }
         catch {
             print(error)
         }
     }
-    func setlogged(upass: String, ulogin: String) async -> Void {
+    
+    func setlogged(upass: String, ulogin: String) {
         do {
             let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
             let path = documents + "/diacompanion.db"
