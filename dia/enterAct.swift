@@ -65,6 +65,9 @@ struct enterAct: View {
             }
         }
     }
+    init() {
+        UIScrollView.appearance().keyboardDismissMode = .onDrag
+    }
 }
 
 struct enterAct_Previews: PreviewProvider {

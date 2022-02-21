@@ -51,6 +51,9 @@ struct massa: View {
             }
         }
     }
+    init() {
+        UIScrollView.appearance().keyboardDismissMode = .onDrag
+    }
 }
 
 struct massa_Previews: PreviewProvider {

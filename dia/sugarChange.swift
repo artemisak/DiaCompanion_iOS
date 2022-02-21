@@ -78,6 +78,9 @@ struct sugarChange: View {
             }
         }
     }
+    init() {
+        UIScrollView.appearance().keyboardDismissMode = .onDrag
+    }
 }
 
 //struct sugarChange_Previews: PreviewProvider {

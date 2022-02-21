@@ -30,7 +30,8 @@ class check: ObservableObject {
         }
     }
     
-    func setlogged(upass: String, ulogin: String) {
+    func setlogged(upass: String, ulogin: String) -> Bool {
+        var isWrong = false
         do {
             let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
             let path = documents + "/diacompanion.db"
@@ -42,11 +43,13 @@ class check: ObservableObject {
             if (upass == "pass123") && (ulogin == "almazov") {
                 try db.run(tb.update(log <- 1))
                 self.istrue = true
+                isWrong = true
             }
         }
         catch {
             print(error)
         }
+        return isWrong
     }
 }
 

@@ -77,6 +77,9 @@ struct inject: View {
             }
         }
     }
+    init() {
+        UIScrollView.appearance().keyboardDismissMode = .onDrag
+    }
 }
 
 struct inject_Previews: PreviewProvider {

@@ -99,4 +99,7 @@ struct enterFood: View {
     func removeRows(at offsets: IndexSet){
         foodItems.remove(atOffsets: offsets)
     }
+    init() {
+        UIScrollView.appearance().keyboardDismissMode = .onDrag
+    }
 }

@@ -50,6 +50,9 @@ struct ketonur: View {
             }
         }
     }
+    init() {
+        UIScrollView.appearance().keyboardDismissMode = .onDrag
+    }
 }
 
 struct ketonur_Previews: PreviewProvider {
