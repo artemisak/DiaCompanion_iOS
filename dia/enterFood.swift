@@ -95,11 +95,13 @@ struct enterFood: View {
                 Text("Сохранить")
             }
         }
+        .ignoresSafeArea(.keyboard)
     }
     func removeRows(at offsets: IndexSet){
         foodItems.remove(atOffsets: offsets)
     }
     init() {
         UIScrollView.appearance().keyboardDismissMode = .onDrag
+        UITableView.appearance().showsVerticalScrollIndicator = false
     }
 }

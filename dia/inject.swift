@@ -76,9 +76,11 @@ struct inject: View {
                 }
             }
         }
+        .ignoresSafeArea(.keyboard)
     }
     init() {
         UIScrollView.appearance().keyboardDismissMode = .onDrag
+        UITableView.appearance().showsVerticalScrollIndicator = false
     }
 }
 

@@ -16,7 +16,7 @@ struct massa: View {
     @State private var minutes: Int = 0
     @State private var isAct: Bool = false
     var body: some View {
-        Form{
+        Form {
             Section(header: Text("Общая информация")){
                 TextField("кг", text: $t)
                     .keyboardType(.decimalPad)
@@ -50,9 +50,11 @@ struct massa: View {
                 }
             }
         }
+        .ignoresSafeArea(.keyboard)
     }
     init() {
         UIScrollView.appearance().keyboardDismissMode = .onDrag
+        UITableView.appearance().showsVerticalScrollIndicator = false
     }
 }
 
