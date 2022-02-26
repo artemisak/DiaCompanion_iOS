@@ -18,7 +18,6 @@ struct startPage: View {
             }
         }
         .navigationViewStyle(StackNavigationViewStyle())
-        .preferredColorScheme(.light)
         .onAppear(perform: {
             islogin.checklog()
         })

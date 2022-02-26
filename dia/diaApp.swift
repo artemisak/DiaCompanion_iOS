@@ -12,6 +12,7 @@ struct diaApp: App {
     var body: some Scene {
         WindowGroup {
             startPage()
+                .preferredColorScheme(.light)
         }
     }
 }
