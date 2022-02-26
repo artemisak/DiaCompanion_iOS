@@ -278,9 +278,13 @@ func getName() -> String {
         _=copyDatabaseIfNeeded(sourcePath: sourcePath)
         let db = try Connection(path)
         let foodTable = Table("usermac")
-        let userName = Expression<String>("fio")
+        let userName = Expression<String?>("fio")
         for i in try db.prepare(foodTable.select(userName)){
-            fio = i[userName]
+            if i[userName] != nil {
+            fio = i[userName]!
+            } else {
+                fio = "Новый пользователь 1"
+            }
         }
         if fio == "" {
             fio = "Новый пользователь 1"
