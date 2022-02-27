@@ -20,15 +20,15 @@ struct bday: View {
                 Text("Дата рождения")
                     .padding()
                 Divider()
-                    VStack(){
-                        DatePicker(
-                            "Дата",
-                             selection: $vDate,
-                             displayedComponents: [.date]
-                        ).environment(\.locale, Locale.init(identifier: "ru"))
-                         .datePickerStyle(.wheel)
-                         .labelsHidden()
-                    }.padding()
+                VStack(){
+                    DatePicker(
+                        "Дата",
+                        selection: $vDate,
+                        displayedComponents: [.date]
+                    ).environment(\.locale, Locale.init(identifier: "ru"))
+                        .datePickerStyle(.wheel)
+                        .labelsHidden()
+                }.padding()
                 Divider()
                 HStack(){
                     Button(action: {

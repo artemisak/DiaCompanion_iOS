@@ -11,7 +11,7 @@ struct weekS: View {
     @Binding var bWeek: Bool
     @State private var selectedW = 20
     @State private var selectedD = 4
-
+    
     var body: some View {
         ZStack{
             Color(.black)
@@ -21,7 +21,7 @@ struct weekS: View {
             VStack(spacing:0){
                 Text("Неделя беременности на начало исследования")
                     .multilineTextAlignment(.center)
-                .padding()
+                    .padding()
                 Divider()
                 HStack(){
                     VStack{

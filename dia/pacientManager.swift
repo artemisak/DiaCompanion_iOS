@@ -18,14 +18,14 @@ func addName(pName: String){
         let users = Table("usermac")
         let name = Expression<String>("fio")
         let _id = Expression<Int>("id")
-
+        
         let all = Array(try db.prepare(users.select(_id)))
         if all.count != 0 {
             try db.run(users.update(name <- pName))
         } else {
             try db.run(users.insert(name <- pName))
         }
-
+        
     } catch {
         print(error)
     }
@@ -277,7 +277,7 @@ func copyDatabaseIfNeeded(sourcePath: String) -> Bool {
         try FileManager.default.copyItem(atPath: sourcePath, toPath: destinationPath)
         return true
     } catch {
-      print("error during file copy: \(error)")
+        print("error during file copy: \(error)")
         return false
     }
 }

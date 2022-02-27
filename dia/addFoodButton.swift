@@ -72,7 +72,7 @@ struct addFoodButton: View {
             }
         }
     }
-        
+    
     @ViewBuilder
     func DoButton(dish: FoodList) -> some View {
         Button(action: {

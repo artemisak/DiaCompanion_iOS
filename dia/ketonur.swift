@@ -23,14 +23,14 @@ struct ketonur: View {
             }
             Section(header: Text("Время измерения")){
                 VStack(alignment: .center){
-                DatePicker(
-                    selection: $date,
-                    displayedComponents: [.date, .hourAndMinute]
-                ){}
-                .environment(\.locale, Locale.init(identifier: "ru"))
-                .frame(width: 300)
-                .labelsHidden()
-                .datePickerStyle(WheelDatePickerStyle())
+                    DatePicker(
+                        selection: $date,
+                        displayedComponents: [.date, .hourAndMinute]
+                    ){}
+                    .environment(\.locale, Locale.init(identifier: "ru"))
+                    .frame(width: 300)
+                    .labelsHidden()
+                    .datePickerStyle(WheelDatePickerStyle())
                 }.frame(maxWidth: .infinity)
             }
         }

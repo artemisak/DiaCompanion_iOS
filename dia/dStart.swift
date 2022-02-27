@@ -23,11 +23,11 @@ struct dStart: View {
                 VStack(){
                     DatePicker(
                         "Дата",
-                         selection: $vDate,
-                         displayedComponents: [.date]
+                        selection: $vDate,
+                        displayedComponents: [.date]
                     ).environment(\.locale, Locale.init(identifier: "ru"))
-                     .datePickerStyle(.wheel)
-                     .labelsHidden()
+                        .datePickerStyle(.wheel)
+                        .labelsHidden()
                 }.padding()
                 Divider()
                 HStack(){

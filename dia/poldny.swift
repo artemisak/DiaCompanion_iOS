@@ -26,12 +26,12 @@ struct poldny: View {
                     }
                 }
             }
-            
+        
     }
     func startUp() {
         
-//        let testOnDates = [Date().addingTimeInterval(60*60*24),Date().addingTimeInterval(60*60*24*2)]
-//        rkManager3.selectedDates.append(contentsOf: testOnDates)
+        //        let testOnDates = [Date().addingTimeInterval(60*60*24),Date().addingTimeInterval(60*60*24*2)]
+        //        rkManager3.selectedDates.append(contentsOf: testOnDates)
         
         rkManager3.colors.weekdayHeaderColor = Color.blue
         rkManager3.colors.monthHeaderColor = Color.black

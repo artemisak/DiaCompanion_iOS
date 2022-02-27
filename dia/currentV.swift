@@ -17,7 +17,7 @@ struct currentV: View {
         case Tkachuk = "Ткачут Александра Сергеевна"
         case Vasukova = "Васюкова Елена Андреева"
         case without = ""
-
+        
         var id: String { self.rawValue }
     }
     @State private var selectedVrach = Vrachi.Popova
@@ -32,17 +32,17 @@ struct currentV: View {
                 Text("Лечащий врач")
                     .padding()
                 Divider()
-                    VStack(){
-                        Picker("", selection: $selectedVrach) {
-                            Text("Анопова Анна Дмитриевна").tag(Vrachi.Anopova)
-                            Text("Болотько Яна Алексеевна").tag(Vrachi.Bolotko)
-                            Text("Дронова Александра Владимировна").tag(Vrachi.Dronova)
-                            Text("Попова Полина Викторовна").tag(Vrachi.Popova)
-                            Text("Ткачут Александра Сергеевна").tag(Vrachi.Tkachuk)
-                            Text("Васюкова Елена Андреева").tag(Vrachi.Vasukova)
-                            Text("Без врача").tag(Vrachi.without)
-                        }.pickerStyle(.inline).labelsHidden()
-                    }
+                VStack(){
+                    Picker("", selection: $selectedVrach) {
+                        Text("Анопова Анна Дмитриевна").tag(Vrachi.Anopova)
+                        Text("Болотько Яна Алексеевна").tag(Vrachi.Bolotko)
+                        Text("Дронова Александра Владимировна").tag(Vrachi.Dronova)
+                        Text("Попова Полина Викторовна").tag(Vrachi.Popova)
+                        Text("Ткачут Александра Сергеевна").tag(Vrachi.Tkachuk)
+                        Text("Васюкова Елена Андреева").tag(Vrachi.Vasukova)
+                        Text("Без врача").tag(Vrachi.without)
+                    }.pickerStyle(.inline).labelsHidden()
+                }
                 Divider()
                 HStack(){
                     Button(action: {

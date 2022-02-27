@@ -29,16 +29,14 @@ struct ModalView: View {
                             Button("Отметить полные дни", action: {})
                         }.foregroundColor(.black)
                         NavigationLink(destination: PDFKitView(url: fileUrl)
+                                        .navigationTitle("Обучение")
                                         .navigationBarTitleDisplayMode(.inline)) {
                             Button("Обучение", action: {})
                         }.foregroundColor(.black)
-//                        Button("Обучение", action: {
-//                            PDFKitView(url: fileUrl)
-//                        }).foregroundColor(.black)
                         Button("Помощь", action: {
                             phelper = false
                         })
-                        .foregroundColor(.black)
+                            .foregroundColor(.black)
                     }
                 }
                 if !phelper {
@@ -63,14 +61,14 @@ struct PDFKitRepresentedView: UIViewRepresentable {
     init(_ url: URL) {
         self.url = url
     }
-
+    
     func makeUIView(context: UIViewRepresentableContext<PDFKitRepresentedView>) -> PDFKitRepresentedView.UIViewType {
         let pdfView = PDFView()
         pdfView.document = PDFDocument(url: self.url)
         pdfView.autoScales = true
         return pdfView
     }
-
+    
     func updateUIView(_ uiView: UIView, context: UIViewRepresentableContext<PDFKitRepresentedView>) {
         // Update the view.
     }

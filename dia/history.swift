@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct history: View {
-
+    
     @StateObject var hList = historyList()
     
     var body: some View {
@@ -16,7 +16,7 @@ struct history: View {
             ForEach(hList.histList, id: \.id){
                 Text("\($0.name)")
             }.onDelete(perform: removeRows)
-             .onMove(perform: move)
+                .onMove(perform: move)
         }
         .listStyle(.plain)
         .task {
@@ -31,7 +31,7 @@ struct history: View {
     
     func move(from source: IndexSet, to destination: Int) {
         hList.histList.move(fromOffsets: source, toOffset: destination)
-        }
+    }
     
     func removeRows(at offsets: IndexSet) {
         offsets.sorted(by: > ).forEach {i in

@@ -43,7 +43,7 @@ struct mainPage: View {
                                 Text("Введение инсулина").foregroundColor(Color.black).multilineTextAlignment(.center)
                                     .font(.system(size: 17))
                             }
-
+                            
                         }
                         NavigationLink(destination: enterAct()) {
                             VStack {
@@ -51,7 +51,7 @@ struct mainPage: View {
                                 Text("Физическая \n активность и сон").foregroundColor(Color.black).multilineTextAlignment(.center)
                                     .font(.system(size: 17))
                             }
-
+                            
                         }
                         .padding(.top, 26.3)
                         NavigationLink(destination: export()) {

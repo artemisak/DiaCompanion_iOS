@@ -32,7 +32,7 @@ class Anatomy {
         format_set_align(merge_format_alt, UInt8(LXW_ALIGN_VERTICAL_CENTER.rawValue))
         format_set_bg_color(merge_format_alt, 0xF0F8FF)
         format_set_border(merge_format_alt, UInt8(LXW_BORDER_DOTTED.rawValue))
-
+        
         let merge_format1 = workbook_add_format(workbook);
         format_set_align(merge_format1, UInt8(LXW_ALIGN_CENTER.rawValue))
         format_set_align(merge_format1, UInt8(LXW_ALIGN_VERTICAL_CENTER.rawValue))
@@ -44,7 +44,7 @@ class Anatomy {
         format_set_align(merge_format_alt1, UInt8(LXW_ALIGN_VERTICAL_CENTER.rawValue))
         format_set_bg_color(merge_format_alt1, 0xF0F8FF)
         format_set_border(merge_format_alt1, UInt8(LXW_BORDER_DOTTED.rawValue))
-
+        
         let merge_format2 = workbook_add_format(workbook);
         format_set_align(merge_format2, UInt8(LXW_ALIGN_DISTRIBUTED.rawValue))
         format_set_align(merge_format2, UInt8(LXW_ALIGN_VERTICAL_CENTER.rawValue))
@@ -124,7 +124,7 @@ class Anatomy {
         formater.dateFormat = "dd.MM.yyyy"
         let formater1 = DateFormatter()
         formater1.dateFormat = "HH:mm"
-                
+        
         var listOfIndex: [Int] = []
         for i in 0..<tbl.count {
             listOfIndex.append(tbl[i].food.joined().count)
@@ -135,7 +135,7 @@ class Anatomy {
                 listOfIndex1.append(tbl[i].food[i1].count)
             }
         }
-
+        
         worksheet_merge_range(worksheet1, 0, 0, 0, 34, userName, nil);
         worksheet_merge_range(worksheet1, 1, 0, 1, 34, "Приемы пищи", merge_format3);
         worksheet_write_string(worksheet1, 2, 1, "Дата", merge_format3)
@@ -273,7 +273,7 @@ class Anatomy {
                 r += 1
             }
         }
-                
+        
         worksheet_write_string(worksheet1, lxw_row_t(3+r1+1), 0, "Среднее по дням", merge_format3)
         worksheet_write_string(worksheet1, lxw_row_t(3+r1+2), 1, "Дата", merge_format3)
         worksheet_merge_range(worksheet1, lxw_row_t(3+r1+2), 2, lxw_row_t(3+r1+2), 4, nil, merge_format3);

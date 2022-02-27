@@ -172,7 +172,7 @@ func getFoodRecords() -> [TableRecord] {
                 record[i].ne = ["\(i1[ne])"]
             }
         }
-
+        
         if record.count > 0 {
             record = record.sorted(by: {($0.day, $0.time, $0.foodType) < ($1.day, $1.time, $1.foodType)})
             
@@ -281,7 +281,7 @@ func getName() -> String {
         let userName = Expression<String?>("fio")
         for i in try db.prepare(foodTable.select(userName)){
             if i[userName] != nil {
-            fio = i[userName]!
+                fio = i[userName]!
             } else {
                 fio = "Новый пользователь 1"
             }
@@ -329,11 +329,11 @@ func getSugarRecords() -> [sugarlvl] {
         
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "ru_RU")
-//        dateFormatter.dateFormat = "dd.MM.yyyy"
+        //        dateFormatter.dateFormat = "dd.MM.yyyy"
         dateFormatter.setLocalizedDateFormatFromTemplate("dd.MM.yyyy")
         let dateFormatter1 = DateFormatter()
         dateFormatter1.locale = Locale(identifier: "ru_RU")
-//        dateFormatter1.dateFormat = "HH:mm"
+        //        dateFormatter1.dateFormat = "HH:mm"
         dateFormatter1.setLocalizedDateFormatFromTemplate("HH:mm")
         
         for i in try db.prepare(sugarChange.select(lvl,period,time)) {
@@ -398,23 +398,23 @@ func getSugarRecords() -> [sugarlvl] {
 }
 
 extension String {
-
+    
     var length: Int {
         return count
     }
-
+    
     subscript (i: Int) -> String {
         return self[i ..< i + 1]
     }
-
+    
     func substring(fromIndex: Int) -> String {
         return self[min(fromIndex, length) ..< length]
     }
-
+    
     func substring(toIndex: Int) -> String {
         return self[0 ..< max(0, toIndex)]
     }
-
+    
     subscript (r: Range<Int>) -> String {
         let range = Range(uncheckedBounds: (lower: max(0, min(length, r.lowerBound)),
                                             upper: min(length, max(0, r.upperBound))))
