@@ -268,6 +268,50 @@ func addKetonur(mmol: Double, time: String){
     }
 }
 
+func addDatesToDB(dates: [Date]) {
+    do {
+        let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
+        let path = documents + "/diacompanion.db"
+        let sourcePath = Bundle.main.path(forResource: "diacompanion", ofType: "db")!
+        _=copyDatabaseIfNeeded(sourcePath: sourcePath)
+        let db = try Connection(path)
+        let fulldays = Table("fulldays")
+        let day = Expression<String>("day")
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "ru_RU")
+        dateFormatter.setLocalizedDateFormatFromTemplate("dd.MM.yyyy")
+        for i in 0..<dates.count {
+            try db.run(fulldays.insert(day <- dateFormatter.string(from: dates[i])))
+        }
+    }
+    catch {
+        print(error)
+    }
+}
+
+func getDatesFromDB() -> [Date] {
+    var dates : [Date] = []
+    do {
+        let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
+        let path = documents + "/diacompanion.db"
+        let sourcePath = Bundle.main.path(forResource: "diacompanion", ofType: "db")!
+        _=copyDatabaseIfNeeded(sourcePath: sourcePath)
+        let db = try Connection(path)
+        let fulldays = Table("fulldays")
+        let day = Expression<String>("day")
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "ru_RU")
+        dateFormatter.setLocalizedDateFormatFromTemplate("dd.MM.yyyy")
+        for i in try db.prepare(fulldays.select(day)) {
+            dates.append(dateFormatter.date(from: i[day])!)
+        }
+    }
+    catch {
+        print(error)
+    }
+    return dates
+}
+
 func copyDatabaseIfNeeded(sourcePath: String) -> Bool {
     let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
     let destinationPath = documents + "/diacompanion.db"

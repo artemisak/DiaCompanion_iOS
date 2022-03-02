@@ -20,6 +20,7 @@ struct poldny: View {
             .toolbar {
                 ToolbarItemGroup(placement: .navigationBarTrailing){
                     Button(action: {
+                        addDatesToDB(dates: rkManager3.selectedDates)
                         presentationMode.wrappedValue.dismiss()
                     }){
                         Text("Сохранить")
@@ -29,10 +30,7 @@ struct poldny: View {
         
     }
     func startUp() {
-        
-        //        let testOnDates = [Date().addingTimeInterval(60*60*24),Date().addingTimeInterval(60*60*24*2)]
-        //        rkManager3.selectedDates.append(contentsOf: testOnDates)
-        
+        rkManager3.selectedDates = getDatesFromDB()
         rkManager3.colors.weekdayHeaderColor = Color.blue
         rkManager3.colors.monthHeaderColor = Color.black
         rkManager3.colors.textColor = Color.blue

@@ -10,7 +10,7 @@ import PDFKit
 
 struct ModalView: View {
     @State var phelper : Bool = true
-    let fileUrl = Bundle.main.url(forResource: "Help", withExtension: "pdf")!
+    let fileUrl = Bundle.main.url(forResource: "help", withExtension: "pdf")!
     var body: some View {
         NavigationView {
             ZStack {
