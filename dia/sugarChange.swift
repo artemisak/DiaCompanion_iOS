@@ -25,11 +25,13 @@ struct sugarChange: View {
         var id: String { self.rawValue }
     }
     @State private var previewIndex = selectedvar.natoshak
+    @FocusState private var focusedField: Bool
     var body: some View {
         Form {
             Section(header: Text("Общая информация")){
                 TextField("Уровень сахара в крови, ммоль/л", text: $t)
                     .keyboardType(.decimalPad)
+                    .focused($focusedField)
                 Picker("Период", selection: $previewIndex) {
                     Text("Натощак").tag(selectedvar.natoshak)
                     Text("После завтрака").tag(selectedvar.zavtrak)
@@ -57,7 +59,7 @@ struct sugarChange: View {
         }
         .navigationBarTitle(Text("Измерение сахара"))
         .toolbar {
-            ToolbarItemGroup(){
+            ToolbarItem(placement: .navigationBarTrailing, content: {
                 Button(action: {
                     let dateFormatter = DateFormatter()
                     dateFormatter.locale = Locale(identifier: "ru_RU")
@@ -75,7 +77,17 @@ struct sugarChange: View {
                 }) {
                     Text("Сохранить")
                 }
-            }
+            })
+            ToolbarItem(placement: .keyboard, content: {
+                HStack{
+                Spacer()
+                Button(action: {
+                    focusedField = false
+                }, label: {
+                    Text("Готово")
+                })
+                }
+            })
         }
         .ignoresSafeArea(.keyboard)
     }
@@ -84,9 +96,3 @@ struct sugarChange: View {
         UITableView.appearance().showsVerticalScrollIndicator = false
     }
 }
-
-//struct sugarChange_Previews: PreviewProvider {
-//    static var previews: some View {
-//        sugarChange()
-//    }
-//}

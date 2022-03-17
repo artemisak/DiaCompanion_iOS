@@ -80,7 +80,7 @@ class Food: ObservableObject {
     }
 }
 
-func SaveToDB(FoodName: String, gram: String, selectedDate: Date) {
+func SaveToDB(FoodName: String, gram: String, selectedDate: Date, selectedType: String) {
     do {
         let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
         let path = documents + "/diacompanion.db"
@@ -93,14 +93,20 @@ func SaveToDB(FoodName: String, gram: String, selectedDate: Date) {
         let date = Expression<String>("date")
         let time = Expression<String>("time")
         let timeStamp = Expression<String>("timeStamp")
+        let type = Expression<String>("foodType")
         let dateFormatter = DateFormatter()
+        let dateFormatter1 = DateFormatter()
+        let dateFormatter2 = DateFormatter()
         dateFormatter.locale = Locale(identifier: "ru_RU")
         dateFormatter.setLocalizedDateFormatFromTemplate("dd.MM.yyyy HH:mm")
+        dateFormatter1.locale = Locale(identifier: "ru_RU")
+        dateFormatter1.setLocalizedDateFormatFromTemplate("dd.MM.yyyy")
+        dateFormatter2.locale = Locale(identifier: "ru_RU")
+        dateFormatter2.setLocalizedDateFormatFromTemplate("HH:mm")
         let realDateTime = dateFormatter.string(from: Date.now)
-        let selectDate = dateFormatter.string(from: selectedDate)
-        dateFormatter.setLocalizedDateFormatFromTemplate("HH:mm")
-        let dtime = dateFormatter.string(from: selectedDate)
-        try db.run(diary.insert(foodName <- FoodName, g <- gram, date <- selectDate, time <- dtime,timeStamp <- realDateTime))
+        let selectDate = dateFormatter1.string(from: selectedDate)
+        let dtime = dateFormatter2.string(from: selectedDate)
+        try db.run(diary.insert(foodName <- FoodName, g <- gram, date <- selectDate, time <- dtime,timeStamp <- realDateTime, type <- selectedType))
     }
     catch {
         print(error)

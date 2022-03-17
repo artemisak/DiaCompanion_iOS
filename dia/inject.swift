@@ -30,6 +30,7 @@ struct inject: View {
         var id: String { self.rawValue }
     }
     @State private var previewIndex = injectType.ultra
+    @FocusState private var focusedField: Bool
     var body: some View {
         Form{
             Section(header: Text("Общая информация")){
@@ -76,6 +77,18 @@ struct inject: View {
                 }
             }
         }
+        .toolbar(content: {
+            ToolbarItem(placement: .keyboard, content: {
+                HStack{
+                Spacer()
+                Button(action: {
+                    focusedField = false
+                }, label: {
+                    Text("Готово")
+                })
+                }
+            })
+        })
         .ignoresSafeArea(.keyboard)
     }
     init() {

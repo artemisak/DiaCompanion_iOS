@@ -20,17 +20,20 @@ struct export: View {
                         Button(action:{
                             isLoad.toggle()
                             Task {
-                                path.removeAll()
-                                path.append(try await anatomy.generate())
-                                DispatchQueue.main.asyncAfter(deadline: .now()) {
+                                do {
+                                    path.removeAll()
+                                    path.append(try await anatomy.generate())
                                     isLoad.toggle()
+                                    isPres.toggle()
+                                    }
+                                catch {
+                                    print(error)
                                 }
-                                isPres.toggle()
                             }
                         }){
                             VStack{
                                 Image("menu_xlsx")
-                                Text("Показать данные в \n таблице").foregroundColor(Color.black).multilineTextAlignment(.center)
+                                Text("Отправить данные \n врачу").foregroundColor(Color.black).multilineTextAlignment(.center)
                             }
                         }
                         .sheet(isPresented: $isPres) {
@@ -41,7 +44,7 @@ struct export: View {
                         }){
                             VStack{
                                 Image("menu_mail")
-                                Text("Отправить данные \n врачу").foregroundColor(Color.black).multilineTextAlignment(.center)
+                                Text("Показать данные в \n таблице").foregroundColor(Color.black).multilineTextAlignment(.center)
                             }
                         }
                     }.padding(.top)
@@ -58,23 +61,23 @@ struct export: View {
     }
 }
 
-struct ShareSheet: UIViewControllerRepresentable {
-    typealias Callback = (_ activityType: UIActivity.ActivityType?, _ completed: Bool, _ returnedItems: [Any]?, _ error: Error?) -> Void
-    
-    let activityItems: [Any]
-    let applicationActivities: [UIActivity]? = nil
-    let excludedActivityTypes: [UIActivity.ActivityType]? = nil
-    let callback: Callback? = nil
-    
-    func makeUIViewController(context: UIViewControllerRepresentableContext<ShareSheet>) -> UIActivityViewController {
-        let controller = UIActivityViewController(
-            activityItems: activityItems,
-            applicationActivities: applicationActivities)
-        controller.excludedActivityTypes = excludedActivityTypes
-        controller.completionWithItemsHandler = callback
-        return controller
-    }
-    
-    func updateUIViewController(_ uiViewController: UIActivityViewController, context: UIViewControllerRepresentableContext<ShareSheet>) {
-    }
-}
+//struct ShareSheet: UIViewControllerRepresentable {
+//    typealias Callback = (_ activityType: UIActivity.ActivityType?, _ completed: Bool, _ returnedItems: [Any]?, _ error: Error?) -> Void
+//
+//    let activityItems: [Any]
+//    let applicationActivities: [UIActivity]? = nil
+//    let excludedActivityTypes: [UIActivity.ActivityType]? = nil
+//    let callback: Callback? = nil
+//
+//    func makeUIViewController(context: UIViewControllerRepresentableContext<ShareSheet>) -> UIActivityViewController {
+//        let controller = UIActivityViewController(
+//            activityItems: activityItems,
+//            applicationActivities: applicationActivities)
+//        controller.excludedActivityTypes = excludedActivityTypes
+//        controller.completionWithItemsHandler = callback
+//        return controller
+//    }
+//
+//    func updateUIViewController(_ uiViewController: UIActivityViewController, context: UIViewControllerRepresentableContext<ShareSheet>) {
+//    }
+//}

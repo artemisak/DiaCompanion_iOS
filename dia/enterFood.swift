@@ -10,26 +10,33 @@ import SwiftUI
 struct enterFood: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @State private var multiSelection = Set<UUID>()
-    @State private var previewIndex = 1
     @State private var enabled : Bool = false
     @State private var sugar: String = ""
     @State private var isEditing = false
-    @State private var sugarlvl: String = "Риск не определен"
+    @State private var sugarlvl: String = "УСК не определен"
     @State private var isHidden: Bool = true
     @State private var date = Date()
     @State private var foodn: String = ""
     @State private var i: Int = 0
     @State private var isSheetShown = false
     @State public var foodItems: [String] = []
-    
+    enum ftype: String, CaseIterable, Identifiable {
+        case zavtrak = "Завтрак"
+        case obed = "Обед"
+        case uzin = "Ужин"
+        case perekus = "Перекусы"
+        var id: String { self.rawValue }
+    }
+    @State private var previewIndex = ftype.zavtrak
+    @FocusState private var focusedField: Bool
     var body: some View {
         Form {
             Section(header: Text("Общая информация")){
                 Picker(selection: $previewIndex, label: Text("Прием пищи")) {
-                    Text("Завтрак").tag(1)
-                    Text("Обед").tag(2)
-                    Text("Ужин").tag(3)
-                    Text("Перекусы").tag(4)
+                    Text("Завтрак").tag(ftype.zavtrak)
+                    Text("Обед").tag(ftype.obed)
+                    Text("Ужин").tag(ftype.uzin)
+                    Text("Перекусы").tag(ftype.perekus)
                 }
                 DatePicker(
                     "Дата",
@@ -53,7 +60,7 @@ struct enterFood: View {
                     .disabled(enabled == false)
                     .onChange(of: sugar){_ in
                         if (sugar == ""){
-                            sugarlvl = "Риск не определен"
+                            sugarlvl = "УСК не определен"
                         } else if (Double(sugar) ?? 5.0 > 7){
                             sugarlvl = "УСК превысит норму"
                         } else {
@@ -85,15 +92,27 @@ struct enterFood: View {
         
         .navigationTitle("Приемы пищи")
         .toolbar {
-            Button(action: {
-                for i in foodItems {
-                    let arg = "\(i)".components(separatedBy: "//")
-                    SaveToDB(FoodName: arg[0], gram: arg[1], selectedDate: date)
+            ToolbarItem(placement: .navigationBarTrailing, content: {
+                Button(action: {
+                    for i in foodItems {
+                        let arg = "\(i)".components(separatedBy: "//")
+                        SaveToDB(FoodName: arg[0], gram: arg[1], selectedDate: date, selectedType: previewIndex.rawValue)
+                    }
+                    self.presentationMode.wrappedValue.dismiss()
+                }) {
+                    Text("Сохранить")
                 }
-                self.presentationMode.wrappedValue.dismiss()
-            }) {
-                Text("Сохранить")
-            }
+            })
+            ToolbarItem(placement: .keyboard, content: {
+                HStack{
+                Spacer()
+                Button(action: {
+                    focusedField = false
+                }, label: {
+                    Text("Готово")
+                })
+                }
+            })
         }
         .ignoresSafeArea(.keyboard)
     }

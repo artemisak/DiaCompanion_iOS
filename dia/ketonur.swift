@@ -15,6 +15,7 @@ struct ketonur: View {
     @State private var hours: Int = 0
     @State private var minutes: Int = 0
     @State private var isAct: Bool = false
+    @FocusState private var focusedField: Bool
     var body: some View {
         Form{
             Section(header: Text("Общая информация")){
@@ -37,7 +38,7 @@ struct ketonur: View {
         .navigationTitle(Text("Уровень кетонурии"))
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
-            ToolbarItemGroup(){
+            ToolbarItem(placement: .navigationBarTrailing){
                 Button(action: {
                     let datef = DateFormatter()
                     datef.locale = Locale(identifier: "ru_RU")
@@ -48,6 +49,16 @@ struct ketonur: View {
                     Text("Сохранить")
                 }
             }
+            ToolbarItem(placement: .keyboard, content: {
+                HStack{
+                Spacer()
+                Button(action: {
+                    focusedField = false
+                }, label: {
+                    Text("Готово")
+                })
+                }
+            })
         }
         .ignoresSafeArea(.keyboard)
     }

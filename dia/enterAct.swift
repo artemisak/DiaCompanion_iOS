@@ -23,6 +23,7 @@ struct enterAct: View {
         var id: String {self.rawValue}
     }
     @State private var previewIndex = act.zar
+    @FocusState private var focusedField: Bool
     var body: some View {
         Form{
             Section(header: Text("Общая информация")){
@@ -64,6 +65,18 @@ struct enterAct: View {
                 }
             }
         }
+        .toolbar(content: {
+            ToolbarItem(placement: .keyboard, content: {
+                HStack{
+                Spacer()
+                Button(action: {
+                    focusedField = false
+                }, label: {
+                    Text("Готово")
+                })
+                }
+            })
+        })
         .ignoresSafeArea(.keyboard)
     }
     init() {
