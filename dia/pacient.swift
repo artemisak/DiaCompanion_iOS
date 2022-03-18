@@ -18,7 +18,7 @@ struct pacient: View {
     @State public var bHeight: Bool = true
     @State public var vDate = Date()
     @State public var txt: String = ""
-    
+    @FocusState private var focusedField: Bool
     var body: some View {
         ZStack{
             List{
@@ -76,6 +76,18 @@ struct pacient: View {
         }
         .navigationBarTitle("Персональная карта")
         .navigationBarTitleDisplayMode(.inline)
+        .toolbar{
+            ToolbarItem(placement: .keyboard, content: {
+                HStack{
+                Spacer()
+                Button(action: {
+                    focusedField = false
+                }, label: {
+                    Text("Готово")
+                })
+                }
+            })
+        }
     }
 }
 

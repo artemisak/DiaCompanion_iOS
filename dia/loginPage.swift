@@ -13,6 +13,7 @@ struct loginPage: View {
     @State private var pass: String = ""
     @State private var isWrong: Bool = true
     @ObservedObject var islogin: check
+    @FocusState private var focusedField: Bool
     var body: some View {
         VStack(spacing: 0) {
             Color.white
@@ -109,6 +110,16 @@ struct loginPage: View {
                         .frame(width: 35.0, height: 35.0)
                 }
             }
+            ToolbarItem(placement: .keyboard, content: {
+                HStack{
+                Spacer()
+                Button(action: {
+                    focusedField = false
+                }, label: {
+                    Text("Готово")
+                })
+                }
+            })
         }
     }
 }

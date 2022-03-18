@@ -17,7 +17,7 @@ struct RKViewController: View {
     var body: some View {
         Group {
             List {
-                ForEach(0..<numberOfMonths()) { index in
+                ForEach(0..<numberOfMonths(), id: \.self) { index in
                     RKMonth(isPresented: self.$isPresented, rkManager: self.rkManager, monthOffset: index)
                 }
             }

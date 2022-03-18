@@ -20,6 +20,7 @@ struct addFoodButton: View {
     @State private var searchByWordView: Bool = true
     @State private var searchByWordCategoryView: Bool = true
     @StateObject var items = Food()
+    @FocusState private var focusedField: Bool
     @MainActor
     var body: some View {
         NavigationView {
@@ -64,11 +65,23 @@ struct addFoodButton: View {
             .navigationBarTitleDisplayMode(.large)
             .interactiveDismissDisabled()
             .toolbar {
-                Button(action: {
-                    self.presentationMode.wrappedValue.dismiss()
-                }) {
-                    Text("Закрыть")
-                }
+                ToolbarItem(placement: .navigationBarTrailing, content: {
+                    Button(action: {
+                        self.presentationMode.wrappedValue.dismiss()
+                    }) {
+                        Text("Закрыть")
+                    }
+                })
+                ToolbarItem(placement: .keyboard, content: {
+                    HStack{
+                    Spacer()
+                    Button(action: {
+                        focusedField = false
+                    }, label: {
+                        Text("Готово")
+                    })
+                    }
+                })
             }
         }
     }
