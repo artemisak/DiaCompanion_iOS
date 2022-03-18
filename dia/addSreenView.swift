@@ -12,7 +12,6 @@ struct addSreenView: View {
     @Binding var gram: String
     @Binding var selectedFood: String
     @Binding var foodItems: [String]
-    
     var body: some View {
         ZStack{
             Color(.black)
@@ -61,6 +60,18 @@ struct addSreenView: View {
             }
             .background(Color.white.cornerRadius(10))
             .frame(maxWidth: 350)
+        }
+        .toolbar {
+            ToolbarItem(placement: .keyboard, content: {
+                HStack{
+                Spacer()
+                Button(action: {
+                    UIApplication.shared.dismissedKeyboard()
+                }, label: {
+                    Text("Готово")
+                })
+                }
+            })
         }
     }
 }

@@ -20,7 +20,6 @@ struct addFoodButton: View {
     @State private var searchByWordView: Bool = true
     @State private var searchByWordCategoryView: Bool = true
     @StateObject var items = Food()
-    @FocusState private var focusedField: Bool
     @MainActor
     var body: some View {
         NavigationView {
@@ -76,7 +75,7 @@ struct addFoodButton: View {
                     HStack{
                     Spacer()
                     Button(action: {
-                        focusedField = false
+                        UIApplication.shared.dismissedKeyboard()
                     }, label: {
                         Text("Готово")
                     })
@@ -132,6 +131,18 @@ struct addFoodButton: View {
         .listStyle(.plain)
         .navigationTitle(category)
         .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .keyboard, content: {
+                HStack{
+                Spacer()
+                Button(action: {
+                    UIApplication.shared.dismissedKeyboard()
+                }, label: {
+                    Text("Готово")
+                })
+                }
+            })
+        }
     }
 }
 

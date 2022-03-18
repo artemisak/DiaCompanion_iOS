@@ -28,7 +28,6 @@ struct enterFood: View {
         var id: String { self.rawValue }
     }
     @State private var previewIndex = ftype.zavtrak
-    @FocusState private var focusedField: Bool
     var body: some View {
         Form {
             Section(header: Text("Общая информация")){
@@ -107,7 +106,7 @@ struct enterFood: View {
                 HStack{
                 Spacer()
                 Button(action: {
-                    focusedField = false
+                    UIApplication.shared.dismissedKeyboard()
                 }, label: {
                     Text("Готово")
                 })

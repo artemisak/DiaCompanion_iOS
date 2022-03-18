@@ -13,7 +13,6 @@ struct loginPage: View {
     @State private var pass: String = ""
     @State private var isWrong: Bool = true
     @ObservedObject var islogin: check
-    @FocusState private var focusedField: Bool
     var body: some View {
         VStack(spacing: 0) {
             Color.white
@@ -114,7 +113,7 @@ struct loginPage: View {
                 HStack{
                 Spacer()
                 Button(action: {
-                    focusedField = false
+                    UIApplication.shared.dismissedKeyboard()
                 }, label: {
                     Text("Готово")
                 })
