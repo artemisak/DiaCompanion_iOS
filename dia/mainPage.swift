@@ -3,12 +3,10 @@ import SwiftUI
 
 struct mainPage: View {
     @State private var showModal: Bool = false
-    
     @State private var isPres: Bool = false
     @State private var isLoad: Bool = true
     @State private var path: [Any] = []
     var anatomy = Anatomy()
-    
     var body: some View {
         GeometryReader { g in
             ZStack {
@@ -70,18 +68,19 @@ struct mainPage: View {
 //                            }
                             Button(action:{
                                 isLoad.toggle()
-                                Task {
+                                Task(priority: .background) {
                                     do {
                                         path.removeAll()
                                         path.append(try await anatomy.generate())
-                                        isLoad.toggle()
-                                        isPres.toggle()
+                                        DispatchQueue.main.asyncAfter(deadline: .now()+0.075){
+                                            isLoad.toggle()
+                                            isPres.toggle()
+                                        }
                                     }
                                     catch {
                                         print(error)
                                     }
                                 }
-
                             }){
                                 VStack{
                                     Image("menu_xlsx")
@@ -117,7 +116,6 @@ struct mainPage: View {
         
     }
 }
-
 struct ShareSheet: UIViewControllerRepresentable {
     typealias Callback = (_ activityType: UIActivity.ActivityType?, _ completed: Bool, _ returnedItems: [Any]?, _ error: Error?) -> Void
     
