@@ -7,6 +7,16 @@
 
 import SwiftUI
 
+enum selectedvar: String, CaseIterable, Identifiable {
+    case natoshak = "Натощак"
+    case zavtrak = "После завтрака"
+    case obed = "После обеда"
+    case uzin = "После ужина"
+    case dop = "Дополнительно"
+    case rodi = "При родах"
+    var id: String { self.rawValue }
+}
+
 struct sugarChange: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @State private var t: String = ""
@@ -15,31 +25,22 @@ struct sugarChange: View {
     @State private var minutes: Int = 0
     @State private var isAct: Bool = false
     @State private var bool1: Int = 0
-    enum selectedvar: String, CaseIterable, Identifiable {
-        case natoshak = "Натощак"
-        case zavtrak = "После завтрака"
-        case obed = "После обеда"
-        case uzin = "После ужина"
-        case dop = "Дополнительно"
-        case rodi = "При родах"
-        var id: String { self.rawValue }
-    }
-    @State private var previewIndex = selectedvar.natoshak
     @FocusState private var focusedField: Bool
+    @State var previewIndex = selectedvar.natoshak
     var body: some View {
         Form {
             Section(header: Text("Общая информация")){
                 TextField("Уровень сахара в крови, ммоль/л", text: $t)
                     .keyboardType(.decimalPad)
                     .focused($focusedField)
-                Picker("Период", selection: $previewIndex) {
-                    Text("Натощак").tag(selectedvar.natoshak)
-                    Text("После завтрака").tag(selectedvar.zavtrak)
-                    Text("После обеда").tag(selectedvar.obed)
-                    Text("После ужина").tag(selectedvar.uzin)
-                    Text("Дополнительно").tag(selectedvar.dop)
-                    Text("При родах").tag(selectedvar.rodi)
-                }
+                NavigationLink(destination: sugarPicker(previewIndex: $previewIndex), label: {
+                    HStack {
+                        Text("Период")
+                        Spacer()
+                        Text("\(previewIndex.rawValue)")
+                            .foregroundColor(.gray)
+                    }
+                })
                 Toggle(isOn: $isAct, label: {
                     Text("Была физическая нагрузка")
                 })
@@ -94,5 +95,21 @@ struct sugarChange: View {
     init() {
         UIScrollView.appearance().keyboardDismissMode = .onDrag
         UITableView.appearance().showsVerticalScrollIndicator = false
+    }
+}
+
+struct sugarPicker: View {
+    @Binding var previewIndex: selectedvar
+    var body: some View {
+        Form {
+            Picker("Период", selection: $previewIndex) {
+                Text("Натощак").tag(selectedvar.natoshak)
+                Text("После завтрака").tag(selectedvar.zavtrak)
+                Text("После обеда").tag(selectedvar.obed)
+                Text("После ужина").tag(selectedvar.uzin)
+                Text("Дополнительно").tag(selectedvar.dop)
+                Text("При родах").tag(selectedvar.rodi)
+            }.pickerStyle(.inline)
+        }
     }
 }
