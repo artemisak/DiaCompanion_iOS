@@ -59,20 +59,13 @@ struct mainPage: View {
                                 
                             }
                             .padding(.top, 26.3)
-//                            NavigationLink(destination: export()) {
-//                                VStack {
-//                                    Image("menu_chart")
-//                                    Text("Эскпорт данных").foregroundColor(Color.black).multilineTextAlignment(.center)
-//                                        .font(.system(size: 17))
-//                                }
-//                            }
                             Button(action:{
-                                isLoad.toggle()
-                                Task(priority: .background) {
+                                Task {
                                     do {
+                                        isLoad.toggle()
                                         path.removeAll()
                                         path.append(try await anatomy.generate())
-                                        DispatchQueue.main.asyncAfter(deadline: .now()+0.075){
+                                        DispatchQueue.main.asyncAfter(deadline: .now()+0.1) {
                                             isLoad.toggle()
                                             isPres.toggle()
                                         }
@@ -116,6 +109,7 @@ struct mainPage: View {
         
     }
 }
+
 struct ShareSheet: UIViewControllerRepresentable {
     typealias Callback = (_ activityType: UIActivity.ActivityType?, _ completed: Bool, _ returnedItems: [Any]?, _ error: Error?) -> Void
     
