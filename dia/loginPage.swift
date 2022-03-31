@@ -60,6 +60,7 @@ struct loginPage: View {
             if !isWrong {
                 Color.white
                     .frame(height: 30)
+                    .padding(.bottom, 10)
                     .onTapGesture {
                         UIApplication.shared.dismissedKeyboard()
                     }
@@ -67,7 +68,7 @@ struct loginPage: View {
                         Text("Неверный логин или пароль").foregroundColor(.red).font(.system(size: 18))
                             .frame(maxWidth: .infinity, alignment: .leading)
                     )
-                    .padding(.bottom, 10)
+                    
             } else {
                 Color.white
                     .frame(height: 30)
