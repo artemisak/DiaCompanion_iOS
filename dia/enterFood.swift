@@ -7,6 +7,14 @@
 
 import SwiftUI
 
+enum ftype: String, CaseIterable, Identifiable {
+    case zavtrak = "Завтрак"
+    case obed = "Обед"
+    case uzin = "Ужин"
+    case perekus = "Перекусы"
+    var id: String { self.rawValue }
+}
+
 struct enterFood: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @State private var multiSelection = Set<UUID>()
@@ -19,24 +27,18 @@ struct enterFood: View {
     @State private var foodn: String = ""
     @State private var i: Int = 0
     @State private var isSheetShown = false
-    @State public var foodItems: [String] = []
-    enum ftype: String, CaseIterable, Identifiable {
-        case zavtrak = "Завтрак"
-        case obed = "Обед"
-        case uzin = "Ужин"
-        case perekus = "Перекусы"
-        var id: String { self.rawValue }
-    }
-    @State private var previewIndex = ftype.zavtrak
+    @State private var foodItems: [String] = []
+    @State private var ftpreviewIndex = ftype.zavtrak
     var body: some View {
         Form {
             Section(header: Text("Общая информация")){
-                Picker(selection: $previewIndex, label: Text("Прием пищи")) {
-                    Text("Завтрак").tag(ftype.zavtrak)
-                    Text("Обед").tag(ftype.obed)
-                    Text("Ужин").tag(ftype.uzin)
-                    Text("Перекусы").tag(ftype.perekus)
-                }
+                NavigationLink(destination: ftPicker(ftpreviewIndex: $ftpreviewIndex), label: {
+                    HStack{
+                        Text("Прием пищи")
+                        Spacer()
+                        Text("\(ftpreviewIndex.rawValue)")
+                    }
+                })
                 DatePicker(
                     "Дата",
                     selection: $date,
@@ -95,7 +97,7 @@ struct enterFood: View {
                 Button(action: {
                     for i in foodItems {
                         let arg = "\(i)".components(separatedBy: "//")
-                        SaveToDB(FoodName: arg[0], gram: arg[1], selectedDate: date, selectedType: previewIndex.rawValue)
+                        SaveToDB(FoodName: arg[0], gram: arg[1], selectedDate: date, selectedType: ftpreviewIndex.rawValue)
                     }
                     self.presentationMode.wrappedValue.dismiss()
                 }) {
@@ -121,5 +123,19 @@ struct enterFood: View {
     init() {
         UIScrollView.appearance().keyboardDismissMode = .onDrag
         UITableView.appearance().showsVerticalScrollIndicator = false
+    }
+}
+
+struct ftPicker: View {
+    @Binding var ftpreviewIndex: ftype
+    var body: some View {
+        Form {
+            Picker(selection: $ftpreviewIndex, label: Text("Прием пищи")) {
+                Text("Завтрак").tag(ftype.zavtrak)
+                Text("Обед").tag(ftype.obed)
+                Text("Ужин").tag(ftype.uzin)
+                Text("Перекусы").tag(ftype.perekus)
+            }.pickerStyle(.inline)
+        }
     }
 }

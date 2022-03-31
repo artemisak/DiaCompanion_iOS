@@ -8,42 +8,42 @@ import Foundation
 import SwiftUI
 
 struct pacient: View {
-    @State public var pFio: Bool = true
-    @State public var pV: Bool = true
-    @State public var pDate: Bool = true
-    @State public var bStart: Bool = true
-    @State public var bWeek: Bool = true
-    @State public var bid: Bool = true
-    @State public var bWeight: Bool = true
-    @State public var bHeight: Bool = true
-    @State public var vDate = Date()
-    @State public var txt: String = ""
+    @State private var pFio: Bool = true
+    @State private var pV: Bool = true
+    @State private var pDate: Bool = true
+    @State private var bStart: Bool = true
+    @State private var bWeek: Bool = true
+    @State private var bid: Bool = true
+    @State private var bWeight: Bool = true
+    @State private var bHeight: Bool = true
+    @State private var vDate = Date()
+    @State private var txt: String = ""
     var body: some View {
         ZStack{
             List{
                 Section(header: Text("Данные пациента")){
-                    Button(action: {withAnimation(.linear){pFio.toggle()}}) {
+                    Button(action: {withAnimation{pFio.toggle()}}) {
                         Text("ФИО пациента")
                     }.foregroundColor(.black)
-                    Button(action: {withAnimation(.linear){pDate.toggle()}}) {
+                    Button(action: {withAnimation{pDate.toggle()}}) {
                         Text("Дата рождения пациента")
                     }.foregroundColor(.black)
-                    Button(action: {withAnimation(.linear){pV.toggle()}}) {
+                    Button(action: {withAnimation{pV.toggle()}}) {
                         Text("Лечащий врач")
                     }.foregroundColor(.black)
-                    Button(action: {withAnimation(.linear){bStart.toggle()}}) {
+                    Button(action: {withAnimation{bStart.toggle()}}) {
                         Text("Дата начала ведения дневника")
                     }.foregroundColor(.black)
-                    Button(action: {withAnimation(.linear){bWeek.toggle()}}) {
+                    Button(action: {withAnimation{bWeek.toggle()}}) {
                         Text("Неделя берем. на начало исследования")
                     }.foregroundColor(.black)
-                    Button(action: {withAnimation(.linear){bid.toggle()}}) {
+                    Button(action: {withAnimation{bid.toggle()}}) {
                         Text("Индивидуальный номер пациента")
                     }.foregroundColor(.black)
-                    Button(action: {withAnimation(.linear){bWeight.toggle()}}) {
+                    Button(action: {withAnimation{bWeight.toggle()}}) {
                         Text("Вес до беременности, кг")
                     }.foregroundColor(.black)
-                    Button(action: {withAnimation(.linear){bHeight.toggle()}}) {
+                    Button(action: {withAnimation{bHeight.toggle()}}) {
                         Text("Рост до беременности, см")
                     }.foregroundColor(.black)
                 }

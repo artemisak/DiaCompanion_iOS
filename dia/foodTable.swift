@@ -8,7 +8,7 @@ import Foundation
 import xlsxwriter
 
 class Anatomy {
-    func generate() async throws -> URL {
+    func generate() async -> URL {
         let generateTask = Task { () -> URL in
             let documentDirectory = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor:nil, create:false)
             let fileURL = documentDirectory.appendingPathComponent("foodTable.xlsx")

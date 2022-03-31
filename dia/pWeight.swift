@@ -35,7 +35,9 @@ struct pWeight: View {
                     Button(action: {
                         addWeight(Weight: Double(txt)!)
                         txt = ""
-                        bWeight.toggle()
+                        withAnimation {
+                            bWeight.toggle()
+                        }
                     }){
                         Text("Сохранить")
                             .frame(maxWidth: .infinity)
@@ -45,7 +47,9 @@ struct pWeight: View {
                     Divider()
                     Button(action: {
                         txt = ""
-                        bWeight.toggle()
+                        withAnimation {
+                            bWeight.toggle()
+                        }
                     }){
                         Text("Отменить")
                             .frame(maxWidth: .infinity)

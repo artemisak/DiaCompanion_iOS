@@ -19,7 +19,7 @@ struct addFoodButton: View {
     @State private var selectedFoodCategoryItem: String = ""
     @State private var searchByWordView: Bool = true
     @State private var searchByWordCategoryView: Bool = true
-    @StateObject var items = Food()
+    @StateObject private var items = Food()
     @MainActor
     var body: some View {
         NavigationView {

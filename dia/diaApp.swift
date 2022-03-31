@@ -15,4 +15,7 @@ struct diaApp: App {
                 .preferredColorScheme(.light)
         }
     }
+    init(){
+        Thread.sleep(forTimeInterval: 0.2)
+    }
 }

@@ -35,7 +35,9 @@ struct pid: View {
                     Button(action: {
                         addID(id: Int(txt)!)
                         txt = ""
-                        bid.toggle()
+                        withAnimation {
+                            bid.toggle()
+                        }
                     }){
                         Text("Сохранить")
                             .frame(maxWidth: .infinity)
@@ -45,7 +47,9 @@ struct pid: View {
                     Divider()
                     Button(action: {
                         txt = ""
-                        bid.toggle()
+                        withAnimation {
+                            bid.toggle()
+                        }
                     }){
                         Text("Отменить")
                             .frame(maxWidth: .infinity)

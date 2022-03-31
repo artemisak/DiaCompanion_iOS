@@ -37,7 +37,9 @@ struct dStart: View {
                         dateFormatter.setLocalizedDateFormatFromTemplate("dd.MM.yyyy")
                         addDateS(pDate: dateFormatter.string(from: vDate))
                         vDate = Date.now
-                        bStart.toggle()
+                        withAnimation {
+                            bStart.toggle()
+                        }
                     }){
                         Text("Сохранить")
                             .frame(maxWidth: .infinity)
@@ -46,7 +48,9 @@ struct dStart: View {
                     Divider()
                     Button(action: {
                         vDate = Date.now
-                        bStart.toggle()
+                        withAnimation {
+                            bStart.toggle()
+                        }
                     }){
                         Text("Отменить")
                             .frame(maxWidth: .infinity)

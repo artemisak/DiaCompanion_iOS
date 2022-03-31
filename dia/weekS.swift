@@ -55,7 +55,9 @@ struct weekS: View {
                 HStack(){
                     Button(action: {
                         addWeekDay(week: selectedW, day: selectedD)
-                        bWeek.toggle()
+                        withAnimation {
+                            bWeek.toggle()
+                        }
                     }){
                         Text("Сохранить")
                             .frame(maxWidth: .infinity)
@@ -63,7 +65,11 @@ struct weekS: View {
                     }
                     .frame(maxWidth: .infinity)
                     Divider()
-                    Button(action: {bWeek.toggle()}){
+                    Button(action: {
+                        withAnimation {
+                            bWeek.toggle()
+                        }
+                    }){
                         Text("Отменить")
                             .frame(maxWidth: .infinity)
                             .foregroundColor(.black)

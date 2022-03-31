@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct startPage: View {
-    @StateObject var islogin = check()
+    @StateObject private var islogin = check()
     var body: some View {
         NavigationView {
             if !islogin.istrue {
@@ -18,12 +18,11 @@ struct startPage: View {
             }
         }
         .navigationViewStyle(StackNavigationViewStyle())
-        .onAppear(perform: {
-            islogin.checklog()
-        })
+        .task {
+            await islogin.checklog()
+        }
     }
 }
-
 
 struct startPage_Previews: PreviewProvider {
     static var previews: some View {

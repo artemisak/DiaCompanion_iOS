@@ -60,18 +60,13 @@ struct mainPage: View {
                             }
                             .padding(.top, 26.3)
                             Button(action:{
+                                isLoad.toggle()
+                                path.removeAll()
                                 Task {
-                                    do {
+                                    path.append(await anatomy.generate())
+                                    DispatchQueue.main.asyncAfter(deadline: .now()+0.2){
                                         isLoad.toggle()
-                                        path.removeAll()
-                                        path.append(try await anatomy.generate())
-                                        DispatchQueue.main.asyncAfter(deadline: .now()+0.1) {
-                                            isLoad.toggle()
-                                            isPres.toggle()
-                                        }
-                                    }
-                                    catch {
-                                        print(error)
+                                        isPres.toggle()
                                     }
                                 }
                             }){
@@ -95,6 +90,7 @@ struct mainPage: View {
             }
         }
         .navigationBarTitleDisplayMode(.inline)
+        .navigationBarBackButtonHidden(true)
         .navigationTitle("ДиаКомпаньон")
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing){

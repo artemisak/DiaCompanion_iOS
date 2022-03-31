@@ -36,7 +36,10 @@ struct fio: View {
                     Button(action: {
                         addName(pName: txt)
                         txt = ""
-                        pFio.toggle()
+                        withAnimation {
+                            pFio.toggle()
+                        }
+                        
                     }){
                         Text("Сохранить")
                             .frame(maxWidth: .infinity)
@@ -46,7 +49,9 @@ struct fio: View {
                     Divider()
                     Button(action: {
                         txt = ""
-                        pFio.toggle()
+                        withAnimation {
+                            pFio.toggle()
+                        }
                     }){
                         Text("Отменить")
                             .frame(maxWidth: .infinity)

@@ -9,8 +9,8 @@ import SwiftUI
 import PDFKit
 
 struct ModalView: View {
-    @State var phelper : Bool = true
-    let fileUrl = Bundle.main.url(forResource: "help", withExtension: "pdf")!
+    @State private var phelper : Bool = true
+    @State private var fileUrl = Bundle.main.url(forResource: "help", withExtension: "pdf")!
     var body: some View {
         NavigationView {
             ZStack {
@@ -34,7 +34,9 @@ struct ModalView: View {
                             Button("Обучение", action: {})
                         }.foregroundColor(.black)
                         Button("Помощь", action: {
-                            phelper = false
+                            withAnimation {
+                                phelper = false
+                            }
                         })
                             .foregroundColor(.black)
                     }

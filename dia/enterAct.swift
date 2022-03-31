@@ -7,36 +7,34 @@
 
 import SwiftUI
 
+enum act: String, CaseIterable, Identifiable {
+    case zar = "Зарядка"
+    case sleep = "Сон"
+    case hod = "Ходьба"
+    case sport = "Спорт"
+    case uborka = "Уборка в квартире"
+    case rabota = "Работа в огороде"
+    var id: String {self.rawValue}
+}
+
 struct enterAct: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @State private var t: String = ""
     @State private var date = Date()
-    @State var hours: Int = 0
-    @State var minutes: Int = 0
-    enum act: String, CaseIterable, Identifiable {
-        case zar = "Зарядка"
-        case sleep = "Сон"
-        case hod = "Ходьба"
-        case sport = "Спорт"
-        case uborka = "Уборка в квартире"
-        case rabota = "Работа в огороде"
-        var id: String {self.rawValue}
-    }
-    @State private var previewIndex = act.zar
+    @State private var actpreviewIndex = act.zar
     @FocusState private var focusedField: Bool
     var body: some View {
         Form{
             Section(header: Text("Общая информация")){
                 TextField("Длительность, мин.", text: $t)
                     .keyboardType(.asciiCapableNumberPad)
-                Picker(selection: $previewIndex, label: Text("Род занятий")) {
-                    Text("Зарядка").tag(act.zar)
-                    Text("Сон").tag(act.sleep)
-                    Text("Ходьба").tag(act.hod)
-                    Text("Спорт").tag(act.sport)
-                    Text("Уборка в квартире").tag(act.uborka)
-                    Text("Работа в огороде").tag(act.rabota)
-                }
+                NavigationLink(destination: actPicker(actpreviewIndex: $actpreviewIndex), label: {
+                    HStack{
+                        Text("Род занятий")
+                        Spacer()
+                        Text("\(actpreviewIndex.rawValue)")
+                    }
+                })
             }
             Section(header: Text("Время начала")){
                 VStack(alignment: .center){
@@ -58,7 +56,7 @@ struct enterAct: View {
                     let dateFormatter = DateFormatter()
                     dateFormatter.locale = Locale(identifier: "ru_RU")
                     dateFormatter.setLocalizedDateFormatFromTemplate("dd.MM.yyyy HH:mm")
-                    addAct(min: Int(t) ?? 10, rod: previewIndex.rawValue, time: dateFormatter.string(from: date))
+                    addAct(min: Int(t) ?? 10, rod: actpreviewIndex.rawValue, time: dateFormatter.string(from: date))
                     presentationMode.wrappedValue.dismiss()
                 }) {
                     Text("Сохранить")
@@ -85,8 +83,18 @@ struct enterAct: View {
     }
 }
 
-struct enterAct_Previews: PreviewProvider {
-    static var previews: some View {
-        enterAct()
+struct actPicker: View {
+    @Binding var actpreviewIndex: act
+    var body: some View {
+        Form{
+            Picker(selection: $actpreviewIndex, label: Text("Род занятий")) {
+                Text("Зарядка").tag(act.zar)
+                Text("Сон").tag(act.sleep)
+                Text("Ходьба").tag(act.hod)
+                Text("Спорт").tag(act.sport)
+                Text("Уборка в квартире").tag(act.uborka)
+                Text("Работа в огороде").tag(act.rabota)
+            }.pickerStyle(.inline)
+        }
     }
 }

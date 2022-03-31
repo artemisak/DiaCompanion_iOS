@@ -9,7 +9,7 @@ import SwiftUI
 
 struct history: View {
     
-    @StateObject var hList = historyList()
+    @StateObject private var hList = historyList()
     
     var body: some View {
         List() {

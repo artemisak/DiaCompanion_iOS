@@ -7,21 +7,21 @@
 
 import SwiftUI
 
+enum Vrachi: String, CaseIterable, Identifiable {
+    case Anopova = "Анопова Анна Дмитриевна"
+    case Bolotko = "Болотько Яна Алексеевна"
+    case Dronova = "Дронова Александра Владимировна"
+    case Popova = "Попова Полина Викторовна"
+    case Tkachuk = "Ткачут Александра Сергеевна"
+    case Vasukova = "Васюкова Елена Андреева"
+    case without = ""
+    
+    var id: String { self.rawValue }
+}
+
 struct currentV: View {
     @Binding var pV: Bool
-    enum Vrachi: String, CaseIterable, Identifiable {
-        case Anopova = "Анопова Анна Дмитриевна"
-        case Bolotko = "Болотько Яна Алексеевна"
-        case Dronova = "Дронова Александра Владимировна"
-        case Popova = "Попова Полина Викторовна"
-        case Tkachuk = "Ткачут Александра Сергеевна"
-        case Vasukova = "Васюкова Елена Андреева"
-        case without = ""
-        
-        var id: String { self.rawValue }
-    }
     @State private var selectedVrach = Vrachi.Popova
-    
     var body: some View {
         ZStack(){
             Color(.black)
@@ -47,14 +47,20 @@ struct currentV: View {
                 HStack(){
                     Button(action: {
                         addVrach(pVrach: selectedVrach.rawValue)
-                        pV.toggle()
+                        withAnimation {
+                            pV.toggle()
+                        }
                     }){
                         Text("Сохранить")
                             .frame(maxWidth: .infinity)
                             .foregroundColor(.black)
                     }.frame(maxWidth: .infinity)
                     Divider()
-                    Button(action: {pV.toggle()}){
+                    Button(action: {
+                        withAnimation {
+                            pV.toggle()
+                        }
+                    }){
                         Text("Отменить")
                             .frame(maxWidth: .infinity)
                             .foregroundColor(.black)

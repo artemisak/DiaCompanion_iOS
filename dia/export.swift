@@ -11,7 +11,7 @@ struct export: View {
     @State private var isPres: Bool = false
     @State private var isLoad: Bool = true
     @State private var path: [Any] = []
-    var anatomy = Anatomy()
+    @State private var anatomy = Anatomy()
     var body: some View {
         ZStack {
             VStack {
@@ -20,15 +20,10 @@ struct export: View {
                         Button(action:{
                             isLoad.toggle()
                             Task {
-                                do {
-                                    path.removeAll()
-                                    path.append(try await anatomy.generate())
-                                    isLoad.toggle()
-                                    isPres.toggle()
-                                    }
-                                catch {
-                                    print(error)
-                                }
+                                path.removeAll()
+                                path.append(await anatomy.generate())
+                                isLoad.toggle()
+                                isPres.toggle()
                             }
                         }){
                             VStack{

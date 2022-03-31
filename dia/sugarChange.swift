@@ -26,18 +26,18 @@ struct sugarChange: View {
     @State private var isAct: Bool = false
     @State private var bool1: Int = 0
     @FocusState private var focusedField: Bool
-    @State var previewIndex = selectedvar.natoshak
+    @State private var spreviewIndex = selectedvar.natoshak
     var body: some View {
         Form {
             Section(header: Text("Общая информация")){
                 TextField("Уровень сахара в крови, ммоль/л", text: $t)
                     .keyboardType(.decimalPad)
                     .focused($focusedField)
-                NavigationLink(destination: sugarPicker(previewIndex: $previewIndex), label: {
+                NavigationLink(destination: sugarPicker(spreviewIndex: $spreviewIndex), label: {
                     HStack {
                         Text("Период")
                         Spacer()
-                        Text("\(previewIndex.rawValue)")
+                        Text("\(spreviewIndex.rawValue)")
                             .foregroundColor(.gray)
                     }
                 })
@@ -73,7 +73,7 @@ struct sugarChange: View {
                     t = String(t.map {
                         $0 == "," ? "." : $0
                     })
-                    addSugarChange(lvl: Double(t) ?? 5.0, period: previewIndex.rawValue, physical: bool1, time: dateFormatter.string(from: date))
+                    addSugarChange(lvl: Double(t) ?? 5.0, period: spreviewIndex.rawValue, physical: bool1, time: dateFormatter.string(from: date))
                     self.presentationMode.wrappedValue.dismiss()
                 }) {
                     Text("Сохранить")
@@ -99,10 +99,10 @@ struct sugarChange: View {
 }
 
 struct sugarPicker: View {
-    @Binding var previewIndex: selectedvar
+    @Binding var spreviewIndex: selectedvar
     var body: some View {
         Form {
-            Picker("Период", selection: $previewIndex) {
+            Picker("Период", selection: $spreviewIndex) {
                 Text("Натощак").tag(selectedvar.natoshak)
                 Text("После завтрака").tag(selectedvar.zavtrak)
                 Text("После обеда").tag(selectedvar.obed)

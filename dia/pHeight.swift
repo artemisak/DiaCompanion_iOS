@@ -35,7 +35,9 @@ struct pHeight: View {
                     Button(action: {
                         addHeight(Height: Double(txt)!)
                         txt = ""
-                        bHeight.toggle()
+                        withAnimation {
+                            bHeight.toggle()
+                        }
                     }){
                         Text("Сохранить")
                             .frame(maxWidth: .infinity)
@@ -45,7 +47,9 @@ struct pHeight: View {
                     Divider()
                     Button(action: {
                         txt = ""
-                        bHeight.toggle()
+                        withAnimation {
+                            bHeight.toggle()
+                        }
                     }){
                         Text("Отменить")
                             .frame(maxWidth: .infinity)

@@ -14,7 +14,7 @@ struct helper: View {
             Color(.black)
                 .opacity(0.3)
                 .ignoresSafeArea()
-                .onTapGesture{withAnimation(.linear){phelper.toggle()}}
+                .onTapGesture{withAnimation{phelper.toggle()}}
             VStack(spacing:0){
                 Text("Помощь")
                     .padding()
@@ -24,7 +24,9 @@ struct helper: View {
                 }.padding()
                 Divider()
                 Button(action: {
-                    phelper.toggle()
+                    withAnimation {
+                        phelper.toggle()
+                    }
                 }){
                     Text("OK")
                         .frame(maxWidth: .infinity)

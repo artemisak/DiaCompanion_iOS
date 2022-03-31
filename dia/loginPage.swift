@@ -12,9 +12,11 @@ struct loginPage: View {
     @State private var login: String = ""
     @State private var pass: String = ""
     @State private var isWrong: Bool = true
+    @State private var isnt: Bool = false
     @ObservedObject var islogin: check
     var body: some View {
         VStack(spacing: 0) {
+            NavigationLink(isActive: $isnt, destination: {mainPage()}, label: {EmptyView()})
             Color.white
                 .frame(height: 30)
                 .onTapGesture {
@@ -32,7 +34,6 @@ struct loginPage: View {
                 if !isWrong {
                     Divider()
                         .background(Color.red)
-                    
                 } else {
                     Divider()
                 }
@@ -49,7 +50,6 @@ struct loginPage: View {
                 if !isWrong {
                     Divider()
                         .background(Color.red)
-                    
                 } else {
                     Divider()
                 }
@@ -73,9 +73,10 @@ struct loginPage: View {
                     }
             }
             Button(action: {
-                withAnimation {
-                    UIApplication.shared.dismissedKeyboard()
-                    isWrong = islogin.setlogged(upass: pass, ulogin: login)
+                UIApplication.shared.dismissedKeyboard()
+                Task(priority: .userInitiated) {
+                    isnt = await islogin.setlogged(upass: pass, ulogin: login)
+                    isWrong = isnt
                 }
             }, label: {
                 Text("Войти")
@@ -97,6 +98,7 @@ struct loginPage: View {
         )
         .ignoresSafeArea()
         .navigationBarTitleDisplayMode(.inline)
+        .navigationBarBackButtonHidden(true)
         .toolbar {
             ToolbarItem(placement: .principal) {
                 HStack{

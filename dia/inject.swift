@@ -7,6 +7,22 @@
 
 import SwiftUI
 
+enum injects :String, CaseIterable, Identifiable {
+    case natoshak = "Натощак"
+    case zavtrak = "Завтрак"
+    case obed = "Обед"
+    case uzin = "Ужин"
+    case dop = "Дополнительно"
+    var id: String { self.rawValue }
+}
+
+enum injectType: String, CaseIterable, Identifiable {
+    case ultra = "Ультракоторкий"
+    case kor = "Короткий"
+    case prolong = "Пролонгированный"
+    var id: String { self.rawValue }
+}
+
 struct inject: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @State private var t: String = ""
@@ -14,40 +30,30 @@ struct inject: View {
     @State private var hours: Int = 0
     @State private var minutes: Int = 0
     @State private var isAct: Bool = false
-    enum inject :String, CaseIterable, Identifiable {
-        case natoshak = "Натощак"
-        case zavtrak = "Завтрак"
-        case obed = "Обед"
-        case uzin = "Ужин"
-        case dop = "Дополнительно"
-        var id: String { self.rawValue }
-    }
-    @State private var previewIndex1 = inject.natoshak
-    enum injectType: String, CaseIterable, Identifiable {
-        case ultra = "Ультракоторкий"
-        case kor = "Короткий"
-        case prolong = "Пролонгированный"
-        var id: String { self.rawValue }
-    }
+    @State private var previewIndex1 = injects.natoshak
     @State private var previewIndex = injectType.ultra
     @FocusState private var focusedField: Bool
     var body: some View {
-        Form{
+        Form {
             Section(header: Text("Общая информация")){
                 TextField("Ед.", text: $t)
                     .keyboardType(.decimalPad)
-                Picker("Тип действия", selection: $previewIndex) {
-                    Text("Ультракороткий").tag(injectType.ultra)
-                    Text("Короткий").tag(injectType.kor)
-                    Text("Пролонгированный").tag(injectType.prolong)
-                }
-                Picker("Прием пищи", selection: $previewIndex1) {
-                    Text("Натощак").tag(inject.natoshak)
-                    Text("Завтрак").tag(inject.zavtrak)
-                    Text("Обед").tag(inject.obed)
-                    Text("Ужин").tag(inject.uzin)
-                    Text("Дополнительно").tag(inject.dop)
-                }
+                NavigationLink(destination: injectTypePicker(previewIndex: $previewIndex), label: {
+                    HStack{
+                        Text("Тип действия")
+                        Spacer()
+                        Text("\(previewIndex.rawValue)")
+                            .foregroundColor(.gray)
+                    }
+                })
+                NavigationLink(destination: injectPicker(previewIndex1: $previewIndex1), label: {
+                    HStack{
+                        Text("Прием пищи")
+                        Spacer()
+                        Text("\(previewIndex1.rawValue)")
+                            .foregroundColor(.gray)
+                    }
+                })
             }
             Section(header: Text("Время измерения")){
                 VStack(alignment: .center){
@@ -97,8 +103,30 @@ struct inject: View {
     }
 }
 
-struct inject_Previews: PreviewProvider {
-    static var previews: some View {
-        inject()
+struct injectTypePicker: View {
+    @Binding var previewIndex: injectType
+    var body: some View {
+        Form {
+            Picker("Тип действия", selection: $previewIndex) {
+                Text("Ультракороткий").tag(injectType.ultra)
+                Text("Короткий").tag(injectType.kor)
+                Text("Пролонгированный").tag(injectType.prolong)
+            }.pickerStyle(.inline)
+        }
+    }
+}
+
+struct injectPicker: View {
+    @Binding var previewIndex1: injects
+    var body: some View {
+        Form {
+            Picker("Прием пищи", selection: $previewIndex1) {
+                Text("Натощак").tag(injects.natoshak)
+                Text("Завтрак").tag(injects.zavtrak)
+                Text("Обед").tag(injects.obed)
+                Text("Ужин").tag(injects.uzin)
+                Text("Дополнительно").tag(injects.dop)
+            }.pickerStyle(.inline)
+        }
     }
 }
