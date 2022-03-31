@@ -22,15 +22,16 @@ struct loginPage: View {
                 .onTapGesture {
                     UIApplication.shared.dismissedKeyboard()
                 }
-            VStack(alignment: .leading, spacing: 8) {
+            VStack(alignment: .leading, spacing: 0) {
                 Text("Логин")
                     .fontWeight(.bold)
                     .foregroundColor(.gray)
-                TextField("Email", text: $login)
+                    .font(.system(size: 18))
+                    .padding(.bottom, 5)
+                TextField("example@mail.ru", text: $login)
                     .textInputAutocapitalization(.never)
                     .disableAutocorrection(true)
-                    .font(.system(size: 20))
-                    .padding(.top, 5)
+                    .font(.system(size: 22.5))
                 if !isWrong {
                     Divider()
                         .background(Color.red)
@@ -38,15 +39,16 @@ struct loginPage: View {
                     Divider()
                 }
             }
-            VStack(alignment: .leading, spacing: 8) {
+            VStack(alignment: .leading, spacing: 0) {
                 Text("Пароль")
                     .fontWeight(.bold)
                     .foregroundColor(.gray)
-                SecureField("Password", text: $pass)
+                    .font(.system(size: 18))
+                    .padding(.bottom, 5)
+                SecureField("password", text: $pass)
                     .textInputAutocapitalization(.never)
                     .disableAutocorrection(true)
-                    .font(.system(size: 20))
-                    .padding(.top, 5)
+                    .font(.system(size: 22.5))
                 if !isWrong {
                     Divider()
                         .background(Color.red)
@@ -54,7 +56,7 @@ struct loginPage: View {
                     Divider()
                 }
             }
-            .padding(.top, 20)
+            .padding(.top, 22.5)
             if !isWrong {
                 Color.white
                     .frame(height: 30)
@@ -62,9 +64,10 @@ struct loginPage: View {
                         UIApplication.shared.dismissedKeyboard()
                     }
                     .overlay(
-                        Text("Неверный логин или пароль").foregroundColor(.red).font(.system(size: 15))
+                        Text("Неверный логин или пароль").foregroundColor(.red).font(.system(size: 18))
                             .frame(maxWidth: .infinity, alignment: .leading)
                     )
+                    .padding(.bottom, 10)
             } else {
                 Color.white
                     .frame(height: 30)
@@ -80,6 +83,7 @@ struct loginPage: View {
                 }
             }, label: {
                 Text("Войти")
+                    .font(.system(size: 22.5))
             })
                 .buttonStyle(RoundedRectangleButtonStyle())
         }
@@ -134,7 +138,7 @@ struct RoundedRectangleButtonStyle: ButtonStyle {
         }
         .padding()
         .background(Color.blue.cornerRadius(8))
-        .scaleEffect(configuration.isPressed ? 0.95 : 1)
+        .opacity(configuration.isPressed ? 0.75 : 1)
     }
 }
 
