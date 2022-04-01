@@ -18,7 +18,7 @@ struct loginPage: View {
     var body: some View {
         VStack(spacing: 0) {
             NavigationLink(isActive: $isnt, destination: {mainPage()}, label: {EmptyView()})
-            Color.white
+            Color.clear
                 .frame(height: 30)
                 .onTapGesture {
                     UIApplication.shared.dismissedKeyboard()
@@ -32,7 +32,7 @@ struct loginPage: View {
                 TextField("example@mail.ru", text: $login)
                     .textInputAutocapitalization(.never)
                     .disableAutocorrection(true)
-                    .font(.system(size: 22.5))
+//                    .font(.system(size: 22.5))
                 Divider()
                     .background(!isWrong ? Color.red : Color.black)
             }
@@ -45,13 +45,13 @@ struct loginPage: View {
                 SecureField("password", text: $pass)
                     .textInputAutocapitalization(.never)
                     .disableAutocorrection(true)
-                    .font(.system(size: 22.5))
+//                    .font(.system(size: 22.5))
                 Divider()
                     .background(!isWrong ? Color.red : Color.black)
             }
             .padding(.top, 22.5)
             if !isWrong {
-                Color.white
+                Color.clear
                     .frame(height: 30)
                     .padding(.bottom, 10)
                     .onTapGesture {
@@ -62,7 +62,7 @@ struct loginPage: View {
                             .frame(maxWidth: .infinity, alignment: .leading)
                     )
             } else {
-                Color.white
+                Color.clear
                     .frame(height: 30)
                     .onTapGesture {
                         UIApplication.shared.dismissedKeyboard()
@@ -84,13 +84,13 @@ struct loginPage: View {
             } label: {
                 HStack{
                     Text("Регистрация")
-                        .font(.system(size: 18))
+//                        .font(.system(size: 18))
                     Image(systemName: "questionmark.circle")
                 }
             }
             .padding(.top, 10)
             .alert(isPresented: $reg) {
-                Alert(title: Text("Регистрация"), message: Text("Для получения логина и пароля обратитесь в Национальный медицинский исследовательский центр имени В.А.Алмазова \nили напишите по почте amedi.ioakim@gmail.com. \nОбратите внимание, что приложение находится в бета-тесте, некоторые функции могут быть \nнедоступны или работать некорректно. Сейчас в бета-тесте принимает участие медицинский персонал центра."), dismissButton: .default(Text("ОК")))
+                Alert(title: Text("Регистрация"), message: Text("Для получения логина и пароля обратитесь в Национальный медицинский исследовательский центр имени В.А.Алмазова. Обратите внимание, что приложение находится в бета-тесте, некоторые функции могут быть недоступны или работать некорректно. Сейчас в бета-тесте принимает участие медицинский персонал центра."), dismissButton: .default(Text("ОК")))
             }
         }
         .padding()
