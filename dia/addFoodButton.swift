@@ -20,7 +20,6 @@ struct addFoodButton: View {
     @State private var searchByWordView: Bool = true
     @State private var searchByWordCategoryView: Bool = true
     @StateObject private var items = Food()
-    @MainActor
     var body: some View {
         NavigationView {
             ZStack {
@@ -85,7 +84,6 @@ struct addFoodButton: View {
         }
     }
     
-    @ViewBuilder
     func DoButton(dish: FoodList) -> some View {
         Button(action: {
             selectedFoodTemp = dish.name
@@ -99,7 +97,6 @@ struct addFoodButton: View {
         .padding(.vertical, 10)
     }
     
-    @ViewBuilder
     func DoLink(dish: FoodList) -> some View {
         NavigationLink(destination: GetFoodCategoryItemsView(category: "\(dish.name)")) {
             Text("\(dish.name)")
@@ -110,7 +107,6 @@ struct addFoodButton: View {
         .padding(.vertical, 10)
     }
     
-    @ViewBuilder
     func GetFoodCategoryItemsView(category: String) -> some View {
         ZStack {
             ScrollView {

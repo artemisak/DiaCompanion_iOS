@@ -13,6 +13,7 @@ struct loginPage: View {
     @State private var pass: String = ""
     @State private var isWrong: Bool = true
     @State private var isnt: Bool = false
+    @State private var reg: Bool = false
     @ObservedObject var islogin: check
     var body: some View {
         VStack(spacing: 0) {
@@ -47,7 +48,6 @@ struct loginPage: View {
                     .font(.system(size: 22.5))
                 Divider()
                     .background(!isWrong ? Color.red : Color.black)
-
             }
             .padding(.top, 22.5)
             if !isWrong {
@@ -57,11 +57,10 @@ struct loginPage: View {
                     .onTapGesture {
                         UIApplication.shared.dismissedKeyboard()
                     }
-                    .overlay(
+                    .background(
                         Text("Неверный логин или пароль").foregroundColor(.red).font(.system(size: 18))
                             .frame(maxWidth: .infinity, alignment: .leading)
                     )
-                    
             } else {
                 Color.white
                     .frame(height: 30)
@@ -79,7 +78,20 @@ struct loginPage: View {
                 Text("Войти")
                     .font(.system(size: 22.5))
             })
-                .buttonStyle(RoundedRectangleButtonStyle())
+            .buttonStyle(RoundedRectangleButtonStyle())
+            Button {
+                reg = true
+            } label: {
+                HStack{
+                    Text("Регистрация")
+                        .font(.system(size: 18))
+                    Image(systemName: "questionmark.circle")
+                }
+            }
+            .padding(.top, 10)
+            .alert(isPresented: $reg) {
+                Alert(title: Text("Регистрация"), message: Text("Для получения логина и пароля обратитесь в Национальный медицинский исследовательский центр имени В.А.Алмазова \nили напишите по почте amedi.ioakim@gmail.com. \nОбратите внимание, что приложение находится в бета-тесте, некоторые функции могут быть \nнедоступны или работать некорректно. Сейчас в бета-тесте принимает участие медицинский персонал центра."), dismissButton: .default(Text("ОК")))
+            }
         }
         .padding()
         .frame(maxHeight: .infinity)
@@ -111,12 +123,12 @@ struct loginPage: View {
             }
             ToolbarItem(placement: .keyboard, content: {
                 HStack{
-                Spacer()
-                Button(action: {
-                    UIApplication.shared.dismissedKeyboard()
-                }, label: {
-                    Text("Готово")
-                })
+                    Spacer()
+                    Button(action: {
+                        UIApplication.shared.dismissedKeyboard()
+                    }, label: {
+                        Text("Готово")
+                    })
                 }
             })
         }
