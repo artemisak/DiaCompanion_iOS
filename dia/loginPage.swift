@@ -32,12 +32,8 @@ struct loginPage: View {
                     .textInputAutocapitalization(.never)
                     .disableAutocorrection(true)
                     .font(.system(size: 22.5))
-                if !isWrong {
-                    Divider()
-                        .background(Color.red)
-                } else {
-                    Divider()
-                }
+                Divider()
+                    .background(!isWrong ? Color.red : Color.black)
             }
             VStack(alignment: .leading, spacing: 0) {
                 Text("Пароль")
@@ -49,12 +45,9 @@ struct loginPage: View {
                     .textInputAutocapitalization(.never)
                     .disableAutocorrection(true)
                     .font(.system(size: 22.5))
-                if !isWrong {
-                    Divider()
-                        .background(Color.red)
-                } else {
-                    Divider()
-                }
+                Divider()
+                    .background(!isWrong ? Color.red : Color.black)
+
             }
             .padding(.top, 22.5)
             if !isWrong {
