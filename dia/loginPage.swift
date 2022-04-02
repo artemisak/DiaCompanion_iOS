@@ -16,6 +16,7 @@ struct loginPage: View {
     @State private var reg: Bool = false
     @ObservedObject var islogin: check
     var body: some View {
+        ZStack{
         VStack(spacing: 0) {
             NavigationLink(isActive: $isnt, destination: {mainPage()}, label: {EmptyView()})
             Color.clear
@@ -89,9 +90,9 @@ struct loginPage: View {
                 }
             }
             .padding(.top, 10)
-            .alert(isPresented: $reg) {
-                Alert(title: Text("Регистрация"), message: Text("Для получения логина и пароля обратитесь в Национальный медицинский исследовательский центр имени В.А.Алмазова. Обратите внимание, что приложение находится в бета-тесте, некоторые функции могут быть недоступны или работать некорректно. Сейчас в бета-тесте принимает участие медицинский персонал центра."), dismissButton: .default(Text("ОК")))
-            }
+//            .alert(isPresented: $reg) {
+//                Alert(title: Text("Регистрация"), message: Text("Для получения логина и пароля обратитесь в Национальный медицинский исследовательский центр имени В.А.Алмазова. Обратите внимание, что приложение находится в бета-тесте, некоторые функции могут быть недоступны или работать некорректно. Сейчас в бета-тесте принимает участие медицинский персонал центра."), dismissButton: .default(Text("ОК")))
+//            }
         }
         .padding()
         .frame(maxHeight: .infinity)
@@ -119,6 +120,7 @@ struct loginPage: View {
                     Image("ofIcon")
                         .resizable()
                         .frame(width: 35.0, height: 35.0)
+                        .zIndex(1)
                 }
             }
             ToolbarItem(placement: .keyboard, content: {
@@ -131,6 +133,10 @@ struct loginPage: View {
                     })
                 }
             })
+        }
+            if reg {
+                helper(phelper: $reg)
+            }
         }
     }
 }
