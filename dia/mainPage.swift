@@ -5,7 +5,7 @@ struct mainPage: View {
     @State private var showModal: Bool = false
     @State private var isPres: Bool = false
     @State private var isLoad: Bool = true
-    @State private var path: [Any] = []
+    @State private var path: [URL] = []
     var anatomy = Anatomy()
     var body: some View {
         GeometryReader { g in
@@ -65,8 +65,8 @@ struct mainPage: View {
                                 Task {
                                     path.append(await anatomy.generate())
                                     DispatchQueue.main.asyncAfter(deadline: .now()+0.2){
-                                        isLoad.toggle()
                                         isPres.toggle()
+                                        isLoad.toggle()
                                     }
                                 }
                             }){
@@ -77,6 +77,7 @@ struct mainPage: View {
                             }
                             .sheet(isPresented: $isPres) {
                                 ShareSheet(activityItems: path)
+                                    .ignoresSafeArea()
                             }
                         }
                     }
@@ -107,22 +108,15 @@ struct mainPage: View {
 }
 
 struct ShareSheet: UIViewControllerRepresentable {
-    typealias Callback = (_ activityType: UIActivity.ActivityType?, _ completed: Bool, _ returnedItems: [Any]?, _ error: Error?) -> Void
-    
-    let activityItems: [Any]
-    let applicationActivities: [UIActivity]? = nil
-    let excludedActivityTypes: [UIActivity.ActivityType]? = nil
-    let callback: Callback? = nil
+    let activityItems: [URL]
     
     func makeUIViewController(context: UIViewControllerRepresentableContext<ShareSheet>) -> UIActivityViewController {
         let controller = UIActivityViewController(
             activityItems: activityItems,
-            applicationActivities: applicationActivities)
-        controller.excludedActivityTypes = excludedActivityTypes
-        controller.completionWithItemsHandler = callback
+            applicationActivities: nil)
         return controller
     }
-    
+
     func updateUIViewController(_ uiViewController: UIActivityViewController, context: UIViewControllerRepresentableContext<ShareSheet>) {
     }
 }

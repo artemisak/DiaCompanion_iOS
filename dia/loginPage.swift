@@ -28,12 +28,12 @@ struct loginPage: View {
                 Text("Логин")
                     .fontWeight(.bold)
                     .foregroundColor(.gray)
-                    .font(.system(size: 18))
+                    .font(.system(size: 20))
                     .padding(.bottom, 5)
                 TextField("example@mail.ru", text: $login)
                     .textInputAutocapitalization(.never)
                     .disableAutocorrection(true)
-//                    .font(.system(size: 22.5))
+                    .font(.system(size: 20))
                 Divider()
                     .background(!isWrong ? Color.red : Color.black)
             }
@@ -41,12 +41,12 @@ struct loginPage: View {
                 Text("Пароль")
                     .fontWeight(.bold)
                     .foregroundColor(.gray)
-                    .font(.system(size: 18))
+                    .font(.system(size: 20))
                     .padding(.bottom, 5)
                 SecureField("password", text: $pass)
                     .textInputAutocapitalization(.never)
                     .disableAutocorrection(true)
-//                    .font(.system(size: 22.5))
+                    .font(.system(size: 20))
                 Divider()
                     .background(!isWrong ? Color.red : Color.black)
             }
@@ -77,7 +77,7 @@ struct loginPage: View {
                 }
             }, label: {
                 Text("Войти")
-                    .font(.system(size: 22.5))
+                    .font(.system(size: 20))
             })
             .buttonStyle(RoundedRectangleButtonStyle())
             Button {
@@ -85,7 +85,7 @@ struct loginPage: View {
             } label: {
                 HStack{
                     Text("Регистрация")
-//                        .font(.system(size: 18))
+                        .font(.system(size: 20))
                     Image(systemName: "questionmark.circle")
                 }
             }
