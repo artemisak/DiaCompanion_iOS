@@ -19,6 +19,7 @@ struct loginPage: View {
         ZStack{
         VStack(spacing: 0) {
             NavigationLink(isActive: $isnt, destination: {mainPage()}, label: {EmptyView()})
+                .hidden()
             Color.clear
                 .frame(height: 30)
                 .onTapGesture {

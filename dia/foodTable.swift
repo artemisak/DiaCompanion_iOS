@@ -7,9 +7,8 @@
 import Foundation
 import xlsxwriter
 
-class Anatomy {
-    func generate() async -> URL {
-        let generateTask = Task { () -> URL in
+class exportTable {
+    func generate() -> URL {
             let documentDirectory = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor:nil, create:false)
             let fileURL = documentDirectory.appendingPathComponent("foodTable.xlsx")
             
@@ -559,8 +558,5 @@ class Anatomy {
                 print("Error in workbook_close().\nError %d = %s\n", error, lxw_strerror(error)!)
             }
             return fileURL
-        }
-        generateTask.cancel()
-        return await generateTask.value
     }
 }

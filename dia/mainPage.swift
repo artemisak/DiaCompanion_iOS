@@ -3,10 +3,8 @@ import SwiftUI
 
 struct mainPage: View {
     @State private var showModal: Bool = false
-    @State private var isPres: Bool = false
     @State private var isLoad: Bool = true
-    @State private var path: [URL] = []
-    var anatomy = Anatomy()
+    var sheets = exportTable()
     var body: some View {
         GeometryReader { g in
             ZStack {
@@ -16,7 +14,7 @@ struct mainPage: View {
                             NavigationLink(destination: sugarChange()) {
                                 VStack {
                                     Image("menu_sugar")
-                                    Text("Измерение сахара")
+                                    Text("Изм. сахара")
                                         .font(.system(size: 17))
                                         .foregroundColor(Color.black)
                                         .multilineTextAlignment(.center)
@@ -53,7 +51,7 @@ struct mainPage: View {
                             NavigationLink(destination: enterAct()) {
                                 VStack {
                                     Image("menu_sleep")
-                                    Text("Физическая \n активность и сон").foregroundColor(Color.black).multilineTextAlignment(.center)
+                                    Text("Активность и сон").foregroundColor(Color.black).multilineTextAlignment(.center)
                                         .font(.system(size: 17))
                                 }
                                 
@@ -61,24 +59,18 @@ struct mainPage: View {
                             .padding(.top, 26.3)
                             Button(action:{
                                 isLoad.toggle()
-                                path.removeAll()
-                                Task {
-                                    path.append(await anatomy.generate())
-                                    DispatchQueue.main.asyncAfter(deadline: .now()+0.2){
-                                        isPres.toggle()
-                                        isLoad.toggle()
-                                    }
+                                let AV = UIActivityViewController(activityItems: [sheets.generate()], applicationActivities: nil)
+                                DispatchQueue.main.asyncAfter(deadline: .now()+0.2){
+                                    isLoad.toggle()
+                                    UIApplication.shared.currentUIWindow()?.rootViewController?.present(AV, animated: true, completion: nil)
                                 }
                             }){
                                 VStack{
                                     Image("menu_xlsx")
-                                    Text("Экспорт данных").foregroundColor(Color.black).multilineTextAlignment(.center)
+                                    Text("Экспорт данных").foregroundColor(Color.black).multilineTextAlignment(.center).font(.system(size: 17))
                                 }
                             }
-                            .sheet(isPresented: $isPres) {
-                                ShareSheet(activityItems: path)
-                                    .ignoresSafeArea()
-                            }
+                            .padding(.top, 26.3)
                         }
                     }
                     .position(x: g.size.width/2, y: g.size.height/2)
@@ -107,16 +99,18 @@ struct mainPage: View {
     }
 }
 
-struct ShareSheet: UIViewControllerRepresentable {
-    let activityItems: [URL]
-    
-    func makeUIViewController(context: UIViewControllerRepresentableContext<ShareSheet>) -> UIActivityViewController {
-        let controller = UIActivityViewController(
-            activityItems: activityItems,
-            applicationActivities: nil)
-        return controller
-    }
+public extension UIApplication {
+    func currentUIWindow() -> UIWindow? {
+        let connectedScenes = UIApplication.shared.connectedScenes
+            .filter({
+                $0.activationState == .foregroundActive})
+            .compactMap({$0 as? UIWindowScene})
+        
+        let window = connectedScenes.first?
+            .windows
+            .first { $0.isKeyWindow }
 
-    func updateUIViewController(_ uiViewController: UIActivityViewController, context: UIViewControllerRepresentableContext<ShareSheet>) {
+        return window
+        
     }
 }
