@@ -32,7 +32,6 @@ struct inject: View {
     @State private var isAct: Bool = false
     @State private var previewIndex1 = injects.natoshak
     @State private var previewIndex = injectType.ultra
-    @FocusState private var focusedField: Bool
     var body: some View {
         Form {
             Section(header: Text("Общая информация")){
@@ -88,7 +87,7 @@ struct inject: View {
                 HStack{
                 Spacer()
                 Button(action: {
-                    focusedField = false
+                    UIApplication.shared.dismissedKeyboard()
                 }, label: {
                     Text("Готово")
                 })

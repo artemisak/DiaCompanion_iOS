@@ -25,14 +25,12 @@ struct sugarChange: View {
     @State private var minutes: Int = 0
     @State private var isAct: Bool = false
     @State private var bool1: Int = 0
-    @FocusState private var focusedField: Bool
     @State private var spreviewIndex = selectedvar.natoshak
     var body: some View {
         Form {
             Section(header: Text("Общая информация")){
                 TextField("Уровень сахара в крови, ммоль/л", text: $t)
                     .keyboardType(.decimalPad)
-                    .focused($focusedField)
                 NavigationLink(destination: sugarPicker(spreviewIndex: $spreviewIndex), label: {
                     HStack {
                         Text("Период")
@@ -83,7 +81,7 @@ struct sugarChange: View {
                 HStack{
                 Spacer()
                 Button(action: {
-                    focusedField = false
+                    UIApplication.shared.dismissedKeyboard()
                 }, label: {
                     Text("Готово")
                 })
