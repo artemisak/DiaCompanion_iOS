@@ -59,9 +59,9 @@ struct mainPage: View {
                             .padding(.top, 26.3)
                             Button(action:{
                                 isLoad.toggle()
-                                let AV = UIActivityViewController(activityItems: [sheets.generate()], applicationActivities: nil)
                                 DispatchQueue.main.asyncAfter(deadline: .now()+0.2){
                                     isLoad.toggle()
+                                    let AV = UIActivityViewController(activityItems: [sheets.generate()], applicationActivities: nil)
                                     UIApplication.shared.currentUIWindow()?.rootViewController?.present(AV, animated: true, completion: nil)
                                 }
                             }){
