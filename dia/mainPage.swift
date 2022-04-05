@@ -9,54 +9,58 @@ struct mainPage: View {
         GeometryReader { g in
             ZStack {
                 ScrollView {
-                    HStack {
-                        VStack {
+                    VStack {
+                        HStack {
+                            Spacer()
                             NavigationLink(destination: sugarChange()) {
                                 VStack {
                                     Image("menu_sugar")
-                                    Text("Изм. сахара")
-                                        .font(.system(size: 17))
+                                    Text("Измерение сахара")
                                         .foregroundColor(Color.black)
                                         .multilineTextAlignment(.center)
                                 }
                             }
-                            NavigationLink(destination: enterFood()) {
-                                VStack {
-                                    Image("menu_food")
-                                    Text("Прием пищи")
-                                        .font(.system(size: 17))
-                                        .foregroundColor(Color.black)
-                                        .multilineTextAlignment(.center)
-                                }
-                            }.padding(.vertical, 26.3)
-                            NavigationLink(destination: history()) {
-                                VStack {
-                                    Image("menu_paper")
-                                    Text("История записей")
-                                        .font(.system(size: 17))
-                                        .foregroundColor(Color.black)
-                                        .multilineTextAlignment(.center)
-                                }
-                            }
-                        }.padding(.trailing)
-                        VStack {
+                            Spacer()
                             NavigationLink(destination: inject()) {
                                 VStack {
                                     Image("menu_syringe")
                                     Text("Введение инсулина").foregroundColor(Color.black).multilineTextAlignment(.center)
-                                        .font(.system(size: 17))
                                 }
                                 
                             }
+                            Spacer()
+                        }
+                        HStack{
+                            Spacer()
+                            NavigationLink(destination: enterFood()) {
+                                VStack {
+                                    Image("menu_food")
+                                    Text("Прием пищи")
+                                        .foregroundColor(Color.black)
+                                        .multilineTextAlignment(.center)
+                                }
+                            }
+                            Spacer()
                             NavigationLink(destination: enterAct()) {
                                 VStack {
                                     Image("menu_sleep")
-                                    Text("Активность и сон").foregroundColor(Color.black).multilineTextAlignment(.center)
-                                        .font(.system(size: 17))
+                                    Text(" Физическая \nактивность и сон").foregroundColor(Color.black).multilineTextAlignment(.center)
                                 }
                                 
                             }
-                            .padding(.top, 26.3)
+                            Spacer()
+                        }
+                        HStack{
+                            Spacer()
+                            NavigationLink(destination: history()) {
+                                VStack {
+                                    Image("menu_paper")
+                                    Text("История записей")
+                                        .foregroundColor(Color.black)
+                                        .multilineTextAlignment(.center)
+                                }
+                            }
+                            Spacer()
                             Button(action:{
                                 isLoad.toggle()
                                 DispatchQueue.main.asyncAfter(deadline: .now()+0.2){
@@ -67,10 +71,12 @@ struct mainPage: View {
                             }){
                                 VStack{
                                     Image("menu_xlsx")
-                                    Text("Экспорт данных").foregroundColor(Color.black).multilineTextAlignment(.center).font(.system(size: 17))
+                                    Text("Экспорт данных")
+                                        .foregroundColor(Color.black)
+                                        .multilineTextAlignment(.center)
                                 }
                             }
-                            .padding(.top, 26.3)
+                            Spacer()
                         }
                     }
                     .position(x: g.size.width/2, y: g.size.height/2)
