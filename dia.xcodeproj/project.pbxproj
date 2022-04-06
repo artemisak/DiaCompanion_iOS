@@ -7,9 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A70829BE27FDE39400C74F21 /* help.pdf in Resources */ = {isa = PBXBuildFile; fileRef = A70829BD27FDE39400C74F21 /* help.pdf */; };
 		A70BCC3A27B9471E00C22703 /* loginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A70BCC3927B9471E00C22703 /* loginManager.swift */; };
 		A7230C7F27705AED00B68244 /* excelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7230C7E27705AED00B68244 /* excelManager.swift */; };
-		A7312B1E27CBE69B009E534C /* help.pdf in Resources */ = {isa = PBXBuildFile; fileRef = A7312B1D27CBE69B009E534C /* help.pdf */; };
 		A74A33D027B7E833003D2EBD /* loginPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74A33CF27B7E833003D2EBD /* loginPage.swift */; };
 		A7BD994727CA46FC0090D9D7 /* helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7BD994627CA46FC0090D9D7 /* helper.swift */; };
 		A7DCBBB327BD8AD4009A3A16 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A7DCBBB227BD8AD4009A3A16 /* Launch Screen.storyboard */; };
@@ -58,6 +58,7 @@
 /* Begin PBXFileReference section */
 		6C02743FFD40C5E72C5C050B /* Pods_dia.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_dia.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A316D5BECBE459250AC4A311 /* Pods-dia.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-dia.debug.xcconfig"; path = "Target Support Files/Pods-dia/Pods-dia.debug.xcconfig"; sourceTree = "<group>"; };
+		A70829BD27FDE39400C74F21 /* help.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = help.pdf; sourceTree = "<group>"; };
 		A70BCC3927B9471E00C22703 /* loginManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = loginManager.swift; sourceTree = "<group>"; };
 		A7230C7E27705AED00B68244 /* excelManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = excelManager.swift; sourceTree = "<group>"; };
 		A7312B1D27CBE69B009E534C /* help.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = help.pdf; sourceTree = "<group>"; };
@@ -145,6 +146,7 @@
 		AC2603132690691E00C4A520 = {
 			isa = PBXGroup;
 			children = (
+				A70829BD27FDE39400C74F21 /* help.pdf */,
 				AC71760727209863000376FD /* diacompanion.db */,
 				AC26031E2690691E00C4A520 /* dia */,
 				AC26031D2690691E00C4A520 /* Products */,
@@ -285,10 +287,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A70829BE27FDE39400C74F21 /* help.pdf in Resources */,
 				AC2603242690691F00C4A520 /* Assets.xcassets in Resources */,
 				AC2603272690691F00C4A520 /* Preview Assets.xcassets in Resources */,
 				AC71760827209863000376FD /* diacompanion.db in Resources */,
-				A7312B1E27CBE69B009E534C /* help.pdf in Resources */,
 				A7DCBBB327BD8AD4009A3A16 /* Launch Screen.storyboard in Resources */,
 				AC3B847826EBA8FA00E98681 /* Localizable.strings in Resources */,
 			);
