@@ -5,81 +5,72 @@ struct mainPage: View {
     @State private var showModal: Bool = false
     @State private var isLoad: Bool = true
     var sheets = exportTable()
+    var columns: [GridItem] =
+             Array(repeating: .init(.flexible()), count: 2)
     var body: some View {
         GeometryReader { g in
             ZStack {
                 ScrollView {
-                    VStack {
-                        HStack {
-                            Spacer()
-                            NavigationLink(destination: sugarChange()) {
-                                VStack {
-                                    Image("menu_sugar")
-                                    Text("Измерение сахара")
-                                        .foregroundColor(Color.black)
-                                        .multilineTextAlignment(.center)
-                                }
+                    LazyVGrid(columns: columns) {
+                        NavigationLink(destination: sugarChange()) {
+                            VStack {
+                                Image("menu_sugar")
+                                Text("Измерение сахара")
+                                    .foregroundColor(Color.black)
+                                    .multilineTextAlignment(.center)
                             }
-                            Spacer()
-                            NavigationLink(destination: inject()) {
-                                VStack {
-                                    Image("menu_syringe")
-                                    Text("Введение инсулина").foregroundColor(Color.black).multilineTextAlignment(.center)
-                                }
-                                
-                            }
-                            Spacer()
                         }
-                        HStack{
-                            Spacer()
-                            NavigationLink(destination: enterFood()) {
-                                VStack {
-                                    Image("menu_food")
-                                    Text("Прием пищи")
-                                        .foregroundColor(Color.black)
-                                        .multilineTextAlignment(.center)
-                                }
+                        NavigationLink(destination: inject()) {
+                            VStack {
+                                Image("menu_syringe")
+                                Text("Введение инсулина")
+                                    .foregroundColor(Color.black)
+                                    .multilineTextAlignment(.center)
                             }
-                            Spacer()
-                            NavigationLink(destination: enterAct()) {
-                                VStack {
-                                    Image("menu_sleep")
-                                    Text(" Физическая \nактивность и сон").foregroundColor(Color.black).multilineTextAlignment(.center)
-                                }
-                                
-                            }
-                            Spacer()
+
                         }
-                        HStack{
-                            Spacer()
-                            NavigationLink(destination: history()) {
-                                VStack {
-                                    Image("menu_paper")
-                                    Text("История записей")
-                                        .foregroundColor(Color.black)
-                                        .multilineTextAlignment(.center)
-                                }
+                        NavigationLink(destination: enterFood()) {
+                            VStack {
+                                Image("menu_food")
+                                Text("Прием пищи")
+                                    .foregroundColor(Color.black)
+                                    .multilineTextAlignment(.center)
                             }
-                            Spacer()
-                            Button(action:{
+                        }
+                        NavigationLink(destination: enterAct()) {
+                            VStack {
+                                Image("menu_sleep")
+                                Text("Физическая \nактивность и сон")
+                                    .foregroundColor(Color.black)
+                                    .multilineTextAlignment(.center)
+                            }
+
+                        }
+                        NavigationLink(destination: history()) {
+                            VStack {
+                                Image("menu_paper")
+                                Text("История записей")
+                                    .foregroundColor(Color.black)
+                                    .multilineTextAlignment(.center)
+                            }
+                        }
+                        Button(action:{
+                            isLoad.toggle()
+                            DispatchQueue.main.asyncAfter(deadline: .now()+0.2){
                                 isLoad.toggle()
-                                DispatchQueue.main.asyncAfter(deadline: .now()+0.2){
-                                    isLoad.toggle()
-                                    let AV = UIActivityViewController(activityItems: [sheets.generate()], applicationActivities: nil)
-                                    UIApplication.shared.currentUIWindow()?.rootViewController?.present(AV, animated: true, completion: nil)
-                                }
-                            }){
-                                VStack{
-                                    Image("menu_xlsx")
-                                    Text("Экспорт данных")
-                                        .foregroundColor(Color.black)
-                                        .multilineTextAlignment(.center)
-                                }
+                                let AV = UIActivityViewController(activityItems: [sheets.generate()], applicationActivities: nil)
+                                UIApplication.shared.currentUIWindow()?.rootViewController?.present(AV, animated: true, completion: nil)
                             }
-                            Spacer()
+                        }){
+                            VStack{
+                                Image("menu_xlsx")
+                                Text("Экспорт данных")
+                                    .foregroundColor(Color.black)
+                                    .multilineTextAlignment(.center)
+                            }
                         }
-                    }
-                    .position(x: g.size.width/2, y: g.size.height/2)
+
+                    }.position(x: g.size.width/2, y: g.size.height/2)
                 }
                 if !isLoad {
                     ProgressView()
