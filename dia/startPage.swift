@@ -18,9 +18,9 @@ struct startPage: View {
             }
         }
         .navigationViewStyle(StackNavigationViewStyle())
-        .task {
-            await islogin.checklog()
-        }
+        .onAppear(perform: {
+            islogin.checklog()
+        })
     }
 }
 

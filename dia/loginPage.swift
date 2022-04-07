@@ -70,10 +70,8 @@ struct loginPage: View {
                 }
                 Button(action: {
                     UIApplication.shared.dismissedKeyboard()
-                    Task(priority: .userInitiated) {
-                        isnt = await islogin.setlogged(upass: pass, ulogin: login)
-                        isWrong = isnt
-                    }
+                    isnt = islogin.setlogged(upass: pass, ulogin: login)
+                    isWrong = isnt
                 }, label: {
                     Text("Войти")
                 })

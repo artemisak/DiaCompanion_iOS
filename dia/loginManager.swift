@@ -12,7 +12,7 @@ class check: ObservableObject {
     
     @Published var istrue = false
     
-    func checklog() async -> Void {
+    func checklog() -> Void {
         do {
             let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
             let path = documents + "/diacompanion.db"
@@ -30,8 +30,7 @@ class check: ObservableObject {
         }
     }
     
-    func setlogged(upass: String, ulogin: String) async -> Bool {
-        var var1 = false
+    func setlogged(upass: String, ulogin: String) -> Bool {
         do {
             let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
             let path = documents + "/diacompanion.db"
@@ -42,14 +41,14 @@ class check: ObservableObject {
             let log = Expression<Int64>("loggedin")
             if (upass == "pass123") && (ulogin == "almazov") {
                 try db.run(tb.update(log <- 1))
-                var1 = true
+                return true
+            } else {
+                return false
             }
         }
         catch {
             print(error)
+            return false
         }
-        return var1
     }
 }
-
-
