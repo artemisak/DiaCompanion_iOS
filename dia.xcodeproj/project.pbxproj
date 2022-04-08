@@ -145,8 +145,6 @@
 		AC2603132690691E00C4A520 = {
 			isa = PBXGroup;
 			children = (
-				A70829BD27FDE39400C74F21 /* help.pdf */,
-				AC71760727209863000376FD /* diacompanion.db */,
 				AC26031E2690691E00C4A520 /* dia */,
 				AC26031D2690691E00C4A520 /* Products */,
 				C0D553CA378A488FD7608214 /* Pods */,
@@ -165,6 +163,8 @@
 		AC26031E2690691E00C4A520 /* dia */ = {
 			isa = PBXGroup;
 			children = (
+				AC71760727209863000376FD /* diacompanion.db */,
+				A70829BD27FDE39400C74F21 /* help.pdf */,
 				AC26031F2690691E00C4A520 /* diaApp.swift */,
 				AC2603212690691E00C4A520 /* mainPage.swift */,
 				A7DCBBB427BEA659009A3A16 /* startPage.swift */,
@@ -541,7 +541,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2;
+				MARKETING_VERSION = 1.3;
 				PRODUCT_BUNDLE_IDENTIFIER = app.dia;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -569,7 +569,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2;
+				MARKETING_VERSION = 1.3;
 				PRODUCT_BUNDLE_IDENTIFIER = app.dia;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;

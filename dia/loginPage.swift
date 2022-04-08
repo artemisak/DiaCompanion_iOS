@@ -9,16 +9,24 @@ import SwiftUI
 import UIKit
 
 struct loginPage: View {
+    enum Field: Hashable {
+        case username
+        case password
+    }
     @State private var login: String = ""
     @State private var pass: String = ""
     @State private var isWrong: Bool = true
     @State private var isnt: Bool = false
     @State private var reg: Bool = false
+    @FocusState private var focusedField: Field?
     @ObservedObject var islogin: check
     var body: some View {
         ZStack {
             Color.white
                 .ignoresSafeArea()
+                .onTapGesture {
+                    UIApplication.shared.dismissedKeyboard()
+                }
             VStack(spacing: 0) {
                 NavigationLink(isActive: $isnt, destination: {mainPage()}, label: {EmptyView()})
                     .hidden()
@@ -27,13 +35,16 @@ struct loginPage: View {
                         .fontWeight(.bold)
                         .foregroundColor(.gray)
                         .padding(.bottom, 5)
-                        .padding(.top, 30)
                         .onTapGesture {
                             UIApplication.shared.dismissedKeyboard()
                         }
                     TextField("example@mail.ru", text: $login)
                         .textInputAutocapitalization(.never)
                         .disableAutocorrection(true)
+                        .focused($focusedField, equals: .username)
+                        .onSubmit {
+                            focusedField = .password
+                        }
                     Divider()
                         .background(!isWrong ? Color.red : Color.black)
                 }
@@ -45,6 +56,12 @@ struct loginPage: View {
                     SecureField("password", text: $pass)
                         .textInputAutocapitalization(.never)
                         .disableAutocorrection(true)
+                        .focused($focusedField, equals: .password)
+                        .onSubmit {
+                            UIApplication.shared.dismissedKeyboard()
+                            isnt = islogin.setlogged(upass: pass, ulogin: login)
+                            isWrong = isnt
+                        }
                     Divider()
                         .background(!isWrong ? Color.red : Color.black)
                 }
@@ -53,25 +70,26 @@ struct loginPage: View {
                     Color.clear
                         .frame(height: 30)
                         .padding(.bottom, 10)
-                        .onTapGesture {
-                            UIApplication.shared.dismissedKeyboard()
-                        }
                         .background(
                             Text("Неверный логин или пароль")
                                 .foregroundColor(.red)
                                 .frame(maxWidth: .infinity, alignment: .leading)
+                                .onTapGesture {
+                                    UIApplication.shared.dismissedKeyboard()
+                                }
                         )
                 } else {
                     Color.clear
                         .frame(height: 30)
-                        .onTapGesture {
-                            UIApplication.shared.dismissedKeyboard()
-                        }
                 }
                 Button(action: {
-                    UIApplication.shared.dismissedKeyboard()
                     isnt = islogin.setlogged(upass: pass, ulogin: login)
                     isWrong = isnt
+                    if isnt {
+                        UIApplication.shared.dismissedKeyboard()
+                    } else {
+                        focusedField = .username
+                    }
                 }, label: {
                     Text("Войти")
                 })
@@ -90,17 +108,6 @@ struct loginPage: View {
             }
             .padding()
             .frame(maxHeight: .infinity)
-            .gesture(
-                DragGesture(minimumDistance: 0.1, coordinateSpace: .local)
-                    .onEnded { value in
-                        if value.translation.height < 0 {
-                            UIApplication.shared.dismissedKeyboard()
-                        }
-                        if value.translation.height > 0 {
-                            UIApplication.shared.dismissedKeyboard()
-                        }
-                    }
-            )
             .ignoresSafeArea()
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarBackButtonHidden(true)
@@ -133,6 +140,17 @@ struct loginPage: View {
                     .ignoresSafeArea()
             }
         }
+        .gesture(
+            DragGesture(minimumDistance: 0.1, coordinateSpace: .local)
+                .onEnded { value in
+                    if value.translation.height < 0 {
+                        UIApplication.shared.dismissedKeyboard()
+                    }
+                    if value.translation.height > 0 {
+                        UIApplication.shared.dismissedKeyboard()
+                    }
+                }
+        )
     }
 }
 
