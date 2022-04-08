@@ -33,6 +33,18 @@ struct pHeight: View {
                 Divider()
                 HStack(){
                     Button(action: {
+                        txt = ""
+                        withAnimation {
+                            bHeight.toggle()
+                        }
+                    }){
+                        Text("Отменить")
+                            .frame(maxWidth: .infinity)
+                            .foregroundColor(.black)
+                    }
+                    .frame(maxWidth: .infinity)
+                    Divider()
+                    Button(action: {
                         addHeight(Height: Double(txt)!)
                         txt = ""
                         withAnimation {
@@ -40,18 +52,6 @@ struct pHeight: View {
                         }
                     }){
                         Text("Сохранить")
-                            .frame(maxWidth: .infinity)
-                            .foregroundColor(.black)
-                    }
-                    .frame(maxWidth: .infinity)
-                    Divider()
-                    Button(action: {
-                        txt = ""
-                        withAnimation {
-                            bHeight.toggle()
-                        }
-                    }){
-                        Text("Отменить")
                             .frame(maxWidth: .infinity)
                             .foregroundColor(.black)
                     }

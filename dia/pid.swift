@@ -33,6 +33,18 @@ struct pid: View {
                 Divider()
                 HStack(){
                     Button(action: {
+                        txt = ""
+                        withAnimation {
+                            bid.toggle()
+                        }
+                    }){
+                        Text("Отменить")
+                            .frame(maxWidth: .infinity)
+                            .foregroundColor(.black)
+                    }
+                    .frame(maxWidth: .infinity)
+                    Divider()
+                    Button(action: {
                         addID(id: Int(txt)!)
                         txt = ""
                         withAnimation {
@@ -40,18 +52,6 @@ struct pid: View {
                         }
                     }){
                         Text("Сохранить")
-                            .frame(maxWidth: .infinity)
-                            .foregroundColor(.black)
-                    }
-                    .frame(maxWidth: .infinity)
-                    Divider()
-                    Button(action: {
-                        txt = ""
-                        withAnimation {
-                            bid.toggle()
-                        }
-                    }){
-                        Text("Отменить")
                             .frame(maxWidth: .infinity)
                             .foregroundColor(.black)
                     }

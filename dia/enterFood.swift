@@ -29,6 +29,7 @@ struct enterFood: View {
     @State private var isSheetShown = false
     @State private var foodItems: [String] = []
     @State private var ftpreviewIndex = ftype.zavtrak
+    @State private var lvlColor: Color?
     var body: some View {
         Form {
             Section(header: Text("Общая информация")){
@@ -55,6 +56,7 @@ struct enterFood: View {
             Section {
                 Text("\(sugarlvl)")
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .foregroundColor(lvlColor)
                 TextField("5,0 ммоль/л", text: $sugar)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .keyboardType(.decimalPad)
@@ -62,10 +64,13 @@ struct enterFood: View {
                     .onChange(of: sugar){_ in
                         if (sugar == ""){
                             sugarlvl = "УСК не определен"
+                            lvlColor = Color.black
                         } else if (Double(sugar) ?? 5.0 > 7){
                             sugarlvl = "УСК превысит норму"
+                            lvlColor = Color.red
                         } else {
                             sugarlvl = "УСК в норме"
+                            lvlColor = Color.green
                         }
                     }
             }
@@ -90,7 +95,6 @@ struct enterFood: View {
                 .onDelete(perform: removeRows)
             }
         }
-        
         .navigationTitle("Приемы пищи")
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing, content: {

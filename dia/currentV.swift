@@ -46,22 +46,22 @@ struct currentV: View {
                 Divider()
                 HStack(){
                     Button(action: {
+                        withAnimation {
+                            pV.toggle()
+                        }
+                    }){
+                        Text("Отменить")
+                            .frame(maxWidth: .infinity)
+                            .foregroundColor(.black)
+                    }.frame(maxWidth: .infinity)
+                    Divider()
+                    Button(action: {
                         addVrach(pVrach: selectedVrach.rawValue)
                         withAnimation {
                             pV.toggle()
                         }
                     }){
                         Text("Сохранить")
-                            .frame(maxWidth: .infinity)
-                            .foregroundColor(.black)
-                    }.frame(maxWidth: .infinity)
-                    Divider()
-                    Button(action: {
-                        withAnimation {
-                            pV.toggle()
-                        }
-                    }){
-                        Text("Отменить")
                             .frame(maxWidth: .infinity)
                             .foregroundColor(.black)
                     }.frame(maxWidth: .infinity)

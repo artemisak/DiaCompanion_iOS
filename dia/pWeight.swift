@@ -33,6 +33,18 @@ struct pWeight: View {
                 Divider()
                 HStack(){
                     Button(action: {
+                        txt = ""
+                        withAnimation {
+                            bWeight.toggle()
+                        }
+                    }){
+                        Text("Отменить")
+                            .frame(maxWidth: .infinity)
+                            .foregroundColor(.black)
+                    }
+                    .frame(maxWidth: .infinity)
+                    Divider()
+                    Button(action: {
                         addWeight(Weight: Double(txt)!)
                         txt = ""
                         withAnimation {
@@ -40,18 +52,6 @@ struct pWeight: View {
                         }
                     }){
                         Text("Сохранить")
-                            .frame(maxWidth: .infinity)
-                            .foregroundColor(.black)
-                    }
-                    .frame(maxWidth: .infinity)
-                    Divider()
-                    Button(action: {
-                        txt = ""
-                        withAnimation {
-                            bWeight.toggle()
-                        }
-                    }){
-                        Text("Отменить")
                             .frame(maxWidth: .infinity)
                             .foregroundColor(.black)
                     }

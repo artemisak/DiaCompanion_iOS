@@ -39,23 +39,23 @@ struct weekS: View {
                 Divider()
                 HStack(spacing: 0) {
                     Button(action: {
-                        addWeekDay(week: Int(selections1[0]), day: Int(selections1[1]))
                         withAnimation {
                             bWeek.toggle()
                         }
                     }){
-                        Text("Сохранить")
+                        Text("Отменить")
                             .frame(maxWidth: .infinity)
                             .foregroundColor(.black)
                     }
                     .frame(maxWidth: .infinity)
                     Divider()
                     Button(action: {
+                        addWeekDay(week: Int(selections1[0]), day: Int(selections1[1]))
                         withAnimation {
                             bWeek.toggle()
                         }
                     }){
-                        Text("Отменить")
+                        Text("Сохранить")
                             .frame(maxWidth: .infinity)
                             .foregroundColor(.black)
                     }

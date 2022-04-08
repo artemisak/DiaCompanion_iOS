@@ -34,6 +34,18 @@ struct fio: View {
                 Divider()
                 HStack(){
                     Button(action: {
+                        txt = ""
+                        withAnimation {
+                            pFio.toggle()
+                        }
+                    }){
+                        Text("Отменить")
+                            .frame(maxWidth: .infinity)
+                            .foregroundColor(.black)
+                    }
+                    .frame(maxWidth: .infinity)
+                    Divider()
+                    Button(action: {
                         addName(pName: txt)
                         txt = ""
                         withAnimation {
@@ -42,18 +54,6 @@ struct fio: View {
                         
                     }){
                         Text("Сохранить")
-                            .frame(maxWidth: .infinity)
-                            .foregroundColor(.black)
-                    }
-                    .frame(maxWidth: .infinity)
-                    Divider()
-                    Button(action: {
-                        txt = ""
-                        withAnimation {
-                            pFio.toggle()
-                        }
-                    }){
-                        Text("Отменить")
                             .frame(maxWidth: .infinity)
                             .foregroundColor(.black)
                     }

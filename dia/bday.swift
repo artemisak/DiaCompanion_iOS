@@ -32,6 +32,17 @@ struct bday: View {
                 Divider()
                 HStack(){
                     Button(action: {
+                        vDate = Date.now
+                        withAnimation {
+                            pDate.toggle()
+                        }
+                    }){
+                        Text("Отменить")
+                            .frame(maxWidth: .infinity)
+                            .foregroundColor(.black)
+                    }.frame(maxWidth: .infinity)
+                    Divider()
+                    Button(action: {
                         let dateFormatter = DateFormatter()
                         dateFormatter.locale = Locale(identifier: "ru_RU")
                         dateFormatter.setLocalizedDateFormatFromTemplate("dd.MM.yyyy")
@@ -42,17 +53,6 @@ struct bday: View {
                         }
                     }){
                         Text("Сохранить")
-                            .frame(maxWidth: .infinity)
-                            .foregroundColor(.black)
-                    }.frame(maxWidth: .infinity)
-                    Divider()
-                    Button(action: {
-                        vDate = Date.now
-                        withAnimation {
-                            pDate.toggle()
-                        }
-                    }){
-                        Text("Отменить")
                             .frame(maxWidth: .infinity)
                             .foregroundColor(.black)
                     }.frame(maxWidth: .infinity)
