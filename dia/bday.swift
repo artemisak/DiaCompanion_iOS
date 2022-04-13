@@ -51,6 +51,7 @@ struct bday: View {
                         withAnimation {
                             pDate.toggle()
                         }
+                        UIApplication.shared.dismissedKeyboard()
                     }){
                         Text("Сохранить")
                             .frame(maxWidth: .infinity)

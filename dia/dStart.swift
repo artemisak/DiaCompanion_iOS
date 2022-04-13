@@ -51,6 +51,7 @@ struct dStart: View {
                         withAnimation {
                             bStart.toggle()
                         }
+                        UIApplication.shared.dismissedKeyboard()
                     }){
                         Text("Сохранить")
                             .frame(maxWidth: .infinity)

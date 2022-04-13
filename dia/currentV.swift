@@ -60,6 +60,7 @@ struct currentV: View {
                         withAnimation {
                             pV.toggle()
                         }
+                        UIApplication.shared.dismissedKeyboard()
                     }){
                         Text("Сохранить")
                             .frame(maxWidth: .infinity)

@@ -50,6 +50,7 @@ struct pWeight: View {
                         withAnimation {
                             bWeight.toggle()
                         }
+                        UIApplication.shared.dismissedKeyboard()
                     }){
                         Text("Сохранить")
                             .frame(maxWidth: .infinity)

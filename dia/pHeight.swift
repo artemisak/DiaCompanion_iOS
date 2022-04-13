@@ -50,6 +50,7 @@ struct pHeight: View {
                         withAnimation {
                             bHeight.toggle()
                         }
+                        UIApplication.shared.dismissedKeyboard()
                     }){
                         Text("Сохранить")
                             .frame(maxWidth: .infinity)

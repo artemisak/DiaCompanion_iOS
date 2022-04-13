@@ -87,6 +87,7 @@ struct pacient: View {
                 }
             })
         }
+        .ignoresSafeArea(.keyboard)
     }
 }
 

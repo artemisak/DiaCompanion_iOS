@@ -54,6 +54,7 @@ struct weekS: View {
                         withAnimation {
                             bWeek.toggle()
                         }
+                        UIApplication.shared.dismissedKeyboard()
                     }){
                         Text("Сохранить")
                             .frame(maxWidth: .infinity)

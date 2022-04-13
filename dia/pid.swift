@@ -50,6 +50,7 @@ struct pid: View {
                         withAnimation {
                             bid.toggle()
                         }
+                        UIApplication.shared.dismissedKeyboard()
                     }){
                         Text("Сохранить")
                             .frame(maxWidth: .infinity)

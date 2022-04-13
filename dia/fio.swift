@@ -51,7 +51,7 @@ struct fio: View {
                         withAnimation {
                             pFio.toggle()
                         }
-                        
+                        UIApplication.shared.dismissedKeyboard()
                     }){
                         Text("Сохранить")
                             .frame(maxWidth: .infinity)
