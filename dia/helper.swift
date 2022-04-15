@@ -10,15 +10,6 @@ import SwiftUI
 struct helper: View {
     @Binding var phelper: Bool
     var body: some View {
-//        ZStack {
-//            Color(.black)
-//                .opacity(0.3)
-//                .ignoresSafeArea()
-//                .onTapGesture{
-//                    withAnimation{
-//                        phelper.toggle()
-//                    }
-//                }
             VStack(spacing:0){
                 Text("Помощь")
                     .padding()
@@ -36,14 +27,10 @@ struct helper: View {
                     }
                 }){
                     Text("OK")
-                        .frame(maxWidth: .infinity)
-                        .foregroundColor(.black)
                 }
-                .frame(maxWidth: .infinity)
-                .frame(height: 50)
+                .buttonStyle(TransparentButton())
             }
             .background(Color.white.cornerRadius(10))
             .frame(maxWidth: 350, maxHeight: 450)
-//        }
     }
 }

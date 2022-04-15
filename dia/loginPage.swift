@@ -17,7 +17,7 @@ struct loginPage: View {
     @State private var pass: String = ""
     @State private var isWrong: Bool = true
     @State private var isnt: Bool = false
-    @State private var reg: Bool = false
+    @Binding var reg: Bool
     @FocusState private var focusedField: Field?
     @ObservedObject var islogin: check
     var body: some View {
@@ -104,6 +104,7 @@ struct loginPage: View {
                         Image(systemName: "questionmark.circle")
                     }
                 }
+                .buttonStyle(ChangeColorButton())
                 .padding(.top, 10)
             }
             .padding()
@@ -135,10 +136,6 @@ struct loginPage: View {
                     }
                 })
             }
-            if reg {
-                regHelper(phelper: $reg)
-                    .ignoresSafeArea()
-            }
         }
         .gesture(
             DragGesture(minimumDistance: 0.1, coordinateSpace: .local)
@@ -151,19 +148,6 @@ struct loginPage: View {
                     }
                 }
         )
-    }
-}
-
-struct RoundedRectangleButtonStyle: ButtonStyle {
-    func makeBody(configuration: Configuration) -> some View {
-        HStack {
-            Spacer()
-            configuration.label.foregroundColor(.white)
-            Spacer()
-        }
-        .padding()
-        .background(Color.blue.cornerRadius(8))
-        .opacity(configuration.isPressed ? 0.75 : 1)
     }
 }
 

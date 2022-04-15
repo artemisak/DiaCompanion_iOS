@@ -13,33 +13,34 @@ struct ModalView: View {
     @State private var fileUrl = Bundle.main.url(forResource: "help", withExtension: "pdf")!
     var body: some View {
         NavigationView {
-                List {
-                    Section(header: Text("О пациенте")){
-                        NavigationLink(destination: ketonur()) {
-                            Button("Добавить запись о кетонурии", action: {})
-                        }.foregroundColor(.black)
-                        NavigationLink(destination: massa()) {
-                            Button("Добавить измерение массы тела", action: {})
-                        }.foregroundColor(.black)
-                        NavigationLink(destination: pacient()) {
-                            Button("Данные пациента", action: {})
-                        }.foregroundColor(.black)
-                        NavigationLink(destination: poldny()) {
-                            Button("Отметить полные дни", action: {})
-                        }.foregroundColor(.black)
-                        NavigationLink(destination: PDFKitView(url: fileUrl)
-                                        .navigationTitle("Обучение")
-                                        .navigationBarTitleDisplayMode(.inline)) {
+            List {
+                Section(header: Text("О пациенте")){
+                    NavigationLink(destination: ketonur()) {
+                        Button("Добавить запись о кетонурии", action: {})
+                    }.foregroundColor(.black)
+                    NavigationLink(destination: massa()) {
+                        Button("Добавить измерение массы тела", action: {})
+                    }.foregroundColor(.black)
+                    NavigationLink(destination: pacient()) {
+                        Button("Данные пациента", action: {})
+                    }.foregroundColor(.black)
+                    NavigationLink(destination: poldny()) {
+                        Button("Отметить полные дни", action: {})
+                    }.foregroundColor(.black)
+                    NavigationLink(destination: PDFKitView(url: fileUrl)
+                        .navigationTitle("Обучение")
+                        .navigationBarTitleDisplayMode(.inline)) {
                             Button("Обучение", action: {})
                         }.foregroundColor(.black)
-                        Button("Помощь", action: {
-                            withAnimation {
-                                phelper.toggle()
-                            }
-                        })
-                            .foregroundColor(.black)
-                    }
-                }.listStyle(.insetGrouped)
+                    Button("Помощь", action: {
+                        withAnimation {
+                            phelper.toggle()
+                        }
+                    })
+                    .foregroundColor(.black)
+                }
+            }
+            .listStyle(.insetGrouped)
             .navigationTitle("Дополнительно")
         }
         .customPopupView(isPresented: $phelper, popupView: { helper(phelper: $phelper) })
