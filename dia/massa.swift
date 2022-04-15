@@ -28,10 +28,10 @@ struct massa: View {
                         selection: $date,
                         displayedComponents: [.date, .hourAndMinute]
                     ){}
-                    .environment(\.locale, Locale.init(identifier: "ru"))
-                    .frame(width: 300)
-                    .labelsHidden()
-                    .datePickerStyle(WheelDatePickerStyle())
+                        .environment(\.locale, Locale.init(identifier: "ru"))
+                        .frame(width: 300)
+                        .labelsHidden()
+                        .datePickerStyle(WheelDatePickerStyle())
                 }.frame(maxWidth: .infinity)
             }
         }
@@ -52,12 +52,12 @@ struct massa: View {
             }
             ToolbarItem(placement: .keyboard, content: {
                 HStack{
-                Spacer()
-                Button(action: {
-                    focusedField = false
-                }, label: {
-                    Text("Готово")
-                })
+                    Spacer()
+                    Button(action: {
+                        focusedField = false
+                    }, label: {
+                        Text("Готово")
+                    })
                 }
             })
         }

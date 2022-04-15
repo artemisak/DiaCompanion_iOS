@@ -48,10 +48,10 @@ struct enterFood: View {
             }
             Section(header: Text("Уровень сахара в крови")) {
                 Toggle(isOn: $enabled) {Text("Записать текущий УСК")}
-                .onChange(of: enabled){_ in
-                    sugar = ""
-                    sugarlvl = "УСК не определен"
-                }
+                    .onChange(of: enabled){_ in
+                        sugar = ""
+                        sugarlvl = "УСК не определен"
+                    }
             }
             Section {
                 Text("\(sugarlvl)")
@@ -83,9 +83,9 @@ struct enterFood: View {
                         Image(systemName: "folder.badge.plus")
                     }
                 })
-                    .sheet(isPresented: $isSheetShown) {
-                        addFoodButton(foodItems: $foodItems)
-                    }
+                .sheet(isPresented: $isSheetShown) {
+                    addFoodButton(foodItems: $foodItems)
+                }
             }
             Section(){
                 ForEach(foodItems, id: \.self) {i in
@@ -110,12 +110,12 @@ struct enterFood: View {
             })
             ToolbarItem(placement: .keyboard, content: {
                 HStack{
-                Spacer()
-                Button(action: {
-                    UIApplication.shared.dismissedKeyboard()
-                }, label: {
-                    Text("Готово")
-                })
+                    Spacer()
+                    Button(action: {
+                        UIApplication.shared.dismissedKeyboard()
+                    }, label: {
+                        Text("Готово")
+                    })
                 }
             })
         }

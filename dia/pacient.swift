@@ -78,12 +78,12 @@ struct pacient: View {
         .toolbar {
             ToolbarItem(placement: .keyboard, content: {
                 HStack{
-                Spacer()
-                Button(action: {
-                    UIApplication.shared.dismissedKeyboard()
-                }, label: {
-                    Text("Готово")
-                })
+                    Spacer()
+                    Button(action: {
+                        UIApplication.shared.dismissedKeyboard()
+                    }, label: {
+                        Text("Готово")
+                    })
                 }
             })
         }

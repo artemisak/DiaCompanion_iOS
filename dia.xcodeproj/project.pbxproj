@@ -12,7 +12,7 @@
 		A7230C7F27705AED00B68244 /* excelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7230C7E27705AED00B68244 /* excelManager.swift */; };
 		A74A33D027B7E833003D2EBD /* loginPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74A33CF27B7E833003D2EBD /* loginPage.swift */; };
 		A7BD994727CA46FC0090D9D7 /* helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7BD994627CA46FC0090D9D7 /* helper.swift */; };
-		A7D0976A2809FE16000A12E1 /* Buttons.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7D097692809FE16000A12E1 /* Buttons.swift */; };
+		A7D0976A2809FE16000A12E1 /* myButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7D097692809FE16000A12E1 /* myButtons.swift */; };
 		A7DCBBB327BD8AD4009A3A16 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A7DCBBB227BD8AD4009A3A16 /* Launch Screen.storyboard */; };
 		A7DCBBB527BEA659009A3A16 /* startPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7DCBBB427BEA659009A3A16 /* startPage.swift */; };
 		A7FBB23B27FC257D00828432 /* regHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7FBB23A27FC257D00828432 /* regHelper.swift */; };
@@ -64,7 +64,7 @@
 		A7230C7E27705AED00B68244 /* excelManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = excelManager.swift; sourceTree = "<group>"; };
 		A74A33CF27B7E833003D2EBD /* loginPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = loginPage.swift; sourceTree = "<group>"; };
 		A7BD994627CA46FC0090D9D7 /* helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = helper.swift; sourceTree = "<group>"; };
-		A7D097692809FE16000A12E1 /* Buttons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Buttons.swift; sourceTree = "<group>"; };
+		A7D097692809FE16000A12E1 /* myButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = myButtons.swift; sourceTree = "<group>"; };
 		A7DCBBB227BD8AD4009A3A16 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		A7DCBBB427BEA659009A3A16 /* startPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = startPage.swift; sourceTree = "<group>"; };
 		A7FBB23A27FC257D00828432 /* regHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = regHelper.swift; sourceTree = "<group>"; };
@@ -172,7 +172,7 @@
 				A7DCBBB427BEA659009A3A16 /* startPage.swift */,
 				A74A33CF27B7E833003D2EBD /* loginPage.swift */,
 				A7FBB23A27FC257D00828432 /* regHelper.swift */,
-				A7D097692809FE16000A12E1 /* Buttons.swift */,
+				A7D097692809FE16000A12E1 /* myButtons.swift */,
 				A70BCC3927B9471E00C22703 /* loginManager.swift */,
 				ACC3798526ECFA7E00E0729E /* massa.swift */,
 				AC37A67A276147AF00558E55 /* foodTable.swift */,
@@ -361,7 +361,7 @@
 				ACF2F0AA26DEA8300066753D /* history.swift in Sources */,
 				ACCC5C2E2702190B0057CA7C /* pacientManager.swift in Sources */,
 				AC32A68427260602001DDB9F /* pWeight.swift in Sources */,
-				A7D0976A2809FE16000A12E1 /* Buttons.swift in Sources */,
+				A7D0976A2809FE16000A12E1 /* myButtons.swift in Sources */,
 				ACF7E7C32736F12C0027DD11 /* addSreenView.swift in Sources */,
 				ACF2F0A826DE9A1D0066753D /* inject.swift in Sources */,
 				ACC3798626ECFA7E00E0729E /* massa.swift in Sources */,

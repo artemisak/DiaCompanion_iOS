@@ -49,10 +49,10 @@ struct sugarChange: View {
                         selection: $date,
                         displayedComponents: [.date, .hourAndMinute]
                     ){}
-                    .environment(\.locale, Locale.init(identifier: "ru"))
-                    .frame(width: 300)
-                    .labelsHidden()
-                    .datePickerStyle(WheelDatePickerStyle())
+                        .environment(\.locale, Locale.init(identifier: "ru"))
+                        .frame(width: 300)
+                        .labelsHidden()
+                        .datePickerStyle(WheelDatePickerStyle())
                 }.frame(maxWidth: .infinity)
             }
         }
@@ -79,12 +79,12 @@ struct sugarChange: View {
             })
             ToolbarItem(placement: .keyboard, content: {
                 HStack{
-                Spacer()
-                Button(action: {
-                    UIApplication.shared.dismissedKeyboard()
-                }, label: {
-                    Text("Готово")
-                })
+                    Spacer()
+                    Button(action: {
+                        UIApplication.shared.dismissedKeyboard()
+                    }, label: {
+                        Text("Готово")
+                    })
                 }
             })
         }

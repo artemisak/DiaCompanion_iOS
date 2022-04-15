@@ -72,12 +72,12 @@ struct addFoodButton: View {
                 })
                 ToolbarItem(placement: .keyboard, content: {
                     HStack{
-                    Spacer()
-                    Button(action: {
-                        UIApplication.shared.dismissedKeyboard()
-                    }, label: {
-                        Text("Готово")
-                    })
+                        Spacer()
+                        Button(action: {
+                            UIApplication.shared.dismissedKeyboard()
+                        }, label: {
+                            Text("Готово")
+                        })
                     }
                 })
             }
@@ -130,12 +130,12 @@ struct addFoodButton: View {
         .toolbar {
             ToolbarItem(placement: .keyboard, content: {
                 HStack{
-                Spacer()
-                Button(action: {
-                    UIApplication.shared.dismissedKeyboard()
-                }, label: {
-                    Text("Готово")
-                })
+                    Spacer()
+                    Button(action: {
+                        UIApplication.shared.dismissedKeyboard()
+                    }, label: {
+                        Text("Готово")
+                    })
                 }
             })
         }

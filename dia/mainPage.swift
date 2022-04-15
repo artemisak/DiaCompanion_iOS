@@ -6,7 +6,7 @@ struct mainPage: View {
     @State private var isLoad: Bool = true
     var sheets = exportTable()
     var columns: [GridItem] =
-             Array(repeating: .init(.flexible()), count: 2)
+    Array(repeating: .init(.flexible()), count: 2)
     var body: some View {
         GeometryReader { g in
             ZStack {
@@ -27,7 +27,7 @@ struct mainPage: View {
                                     .foregroundColor(Color.black)
                                     .multilineTextAlignment(.center)
                             }
-
+                            
                         }.buttonStyle(ChangeColorButton())
                         NavigationLink(destination: enterFood()) {
                             VStack {
@@ -44,7 +44,7 @@ struct mainPage: View {
                                     .foregroundColor(Color.black)
                                     .multilineTextAlignment(.center)
                             }
-
+                            
                         }.buttonStyle(ChangeColorButton())
                         NavigationLink(destination: history()) {
                             VStack {
