@@ -19,7 +19,7 @@ struct mainPage: View {
                                     .foregroundColor(Color.black)
                                     .multilineTextAlignment(.center)
                             }
-                        }
+                        }.buttonStyle(ChangeColorButton())
                         NavigationLink(destination: inject()) {
                             VStack {
                                 Image("menu_syringe")
@@ -28,7 +28,7 @@ struct mainPage: View {
                                     .multilineTextAlignment(.center)
                             }
 
-                        }
+                        }.buttonStyle(ChangeColorButton())
                         NavigationLink(destination: enterFood()) {
                             VStack {
                                 Image("menu_food")
@@ -36,7 +36,7 @@ struct mainPage: View {
                                     .foregroundColor(Color.black)
                                     .multilineTextAlignment(.center)
                             }
-                        }
+                        }.buttonStyle(ChangeColorButton())
                         NavigationLink(destination: enterAct()) {
                             VStack {
                                 Image("menu_sleep")
@@ -45,7 +45,7 @@ struct mainPage: View {
                                     .multilineTextAlignment(.center)
                             }
 
-                        }
+                        }.buttonStyle(ChangeColorButton())
                         NavigationLink(destination: history()) {
                             VStack {
                                 Image("menu_paper")
@@ -53,7 +53,7 @@ struct mainPage: View {
                                     .foregroundColor(Color.black)
                                     .multilineTextAlignment(.center)
                             }
-                        }
+                        }.buttonStyle(ChangeColorButton())
                         Button(action:{
                             isLoad.toggle()
                             DispatchQueue.main.asyncAfter(deadline: .now()+0.2){
@@ -72,7 +72,7 @@ struct mainPage: View {
                                     .multilineTextAlignment(.center)
                             }
                         }
-
+                        .buttonStyle(ChangeColorButton())
                     }
                     .frame(width: g.size.width)
                     .frame(minHeight: g.size.height)
@@ -92,12 +92,12 @@ struct mainPage: View {
                 Button(action: {showModal.toggle()}){
                     Image(systemName: "line.3.horizontal")
                 }
+                .buttonStyle(ChangeColorButton())
                 .sheet(isPresented: $showModal) {
                     ModalView()
                 }
             }
         }
-        
     }
 }
 
@@ -114,5 +114,13 @@ public extension UIApplication {
         
         return window
         
+    }
+}
+
+struct ChangeColorButton: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .background(Color.white)
+            .foregroundColor(.blue)
     }
 }
