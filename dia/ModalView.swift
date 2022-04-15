@@ -9,11 +9,10 @@ import SwiftUI
 import PDFKit
 
 struct ModalView: View {
-    @State private var phelper : Bool = true
+    @State private var phelper : Bool = false
     @State private var fileUrl = Bundle.main.url(forResource: "help", withExtension: "pdf")!
     var body: some View {
         NavigationView {
-            ZStack {
                 List {
                     Section(header: Text("О пациенте")){
                         NavigationLink(destination: ketonur()) {
@@ -35,19 +34,38 @@ struct ModalView: View {
                         }.foregroundColor(.black)
                         Button("Помощь", action: {
                             withAnimation {
-                                phelper = false
+                                phelper.toggle()
                             }
                         })
                             .foregroundColor(.black)
                     }
-                }
-                if !phelper {
-                    helper(phelper: $phelper)
-                        .ignoresSafeArea()
-                }
-            }
+                }.listStyle(.insetGrouped)
             .navigationTitle("Дополнительно")
         }
+        .customPopupView(isPresented: $phelper, popupView: { helper(phelper: $phelper) })
+    }
+}
+
+struct CustomPopupView<Content, PopupView>: View where Content: View, PopupView: View {
+    
+    @Binding var isPresented: Bool
+    @ViewBuilder let content: () -> Content
+    @ViewBuilder let popupView: () -> PopupView
+    let backgroundColor: Color
+    let animation: Animation?
+    
+    var body: some View {
+        content()
+            .animation(nil, value: isPresented)
+            .overlay(isPresented ? backgroundColor.ignoresSafeArea() : nil)
+            .overlay(isPresented ? popupView() : nil)
+            .animation(animation, value: isPresented)
+    }
+}
+
+extension View {
+    func customPopupView<PopupView>(isPresented: Binding<Bool>, popupView: @escaping () -> PopupView, backgroundColor: Color = .black.opacity(0.3), animation: Animation? = .default) -> some View where PopupView: View {
+        return CustomPopupView(isPresented: isPresented, content: { self }, popupView: popupView, backgroundColor: backgroundColor, animation: animation)
     }
 }
 

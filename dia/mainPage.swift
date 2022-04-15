@@ -59,6 +59,9 @@ struct mainPage: View {
                             DispatchQueue.main.asyncAfter(deadline: .now()+0.2){
                                 isLoad.toggle()
                                 let AV = UIActivityViewController(activityItems: [sheets.generate()], applicationActivities: nil)
+                                AV.overrideUserInterfaceStyle = .light
+                                UINavigationBar.appearance().overrideUserInterfaceStyle = .light
+                                UITableView.appearance().overrideUserInterfaceStyle = .light
                                 UIApplication.shared.currentUIWindow()?.rootViewController?.present(AV, animated: true, completion: nil)
                             }
                         }){
@@ -70,7 +73,9 @@ struct mainPage: View {
                             }
                         }
 
-                    }.position(x: g.size.width/2, y: g.size.height/2)
+                    }
+                    .frame(width: g.size.width)
+                    .frame(minHeight: g.size.height)
                 }
                 if !isLoad {
                     ProgressView()
