@@ -3,7 +3,7 @@ import SwiftUI
 struct addFoodButton: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @Binding var foodItems: [String]
-    @State public var addScreen: Bool = true
+    @State public var addScreen: Bool = false
     @State public var selectedFoodTemp: String = ""
     @State public var selectedFoodCategoryTemp: String = ""
     @State public var gram: String = ""
@@ -67,9 +67,10 @@ struct addFoodButton: View {
                         })
                     }
                 })
-            }
+            }.ignoresSafeArea(.keyboard)
         }
-        .overlay(addScreen ? nil : addSreenView(addScreen: $addScreen, gram: $gram, selectedFood: $selectedFoodTemp, foodItems: $foodItems))
+        .customPopupView(isPresented: $addScreen, popupView: {addSreenView(addScreen: $addScreen, gram: $gram, selectedFood: $selectedFoodTemp, foodItems: $foodItems)})
+        
     }
     
     func DoButton(dish: FoodList) -> some View {

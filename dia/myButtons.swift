@@ -34,11 +34,10 @@ struct TransparentButton: ButtonStyle {
 
 struct TransparentButtonAndLink: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
-        HStack{
         configuration.label
-        Spacer()
-        }
-        .foregroundColor(.black)
-        .padding(.vertical, 10)
+            .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+            .background(Color.white.opacity(0.0001))
+            .foregroundColor(.black)
+            .padding(.vertical, 10)
     }
 }
