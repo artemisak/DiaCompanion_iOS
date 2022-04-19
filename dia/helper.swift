@@ -1,10 +1,3 @@
-//
-//  helper.swift
-//  dia
-//
-//  Created by Артём Исаков on 26.02.2022.
-//
-
 import SwiftUI
 
 struct helper: View {
@@ -31,6 +24,7 @@ struct helper: View {
             .buttonStyle(TransparentButton())
         }
         .background(Color.white.cornerRadius(10))
-        .frame(maxWidth: 350, maxHeight: 450)
+        .frame(maxHeight: 450)
+        .padding([.leading, .trailing], 15)
     }
 }

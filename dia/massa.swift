@@ -1,10 +1,3 @@
-//
-//  massa.swift
-//  dia
-//
-//  Created by Артем  on 11.09.2021.
-//
-
 import SwiftUI
 
 struct massa: View {

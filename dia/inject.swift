@@ -1,10 +1,3 @@
-//
-//  inject.swift
-//  dia
-//
-//  Created by Артем  on 31.08.2021.
-//
-
 import SwiftUI
 
 enum injects :String, CaseIterable, Identifiable {

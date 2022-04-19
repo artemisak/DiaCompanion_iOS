@@ -1,10 +1,3 @@
-//
-//  ketonur.swift
-//  dia
-//
-//  Created by Артем  on 10.09.2021.
-//
-
 import SwiftUI
 
 struct ketonur: View {

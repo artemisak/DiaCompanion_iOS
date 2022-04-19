@@ -12,6 +12,7 @@
 		A7230C7F27705AED00B68244 /* excelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7230C7E27705AED00B68244 /* excelManager.swift */; };
 		A74A33D027B7E833003D2EBD /* loginPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74A33CF27B7E833003D2EBD /* loginPage.swift */; };
 		A7BD994727CA46FC0090D9D7 /* helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7BD994627CA46FC0090D9D7 /* helper.swift */; };
+		A7CC5086280DC2B9007F4A60 /* prediction.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7CC5085280DC2B9007F4A60 /* prediction.swift */; };
 		A7D0976A2809FE16000A12E1 /* myButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7D097692809FE16000A12E1 /* myButtons.swift */; };
 		A7DCBBB327BD8AD4009A3A16 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A7DCBBB227BD8AD4009A3A16 /* Launch Screen.storyboard */; };
 		A7DCBBB527BEA659009A3A16 /* startPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7DCBBB427BEA659009A3A16 /* startPage.swift */; };
@@ -64,6 +65,7 @@
 		A7230C7E27705AED00B68244 /* excelManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = excelManager.swift; sourceTree = "<group>"; };
 		A74A33CF27B7E833003D2EBD /* loginPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = loginPage.swift; sourceTree = "<group>"; };
 		A7BD994627CA46FC0090D9D7 /* helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = helper.swift; sourceTree = "<group>"; };
+		A7CC5085280DC2B9007F4A60 /* prediction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = prediction.swift; sourceTree = "<group>"; };
 		A7D097692809FE16000A12E1 /* myButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = myButtons.swift; sourceTree = "<group>"; };
 		A7DCBBB227BD8AD4009A3A16 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		A7DCBBB427BEA659009A3A16 /* startPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = startPage.swift; sourceTree = "<group>"; };
@@ -186,6 +188,7 @@
 				AC3B847426EBA1F200E98681 /* ketonur.swift */,
 				AC3B847A26EBA8FA00E98681 /* Localizable.strings */,
 				AC3C959A26D1B570005B1393 /* enterFood.swift */,
+				A7CC5085280DC2B9007F4A60 /* prediction.swift */,
 				AC2D32E1273594630022AFD9 /* addFoodButton.swift */,
 				ACF7E7C22736F12C0027DD11 /* addSreenView.swift */,
 				AC2D32E327359EC50022AFD9 /* diaryManager.swift */,
@@ -365,6 +368,7 @@
 				ACF7E7C32736F12C0027DD11 /* addSreenView.swift in Sources */,
 				ACF2F0A826DE9A1D0066753D /* inject.swift in Sources */,
 				ACC3798626ECFA7E00E0729E /* massa.swift in Sources */,
+				A7CC5086280DC2B9007F4A60 /* prediction.swift in Sources */,
 				A7DCBBB527BEA659009A3A16 /* startPage.swift in Sources */,
 				A7230C7F27705AED00B68244 /* excelManager.swift in Sources */,
 				AC2D32E2273594630022AFD9 /* addFoodButton.swift in Sources */,
@@ -545,7 +549,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2;
+				MARKETING_VERSION = 1.3;
 				PRODUCT_BUNDLE_IDENTIFIER = app.dia;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -573,7 +577,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2;
+				MARKETING_VERSION = 1.3;
 				PRODUCT_BUNDLE_IDENTIFIER = app.dia;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;

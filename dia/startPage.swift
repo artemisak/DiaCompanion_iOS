@@ -1,10 +1,3 @@
-//
-//  startPage.swift
-//  dia
-//
-//  Created by Артём Исаков on 17.02.2022.
-//
-
 import SwiftUI
 
 struct startPage: View {

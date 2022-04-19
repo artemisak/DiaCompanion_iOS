@@ -1,10 +1,3 @@
-//
-//  addSreenView.swift
-//  dia
-//
-//  Created by Артем  on 06.11.2021.
-//
-
 import SwiftUI
 
 struct addSreenView: View {
@@ -26,6 +19,7 @@ struct addSreenView: View {
                     TextField("Вес, в граммах", text: $gram)
                         .padding(.leading, 16)
                         .padding(.trailing, 16)
+                        .keyboardType(.numberPad)
                     Rectangle()
                         .frame(height: 1)
                         .foregroundColor(.black)
@@ -35,43 +29,27 @@ struct addSreenView: View {
                 Divider()
                 HStack(){
                     Button(action: {
+                        gram = ""
+                        selectedFood = ""
+                        addScreen.toggle()
+                    }){
+                        Text("Назад")
+                    }
+                    .buttonStyle(TransparentButton())
+                    Divider()
+                    Button(action: {
                         foodItems.append("\(selectedFood)//\(gram)")
                         gram = ""
                         selectedFood = ""
                         addScreen.toggle()
                     }){
                         Text("Сохранить")
-                            .frame(maxWidth: .infinity)
-                            .foregroundColor(.black)
                     }
-                    .frame(maxWidth: .infinity)
-                    Divider()
-                    Button(action: {
-                        gram = ""
-                        selectedFood = ""
-                        addScreen.toggle()
-                    }){
-                        Text("Назад")
-                            .frame(maxWidth: .infinity)
-                            .foregroundColor(.black)
-                    }
-                    .frame(maxWidth: .infinity)
+                    .buttonStyle(TransparentButton())
                 }.frame(height: 50)
             }
             .background(Color.white.cornerRadius(10))
-            .frame(maxWidth: 350)
-        }
-        .toolbar {
-            ToolbarItem(placement: .keyboard, content: {
-                HStack{
-                    Spacer()
-                    Button(action: {
-                        UIApplication.shared.dismissedKeyboard()
-                    }, label: {
-                        Text("Готово")
-                    })
-                }
-            })
+            .padding([.leading, .trailing], 15)
         }
     }
 }

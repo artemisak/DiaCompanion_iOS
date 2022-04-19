@@ -1,66 +1,63 @@
-//
-//  pWeight.swift
-//  dia
-//
-//  Created by Артем  on 25.10.2021.
-//
-
 import SwiftUI
 
 struct pWeight: View {
     @Binding var bWeight: Bool
     @Binding var txt: String
+    @State private var lineColor: Color = Color.black
     var body: some View {
-        ZStack{
-            Color(.black)
-                .opacity(0.3)
-                .ignoresSafeArea()
-                .onTapGesture{withAnimation(.linear){bWeight.toggle()}}
+        VStack(spacing:0){
+            Text("Вес до беременности, в кг")
+                .padding()
+            Divider()
             VStack(spacing:0){
-                Text("Вес до беременности, в кг")
-                    .padding()
+                TextField("кг", text: $txt)
+                    .padding(.leading, 16)
+                    .padding(.trailing, 16)
+                    .keyboardType(.decimalPad)
+                Rectangle()
+                    .frame(height: 1)
+                    .foregroundColor(lineColor)
+                    .padding(.leading, 16)
+                    .padding(.trailing, 16)
+            }.padding()
+            Divider()
+            HStack(){
+                Button(action: {
+                    txt = ""
+                    bWeight.toggle()
+                }){
+                    Text("Отменить")
+                }
+                .buttonStyle(TransparentButton())
                 Divider()
-                VStack(){
-                    TextField("кг", text: $txt)
-                        .padding(.leading, 16)
-                        .padding(.trailing, 16)
-                    Rectangle()
-                        .frame(height: 1)
-                        .foregroundColor(.black)
-                        .padding(.leading, 16)
-                        .padding(.trailing, 16)
-                }.padding()
-                Divider()
-                HStack(){
-                    Button(action: {
+                Button(action: {
+                    do {
+                        addWeight(Weight: try convert(txt: txt))
                         txt = ""
-                        withAnimation {
-                            bWeight.toggle()
-                        }
-                    }){
-                        Text("Отменить")
-                            .frame(maxWidth: .infinity)
-                            .foregroundColor(.black)
+                        lineColor = Color.black
+                        bWeight.toggle()
+                    } catch {
+                        lineColor = Color.red
                     }
-                    .frame(maxWidth: .infinity)
-                    Divider()
-                    Button(action: {
-                        addWeight(Weight: Double(txt)!)
-                        txt = ""
-                        withAnimation {
-                            bWeight.toggle()
-                        }
-                        UIApplication.shared.dismissedKeyboard()
-                    }){
-                        Text("Сохранить")
-                            .frame(maxWidth: .infinity)
-                            .foregroundColor(.black)
-                    }
-                    .frame(maxWidth: .infinity)
-                }.frame(height: 50)
-            }
-            .background(Color.white.cornerRadius(10))
-            .frame(maxWidth: 350)
+                }){
+                    Text("Сохранить")
+                }
+                .buttonStyle(TransparentButton())
+            }.frame(height: 50)
         }
+        .background(Color.white.cornerRadius(10))
+        .padding([.leading, .trailing], 15)
     }
+}
+
+enum inputErorrs: Error {
+    case decimalError
+}
+
+func convert(txt: String) throws -> Double {
+    let decimal = txt.components(separatedBy:",")
+    guard decimal.count-1 < 2 else {
+        throw inputErorrs.decimalError
+    }
+    return Double(String(txt.map{ $0 == "," ? "." : $0}))!
 }

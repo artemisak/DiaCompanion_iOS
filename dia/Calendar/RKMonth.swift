@@ -32,10 +32,9 @@ struct RKMonth: View {
             RKWeekdayHeader(rkManager: self.rkManager)
             VStack(alignment: .leading, spacing: 5) {
                 ForEach(monthsArray, id:  \.self) { row in
-                    HStack() {
+                    HStack(spacing: 0) {
                         ForEach(row, id:  \.self) { column in
-                            HStack() {
-                                Spacer()
+                            HStack(spacing: 0) {
                                 if self.isThisMonth(date: column) {
                                     RKCell(rkDate: RKDate(
                                         date: column,
@@ -47,14 +46,13 @@ struct RKMonth: View {
                                         cellWidth: self.cellWidth)
                                         .onTapGesture { self.dateTapped(date: column) }
                                 } else {
-                                    Text("").frame(width: self.cellWidth, height: self.cellWidth)
+                                    Text("").frame(width: self.cellWidth, height: self.cellWidth).frame(minWidth: 0, maxWidth: .infinity)
                                 }
-                                Spacer()
                             }
                         }
                     }
                 }
-            }.frame(minWidth: 0, maxWidth: .infinity)
+            }
         }.background(rkManager.colors.monthBackColor)
     }
 

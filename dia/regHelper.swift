@@ -1,10 +1,3 @@
-//
-//  regHelper.swift
-//  dia
-//
-//  Created by Артём Исаков on 05.04.2022.
-//
-
 import SwiftUI
 
 struct regHelper: View {
@@ -31,6 +24,7 @@ struct regHelper: View {
             .buttonStyle(TransparentButton())
         }
         .background(Color.white.cornerRadius(10))
-        .frame(maxWidth: 350, maxHeight: 450)
+        .frame(maxHeight: 450)
+        .padding(.all, 15)
     }
 }

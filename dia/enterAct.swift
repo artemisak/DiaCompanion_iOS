@@ -1,10 +1,3 @@
-//
-//  enterAct.swift
-//  dia
-//
-//  Created by Артем  on 29.08.2021.
-//
-
 import SwiftUI
 
 enum act: String, CaseIterable, Identifiable {

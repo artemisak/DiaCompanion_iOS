@@ -1,10 +1,3 @@
-//
-//  weekS.swift
-//  dia
-//
-//  Created by Артем  on 21.10.2021.
-//
-
 import SwiftUI
 
 struct weekS: View {
@@ -15,57 +8,44 @@ struct weekS: View {
         Array(stride(from: 0, through: 7, by: 1))
     ]
     var body: some View {
-        ZStack{
-            Color(.black)
-                .opacity(0.3)
-                .ignoresSafeArea()
-                .onTapGesture{withAnimation(.linear){bWeek.toggle()}}
-            VStack(spacing:0){
-                Text("Неделя беременности на начало исследования")
-                    .multilineTextAlignment(.center)
-                    .padding()
-                Divider()
-                VStack(spacing: 0) {
-                    HStack(spacing: 0) {
-                        Spacer()
-                        Text("Неделя")
-                        Spacer()
-                        Text("День")
-                        Spacer()
-                    }
-                    MultiWheelPicker(selections: $selections1, data: data1)
-                }
+        VStack(spacing:0){
+            Text("Неделя беременности на начало исследования")
+                .multilineTextAlignment(.center)
                 .padding()
-                Divider()
+            Divider()
+            VStack(spacing: 0) {
                 HStack(spacing: 0) {
-                    Button(action: {
-                        withAnimation {
-                            bWeek.toggle()
-                        }
-                    }){
-                        Text("Отменить")
-                            .frame(maxWidth: .infinity)
-                            .foregroundColor(.black)
-                    }
-                    .frame(maxWidth: .infinity)
-                    Divider()
-                    Button(action: {
-                        addWeekDay(week: Int(selections1[0]), day: Int(selections1[1]))
-                        withAnimation {
-                            bWeek.toggle()
-                        }
-                        UIApplication.shared.dismissedKeyboard()
-                    }){
-                        Text("Сохранить")
-                            .frame(maxWidth: .infinity)
-                            .foregroundColor(.black)
-                    }
-                    .frame(maxWidth: .infinity)
-                }.frame(height: 50)
+                    Spacer()
+                    Text("Неделя")
+                    Spacer()
+                    Text("День")
+                    Spacer()
+                }
+                MultiWheelPicker(selections: $selections1, data: data1)
             }
-            .background(Color.white.cornerRadius(10))
-            .frame(maxWidth: 350)
+            .padding()
+            Divider()
+            HStack(spacing: 0) {
+                Button(action: {
+                    withAnimation {
+                        bWeek.toggle()
+                    }
+                }){
+                    Text("Отменить")
+                }.buttonStyle(TransparentButton())
+                Divider()
+                Button(action: {
+                    addWeekDay(week: Int(selections1[0]), day: Int(selections1[1]))
+                    withAnimation {
+                        bWeek.toggle()
+                    }
+                }){
+                    Text("Сохранить")
+                }.buttonStyle(TransparentButton())
+            }.frame(height: 50)
         }
+        .background(Color.white.cornerRadius(10))
+        .padding([.leading, .trailing], 15)
     }
 }
 

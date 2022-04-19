@@ -1,9 +1,3 @@
-//
-//  Buttons.swift
-//  dia
-//
-//  Created by Артём Исаков on 15.04.2022.
-//
 import SwiftUI
 import Foundation
 
@@ -32,8 +26,19 @@ struct TransparentButton: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .frame(maxWidth: .infinity)
-            .background(Color.yellow.opacity(0.0001))
+            .background(Color.white.opacity(0.0001))
             .foregroundColor(.black)
             .frame(height: 50)
+    }
+}
+
+struct TransparentButtonAndLink: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        HStack{
+        configuration.label
+        Spacer()
+        }
+        .foregroundColor(.black)
+        .padding(.vertical, 10)
     }
 }

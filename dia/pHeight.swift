@@ -1,66 +1,55 @@
-//
-//  pHeight.swift
-//  dia
-//
-//  Created by Артем  on 25.10.2021.
-//
-
 import SwiftUI
 
 struct pHeight: View {
     @Binding var bHeight: Bool
     @Binding var txt: String
+    @State private var lineColor: Color = Color.black
     var body: some View {
-        ZStack{
-            Color(.black)
-                .opacity(0.3)
-                .ignoresSafeArea()
-                .onTapGesture{withAnimation(.linear){bHeight.toggle()}}
+        VStack(spacing:0){
+            Text("Рост до беременности, в см")
+                .padding()
+            Divider()
             VStack(spacing:0){
-                Text("Рост до беременности, в см")
-                    .padding()
+                TextField("см", text: $txt)
+                    .padding(.leading, 16)
+                    .padding(.trailing, 16)
+                    .keyboardType(.decimalPad)
+                Rectangle()
+                    .frame(height: 1)
+                    .foregroundColor(.black)
+                    .padding(.leading, 16)
+                    .padding(.trailing, 16)
+            }.padding()
+            Divider()
+            HStack(){
+                Button(action: {
+                    txt = ""
+                    withAnimation {
+                        bHeight.toggle()
+                    }
+                }){
+                    Text("Отменить")
+                }
+                .buttonStyle(TransparentButton())
                 Divider()
-                VStack(){
-                    TextField("см", text: $txt)
-                        .padding(.leading, 16)
-                        .padding(.trailing, 16)
-                    Rectangle()
-                        .frame(height: 1)
-                        .foregroundColor(.black)
-                        .padding(.leading, 16)
-                        .padding(.trailing, 16)
-                }.padding()
-                Divider()
-                HStack(){
-                    Button(action: {
+                Button(action: {
+                    do {
+                        addHeight(Height: try convert(txt: txt))
                         txt = ""
+                        lineColor = Color.black
                         withAnimation {
                             bHeight.toggle()
                         }
-                    }){
-                        Text("Отменить")
-                            .frame(maxWidth: .infinity)
-                            .foregroundColor(.black)
+                    } catch {
+                        lineColor = Color.red
                     }
-                    .frame(maxWidth: .infinity)
-                    Divider()
-                    Button(action: {
-                        addHeight(Height: Double(txt)!)
-                        txt = ""
-                        withAnimation {
-                            bHeight.toggle()
-                        }
-                        UIApplication.shared.dismissedKeyboard()
-                    }){
-                        Text("Сохранить")
-                            .frame(maxWidth: .infinity)
-                            .foregroundColor(.black)
-                    }
-                    .frame(maxWidth: .infinity)
-                }.frame(height: 50)
-            }
-            .background(Color.white.cornerRadius(10))
-            .frame(maxWidth: 350)
+                }){
+                    Text("Сохранить")
+                }
+                .buttonStyle(TransparentButton())
+            }.frame(height: 50)
         }
+        .background(Color.white.cornerRadius(10))
+        .padding([.leading, .trailing], 15)
     }
 }

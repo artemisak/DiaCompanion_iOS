@@ -1,12 +1,4 @@
-//
-//  login.swift
-//  dia
-//
-//  Created by Артём Исаков on 12.02.2022.
-//
-
 import SwiftUI
-import UIKit
 
 struct loginPage: View {
     enum Field: Hashable {

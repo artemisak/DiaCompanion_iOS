@@ -1,10 +1,3 @@
-//
-//  currentV.swift
-//  dia
-//
-//  Created by Артем  on 20.10.2021.
-//
-
 import SwiftUI
 
 enum Vrachi: String, CaseIterable, Identifiable {
@@ -23,53 +16,49 @@ struct currentV: View {
     @Binding var pV: Bool
     @State private var selectedVrach = Vrachi.Popova
     var body: some View {
-        ZStack(){
-            Color(.black)
-                .opacity(0.3)
-                .ignoresSafeArea()
-                .onTapGesture{withAnimation(.linear){pV.toggle()}}
-            VStack(spacing:0){
-                Text("Лечащий врач")
-                    .padding()
-                Divider()
-                VStack(){
-                    Picker("", selection: $selectedVrach) {
-                        Text("Анопова Анна Дмитриевна").tag(Vrachi.Anopova)
-                        Text("Болотько Яна Алексеевна").tag(Vrachi.Bolotko)
-                        Text("Дронова Александра Владимировна").tag(Vrachi.Dronova)
-                        Text("Попова Полина Викторовна").tag(Vrachi.Popova)
-                        Text("Ткачут Александра Сергеевна").tag(Vrachi.Tkachuk)
-                        Text("Васюкова Елена Андреева").tag(Vrachi.Vasukova)
-                        Text("Без врача").tag(Vrachi.without)
-                    }.pickerStyle(.inline).labelsHidden()
-                }
-                Divider()
-                HStack(){
-                    Button(action: {
-                        withAnimation {
-                            pV.toggle()
-                        }
-                    }){
-                        Text("Отменить")
-                            .frame(maxWidth: .infinity)
-                            .foregroundColor(.black)
-                    }.frame(maxWidth: .infinity)
-                    Divider()
-                    Button(action: {
-                        addVrach(pVrach: selectedVrach.rawValue)
-                        withAnimation {
-                            pV.toggle()
-                        }
-                        UIApplication.shared.dismissedKeyboard()
-                    }){
-                        Text("Сохранить")
-                            .frame(maxWidth: .infinity)
-                            .foregroundColor(.black)
-                    }.frame(maxWidth: .infinity)
-                }.frame(height: 50)
+        VStack(spacing:0){
+            Text("Лечащий врач")
+                .padding()
+            Divider()
+            Picker("", selection: $selectedVrach) {
+                Text("Анопова Анна Дмитриевна").tag(Vrachi.Anopova)
+                Text("Болотько Яна Алексеевна").tag(Vrachi.Bolotko)
+                Text("Дронова Александра Владимировна").tag(Vrachi.Dronova)
+                    .font(.system(size: 500))
+                    .minimumScaleFactor(0.015)
+                Text("Попова Полина Викторовна").tag(Vrachi.Popova)
+                Text("Ткачут Александра Сергеевна").tag(Vrachi.Tkachuk)
+                    .font(.system(size: 500))
+                    .minimumScaleFactor(0.015)
+                Text("Васюкова Елена Андреева").tag(Vrachi.Vasukova)
+                Text("Без врача").tag(Vrachi.without)
             }
-            .background(Color.white.cornerRadius(10))
-            .frame(maxWidth: 350)
+            .pickerStyle(.wheel)
+            .labelsHidden()
+            .frame(width: UIScreen.main.bounds.width-30)
+            .clipped()
+            .compositingGroup()
+            Divider()
+            HStack(){
+                Button(action: {
+                    withAnimation {
+                        pV.toggle()
+                    }
+                }){
+                    Text("Отменить")
+                }.buttonStyle(TransparentButton())
+                Divider()
+                Button(action: {
+                    addVrach(pVrach: selectedVrach.rawValue)
+                    withAnimation {
+                        pV.toggle()
+                    }
+                }){
+                    Text("Сохранить")
+                }.buttonStyle(TransparentButton())
+            }.frame(height: 50)
         }
+        .background(Color.white.cornerRadius(10))
+        .padding([.leading, .trailing], 15)
     }
 }

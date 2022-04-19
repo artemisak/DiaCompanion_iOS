@@ -1,10 +1,3 @@
-//
-//  pacientButton.swift
-//  dia
-//
-//  Created by Артем  on 27.09.2021.
-//
-
 import Foundation
 import SQLite
 

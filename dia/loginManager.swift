@@ -1,10 +1,3 @@
-//
-//  checkLogin.swift
-//  dia
-//
-//  Created by Артём Исаков on 13.02.2022.
-//
-
 import Foundation
 import SQLite
 

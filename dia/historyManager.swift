@@ -1,10 +1,3 @@
-//
-//  historyManager.swift
-//  dia
-//
-//  Created by Артем  on 26.11.2021.
-//
-
 import Foundation
 import SQLite
 

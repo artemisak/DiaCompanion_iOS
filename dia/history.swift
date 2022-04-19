@@ -1,10 +1,3 @@
-//
-//  history.swift
-//  dia
-//
-//  Created by Артем  on 31.08.2021.
-//
-
 import SwiftUI
 
 struct history: View {

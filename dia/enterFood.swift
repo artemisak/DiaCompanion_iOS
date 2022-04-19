@@ -61,17 +61,9 @@ struct enterFood: View {
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .keyboardType(.decimalPad)
                     .disabled(enabled == false)
-                    .onChange(of: sugar){_ in
-                        if (sugar == ""){
-                            sugarlvl = "УСК не определен"
-                            lvlColor = Color.black
-                        } else if (Double(sugar) ?? 5.0 > 7){
-                            sugarlvl = "УСК превысит норму"
-                            lvlColor = Color.red
-                        } else {
-                            sugarlvl = "УСК в норме"
-                            lvlColor = Color.green
-                        }
+                    .onChange(of: sugar){s in
+                        sugarlvl = getPredict(sugar: s).0
+                        lvlColor = getPredict(sugar: s).1
                     }
             }
             Section(header: Text("Потребленные продукты")){
@@ -115,6 +107,7 @@ struct enterFood: View {
                         UIApplication.shared.dismissedKeyboard()
                     }, label: {
                         Text("Готово")
+                            .foregroundColor(Color(red: 0, green: 0.590, blue: 1))
                     })
                 }
             })

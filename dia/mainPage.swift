@@ -1,11 +1,10 @@
-
 import SwiftUI
 
 struct mainPage: View {
     @State private var showModal: Bool = false
     @State private var isLoad: Bool = true
-    var sheets = exportTable()
-    var columns: [GridItem] =
+    private var sheets = exportTable()
+    private var columns: [GridItem] =
     Array(repeating: .init(.flexible()), count: 2)
     var body: some View {
         GeometryReader { g in
@@ -74,8 +73,10 @@ struct mainPage: View {
                         }
                         .buttonStyle(ChangeColorButton())
                     }
+                    .padding()
                     .frame(width: g.size.width)
                     .frame(minHeight: g.size.height)
+
                 }
                 if !isLoad {
                     ProgressView()
@@ -96,7 +97,19 @@ struct mainPage: View {
                     ModalView()
                 }
             }
+            ToolbarItem(placement: .keyboard, content: {
+                HStack{
+                    Spacer()
+                    Button(action: {
+                        UIApplication.shared.dismissedKeyboard()
+                    }, label: {
+                        Text("Готово")
+                            .foregroundColor(Color(red: 0, green: 0.590, blue: 1))
+                    })
+                }
+            })
         }
+        .ignoresSafeArea(.keyboard)
     }
 }
 
