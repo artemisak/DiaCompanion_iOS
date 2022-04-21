@@ -77,8 +77,6 @@ struct RKDate {
         return fontWeight
     }
     
-    // MARK: - Date Formats
-    
     func formatDate(date: Date, calendar: Calendar) -> String {
         let formatter = dateFormatter()
         return stringFrom(date: date, formatter: formatter, calendar: calendar)

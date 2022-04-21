@@ -1,5 +1,6 @@
 import Foundation
 import SQLite
+import SwiftUI
 
 func addName(pName: String){
     do {
@@ -262,6 +263,7 @@ func addKetonur(mmol: Double, time: String){
 }
 
 func addDatesToDB(dates: [Date]) {
+    var exist_dates : [Date] = []
     do {
         let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
         let path = documents + "/diacompanion.db"
@@ -273,8 +275,21 @@ func addDatesToDB(dates: [Date]) {
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "ru_RU")
         dateFormatter.setLocalizedDateFormatFromTemplate("dd.MM.yyyy")
+        
+        for i in try db.prepare(fulldays.select(day)){
+            exist_dates.append(dateFormatter.date(from: i[day])!)
+        }
+        
         for i in 0..<dates.count {
-            try db.run(fulldays.insert(day <- dateFormatter.string(from: dates[i])))
+            if  !exist_dates.contains(dates[i]) {
+                try db.run(fulldays.insert(day <- dateFormatter.string(from: dates[i])))
+            }
+        }
+        
+        for i in 0..<exist_dates.count {
+            if  !dates.contains(exist_dates[i]) {
+                try db.run(fulldays.filter(day == dateFormatter.string(from:exist_dates[i])).delete())
+            }
         }
     }
     catch {
