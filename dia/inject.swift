@@ -64,12 +64,21 @@ struct inject: View {
         .toolbar {
             ToolbarItemGroup(){
                 Button(action: {
-                    let dateFormatter = DateFormatter()
-                    dateFormatter.locale = Locale(identifier: "ru_RU")
-                    dateFormatter.setLocalizedDateFormatFromTemplate("dd.MM.yyyy HH:mm")
-                    t = String(t.map {$0 == "," ? "." : $0})
-                    addInject(ed: Double(t) ?? 5.0, type: previewIndex.rawValue, priem: previewIndex1.rawValue, time: dateFormatter.string(from: date))
-                    presentationMode.wrappedValue.dismiss()
+                    do {
+                        let dateFormatter = DateFormatter()
+                        dateFormatter.locale = Locale(identifier: "ru_RU")
+                        dateFormatter.setLocalizedDateFormatFromTemplate("dd.MM.yyyy HH:mm")
+                        addInject(ed: try convert(txt: t), type: previewIndex.rawValue, priem: previewIndex1.rawValue, time: dateFormatter.string(from: date))
+                        presentationMode.wrappedValue.dismiss()
+                    } catch {
+                        let alertController = UIAlertController(title: "Статус операции", message: "Введите релевантное \nзначение", preferredStyle: UIAlertController.Style.alert)
+                        alertController.overrideUserInterfaceStyle = .light
+                        let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) {
+                            (result : UIAlertAction) -> Void in
+                        }
+                        alertController.addAction(okAction)
+                        UIApplication.shared.currentUIWindow()?.rootViewController?.present(alertController, animated: true, completion: nil)
+                    }
                 }) {
                     Text("Сохранить")
                 }

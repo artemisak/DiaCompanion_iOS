@@ -5,6 +5,7 @@ struct addSreenView: View {
     @Binding var gram: String
     @Binding var selectedFood: String
     @Binding var foodItems: [String]
+    @State var isCorrect: Bool = true
     var body: some View {
         VStack(spacing:0){
             Text("Добавить блюдо/продукт")
@@ -14,18 +15,16 @@ struct addSreenView: View {
                 TextField("Вес, в граммах", text: $gram)
                     .padding(.leading, 16)
                     .padding(.trailing, 16)
-                    .keyboardType(.numberPad)
+                    .keyboardType(.asciiCapableNumberPad)
                 Rectangle()
                     .frame(height: 1)
-                    .foregroundColor(.black)
+                    .foregroundColor(isCorrect ? .black : .red)
                     .padding(.leading, 16)
                     .padding(.trailing, 16)
             }.padding()
             Divider()
             HStack(){
                 Button(action: {
-                    gram = ""
-                    selectedFood = ""
                     addScreen.toggle()
                 }){
                     Text("Назад")
@@ -33,10 +32,15 @@ struct addSreenView: View {
                 .buttonStyle(TransparentButton())
                 Divider()
                 Button(action: {
-                    foodItems.append("\(selectedFood)//\(gram)")
-                    gram = ""
-                    selectedFood = ""
-                    addScreen.toggle()
+                    do {
+                        _ = try convertToInt(txt: gram)
+                        isCorrect = true
+                        foodItems.append("\(selectedFood)//\(gram)")
+                        addScreen.toggle()
+                    } catch {
+                        isCorrect = false
+                    }
+
                 }){
                     Text("Сохранить")
                 }
@@ -45,5 +49,7 @@ struct addSreenView: View {
         }
         .background(Color.white.cornerRadius(10))
         .padding([.leading, .trailing], 15)
+        .onAppear(perform: {gram = ""})
+        .onDisappear(perform: {selectedFood = ""})
     }
 }

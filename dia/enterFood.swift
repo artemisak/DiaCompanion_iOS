@@ -46,26 +46,26 @@ struct enterFood: View {
                     displayedComponents: [.date, .hourAndMinute]
                 ).environment(\.locale, Locale.init(identifier: "ru"))
             }
-            Section(header: Text("Уровень сахара в крови")) {
-                Toggle(isOn: $enabled) {Text("Записать текущий УСК")}
-                    .onChange(of: enabled){_ in
-                        sugar = ""
-                        sugarlvl = "УСК не определен"
-                    }
-            }
-            Section {
-                Text("\(sugarlvl)")
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .foregroundColor(lvlColor)
-                TextField("5,0 ммоль/л", text: $sugar)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .keyboardType(.decimalPad)
-                    .disabled(enabled == false)
-                    .onChange(of: sugar){s in
-                        sugarlvl = getPredict(sugar: s).0
-                        lvlColor = getPredict(sugar: s).1
-                    }
-            }
+//            Section(header: Text("Уровень сахара в крови")) {
+//                Toggle(isOn: $enabled) {Text("Записать текущий УСК")}
+//                    .onChange(of: enabled){_ in
+//                        sugar = ""
+//                        sugarlvl = "УСК не определен"
+//                    }
+//            }
+//            Section {
+//                Text("\(sugarlvl)")
+//                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+//                    .foregroundColor(lvlColor)
+//                TextField("5,0 ммоль/л", text: $sugar)
+//                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+//                    .keyboardType(.decimalPad)
+//                    .disabled(enabled == false)
+//                    .onChange(of: sugar){s in
+//                        sugarlvl = getPredict(sugar: s).0
+//                        lvlColor = getPredict(sugar: s).1
+//                    }
+//            }
             Section(header: Text("Потребленные продукты")){
                 Button(action:{
                     isSheetShown.toggle()

@@ -33,11 +33,22 @@ struct ketonur: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing){
                 Button(action: {
-                    let datef = DateFormatter()
-                    datef.locale = Locale(identifier: "ru_RU")
-                    datef.setLocalizedDateFormatFromTemplate("dd.MM.yyyy HH:mm")
-                    addKetonur(mmol: Double(t)!, time: datef.string(from: date))
-                    presentationMode.wrappedValue.dismiss()
+                    do {
+                        let datef = DateFormatter()
+                        datef.locale = Locale(identifier: "ru_RU")
+                        datef.setLocalizedDateFormatFromTemplate("dd.MM.yyyy HH:mm")
+                        addKetonur(mmol: try convert(txt: t), time: datef.string(from: date))
+                        presentationMode.wrappedValue.dismiss()
+                    } catch {
+                        let alertController = UIAlertController(title: "Статус операции", message: "Введите ненулевое \nзначение", preferredStyle: UIAlertController.Style.alert)
+                        alertController.overrideUserInterfaceStyle = .light
+                        let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) {
+                            (result : UIAlertAction) -> Void in
+                        }
+                        alertController.addAction(okAction)
+                        UIApplication.shared.currentUIWindow()?.rootViewController?.present(alertController, animated: true, completion: nil)
+                    }
+
                 }) {
                     Text("Сохранить")
                 }

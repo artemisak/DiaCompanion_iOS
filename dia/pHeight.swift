@@ -16,7 +16,7 @@ struct pHeight: View {
                     .keyboardType(.decimalPad)
                 Rectangle()
                     .frame(height: 1)
-                    .foregroundColor(.black)
+                    .foregroundColor(lineColor)
                     .padding(.leading, 16)
                     .padding(.trailing, 16)
             }.padding()

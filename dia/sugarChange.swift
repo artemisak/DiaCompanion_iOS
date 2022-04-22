@@ -53,19 +53,26 @@ struct sugarChange: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing, content: {
                 Button(action: {
-                    let dateFormatter = DateFormatter()
-                    dateFormatter.locale = Locale(identifier: "ru_RU")
-                    dateFormatter.setLocalizedDateFormatFromTemplate("dd.MM.yyyy HH:mm")
-                    if isAct {
-                        bool1 = 1
-                    } else {
-                        bool1 = 0
+                    do {
+                        let dateFormatter = DateFormatter()
+                        dateFormatter.locale = Locale(identifier: "ru_RU")
+                        dateFormatter.setLocalizedDateFormatFromTemplate("dd.MM.yyyy HH:mm")
+                        if isAct {
+                            bool1 = 1
+                        } else {
+                            bool1 = 0
+                        }
+                        addSugarChange(lvl: try convert(txt: t), period: spreviewIndex.rawValue, physical: bool1, time: dateFormatter.string(from: date))
+                        self.presentationMode.wrappedValue.dismiss()
+                    } catch {
+                        let alertController = UIAlertController(title: "Статус операции", message: "Введите релевантное \nзначение", preferredStyle: UIAlertController.Style.alert)
+                        alertController.overrideUserInterfaceStyle = .light
+                        let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) {
+                            (result : UIAlertAction) -> Void in
+                        }
+                        alertController.addAction(okAction)
+                        UIApplication.shared.currentUIWindow()?.rootViewController?.present(alertController, animated: true, completion: nil)
                     }
-                    t = String(t.map {
-                        $0 == "," ? "." : $0
-                    })
-                    addSugarChange(lvl: Double(t) ?? 5.0, period: spreviewIndex.rawValue, physical: bool1, time: dateFormatter.string(from: date))
-                    self.presentationMode.wrappedValue.dismiss()
                 }) {
                     Text("Сохранить")
                 }

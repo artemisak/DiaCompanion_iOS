@@ -67,11 +67,14 @@ struct CustomPopupView<Content, PopupView>: View where Content: View, PopupView:
     let animation: Animation?
     
     var body: some View {
+        ZStack{
         content()
             .animation(nil, value: isPresented)
+            .blur(radius: isPresented ? 1.5 : 0)
             .overlay(isPresented ? backgroundColor.ignoresSafeArea() : nil)
             .overlay(isPresented ? popupView() : nil)
             .animation(animation, value: isPresented)
+        }
     }
 }
 

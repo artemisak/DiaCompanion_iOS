@@ -21,6 +21,7 @@ struct enterAct: View {
             Section(header: Text("Общая информация")){
                 TextField("Длительность, мин.", text: $t)
                     .keyboardType(.asciiCapableNumberPad)
+                    .focused($focusedField)
                 NavigationLink(destination: actPicker(actpreviewIndex: $actpreviewIndex), label: {
                     HStack{
                         Text("Род занятий")
@@ -46,11 +47,22 @@ struct enterAct: View {
         .toolbar {
             ToolbarItemGroup(){
                 Button(action: {
-                    let dateFormatter = DateFormatter()
-                    dateFormatter.locale = Locale(identifier: "ru_RU")
-                    dateFormatter.setLocalizedDateFormatFromTemplate("dd.MM.yyyy HH:mm")
-                    addAct(min: Int(t) ?? 10, rod: actpreviewIndex.rawValue, time: dateFormatter.string(from: date))
-                    presentationMode.wrappedValue.dismiss()
+                    do {
+                        let intT = try convertToInt(txt: t)
+                        let dateFormatter = DateFormatter()
+                        dateFormatter.locale = Locale(identifier: "ru_RU")
+                        dateFormatter.setLocalizedDateFormatFromTemplate("dd.MM.yyyy HH:mm")
+                        addAct(min: intT, rod: actpreviewIndex.rawValue, time: dateFormatter.string(from: date))
+                        presentationMode.wrappedValue.dismiss()
+                    } catch {
+                        let alertController = UIAlertController(title: "Статус операции", message: "Введите ненулевое \nзначение", preferredStyle: UIAlertController.Style.alert)
+                        alertController.overrideUserInterfaceStyle = .light
+                        let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) {
+                            (result : UIAlertAction) -> Void in
+                        }
+                        alertController.addAction(okAction)
+                        UIApplication.shared.currentUIWindow()?.rootViewController?.present(alertController, animated: true, completion: nil)
+                    }
                 }) {
                     Text("Сохранить")
                 }
