@@ -31,7 +31,7 @@ struct enterFood: View {
     @State private var ftpreviewIndex = ftype.zavtrak
     @State private var lvlColor: Color?
     var body: some View {
-        Form {
+        List {
             Section(header: Text("Общая информация")){
                 NavigationLink(destination: ftPicker(ftpreviewIndex: $ftpreviewIndex), label: {
                     HStack{

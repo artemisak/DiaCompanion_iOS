@@ -17,7 +17,7 @@ struct enterAct: View {
     @State private var actpreviewIndex = act.zar
     @FocusState private var focusedField: Bool
     var body: some View {
-        Form{
+        List {
             Section(header: Text("Общая информация")){
                 TextField("Длительность, мин.", text: $t)
                     .keyboardType(.asciiCapableNumberPad)

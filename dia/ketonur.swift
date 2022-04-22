@@ -10,7 +10,7 @@ struct ketonur: View {
     @State private var isAct: Bool = false
     @FocusState private var focusedField: Bool
     var body: some View {
-        Form{
+        List {
             Section(header: Text("Общая информация")){
                 TextField("ммоль/л", text: $t)
                     .keyboardType(.decimalPad)

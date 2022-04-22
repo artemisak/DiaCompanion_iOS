@@ -10,7 +10,7 @@ struct massa: View {
     @State private var isAct: Bool = false
     @FocusState private var focusedField: Bool
     var body: some View {
-        Form {
+        List {
             Section(header: Text("Общая информация")){
                 TextField("кг", text: $t)
                     .keyboardType(.decimalPad)

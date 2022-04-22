@@ -26,7 +26,7 @@ struct inject: View {
     @State private var previewIndex1 = injects.natoshak
     @State private var previewIndex = injectType.ultra
     var body: some View {
-        Form {
+        List {
             Section(header: Text("Общая информация")){
                 TextField("Ед.", text: $t)
                     .keyboardType(.decimalPad)

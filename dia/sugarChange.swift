@@ -20,7 +20,7 @@ struct sugarChange: View {
     @State private var bool1: Int = 0
     @State private var spreviewIndex = selectedvar.natoshak
     var body: some View {
-        Form {
+        List {
             Section(header: Text("Общая информация")){
                 TextField("Уровень сахара в крови, ммоль/л", text: $t)
                     .keyboardType(.decimalPad)

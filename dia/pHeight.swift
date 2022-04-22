@@ -23,7 +23,6 @@ struct pHeight: View {
             Divider()
             HStack(){
                 Button(action: {
-                    txt = ""
                     withAnimation {
                         bHeight.toggle()
                     }
@@ -34,9 +33,8 @@ struct pHeight: View {
                 Divider()
                 Button(action: {
                     do {
-                        addHeight(Height: try convert(txt: txt))
-                        txt = ""
                         lineColor = Color.black
+                        addHeight(Height: try convert(txt: txt))
                         withAnimation {
                             bHeight.toggle()
                         }
@@ -51,5 +49,6 @@ struct pHeight: View {
         }
         .background(Color.white.cornerRadius(10))
         .padding([.leading, .trailing], 15)
+        .onAppear(perform: {txt = ""})
     }
 }

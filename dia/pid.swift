@@ -22,7 +22,6 @@ struct pid: View {
             Divider()
             HStack(){
                 Button(action: {
-                    txt = ""
                     withAnimation {
                         bid.toggle()
                     }
@@ -33,7 +32,6 @@ struct pid: View {
                 Divider()
                 Button(action: {
                     addID(id: Int(txt)!)
-                    txt = ""
                     withAnimation {
                         bid.toggle()
                     }
@@ -45,5 +43,6 @@ struct pid: View {
         }
         .background(Color.white.cornerRadius(10))
         .padding([.leading, .trailing], 15)
+        .onAppear(perform: {txt = ""})
     }
 }

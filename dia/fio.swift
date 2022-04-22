@@ -22,7 +22,6 @@ struct fio: View {
             Divider()
             HStack(){
                 Button(action: {
-                    txt = ""
                     withAnimation {
                         pFio.toggle()
                     }
@@ -33,7 +32,6 @@ struct fio: View {
                 Divider()
                 Button(action: {
                     addName(pName: txt)
-                    txt = ""
                     withAnimation {
                         pFio.toggle()
                     }
@@ -45,5 +43,6 @@ struct fio: View {
         }
         .background(Color.white.cornerRadius(10))
         .padding([.leading, .trailing])
+        .onAppear(perform: {txt = ""})
     }
 }
