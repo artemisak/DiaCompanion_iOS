@@ -14,6 +14,7 @@ struct enterAct: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @State private var t: String = ""
     @State private var date = Date()
+    @State private var isCorrect: Bool = false
     @State private var actpreviewIndex = act.zar
     @FocusState private var focusedField: Bool
     var body: some View {
@@ -55,16 +56,20 @@ struct enterAct: View {
                         addAct(min: intT, rod: actpreviewIndex.rawValue, time: dateFormatter.string(from: date))
                         presentationMode.wrappedValue.dismiss()
                     } catch {
-                        let alertController = UIAlertController(title: "Статус операции", message: "Введите ненулевое \nзначение", preferredStyle: UIAlertController.Style.alert)
-                        alertController.overrideUserInterfaceStyle = .light
-                        let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) {
-                            (result : UIAlertAction) -> Void in
-                        }
-                        alertController.addAction(okAction)
-                        UIApplication.shared.currentUIWindow()?.rootViewController?.present(alertController, animated: true, completion: nil)
+                        isCorrect = true
+//                        let alertController = UIAlertController(title: "Статус операции", message: "Введите ненулевое \nзначение", preferredStyle: UIAlertController.Style.alert)
+//                        alertController.overrideUserInterfaceStyle = .light
+//                        let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) {
+//                            (result : UIAlertAction) -> Void in
+//                        }
+//                        alertController.addAction(okAction)
+//                        UIApplication.shared.currentUIWindow()?.rootViewController?.present(alertController, animated: true, completion: nil)
                     }
                 }) {
                     Text("Сохранить")
+                }
+                .alert(isPresented: $isCorrect) {
+                    Alert(title: Text("Статус операции"), message: Text("Введите релевантное \nзначение"), dismissButton: .default(Text("ОК")))
                 }
             }
         }

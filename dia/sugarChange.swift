@@ -18,6 +18,7 @@ struct sugarChange: View {
     @State private var minutes: Int = 0
     @State private var isAct: Bool = false
     @State private var bool1: Int = 0
+    @State private var isCorrect: Bool = false
     @State private var spreviewIndex = selectedvar.natoshak
     var body: some View {
         List {
@@ -65,16 +66,20 @@ struct sugarChange: View {
                         addSugarChange(lvl: try convert(txt: t), period: spreviewIndex.rawValue, physical: bool1, time: dateFormatter.string(from: date))
                         self.presentationMode.wrappedValue.dismiss()
                     } catch {
-                        let alertController = UIAlertController(title: "Статус операции", message: "Введите релевантное \nзначение", preferredStyle: UIAlertController.Style.alert)
-                        alertController.overrideUserInterfaceStyle = .light
-                        let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) {
-                            (result : UIAlertAction) -> Void in
-                        }
-                        alertController.addAction(okAction)
-                        UIApplication.shared.currentUIWindow()?.rootViewController?.present(alertController, animated: true, completion: nil)
+                        isCorrect = true
+//                        let alertController = UIAlertController(title: "Статус операции", message: "Введите релевантное \nзначение", preferredStyle: UIAlertController.Style.alert)
+//                        alertController.overrideUserInterfaceStyle = .light
+//                        let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) {
+//                            (result : UIAlertAction) -> Void in
+//                        }
+//                        alertController.addAction(okAction)
+//                        UIApplication.shared.currentUIWindow()?.rootViewController?.present(alertController, animated: true, completion: nil)
                     }
                 }) {
                     Text("Сохранить")
+                }
+                .alert(isPresented: $isCorrect) {
+                    Alert(title: Text("Статус операции"), message: Text("Введите релевантное \nзначение"), dismissButton: .default(Text("ОК")))
                 }
             })
             ToolbarItem(placement: .keyboard, content: {
