@@ -184,6 +184,7 @@ func addSugarChange(lvl: Double, period: String, physical: Int, time: String){
         let _period = Expression<String>("period")
         let _physical = Expression<Int>("physical")
         let _time = Expression<String>("time")
+        print(lvl)
         try db.run(sugar.insert(_lvl <- lvl, _period <- period, _physical <- physical, _time <- time))
     }
     catch {
@@ -332,4 +333,27 @@ func copyDatabaseIfNeeded(sourcePath: String) -> Bool {
         print("error during file copy: \(error)")
         return false
     }
+}
+
+enum inputErorrs: Error {
+    case decimalError
+    case EmptyError
+}
+
+func convert(txt: String) throws -> Double {
+    let decimal = txt.components(separatedBy:",")
+    guard decimal.count-1 < 2 else {
+        throw inputErorrs.decimalError
+    }
+    guard !txt.isEmpty else {
+        throw inputErorrs.EmptyError
+    }
+    return Double(String(txt.map{ $0 == "," ? "." : $0}))!
+}
+
+func convertToInt(txt: String) throws -> Int {
+    guard !txt.isEmpty else {
+        throw inputErorrs.EmptyError
+    }
+    return Int(txt)!
 }

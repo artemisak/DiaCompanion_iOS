@@ -8,11 +8,13 @@ struct massa: View {
     @State private var hours: Int = 0
     @State private var minutes: Int = 0
     @State private var isAct: Bool = false
+    @State private var isCorrect = false
     @FocusState private var focusedField: Bool
     var body: some View {
         List {
             Section(header: Text("Общая информация")){
                 TextField("кг", text: $t)
+                    .focused($focusedField)
                     .keyboardType(.decimalPad)
             }
             Section(header: Text("Время измерения")){
@@ -37,20 +39,15 @@ struct massa: View {
                         let datef = DateFormatter()
                         datef.locale = Locale(identifier: "ru_RU")
                         datef.setLocalizedDateFormatFromTemplate("dd.MM.yyyy HH:mm")
-                        t = String(t.map {$0 == "," ? "." : $0})
                         addMassa(m: try convert(txt: t), time: datef.string(from: date))
                         presentationMode.wrappedValue.dismiss()
                     } catch {
-                        let alertController = UIAlertController(title: "Статус операции", message: "Введите ненулевое \nзначение", preferredStyle: UIAlertController.Style.alert)
-                        alertController.overrideUserInterfaceStyle = .light
-                        let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) {
-                            (result : UIAlertAction) -> Void in
-                        }
-                        alertController.addAction(okAction)
-                        UIApplication.shared.currentUIWindow()?.rootViewController?.present(alertController, animated: true, completion: nil)
+                        isCorrect.toggle()
                     }
                 }) {
                     Text("Сохранить")
+                }.alert(isPresented: $isCorrect) {
+                    Alert(title: Text("Статус операции"), message: Text("Введите релевантное \nзначение"), dismissButton: .default(Text("ОК")))
                 }
             }
             ToolbarItem(placement: .keyboard, content: {

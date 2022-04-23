@@ -48,26 +48,3 @@ struct pWeight: View {
         .onAppear(perform: {txt = ""})
     }
 }
-
-enum inputErorrs: Error {
-    case decimalError
-    case EmptyError
-}
-
-func convert(txt: String) throws -> Double {
-    let decimal = txt.components(separatedBy:",")
-    guard decimal.count-1 < 2 else {
-        throw inputErorrs.decimalError
-    }
-    guard !txt.isEmpty else {
-        throw inputErorrs.EmptyError
-    }
-    return Double(String(txt.map{ $0 == "," ? "." : $0}))!
-}
-
-func convertToInt(txt: String) throws -> Int {
-    guard !txt.isEmpty else {
-        throw inputErorrs.EmptyError
-    }
-    return Int(txt)!
-}

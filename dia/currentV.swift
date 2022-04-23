@@ -27,7 +27,7 @@ struct currentV: View {
                     .font(.system(size: 500))
                     .minimumScaleFactor(0.015)
                 Text("Попова Полина Викторовна").tag(Vrachi.Popova)
-                Text("Ткачут Александра Сергеевна").tag(Vrachi.Tkachuk)
+                Text("Ткачук Александра Сергеевна").tag(Vrachi.Tkachuk)
                     .font(.system(size: 500))
                     .minimumScaleFactor(0.015)
                 Text("Васюкова Елена Андреева").tag(Vrachi.Vasukova)

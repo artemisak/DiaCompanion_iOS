@@ -58,9 +58,9 @@ struct mainPage: View {
                             DispatchQueue.main.asyncAfter(deadline: .now()+0.2){
                                 isLoad.toggle()
                                 let AV = UIActivityViewController(activityItems: [sheets.generate()], applicationActivities: nil)
-                                AV.overrideUserInterfaceStyle = .light
-                                UINavigationBar.appearance().overrideUserInterfaceStyle = .light
-                                UITableView.appearance().overrideUserInterfaceStyle = .light
+//                                AV.overrideUserInterfaceStyle = .light
+//                                UINavigationBar.appearance().overrideUserInterfaceStyle = .light
+//                                UITableView.appearance().overrideUserInterfaceStyle = .light
                                 UIApplication.shared.currentUIWindow()?.rootViewController?.present(AV, animated: true, completion: nil)
                             }
                         }){
@@ -110,21 +110,5 @@ struct mainPage: View {
             })
         }
         .ignoresSafeArea(.keyboard)
-    }
-}
-
-public extension UIApplication {
-    func currentUIWindow() -> UIWindow? {
-        let connectedScenes = UIApplication.shared.connectedScenes
-            .filter({
-                $0.activationState == .foregroundActive})
-            .compactMap({$0 as? UIWindowScene})
-        
-        let window = connectedScenes.first?
-            .windows
-            .first { $0.isKeyWindow }
-        
-        return window
-        
     }
 }

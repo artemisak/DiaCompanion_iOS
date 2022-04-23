@@ -58,32 +58,6 @@ struct ModalView: View {
     }
 }
 
-struct CustomPopupView<Content, PopupView>: View where Content: View, PopupView: View {
-    
-    @Binding var isPresented: Bool
-    @ViewBuilder let content: () -> Content
-    @ViewBuilder let popupView: () -> PopupView
-    let backgroundColor: Color
-    let animation: Animation?
-    
-    var body: some View {
-        ZStack{
-        content()
-            .animation(nil, value: isPresented)
-            .blur(radius: isPresented ? 1.5 : 0)
-            .overlay(isPresented ? backgroundColor.ignoresSafeArea() : nil)
-            .overlay(isPresented ? popupView() : nil)
-            .animation(animation, value: isPresented)
-        }
-    }
-}
-
-extension View {
-    func customPopupView<PopupView>(isPresented: Binding<Bool>, popupView: @escaping () -> PopupView, backgroundColor: Color = .black.opacity(0.3), animation: Animation? = .default) -> some View where PopupView: View {
-        return CustomPopupView(isPresented: isPresented, content: { self }, popupView: popupView, backgroundColor: backgroundColor, animation: animation)
-    }
-}
-
 struct PDFKitView: View {
     var url: URL
     var body: some View {
@@ -105,7 +79,6 @@ struct PDFKitRepresentedView: UIViewRepresentable {
     }
     
     func updateUIView(_ uiView: UIView, context: UIViewRepresentableContext<PDFKitRepresentedView>) {
-        // Update the view.
     }
 }
 
