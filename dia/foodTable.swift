@@ -546,6 +546,7 @@ class exportTable {
         }
         
         worksheet_protect(worksheet1, "pass123", nil)
+        worksheet_protect(worksheet2, "pass123", nil)
         let error = workbook_close(workbook)
         
         if (error.rawValue != LXW_NO_ERROR.rawValue){

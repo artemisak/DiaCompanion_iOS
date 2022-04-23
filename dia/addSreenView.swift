@@ -15,7 +15,7 @@ struct addSreenView: View {
                 TextField("Вес, в граммах", text: $gram)
                     .padding(.leading, 16)
                     .padding(.trailing, 16)
-                    .keyboardType(.asciiCapableNumberPad)
+                    .keyboardType(.numberPad)
                 Rectangle()
                     .frame(height: 1)
                     .foregroundColor(isCorrect ? .black : .red)

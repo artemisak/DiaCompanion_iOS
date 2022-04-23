@@ -20,7 +20,7 @@ struct enterAct: View {
         List {
             Section(header: Text("Общая информация")){
                 TextField("Длительность, мин.", text: $t)
-                    .keyboardType(.asciiCapableNumberPad)
+                    .keyboardType(.numberPad)
                     .focused($focusedField)
                 NavigationLink(destination: actPicker(actpreviewIndex: $actpreviewIndex), label: {
                     HStack{
