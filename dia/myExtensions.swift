@@ -1,10 +1,3 @@
-//
-//  myExtensions.swift
-//  dia
-//
-//  Created by Артём Исаков on 23.04.2022.
-//
-
 import Foundation
 import SwiftUI
 
