@@ -24,7 +24,7 @@ struct helper: View {
             .buttonStyle(TransparentButton())
         }
         .background(Color.white.cornerRadius(10))
-        .frame(maxHeight: 450)
+        .frame(minHeight: 0, maxHeight: 450)
         .padding([.leading, .trailing], 15)
     }
 }
