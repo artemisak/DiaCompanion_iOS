@@ -76,7 +76,6 @@ struct mainPage: View {
                     .padding()
                     .frame(width: g.size.width)
                     .frame(minHeight: g.size.height)
-
                 }
                 if !isLoad {
                     ProgressView()
