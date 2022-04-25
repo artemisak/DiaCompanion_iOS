@@ -14,6 +14,7 @@ struct mainPage: View {
                         NavigationLink(destination: sugarChange()) {
                             VStack {
                                 Image("menu_sugar")
+                                    .scaledToFit()
                                 Text("Измерение сахара")
                                     .foregroundColor(Color.black)
                                     .multilineTextAlignment(.center)
@@ -22,6 +23,7 @@ struct mainPage: View {
                         NavigationLink(destination: inject()) {
                             VStack {
                                 Image("menu_syringe")
+                                    .scaledToFit()
                                 Text("Введение инсулина")
                                     .foregroundColor(Color.black)
                                     .multilineTextAlignment(.center)
@@ -31,6 +33,7 @@ struct mainPage: View {
                         NavigationLink(destination: enterFood()) {
                             VStack {
                                 Image("menu_food")
+                                    .scaledToFit()
                                 Text("Прием пищи")
                                     .foregroundColor(Color.black)
                                     .multilineTextAlignment(.center)
@@ -39,6 +42,7 @@ struct mainPage: View {
                         NavigationLink(destination: enterAct()) {
                             VStack {
                                 Image("menu_sleep")
+                                    .scaledToFit()
                                 Text("Физическая \nактивность и сон")
                                     .foregroundColor(Color.black)
                                     .multilineTextAlignment(.center)
@@ -48,7 +52,8 @@ struct mainPage: View {
                         NavigationLink(destination: history()) {
                             VStack {
                                 Image("menu_paper")
-                                Text("История записей")
+                                    .scaledToFit()
+                                Text("История \nзаписей")
                                     .foregroundColor(Color.black)
                                     .multilineTextAlignment(.center)
                             }
@@ -66,7 +71,8 @@ struct mainPage: View {
                         }){
                             VStack{
                                 Image("menu_xlsx")
-                                Text("Экспорт данных")
+                                    .scaledToFit()
+                                Text("Экспорт \nданных")
                                     .foregroundColor(Color.black)
                                     .multilineTextAlignment(.center)
                             }

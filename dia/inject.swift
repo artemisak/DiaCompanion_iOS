@@ -55,9 +55,11 @@ struct inject: View {
                         displayedComponents: [.date, .hourAndMinute]
                     ){}
                         .environment(\.locale, Locale.init(identifier: "ru"))
-                        .frame(width: 300)
                         .labelsHidden()
                         .datePickerStyle(WheelDatePickerStyle())
+                        .frame(minWidth: 0, maxWidth: .infinity)
+                        .clipped()
+                        .compositingGroup()
                 }.frame(maxWidth: .infinity)
             }
         }
