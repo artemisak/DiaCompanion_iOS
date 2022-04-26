@@ -5,8 +5,7 @@ struct diaApp: App {
     var body: some Scene {
         WindowGroup {
             startPage()
-//                .preferredColorScheme(.light)
-//                .font(.system(size: 20))
+                .dynamicTypeSize(.medium)
         }
     }
     init(){

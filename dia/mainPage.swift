@@ -1,6 +1,8 @@
 import SwiftUI
 
 struct mainPage: View {
+    var x = UIScreen.main.bounds.size.width
+    var y = UIScreen.main.bounds.size.height
     @State private var showModal: Bool = false
     @State private var isLoad: Bool = true
     private var sheets = exportTable()
@@ -16,8 +18,8 @@ struct mainPage: View {
                                 Image("menu_sugar")
                                     .scaledToFit()
                                 Text("Измерение сахара")
-                                    .foregroundColor(Color.black)
                                     .multilineTextAlignment(.center)
+                                    .foregroundColor(Color.black)
                             }
                         }.buttonStyle(ChangeColorButton())
                         NavigationLink(destination: inject()) {
@@ -26,7 +28,6 @@ struct mainPage: View {
                                     .scaledToFit()
                                 Text("Введение инсулина")
                                     .foregroundColor(Color.black)
-                                    .multilineTextAlignment(.center)
                             }
                             
                         }.buttonStyle(ChangeColorButton())
