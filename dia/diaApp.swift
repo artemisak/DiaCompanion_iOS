@@ -5,7 +5,8 @@ struct diaApp: App {
     var body: some Scene {
         WindowGroup {
             startPage()
-                .dynamicTypeSize(.medium)
+                .dynamicTypeSize(.medium ... .xLarge)
+                .environment(\.defaultMinListRowHeight, 44)
         }
     }
     init(){
