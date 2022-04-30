@@ -30,9 +30,10 @@ struct enterFood: View {
     @State private var foodItems: [String] = []
     @State private var ftpreviewIndex = ftype.zavtrak
     @State private var lvlColor: Color?
+    @Binding var txtTheme: DynamicTypeSize
     var body: some View {
         List {
-            Section(header: Text("Общая информация")){
+            Section(header: Text("Общая информация").font(.system(size: 15.5))){
                 NavigationLink(destination: ftPicker(ftpreviewIndex: $ftpreviewIndex), label: {
                     HStack{
                         Text("Прием пищи")
@@ -44,29 +45,30 @@ struct enterFood: View {
                     "Дата",
                     selection: $date,
                     displayedComponents: [.date, .hourAndMinute]
-                ).environment(\.locale, Locale.init(identifier: "ru"))
+                )
+                .environment(\.locale, Locale.init(identifier: "ru"))
             }
-//            Section(header: Text("Уровень сахара в крови")) {
-//                Toggle(isOn: $enabled) {Text("Записать текущий УСК")}
-//                    .onChange(of: enabled){_ in
-//                        sugar = ""
-//                        sugarlvl = "УСК не определен"
-//                    }
-//            }
-//            Section {
-//                Text("\(sugarlvl)")
-//                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-//                    .foregroundColor(lvlColor)
-//                TextField("5,0 ммоль/л", text: $sugar)
-//                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-//                    .keyboardType(.decimalPad)
-//                    .disabled(enabled == false)
-//                    .onChange(of: sugar){s in
-//                        sugarlvl = getPredict(sugar: s).0
-//                        lvlColor = getPredict(sugar: s).1
-//                    }
-//            }
-            Section(header: Text("Потребленные продукты")){
+            Section(header: Text("Уровень сахара в крови").font(.system(size: 15.5))) {
+                Toggle(isOn: $enabled) {Text("Записать текущий УСК")}
+                    .onChange(of: enabled){_ in
+                        sugar = ""
+                        sugarlvl = "УСК не определен"
+                    }
+            }
+            Section {
+                Text("\(sugarlvl)")
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .foregroundColor(lvlColor)
+                TextField("5,0 ммоль/л", text: $sugar)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .keyboardType(.decimalPad)
+                    .disabled(enabled == false)
+                    .onChange(of: sugar){s in
+                        sugarlvl = getPredict(sugar: s).0
+                        lvlColor = getPredict(sugar: s).1
+                    }
+            }
+            Section(header: Text("Потребленные продукты").font(.system(size: 15.5))){
                 Button(action:{
                     isSheetShown.toggle()
                 }, label:{
@@ -76,10 +78,10 @@ struct enterFood: View {
                     }
                 })
                 .sheet(isPresented: $isSheetShown) {
-                    addFoodButton(foodItems: $foodItems)
+                    addFoodButton(foodItems: $foodItems).dynamicTypeSize(txtTheme)
                 }
             }
-            Section(){
+            Section {
                 ForEach(foodItems, id: \.self) {i in
                     let arg = "\(i)".components(separatedBy: "//")
                     Text("\(arg[0]), \(arg[1]) г.")
@@ -113,13 +115,13 @@ struct enterFood: View {
             })
         }
         .ignoresSafeArea(.keyboard)
+        .onAppear(perform: {
+            UIScrollView.appearance().keyboardDismissMode = .onDrag
+            UITableView.appearance().showsVerticalScrollIndicator = false
+        })
     }
     func removeRows(at offsets: IndexSet){
         foodItems.remove(atOffsets: offsets)
-    }
-    init() {
-        UIScrollView.appearance().keyboardDismissMode = .onDrag
-        UITableView.appearance().showsVerticalScrollIndicator = false
     }
 }
 

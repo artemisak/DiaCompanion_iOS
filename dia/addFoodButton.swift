@@ -69,6 +69,7 @@ struct addFoodButton: View {
                 })
             }.ignoresSafeArea(.keyboard)
         }
+        .navigationViewStyle(.stack)
         .customPopupView(isPresented: $addScreen, popupView: {addSreenView(addScreen: $addScreen, gram: $gram, selectedFood: $selectedFoodTemp, foodItems: $foodItems)})
         
     }

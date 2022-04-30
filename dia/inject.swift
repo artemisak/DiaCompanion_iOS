@@ -28,7 +28,7 @@ struct inject: View {
     @State private var previewIndex = injectType.ultra
     var body: some View {
         List {
-            Section(header: Text("Общая информация")){
+            Section(header: Text("Общая информация").font(.system(size: 15.5))){
                 TextField("Ед.", text: $t)
                     .keyboardType(.decimalPad)
                 NavigationLink(destination: injectTypePicker(previewIndex: $previewIndex), label: {
@@ -48,7 +48,7 @@ struct inject: View {
                     }
                 })
             }
-            Section(header: Text("Время измерения")){
+            Section(header: Text("Время измерения").font(.system(size: 15.5))){
                 VStack(alignment: .center){
                     DatePicker(
                         selection: $date,
@@ -104,11 +104,15 @@ struct inject: View {
             })
         })
         .ignoresSafeArea(.keyboard)
+        .onAppear(perform: {
+            UIScrollView.appearance().keyboardDismissMode = .onDrag
+            UITableView.appearance().showsVerticalScrollIndicator = false
+        })
     }
-    init() {
-        UIScrollView.appearance().keyboardDismissMode = .onDrag
-        UITableView.appearance().showsVerticalScrollIndicator = false
-    }
+//    init() {
+//        UIScrollView.appearance().keyboardDismissMode = .onDrag
+//        UITableView.appearance().showsVerticalScrollIndicator = false
+//    }
 }
 
 struct injectTypePicker: View {

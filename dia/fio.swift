@@ -3,7 +3,7 @@ import SwiftUI
 struct fio: View {
     @Binding var pFio: Bool
     @Binding var txt: String
-    
+    @State var lineColor = Color.black
     var body: some View {
         VStack(spacing:0){
             Text("ФИО пациента")
@@ -15,7 +15,7 @@ struct fio: View {
                     .padding(.trailing, 16)
                 Rectangle()
                     .frame(height: 1)
-                    .foregroundColor(.black)
+                    .foregroundColor(lineColor)
                     .padding(.leading, 16)
                     .padding(.trailing, 16)
             }.padding()
@@ -31,9 +31,14 @@ struct fio: View {
                 .buttonStyle(TransparentButton())
                 Divider()
                 Button(action: {
-                    addName(pName: txt)
-                    withAnimation {
-                        pFio.toggle()
+                    do {
+                        lineColor = Color.black
+                        addName(pName: try checkName(txt: txt))
+                        withAnimation {
+                            pFio.toggle()
+                        }
+                    } catch {
+                        lineColor = Color.red
                     }
                 }){
                     Text("Сохранить")

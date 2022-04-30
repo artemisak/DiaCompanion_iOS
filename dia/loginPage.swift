@@ -10,6 +10,7 @@ struct loginPage: View {
     @State private var isWrong: Bool = true
     @State private var isnt: Bool = false
     @Binding var reg: Bool
+    @Binding var txtTheme: DynamicTypeSize
     @FocusState private var focusedField: Field?
     @ObservedObject var islogin: check
     var body: some View {
@@ -20,7 +21,7 @@ struct loginPage: View {
                     UIApplication.shared.dismissedKeyboard()
                 }
             VStack(spacing: 0) {
-                NavigationLink(isActive: $isnt, destination: {mainPage()}, label: {EmptyView()})
+                NavigationLink(isActive: $isnt, destination: {mainPage(txtTheme: $txtTheme)}, label: {EmptyView()})
                     .hidden()
                 VStack(alignment: .leading, spacing: 0) {
                     Text("Логин")
@@ -111,6 +112,7 @@ struct loginPage: View {
                             .foregroundColor(Color.black)
                             .font(.title)
                             .fontWeight(.bold)
+                            .fixedSize()
                         Image("ofIconTransparent")
                             .resizable()
                             .frame(width: 35.0, height: 35.0)

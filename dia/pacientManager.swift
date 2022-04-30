@@ -338,6 +338,7 @@ func copyDatabaseIfNeeded(sourcePath: String) -> Bool {
 enum inputErorrs: Error {
     case decimalError
     case EmptyError
+    case SymbolicError
 }
 
 func convert(txt: String) throws -> Double {
@@ -356,4 +357,14 @@ func convertToInt(txt: String) throws -> Int {
         throw inputErorrs.EmptyError
     }
     return Int(txt)!
+}
+
+func checkName(txt: String) throws -> String {
+    guard !txt.isEmpty else {
+        throw inputErorrs.EmptyError
+    }
+    guard !txt.contains(where: {$0 == "." || $0 == "," || $0 == "?"}) else {
+        throw inputErorrs.SymbolicError
+    }
+    return txt
 }

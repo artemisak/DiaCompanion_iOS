@@ -22,7 +22,7 @@ struct sugarChange: View {
     @State private var spreviewIndex = selectedvar.natoshak
     var body: some View {
         List {
-            Section(header: Text("Общая информация")){
+            Section(header: Text("Общая информация").font(.system(size: 15.5))){
                 TextField("Уровень сахара в крови, ммоль/л", text: $t)
                     .keyboardType(.decimalPad)
                 NavigationLink(destination: sugarPicker(spreviewIndex: $spreviewIndex), label: {
@@ -34,10 +34,10 @@ struct sugarChange: View {
                     }
                 })
                 Toggle(isOn: $isAct, label: {
-                    Text("Была физическая нагрузка")
+                    Text("Физическая нагрузка")
                 })
             }
-            Section(header: Text("Время измерения")){
+            Section(header: Text("Время измерения").font(.system(size: 15.5))){
                 VStack(alignment: .center){
                     DatePicker(
                         selection: $date,

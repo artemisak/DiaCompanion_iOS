@@ -19,7 +19,7 @@ struct enterAct: View {
     @FocusState private var focusedField: Bool
     var body: some View {
         List {
-            Section(header: Text("Общая информация")){
+            Section(header: Text("Общая информация").font(.system(size: 15.5))){
                 TextField("Длительность, мин.", text: $t)
                     .keyboardType(.numberPad)
                     .focused($focusedField)
@@ -31,7 +31,7 @@ struct enterAct: View {
                     }
                 })
             }
-            Section(header: Text("Время начала")){
+            Section(header: Text("Время начала").font(.system(size: 15.5))){
                 VStack(alignment: .center){
                     DatePicker(
                         selection: $date,

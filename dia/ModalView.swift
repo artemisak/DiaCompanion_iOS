@@ -17,7 +17,7 @@ struct ModalView: View {
     var body: some View {
         NavigationView {
             List {
-                Section(header: Text("О пациенте")){
+                Section(header: Text("О пациенте").font(.system(size: 15.5))){
                     NavigationLink(destination: ketonur()) {
                         Button("Добавить запись о кетонурии", action: {})
                     }.foregroundColor(.black)
@@ -45,7 +45,9 @@ struct ModalView: View {
             }
             .listStyle(.insetGrouped)
             .navigationTitle("Дополнительно")
+            .navigationBarTitleDisplayMode(.large)
         }
+        .navigationViewStyle(.stack)
         .customPopupView(isPresented: $phelper, popupView: { helper(phelper: $phelper) })
         .customPopupView(isPresented: $bWeek, popupView: { weekS(bWeek: $bWeek) })
         .customPopupView(isPresented: $pV, popupView: { currentV(pV:$pV) })

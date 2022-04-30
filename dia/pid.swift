@@ -3,6 +3,7 @@ import SwiftUI
 struct pid: View {
     @Binding var bid: Bool
     @Binding var txt: String
+    @State private var lineColor: Color = Color.black
     var body: some View {
         VStack(spacing:0){
             Text("Индивидуальный номер пациента")
@@ -15,7 +16,7 @@ struct pid: View {
                     .keyboardType(.numberPad)
                 Rectangle()
                     .frame(height: 1)
-                    .foregroundColor(.black)
+                    .foregroundColor(lineColor)
                     .padding(.leading, 16)
                     .padding(.trailing, 16)
             }.padding()
@@ -31,9 +32,14 @@ struct pid: View {
                 .buttonStyle(TransparentButton())
                 Divider()
                 Button(action: {
-                    addID(id: Int(txt)!)
-                    withAnimation {
-                        bid.toggle()
+                    do {
+                        lineColor = .black
+                        addID(id: try convertToInt(txt: txt))
+                        withAnimation {
+                            bid.toggle()
+                        }
+                    } catch {
+                        lineColor = .red
                     }
                 }){
                     Text("Сохранить")

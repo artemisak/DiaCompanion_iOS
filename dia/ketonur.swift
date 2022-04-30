@@ -12,12 +12,12 @@ struct ketonur: View {
     @FocusState private var focusedField: Bool
     var body: some View {
         List {
-            Section(header: Text("Общая информация")){
+            Section(header: Text("Общая информация").font(.system(size: 15.5))){
                 TextField("ммоль/л", text: $t)
                     .focused($focusedField)
                     .keyboardType(.decimalPad)
             }
-            Section(header: Text("Время измерения")){
+            Section(header: Text("Время измерения").font(.system(size: 15.5))){
                 VStack(alignment: .center){
                     DatePicker(
                         selection: $date,

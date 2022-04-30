@@ -1,12 +1,11 @@
 import SwiftUI
 
 struct mainPage: View {
-    var x = UIScreen.main.bounds.size.width
-    var y = UIScreen.main.bounds.size.height
     @State private var showModal: Bool = false
     @State private var isLoad: Bool = true
-    private var sheets = exportTable()
-    private var columns: [GridItem] =
+    @Binding var txtTheme: DynamicTypeSize
+    var sheets = exportTable()
+    var columns: [GridItem] =
     Array(repeating: .init(.flexible()), count: 2)
     var body: some View {
         GeometryReader { g in
@@ -27,11 +26,12 @@ struct mainPage: View {
                                 Image("menu_syringe")
                                     .scaledToFit()
                                 Text("Введение инсулина")
+                                    .multilineTextAlignment(.center)
                                     .foregroundColor(Color.black)
                             }
                             
                         }.buttonStyle(ChangeColorButton())
-                        NavigationLink(destination: enterFood()) {
+                        NavigationLink(destination: enterFood(txtTheme: $txtTheme)) {
                             VStack {
                                 Image("menu_food")
                                     .scaledToFit()
@@ -54,7 +54,7 @@ struct mainPage: View {
                             VStack {
                                 Image("menu_paper")
                                     .scaledToFit()
-                                Text("История \nзаписей")
+                                Text("История записей")
                                     .foregroundColor(Color.black)
                                     .multilineTextAlignment(.center)
                             }
@@ -73,7 +73,7 @@ struct mainPage: View {
                             VStack{
                                 Image("menu_xlsx")
                                     .scaledToFit()
-                                Text("Экспорт \nданных")
+                                Text("Экспорт данных")
                                     .foregroundColor(Color.black)
                                     .multilineTextAlignment(.center)
                             }
@@ -100,7 +100,7 @@ struct mainPage: View {
                     Image(systemName: "line.3.horizontal")
                 }
                 .sheet(isPresented: $showModal) {
-                    ModalView()
+                    ModalView().dynamicTypeSize(txtTheme)
                 }
             }
             ToolbarItem(placement: .keyboard, content: {

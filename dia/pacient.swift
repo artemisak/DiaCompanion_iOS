@@ -12,7 +12,7 @@ struct pacient: View {
     @Binding var bHeight: Bool
     var body: some View {
         List{
-            Section(header: Text("Данные пациента")){
+            Section(header: Text("Данные пациента").font(.system(size: 15.5))){
                 Button(action: {withAnimation{pFio.toggle()}}) {
                     Text("ФИО пациента")
                 }.foregroundColor(.black)
