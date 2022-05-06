@@ -46,7 +46,7 @@ struct enterFood: View {
                     selection: $date,
                     displayedComponents: [.date, .hourAndMinute]
                 )
-                .environment(\.locale, Locale.init(identifier: "ru"))
+                .environment(\.locale, Locale.init(identifier: "ru")).frame(height: 42.7)
             }
             Section(header: Text("Уровень сахара в крови").font(.system(size: 15.5))) {
                 Toggle(isOn: $enabled) {Text("Записать текущий УСК")}

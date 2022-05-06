@@ -14,23 +14,23 @@ struct pacient: View {
         List{
             Section(header: Text("Данные пациента").font(.system(size: 15.5))){
                 Button(action: {withAnimation{pFio.toggle()}}) {
-                    Text("ФИО пациента")
+                    Text("ФИО")
                 }.foregroundColor(.black)
                 Button(action: {withAnimation{pDate.toggle()}}) {
-                    Text("Дата рождения пациента")
+                    Text("Дата рождения")
                 }.foregroundColor(.black)
-                Button(action: {withAnimation{pV.toggle()}}) {
-                    Text("Лечащий врач")
-                }.foregroundColor(.black)
+//                Button(action: {withAnimation{pV.toggle()}}) {
+//                    Text("Лечащий врач")
+//                }.foregroundColor(.black)
                 Button(action: {withAnimation{bStart.toggle()}}) {
                     Text("Дата начала ведения дневника")
                 }.foregroundColor(.black)
                 Button(action: {withAnimation{bWeek.toggle()}}) {
                     Text("Неделя берем. на начало исследования")
                 }.foregroundColor(.black)
-                Button(action: {withAnimation{bid.toggle()}}) {
-                    Text("Индивидуальный номер пациента")
-                }.foregroundColor(.black)
+//                Button(action: {withAnimation{bid.toggle()}}) {
+//                    Text("Индивидуальный номер пациента")
+//                }.foregroundColor(.black)
                 Button(action: {withAnimation{bWeight.toggle()}}) {
                     Text("Вес до беременности, кг")
                 }.foregroundColor(.black)
