@@ -64,8 +64,7 @@ struct enterFood: View {
                     .keyboardType(.decimalPad)
                     .disabled(enabled == false)
                     .onChange(of: sugar){s in
-                        sugarlvl = getPredict(sugar: s).0
-                        lvlColor = getPredict(sugar: s).1
+                        _=getData(foodN: ["Молоко пастеризованное нежирное", "Кефир нежирный", "Простокваша нежирная"], gram: [100.0, 40.0, 50.0], picker_date: date)
                     }
             }
             Section(header: Text("Потребленные продукты").font(.system(size: 15.5))){
