@@ -76,7 +76,7 @@ struct enterFood: View {
                                 }
                                 let foodNutrients = getData(BG0: try convert(txt: sugar), foodtype: ftpreviewIndex, foodN: food, gram: gram, picker_date: date)
                                 let res = try getPredict(BG0: foodNutrients.BG0, gl: foodNutrients.gl, carbo: foodNutrients.carbo, prot: foodNutrients.protb6h, t1: foodNutrients.food_type1, t2: foodNutrients.food_type2, t3: foodNutrients.food_type3, t4: foodNutrients.food_type4, kr: foodNutrients.kr, BMI: foodNutrients.BMI)
-                                if res <= 7 {
+                                if res < 6.8 {
                                     sugarlvl = "УСК не превысит норму"
                                 } else {
                                     sugarlvl = "УСК превысит норму"

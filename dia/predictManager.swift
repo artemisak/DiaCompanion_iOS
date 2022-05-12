@@ -86,14 +86,17 @@ func getData(BG0: Double, foodtype: ftype, foodN: [String], gram: [Double], pick
         var height = 0.0
         for i in try db.prepare(userT.select(w, h)){
             if i[w] != nil {
-                weight = i[w] ?? 60
+                weight = i[w]!
+            } else {
+                weight = 60
             }
             if i[h] != nil {
-                height = i[h] ?? 170
+                height = i[h]!
+            } else {
+                height = 165
             }
         }
-        let BMI = weight/pow(height, 2.0)
-
+        let BMI = weight/pow(height/100, 2.0)
         let nutrients: inpData
         switch foodtype {
         case .zavtrak:
