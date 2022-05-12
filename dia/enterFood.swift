@@ -30,6 +30,7 @@ struct enterFood: View {
     @State private var foodItems: [String] = []
     @State private var ftpreviewIndex = ftype.zavtrak
     @State private var lvlColor: Color?
+    @State private var scolor: Color?
     @Binding var txtTheme: DynamicTypeSize
     var body: some View {
         List {
@@ -63,13 +64,45 @@ struct enterFood: View {
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .keyboardType(.decimalPad)
                     .disabled(enabled == false)
+                    .foregroundColor(scolor)
                     .onChange(of: sugar){s in
-                        _=getData(foodN: ["Молоко пастеризованное нежирное", "Кефир нежирный", "Простокваша нежирная"], gram: [100.0, 40.0, 50.0], picker_date: date)
+                        do {
+                            if (foodItems.count != 0 && sugar != "") {
+                                var food: [String] = []
+                                var gram: [Double] = []
+                                try foodItems.forEach {
+                                    food.append($0.components(separatedBy: "//")[0])
+                                    gram.append( try convert(txt: $0.components(separatedBy: "//")[1]))
+                                }
+                                let foodNutrients = getData(BG0: try convert(txt: sugar), foodtype: ftpreviewIndex, foodN: food, gram: gram, picker_date: date)
+                                let res = try getPredict(BG0: foodNutrients.BG0, gl: foodNutrients.gl, carbo: foodNutrients.carbo, prot: foodNutrients.protb6h, t1: foodNutrients.food_type1, t2: foodNutrients.food_type2, t3: foodNutrients.food_type3, t4: foodNutrients.food_type4, kr: foodNutrients.kr, BMI: foodNutrients.BMI)
+                                if res <= 7 {
+                                    sugarlvl = "УСК не превысит норму"
+                                } else {
+                                    sugarlvl = "УСК превысит норму"
+                                }
+                                scolor = .black
+                            } else {
+                                sugarlvl = "УСК не определен"
+                            }
+                        } catch inputErorrs.decimalError {
+                            scolor = .red
+                        }
+                        catch modelErorrs.generalError {
+                            scolor = .red
+                        }
+                        catch {
+                        }
                     }
             }
             Section(header: Text("Потребленные продукты").font(.system(size: 15.5))){
                 Button(action:{
                     isSheetShown.toggle()
+                    DispatchQueue.main.asyncAfter(deadline: .now()+0.15, execute: {
+                        sugar = ""
+                        sugarlvl = "УСК не определен"
+                        enabled = false
+                    })
                 }, label:{
                     HStack{
                         Text("Добавить")
