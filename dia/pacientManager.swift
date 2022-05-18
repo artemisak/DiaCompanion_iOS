@@ -339,6 +339,7 @@ enum inputErorrs: Error {
     case decimalError
     case EmptyError
     case SymbolicError
+    case UndefinedError
 }
 
 func convert(txt: String) throws -> Double {
@@ -349,12 +350,18 @@ func convert(txt: String) throws -> Double {
     guard !txt.isEmpty else {
         throw inputErorrs.EmptyError
     }
+    guard (Double(String(txt.map{ $0 == "," ? "." : $0})) != nil) else {
+        throw inputErorrs.UndefinedError
+    }
     return Double(String(txt.map{ $0 == "," ? "." : $0}))!
 }
 
 func convertToInt(txt: String) throws -> Int {
     guard !txt.isEmpty else {
         throw inputErorrs.EmptyError
+    }
+    guard (Int(txt) != nil) else {
+        throw inputErorrs.UndefinedError
     }
     return Int(txt)!
 }
@@ -363,7 +370,7 @@ func checkName(txt: String) throws -> String {
     guard !txt.isEmpty else {
         throw inputErorrs.EmptyError
     }
-    guard !txt.contains(where: {$0 == "." || $0 == "," || $0 == "?"}) else {
+    guard !txt.contains(where: {$0 == "." || $0 == "," || $0 == "?" || $0 == "/" || $0 == "$" || $0 == "%" || $0 == ":" || $0 == "!" || $0 == "@" || $0 == "#" || $0 == "^" || $0 == "&" || $0 == "*" || $0 == ";"}) else {
         throw inputErorrs.SymbolicError
     }
     return txt

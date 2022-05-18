@@ -61,13 +61,15 @@ struct enterFood: View {
                         } else {
                             sugarlvl = "УСК не определен"
                         }
-                    } catch inputErorrs.decimalError {
+                    }
+                    catch inputErorrs.decimalError {
                         scolor = .red
                     }
                     catch modelErorrs.generalError {
                         scolor = .red
                     }
                     catch {
+                        scolor = .red
                     }
                 })
                 DatePicker(
@@ -95,13 +97,15 @@ struct enterFood: View {
                         } else {
                             sugarlvl = "УСК не определен"
                         }
-                    } catch inputErorrs.decimalError {
+                    }
+                    catch inputErorrs.decimalError {
                         scolor = .red
                     }
                     catch modelErorrs.generalError {
                         scolor = .red
                     }
                     catch {
+                        scolor = .red
                     }
                 })
                 .environment(\.locale, Locale.init(identifier: "ru")).frame(height: 42.7)
@@ -142,13 +146,15 @@ struct enterFood: View {
                             } else {
                                 sugarlvl = "УСК не определен"
                             }
-                        } catch inputErorrs.decimalError {
+                        }
+                        catch inputErorrs.decimalError {
                             scolor = .red
                         }
                         catch modelErorrs.generalError {
                             scolor = .red
                         }
                         catch {
+                            scolor = .red
                         }
                     }
             }
@@ -194,13 +200,15 @@ struct enterFood: View {
                 } else {
                     sugarlvl = "УСК не определен"
                 }
-            } catch inputErorrs.decimalError {
+            }
+            catch inputErorrs.decimalError {
                 scolor = .red
             }
             catch modelErorrs.generalError {
                 scolor = .red
             }
             catch {
+                scolor = .red
             }
         })
         .navigationTitle("Приемы пищи")
