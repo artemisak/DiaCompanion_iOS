@@ -31,6 +31,8 @@ struct enterFood: View {
     @State private var ftpreviewIndex = ftype.zavtrak
     @State private var lvlColor: Color?
     @State private var scolor: Color?
+    @State private var recColor = Color.white
+    @State private var fontColor = Color.black
     @Binding var txtTheme: DynamicTypeSize
     var body: some View {
         List {
@@ -54,12 +56,18 @@ struct enterFood: View {
                             let res = try getPredict(BG0: foodNutrients.BG0, gl: foodNutrients.gl, carbo: foodNutrients.carbo, prot: foodNutrients.protb6h, t1: foodNutrients.food_type1, t2: foodNutrients.food_type2, t3: foodNutrients.food_type3, t4: foodNutrients.food_type4, kr: foodNutrients.kr, BMI: foodNutrients.BMI)
                             if res < 6.8 {
                                 sugarlvl = "УСК не превысит норму"
+                                recColor = Color.green.opacity(0.7)
+                                fontColor = Color.white
                             } else {
                                 sugarlvl = "УСК превысит норму"
+                                recColor = Color(red: 255/255, green: 91/255, blue: 36/255)
+                                fontColor = Color.white
                             }
                             scolor = .black
                         } else {
                             sugarlvl = "УСК не определен"
+                            recColor = Color.white
+                            fontColor = Color.black
                         }
                     }
                     catch inputErorrs.decimalError {
@@ -90,12 +98,18 @@ struct enterFood: View {
                             let res = try getPredict(BG0: foodNutrients.BG0, gl: foodNutrients.gl, carbo: foodNutrients.carbo, prot: foodNutrients.protb6h, t1: foodNutrients.food_type1, t2: foodNutrients.food_type2, t3: foodNutrients.food_type3, t4: foodNutrients.food_type4, kr: foodNutrients.kr, BMI: foodNutrients.BMI)
                             if res < 6.8 {
                                 sugarlvl = "УСК не превысит норму"
+                                recColor = Color.green.opacity(0.7)
+                                fontColor = Color.white
                             } else {
                                 sugarlvl = "УСК превысит норму"
+                                recColor = Color(red: 255/255, green: 91/255, blue: 36/255)
+                                fontColor = Color.white
                             }
                             scolor = .black
                         } else {
                             sugarlvl = "УСК не определен"
+                            recColor = Color.white
+                            fontColor = Color.black
                         }
                     }
                     catch inputErorrs.decimalError {
@@ -119,8 +133,11 @@ struct enterFood: View {
             }
             Section {
                 Text("\(sugarlvl)")
+                    .foregroundColor(fontColor)
+                    .bold()
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .foregroundColor(lvlColor)
+                    .listRowBackground(recColor)
                 TextField("5,0 ммоль/л", text: $sugar)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .keyboardType(.decimalPad)
@@ -139,12 +156,18 @@ struct enterFood: View {
                                 let res = try getPredict(BG0: foodNutrients.BG0, gl: foodNutrients.gl, carbo: foodNutrients.carbo, prot: foodNutrients.protb6h, t1: foodNutrients.food_type1, t2: foodNutrients.food_type2, t3: foodNutrients.food_type3, t4: foodNutrients.food_type4, kr: foodNutrients.kr, BMI: foodNutrients.BMI)
                                 if res < 6.8 {
                                     sugarlvl = "УСК не превысит норму"
+                                    recColor = Color.green.opacity(0.7)
+                                    fontColor = Color.white
                                 } else {
                                     sugarlvl = "УСК превысит норму"
+                                    recColor = Color(red: 255/255, green: 91/255, blue: 36/255)
+                                    fontColor = Color.white
                                 }
                                 scolor = .black
                             } else {
                                 sugarlvl = "УСК не определен"
+                                recColor = Color.white
+                                fontColor = Color.black
                             }
                         }
                         catch inputErorrs.decimalError {
@@ -192,13 +215,18 @@ struct enterFood: View {
                     let res = try getPredict(BG0: foodNutrients.BG0, gl: foodNutrients.gl, carbo: foodNutrients.carbo, prot: foodNutrients.protb6h, t1: foodNutrients.food_type1, t2: foodNutrients.food_type2, t3: foodNutrients.food_type3, t4: foodNutrients.food_type4, kr: foodNutrients.kr, BMI: foodNutrients.BMI)
                     if res < 6.8 {
                         sugarlvl = "УСК не превысит норму"
+                        recColor = Color.green.opacity(0.7)
+                        fontColor = Color.white
                     } else {
                         sugarlvl = "УСК превысит норму"
+                        recColor = Color(red: 255/255, green: 91/255, blue: 36/255)
+                        fontColor = Color.white
                     }
                     scolor = .black
-                    print(res)
                 } else {
                     sugarlvl = "УСК не определен"
+                    recColor = Color.white
+                    fontColor = Color.black
                 }
             }
             catch inputErorrs.decimalError {
@@ -221,7 +249,7 @@ struct enterFood: View {
                     }
                     self.presentationMode.wrappedValue.dismiss()
                 }) {
-                    Text("Сохранить")
+                    Text("Сохранить").dynamicTypeSize(txtTheme)
                 }
             })
             ToolbarItem(placement: .keyboard, content: {
@@ -232,6 +260,7 @@ struct enterFood: View {
                     }, label: {
                         Text("Готово")
                             .foregroundColor(Color(red: 0, green: 0.590, blue: 1))
+                            .dynamicTypeSize(txtTheme)
                     })
                 }
             })
@@ -251,7 +280,7 @@ struct ftPicker: View {
     @Binding var ftpreviewIndex: ftype
     var body: some View {
         Form {
-            Picker(selection: $ftpreviewIndex, label: Text("Прием пищи")) {
+            Picker(selection: $ftpreviewIndex, label: Text("Прием пищи").font(.system(size: 15.5))) {
                 Text("Завтрак").tag(ftype.zavtrak)
                 Text("Обед").tag(ftype.obed)
                 Text("Ужин").tag(ftype.uzin)

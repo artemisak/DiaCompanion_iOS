@@ -1,9 +1,8 @@
 import SwiftUI
 
 struct history: View {
-    
+    @Binding var txtTheme: DynamicTypeSize
     @StateObject private var hList = historyList()
-    
     var body: some View {
         List() {
             ForEach(hList.histList, id: \.id){
@@ -16,10 +15,10 @@ struct history: View {
             await hList.FillHistoryList()
         }
         .navigationTitle("История записей")
-        .toolbar {
-            EditButton()
-                .environment(\.locale, Locale.init(identifier: "ru"))
-        }
+//        .toolbar {
+//            EditButton()
+//                .environment(\.locale, Locale.init(identifier: "ru"))
+//        }
     }
     
     func move(from source: IndexSet, to destination: Int) {
@@ -33,10 +32,4 @@ struct history: View {
         hList.histList.remove(atOffsets: offsets)
     }
     
-}
-
-struct history_Previews: PreviewProvider {
-    static var previews: some View {
-        history()
-    }
 }

@@ -26,6 +26,7 @@ struct inject: View {
     @State private var isCorrect: Bool = false
     @State private var previewIndex1 = injects.natoshak
     @State private var previewIndex = injectType.ultra
+    @Binding var txtTheme: DynamicTypeSize
     var body: some View {
         List {
             Section(header: Text("Общая информация").font(.system(size: 15.5))){
@@ -84,7 +85,7 @@ struct inject: View {
 //                        UIApplication.shared.currentUIWindow()?.rootViewController?.present(alertController, animated: true, completion: nil)
                     }
                 }) {
-                    Text("Сохранить")
+                    Text("Сохранить").dynamicTypeSize(txtTheme)
                 }
                 .alert(isPresented: $isCorrect) {
                     Alert(title: Text("Статус операции"), message: Text("Введите релевантное \nзначение"), dismissButton: .default(Text("ОК")))
@@ -98,7 +99,7 @@ struct inject: View {
                     Button(action: {
                         UIApplication.shared.dismissedKeyboard()
                     }, label: {
-                        Text("Готово")
+                        Text("Готово").dynamicTypeSize(txtTheme)
                     })
                 }
             })
@@ -109,17 +110,13 @@ struct inject: View {
             UITableView.appearance().showsVerticalScrollIndicator = false
         })
     }
-//    init() {
-//        UIScrollView.appearance().keyboardDismissMode = .onDrag
-//        UITableView.appearance().showsVerticalScrollIndicator = false
-//    }
 }
 
 struct injectTypePicker: View {
     @Binding var previewIndex: injectType
     var body: some View {
         Form {
-            Picker("Тип действия", selection: $previewIndex) {
+            Picker(selection: $previewIndex, label: Text("Тип действия").font(.system(size: 15.5))) {
                 Text("Ультракороткий").tag(injectType.ultra)
                 Text("Короткий").tag(injectType.kor)
                 Text("Пролонгированный").tag(injectType.prolong)

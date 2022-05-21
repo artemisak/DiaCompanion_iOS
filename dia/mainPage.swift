@@ -12,7 +12,7 @@ struct mainPage: View {
             ZStack {
                 ScrollView {
                     LazyVGrid(columns: columns) {
-                        NavigationLink(destination: sugarChange()) {
+                        NavigationLink(destination: sugarChange(txtTheme: $txtTheme)) {
                             VStack {
                                 Image("menu_sugar")
                                     .scaledToFit()
@@ -21,7 +21,7 @@ struct mainPage: View {
                                     .foregroundColor(Color.black)
                             }
                         }.buttonStyle(ChangeColorButton())
-                        NavigationLink(destination: inject()) {
+                        NavigationLink(destination: inject(txtTheme: $txtTheme)) {
                             VStack {
                                 Image("menu_syringe")
                                     .scaledToFit()
@@ -40,7 +40,7 @@ struct mainPage: View {
                                     .multilineTextAlignment(.center)
                             }
                         }.buttonStyle(ChangeColorButton())
-                        NavigationLink(destination: enterAct()) {
+                        NavigationLink(destination: enterAct(txtTheme: $txtTheme)) {
                             VStack {
                                 Image("menu_sleep")
                                     .scaledToFit()
@@ -50,7 +50,7 @@ struct mainPage: View {
                             }
                             
                         }.buttonStyle(ChangeColorButton())
-                        NavigationLink(destination: history()) {
+                        NavigationLink(destination: history(txtTheme: $txtTheme)) {
                             VStack {
                                 Image("menu_paper")
                                     .scaledToFit()
@@ -93,8 +93,8 @@ struct mainPage: View {
         }
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
-        .navigationTitle("ДиаКомпаньон")
         .toolbar {
+            ToolbarItem(placement: .principal, content: {Text("ДиаКомпаньон").font(.headline).fixedSize()})
             ToolbarItem(placement: .navigationBarTrailing){
                 Button(action: {showModal.toggle()}){
                     Image(systemName: "line.3.horizontal")

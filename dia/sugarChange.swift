@@ -20,6 +20,7 @@ struct sugarChange: View {
     @State private var bool1: Int = 0
     @State private var isCorrect: Bool = false
     @State private var spreviewIndex = selectedvar.natoshak
+    @Binding var txtTheme: DynamicTypeSize
     var body: some View {
         List {
             Section(header: Text("Общая информация").font(.system(size: 15.5))){
@@ -79,6 +80,7 @@ struct sugarChange: View {
                     }
                 }) {
                     Text("Сохранить")
+                        .dynamicTypeSize(txtTheme)
                 }
                 .alert(isPresented: $isCorrect) {
                     Alert(title: Text("Статус операции"), message: Text("Введите релевантное \nзначение"), dismissButton: .default(Text("ОК")))
@@ -90,16 +92,16 @@ struct sugarChange: View {
                     Button(action: {
                         UIApplication.shared.dismissedKeyboard()
                     }, label: {
-                        Text("Готово")
+                        Text("Готово").dynamicTypeSize(txtTheme)
                     })
                 }
             })
         }
         .ignoresSafeArea(.keyboard)
-    }
-    init() {
-        UIScrollView.appearance().keyboardDismissMode = .onDrag
-        UITableView.appearance().showsVerticalScrollIndicator = false
+        .onAppear(perform: {
+            UIScrollView.appearance().keyboardDismissMode = .onDrag
+            UITableView.appearance().showsVerticalScrollIndicator = false
+        })
     }
 }
 
@@ -107,7 +109,7 @@ struct sugarPicker: View {
     @Binding var spreviewIndex: selectedvar
     var body: some View {
         Form {
-            Picker("Период", selection: $spreviewIndex) {
+            Picker(selection: $spreviewIndex , label: Text("Период").font(.system(size: 15.5))) {
                 Text("Натощак").tag(selectedvar.natoshak)
                 Text("После завтрака").tag(selectedvar.zavtrak)
                 Text("После обеда").tag(selectedvar.obed)

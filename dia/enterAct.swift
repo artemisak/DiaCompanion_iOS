@@ -17,6 +17,7 @@ struct enterAct: View {
     @State private var isCorrect: Bool = false
     @State private var actpreviewIndex = act.zar
     @FocusState private var focusedField: Bool
+    @Binding var txtTheme: DynamicTypeSize
     var body: some View {
         List {
             Section(header: Text("Общая информация").font(.system(size: 15.5))){
@@ -68,7 +69,7 @@ struct enterAct: View {
 //                        UIApplication.shared.currentUIWindow()?.rootViewController?.present(alertController, animated: true, completion: nil)
                     }
                 }) {
-                    Text("Сохранить")
+                    Text("Сохранить").dynamicTypeSize(txtTheme)
                 }
                 .alert(isPresented: $isCorrect) {
                     Alert(title: Text("Статус операции"), message: Text("Введите релевантное \nзначение"), dismissButton: .default(Text("ОК")))
@@ -82,16 +83,16 @@ struct enterAct: View {
                     Button(action: {
                         focusedField = false
                     }, label: {
-                        Text("Готово")
+                        Text("Готово").dynamicTypeSize(txtTheme)
                     })
                 }
             })
         })
         .ignoresSafeArea(.keyboard)
-    }
-    init() {
-        UIScrollView.appearance().keyboardDismissMode = .onDrag
-        UITableView.appearance().showsVerticalScrollIndicator = false
+        .onAppear(perform: {
+            UIScrollView.appearance().keyboardDismissMode = .onDrag
+            UITableView.appearance().showsVerticalScrollIndicator = false
+        })
     }
 }
 
@@ -99,7 +100,7 @@ struct actPicker: View {
     @Binding var actpreviewIndex: act
     var body: some View {
         Form{
-            Picker(selection: $actpreviewIndex, label: Text("Род занятий")) {
+            Picker(selection: $actpreviewIndex, label: Text("Род занятий").font(.system(size: 15.5))) {
                 Text("Зарядка").tag(act.zar)
                 Text("Сон").tag(act.sleep)
                 Text("Ходьба").tag(act.hod)
