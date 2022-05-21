@@ -49,8 +49,8 @@ struct enterFood: View {
                             var food: [String] = []
                             var gram: [Double] = []
                             try foodItems.forEach {
-                                food.append($0.components(separatedBy: "//")[0])
-                                gram.append( try convert(txt: $0.components(separatedBy: "//")[1]))
+                                food.append($0.components(separatedBy: "////")[0])
+                                gram.append( try convert(txt: $0.components(separatedBy: "////")[1]))
                             }
                             let foodNutrients = getData(BG0: try convert(txt: sugar), foodtype: ftpreviewIndex, foodN: food, gram: gram, picker_date: date)
                             let res = try getPredict(BG0: foodNutrients.BG0, gl: foodNutrients.gl, carbo: foodNutrients.carbo, prot: foodNutrients.protb6h, t1: foodNutrients.food_type1, t2: foodNutrients.food_type2, t3: foodNutrients.food_type3, t4: foodNutrients.food_type4, kr: foodNutrients.kr, BMI: foodNutrients.BMI)
@@ -91,8 +91,8 @@ struct enterFood: View {
                             var food: [String] = []
                             var gram: [Double] = []
                             try foodItems.forEach {
-                                food.append($0.components(separatedBy: "//")[0])
-                                gram.append( try convert(txt: $0.components(separatedBy: "//")[1]))
+                                food.append($0.components(separatedBy: "////")[0])
+                                gram.append( try convert(txt: $0.components(separatedBy: "////")[1]))
                             }
                             let foodNutrients = getData(BG0: try convert(txt: sugar), foodtype: ftpreviewIndex, foodN: food, gram: gram, picker_date: date)
                             let res = try getPredict(BG0: foodNutrients.BG0, gl: foodNutrients.gl, carbo: foodNutrients.carbo, prot: foodNutrients.protb6h, t1: foodNutrients.food_type1, t2: foodNutrients.food_type2, t3: foodNutrients.food_type3, t4: foodNutrients.food_type4, kr: foodNutrients.kr, BMI: foodNutrients.BMI)
@@ -149,8 +149,8 @@ struct enterFood: View {
                                 var food: [String] = []
                                 var gram: [Double] = []
                                 try foodItems.forEach {
-                                    food.append($0.components(separatedBy: "//")[0])
-                                    gram.append( try convert(txt: $0.components(separatedBy: "//")[1]))
+                                    food.append($0.components(separatedBy: "////")[0])
+                                    gram.append( try convert(txt: $0.components(separatedBy: "////")[1]))
                                 }
                                 let foodNutrients = getData(BG0: try convert(txt: sugar), foodtype: ftpreviewIndex, foodN: food, gram: gram, picker_date: date)
                                 let res = try getPredict(BG0: foodNutrients.BG0, gl: foodNutrients.gl, carbo: foodNutrients.carbo, prot: foodNutrients.protb6h, t1: foodNutrients.food_type1, t2: foodNutrients.food_type2, t3: foodNutrients.food_type3, t4: foodNutrients.food_type4, kr: foodNutrients.kr, BMI: foodNutrients.BMI)
@@ -196,7 +196,7 @@ struct enterFood: View {
             }
             Section {
                 ForEach(foodItems, id: \.self) {i in
-                    let arg = "\(i)".components(separatedBy: "//")
+                    let arg = "\(i)".components(separatedBy: "////")
                     Text("\(arg[0]), \(arg[1]) г.")
                 }
                 .onDelete(perform: removeRows)
@@ -208,8 +208,8 @@ struct enterFood: View {
                     var food: [String] = []
                     var gram: [Double] = []
                     try foodItems.forEach {
-                        food.append($0.components(separatedBy: "//")[0])
-                        gram.append( try convert(txt: $0.components(separatedBy: "//")[1]))
+                        food.append($0.components(separatedBy: "////")[0])
+                        gram.append( try convert(txt: $0.components(separatedBy: "////")[1]))
                     }
                     let foodNutrients = getData(BG0: try convert(txt: sugar), foodtype: ftpreviewIndex, foodN: food, gram: gram, picker_date: date)
                     let res = try getPredict(BG0: foodNutrients.BG0, gl: foodNutrients.gl, carbo: foodNutrients.carbo, prot: foodNutrients.protb6h, t1: foodNutrients.food_type1, t2: foodNutrients.food_type2, t3: foodNutrients.food_type3, t4: foodNutrients.food_type4, kr: foodNutrients.kr, BMI: foodNutrients.BMI)
@@ -244,7 +244,7 @@ struct enterFood: View {
             ToolbarItem(placement: .navigationBarTrailing, content: {
                 Button(action: {
                     for i in foodItems {
-                        let arg = "\(i)".components(separatedBy: "//")
+                        let arg = "\(i)".components(separatedBy: "////")
                         SaveToDB(FoodName: arg[0], gram: arg[1], selectedDate: date, selectedType: ftpreviewIndex.rawValue)
                     }
                     self.presentationMode.wrappedValue.dismiss()

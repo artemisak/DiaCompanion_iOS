@@ -31,15 +31,26 @@ struct addFoodButton: View {
                             }
                         })
                     Divider()
-                    ForEach(items.FoodObj, id: \.id){dish in
-                        if !searchByWordView {
+                    if !searchByWordView {
+                        ForEach(items.FoodObj, id: \.id){dish in
                             DoButton(dish: dish)
                             Divider()
-                        } else {
+                        }
+                    } else {
+                        ForEach(items.CatObj, id: \.id){ dish in
                             DoLink(dish: dish)
                             Divider()
                         }
                     }
+//                    ForEach(items.FoodObj, id: \.id){dish in
+//                        if !searchByWordView {
+//                            DoButton(dish: dish)
+//                            Divider()
+//                        } else {
+//                            DoLink(dish: dish)
+//                            Divider()
+//                        }
+//                    }
                 }
                 .padding(.horizontal, 20)
             }
@@ -80,12 +91,38 @@ struct addFoodButton: View {
             selectedFoodTemp = dish.name
             addScreen.toggle()
         }){
-            Text("\(dish.name)")
+            HStack{
+                Text("\(dish.name)")
+                VStack{
+                    Text("Б")
+                        .foregroundColor(Color.gray)
+                        .font(.system(size: 13))
+                    Text("\(dish.prot)").foregroundColor(.orange)
+                }
+                VStack{
+                    Text("Ж")
+                        .foregroundColor(Color.gray)
+                        .font(.system(size: 13))
+                    Text("\(dish.fat)").foregroundColor(.green)
+                }
+                VStack{
+                    Text("У")
+                        .foregroundColor(Color.gray)
+                        .font(.system(size: 13))
+                    Text("\(dish.carbo)").foregroundColor(.blue)
+                }
+                VStack{
+                    Text("ГИ")
+                        .foregroundColor(Color.gray)
+                        .font(.system(size: 13))
+                    Text("\(dish.gi)").foregroundColor(.red)
+                }
+            }
         }
         .buttonStyle(TransparentButtonAndLink())
     }
     
-    func DoLink(dish: FoodList) -> some View {
+    func DoLink(dish: CategoryList) -> some View {
         NavigationLink(destination: GetFoodCategoryItemsView(category: "\(dish.name)")) {
             Text("\(dish.name)")
         }

@@ -35,7 +35,7 @@ struct addSreenView: View {
                     do {
                         _ = try convertToInt(txt: gram)
                         isCorrect = true
-                        foodItems.append("\(selectedFood)//\(gram)")
+                        foodItems.append("\(selectedFood)////\(gram)")
                         addScreen.toggle()
                     } catch {
                         isCorrect = false
