@@ -100,34 +100,34 @@ func getFoodRecords() -> [TableRecord] {
         
         let foodInfo = Table("food")
         let foodN = Expression<String>("name")
-        let carbo = Expression<Double>("carbo")
-        let prot = Expression<Double>("prot")
-        let fat = Expression<Double>("fat")
-        let ec = Expression<Double>("ec")
-        let gi = Expression<Double>("gi")
-        let water = Expression<Double>("water")
-        let nzhk = Expression<Double>("nzhk")
-        let hol = Expression<Double>("hol")
-        let pv = Expression<Double>("pv")
-        let zola = Expression<Double>("zola")
-        let na = Expression<Double>("na")
-        let k = Expression<Double>("k")
-        let ca = Expression<Double>("ca")
-        let mg = Expression<Double>("mg")
-        let p = Expression<Double>("p")
-        let fe = Expression<Double>("fe")
-        let a = Expression<Double>("a")
-        let b1 = Expression<Double>("b1")
-        let b2 = Expression<Double>("b2")
-        let rr = Expression<Double>("rr")
-        let c = Expression<Double>("c")
-        let re = Expression<Double>("re")
-        let kar = Expression<Double>("kar")
-        let mds = Expression<Double>("mds")
-        let kr = Expression<Double>("kr")
-        let te = Expression<Double>("te")
-        let ok = Expression<Double>("ok")
-        let ne = Expression<Double>("ne")
+        let carbo = Expression<Double?>("carbo")
+        let prot = Expression<Double?>("prot")
+        let fat = Expression<Double?>("fat")
+        let ec = Expression<Double?>("ec")
+        let gi = Expression<Double?>("gi")
+        let water = Expression<Double?>("water")
+        let nzhk = Expression<Double?>("nzhk")
+        let hol = Expression<Double?>("hol")
+        let pv = Expression<Double?>("pv")
+        let zola = Expression<Double?>("zola")
+        let na = Expression<Double?>("na")
+        let k = Expression<Double?>("k")
+        let ca = Expression<Double?>("ca")
+        let mg = Expression<Double?>("mg")
+        let p = Expression<Double?>("p")
+        let fe = Expression<Double?>("fe")
+        let a = Expression<Double?>("a")
+        let b1 = Expression<Double?>("b1")
+        let b2 = Expression<Double?>("b2")
+        let rr = Expression<Double?>("rr")
+        let c = Expression<Double?>("c")
+        let re = Expression<Double?>("re")
+        let kar = Expression<Double?>("kar")
+        let mds = Expression<Double?>("mds")
+        let kr = Expression<Double?>("kr")
+        let te = Expression<Double?>("te")
+        let ok = Expression<Double?>("ok")
+        let ne = Expression<Double?>("ne")
         
         for i in try db.prepare(foodTable.select(day,time,foodType,foodName,gram)){
             record.append(FoodRecord(day: dateFormatter.date(from: i[day])!, time: dateFormatter1.date(from: i[time])!,foodType: i[foodType], food: [i[foodName]], g: [i[gram]], carbo: [""], prot: [""], fat: [""], ec: [""], gi: [""], empty: [""], water: [""], nzhk: [""], hol: [""], pv: [""], zola: [""], na: [""], k: [""], ca: [""], mg: [""], p: [""], fe: [""], a:[""], b1: [""], b2: [""], rr: [""], c: [""], re: [""], kar: [""], mds: [""], kr: [""], te: [""], ok: [""], ne: [""]))
@@ -135,34 +135,34 @@ func getFoodRecords() -> [TableRecord] {
         
         for i in 0..<record.count {
             for i1 in try db.prepare(foodInfo.select(foodN, carbo, prot, fat, ec, gi, water, nzhk, hol, pv, zola, na, k, ca, mg, p, fe, a, b1, b2, rr, c, re, kar, mds, kr, te, ok, ne).filter(foodN == record[i].food[0])){
-                record[i].carbo = ["\(i1[carbo])"]
-                record[i].prot = ["\(i1[prot])"]
-                record[i].fat = ["\(i1[fat])"]
-                record[i].ec = ["\(i1[ec])"]
-                record[i].gi = ["\(i1[gi])"]
-                record[i].water = ["\(i1[water])"]
-                record[i].nzhk = ["\(i1[nzhk])"]
-                record[i].hol = ["\(i1[hol])"]
-                record[i].pv = ["\(i1[pv])"]
-                record[i].zola = ["\(i1[zola])"]
-                record[i].na = ["\(i1[na])"]
-                record[i].k = ["\(i1[k])"]
-                record[i].ca = ["\(i1[ca])"]
-                record[i].mg = ["\(i1[mg])"]
-                record[i].p = ["\(i1[p])"]
-                record[i].fe = ["\(i1[fe])"]
-                record[i].a = ["\(i1[a])"]
-                record[i].b1 = ["\(i1[b1])"]
-                record[i].b2 = ["\(i1[b2])"]
-                record[i].rr = ["\(i1[rr])"]
-                record[i].c = ["\(i1[c])"]
-                record[i].re = ["\(i1[re])"]
-                record[i].kar = ["\(i1[kar])"]
-                record[i].mds = ["\(i1[mds])"]
-                record[i].kr = ["\(i1[kr])"]
-                record[i].te = ["\(i1[te])"]
-                record[i].ok = ["\(i1[ok])"]
-                record[i].ne = ["\(i1[ne])"]
+                record[i].carbo = ["\(i1[carbo] ?? 0.0)"]
+                record[i].prot = ["\(i1[prot] ?? 0.0)"]
+                record[i].fat = ["\(i1[fat] ?? 0.0)"]
+                record[i].ec = ["\(i1[ec] ?? 0.0)"]
+                record[i].gi = ["\(i1[gi] ?? 0.0)"]
+                record[i].water = ["\(i1[water] ?? 0.0)"]
+                record[i].nzhk = ["\(i1[nzhk] ?? 0.0)"]
+                record[i].hol = ["\(i1[hol] ?? 0.0)"]
+                record[i].pv = ["\(i1[pv] ?? 0.0)"]
+                record[i].zola = ["\(i1[zola] ?? 0.0)"]
+                record[i].na = ["\(i1[na] ?? 0.0)"]
+                record[i].k = ["\(i1[k] ?? 0.0)"]
+                record[i].ca = ["\(i1[ca] ?? 0.0)"]
+                record[i].mg = ["\(i1[mg] ?? 0.0)"]
+                record[i].p = ["\(i1[p] ?? 0.0)"]
+                record[i].fe = ["\(i1[fe] ?? 0.0)"]
+                record[i].a = ["\(i1[a] ?? 0.0)"]
+                record[i].b1 = ["\(i1[b1] ?? 0.0)"]
+                record[i].b2 = ["\(i1[b2] ?? 0.0)"]
+                record[i].rr = ["\(i1[rr] ?? 0.0)"]
+                record[i].c = ["\(i1[c] ?? 0.0)"]
+                record[i].re = ["\(i1[re] ?? 0.0)"]
+                record[i].kar = ["\(i1[kar] ?? 0.0)"]
+                record[i].mds = ["\(i1[mds] ?? 0.0)"]
+                record[i].kr = ["\(i1[kr] ?? 0.0)"]
+                record[i].te = ["\(i1[te] ?? 0.0)"]
+                record[i].ok = ["\(i1[ok] ?? 0.0)"]
+                record[i].ne = ["\(i1[ne] ?? 0.0)"]
             }
         }
         

@@ -47,7 +47,7 @@ struct enterAct: View {
                 }.frame(maxWidth: .infinity)
             }
         }
-        .navigationBarTitle(Text("Активность"))
+        .navigationTitle("Aктивность")
         .toolbar {
             ToolbarItemGroup(){
                 Button(action: {

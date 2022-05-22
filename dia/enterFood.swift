@@ -20,19 +20,20 @@ struct enterFood: View {
     @State private var multiSelection = Set<UUID>()
     @State private var enabled : Bool = false
     @State private var sugar: String = ""
-    @State private var isEditing = false
+    @State private var isEditing: Bool = false
     @State private var sugarlvl: String = "УСК не определен"
     @State private var isHidden: Bool = true
     @State private var date = Date()
     @State private var foodn: String = ""
     @State private var i: Int = 0
-    @State private var isSheetShown = false
+    @State private var isSheetShown: Bool = false
     @State private var foodItems: [String] = []
     @State private var ftpreviewIndex = ftype.zavtrak
     @State private var lvlColor: Color?
     @State private var scolor: Color?
     @State private var recColor = Color.white
     @State private var fontColor = Color.black
+    @State private var alertMessage: Bool = false
     @Binding var txtTheme: DynamicTypeSize
     var body: some View {
         List {
@@ -84,7 +85,7 @@ struct enterFood: View {
                     "Дата",
                     selection: $date,
                     displayedComponents: [.date, .hourAndMinute]
-                )
+                ).datePickerStyle(.compact)
                 .onChange(of: date, perform: { _ in
                     do {
                         if (foodItems.count != 0 && sugar != "") {
@@ -126,9 +127,16 @@ struct enterFood: View {
             }
             Section(header: Text("Уровень сахара в крови").font(.system(size: 15.5))) {
                 Toggle(isOn: $enabled) {Text("Записать текущий УСК")}
-                    .onChange(of: enabled){_ in
+                    .onChange(of: enabled){ _ in
+                        if (!checkBMI() && enabled) {
+                            alertMessage = true
+                            enabled = false
+                        }
                         sugar = ""
                         sugarlvl = "УСК не определен"
+                    }
+                    .alert(isPresented: $alertMessage) {
+                        Alert(title: Text("Статус операции"), message: Text("Необходимо указать рост и вес \nдо беременности в карте пациента"), dismissButton: .default(Text("ОК")))
                     }
             }
             Section {

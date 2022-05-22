@@ -57,10 +57,10 @@ struct addFoodButton: View {
             .task {
                 await items.FillFoodCategoryList()
             }
-            .navigationTitle("Добавить блюдо")
-            .navigationBarTitleDisplayMode(.large)
+            .navigationBarTitleDisplayMode(.inline)
             .interactiveDismissDisabled()
             .toolbar {
+                ToolbarItem(placement: .principal, content: {Text("Добавить блюдо").bold()})
                 ToolbarItem(placement: .navigationBarTrailing, content: {
                     Button(action: {
                         self.presentationMode.wrappedValue.dismiss()
@@ -80,9 +80,8 @@ struct addFoodButton: View {
                 })
             }.ignoresSafeArea(.keyboard)
         }
-        .navigationViewStyle(.stack)
+        .navigationViewStyle(StackNavigationViewStyle())
         .customPopupView(isPresented: $addScreen, popupView: {addSreenView(addScreen: $addScreen, gram: $gram, selectedFood: $selectedFoodTemp, foodItems: $foodItems)})
-        
     }
     
     func DoButton(dish: FoodList) -> some View {

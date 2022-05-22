@@ -64,7 +64,7 @@ struct inject: View {
                 }.frame(maxWidth: .infinity)
             }
         }
-        .navigationBarTitle(Text("Введение инсулина"))
+        .navigationTitle("Введение инсулина")
         .toolbar {
             ToolbarItemGroup(){
                 Button(action: {

@@ -44,8 +44,12 @@ struct ModalView: View {
                 }
             }
             .listStyle(.insetGrouped)
-            .navigationTitle("Дополнительно")
-            .navigationBarTitleDisplayMode(.large)
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .principal, content: {
+                    Text("Дополнительно").bold()
+                })
+            }
         }
         .navigationViewStyle(.stack)
         .customPopupView(isPresented: $phelper, popupView: { helper(phelper: $phelper) })

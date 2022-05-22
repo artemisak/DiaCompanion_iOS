@@ -48,7 +48,7 @@ func getData(BG0: Double, foodtype: ftype, foodN: [String], gram: [Double], pick
         let gi = Expression<Double>("gi")
         let carbo = Expression<Double>("carbo")
         let prot = Expression<Double>("prot")
-        let kr = Expression<Double>("kr")
+        let kr = Expression<Double?>("kr")
         let diary = Table("diary")
         let food = Expression<String>("foodName")
         let date = Expression<Date>("dateTime")
@@ -59,7 +59,7 @@ func getData(BG0: Double, foodtype: ftype, foodN: [String], gram: [Double], pick
         var nutr: [[Double]] = []
         try zip(foodN,gram).forEach {
             for i in try db.prepare(foodT.where(name == $0).select(gi,carbo,kr)) {
-                nutr.append([(i[carbo]*$1/100.0)*i[gi]/100, i[carbo]*$1/100.0, i[kr]*$1/100.0])
+                nutr.append([(i[carbo]*$1/100.0)*i[gi]/100, i[carbo]*$1/100.0, (i[kr] ?? 0.0)*$1/100.0])
             }
         }
         

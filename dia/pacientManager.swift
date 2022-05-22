@@ -375,3 +375,27 @@ func checkName(txt: String) throws -> String {
     }
     return txt
 }
+
+
+func checkBMI() -> Bool {
+    var res: Bool = false
+    do {
+        let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
+        let path = documents + "/diacompanion.db"
+        let sourcePath = Bundle.main.path(forResource: "diacompanion", ofType: "db")!
+        _=copyDatabaseIfNeeded(sourcePath: sourcePath)
+        let db = try Connection(path)
+        let pacient = Table("usermac")
+        let w = Expression<Double?>("weight")
+        let h = Expression<Double?>("height")
+        for i in try db.prepare(pacient.select(w,h)){
+            if (i[w] != nil && i[h] != nil) {
+                res = true
+            }
+        }
+    }
+    catch {
+        print(error)
+    }
+    return res
+}

@@ -53,7 +53,7 @@ struct sugarChange: View {
                 }.frame(maxWidth: .infinity)
             }
         }
-        .navigationBarTitle(Text("Измерение сахара"))
+        .navigationTitle("Измерение сахара")
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing, content: {
                 Button(action: {
