@@ -12,7 +12,8 @@ struct regHelper: View {
                     Text("Для доступа к приложению по программе обязательного медицинского страхования обратитесь в ближайщее государственное лечебно-профилактическое учреждение согласно месту жительства.")
                         .fixedSize(horizontal: false, vertical: true)
                 }
-            }.padding()
+            }
+            .padding()
             Divider()
             Button(action: {
                 withAnimation {
@@ -24,7 +25,7 @@ struct regHelper: View {
             .buttonStyle(TransparentButton())
         }
         .background(Color.white.cornerRadius(10))
-        .frame(minHeight: 0, maxHeight: 355)
+        .frame(minHeight: 0, maxHeight: 320)
         .padding([.leading, .trailing], 15)
     }
 }

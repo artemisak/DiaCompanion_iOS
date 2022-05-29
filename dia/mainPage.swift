@@ -2,93 +2,72 @@ import SwiftUI
 
 struct mainPage: View {
     @State private var showModal: Bool = false
-    @State private var isLoad: Bool = true
     @Binding var txtTheme: DynamicTypeSize
-    var sheets = exportTable()
     var columns: [GridItem] =
     Array(repeating: .init(.flexible()), count: 2)
     var body: some View {
         GeometryReader { g in
-            ZStack {
-                ScrollView {
-                    LazyVGrid(columns: columns) {
-                        NavigationLink(destination: sugarChange(txtTheme: $txtTheme)) {
-                            VStack {
-                                Image("menu_sugar")
-                                    .scaledToFit()
-                                Text("Измерение сахара")
-                                    .multilineTextAlignment(.center)
-                                    .foregroundColor(Color.black)
-                            }
-                        }.buttonStyle(ChangeColorButton())
-                        NavigationLink(destination: inject(txtTheme: $txtTheme)) {
-                            VStack {
-                                Image("menu_syringe")
-                                    .scaledToFit()
-                                Text("Введение инсулина")
-                                    .multilineTextAlignment(.center)
-                                    .foregroundColor(Color.black)
-                            }
-                            
-                        }.buttonStyle(ChangeColorButton())
-                        NavigationLink(destination: enterFood(txtTheme: $txtTheme)) {
-                            VStack {
-                                Image("menu_food")
-                                    .scaledToFit()
-                                Text("Прием пищи")
-                                    .foregroundColor(Color.black)
-                                    .multilineTextAlignment(.center)
-                            }
-                        }.buttonStyle(ChangeColorButton())
-                        NavigationLink(destination: enterAct(txtTheme: $txtTheme)) {
-                            VStack {
-                                Image("menu_sleep")
-                                    .scaledToFit()
-                                Text("Физическая \nактивность и сон")
-                                    .foregroundColor(Color.black)
-                                    .multilineTextAlignment(.center)
-                            }
-                            
-                        }.buttonStyle(ChangeColorButton())
-                        NavigationLink(destination: history(txtTheme: $txtTheme)) {
-                            VStack {
-                                Image("menu_paper")
-                                    .scaledToFit()
-                                Text("История записей")
-                                    .foregroundColor(Color.black)
-                                    .multilineTextAlignment(.center)
-                            }
-                        }.buttonStyle(ChangeColorButton())
-                        Button(action:{
-                            isLoad.toggle()
-                            DispatchQueue.main.asyncAfter(deadline: .now()+0.2){
-                                isLoad.toggle()
-                                let AV = UIActivityViewController(activityItems: [sheets.generate()], applicationActivities: nil)
-//                                AV.overrideUserInterfaceStyle = .light
-//                                UINavigationBar.appearance().overrideUserInterfaceStyle = .light
-//                                UITableView.appearance().overrideUserInterfaceStyle = .light
-                                UIApplication.shared.currentUIWindow()?.rootViewController?.present(AV, animated: true, completion: nil)
-                            }
-                        }){
-                            VStack{
-                                Image("menu_xlsx")
-                                    .scaledToFit()
-                                Text("Экспорт данных")
-                                    .foregroundColor(Color.black)
-                                    .multilineTextAlignment(.center)
-                            }
+            ScrollView {
+                LazyVGrid(columns: columns) {
+                    NavigationLink(destination: sugarChange(txtTheme: $txtTheme)) {
+                        VStack {
+                            Image("menu_sugar")
+                                .scaledToFit()
+                            Text("Измерение сахара")
+                                .multilineTextAlignment(.center)
+                                .foregroundColor(Color.black)
                         }
-                        .buttonStyle(ChangeColorButton())
-                    }
-                    .padding()
-                    .frame(width: g.size.width)
-                    .frame(minHeight: g.size.height)
+                    }.buttonStyle(ChangeColorButton())
+                    NavigationLink(destination: inject(txtTheme: $txtTheme)) {
+                        VStack {
+                            Image("menu_syringe")
+                                .scaledToFit()
+                            Text("Введение инсулина")
+                                .multilineTextAlignment(.center)
+                                .foregroundColor(Color.black)
+                        }
+                    }.buttonStyle(ChangeColorButton())
+                    NavigationLink(destination: enterFood(txtTheme: $txtTheme)) {
+                        VStack {
+                            Image("menu_food")
+                                .scaledToFit()
+                            Text("Прием пищи")
+                                .foregroundColor(Color.black)
+                                .multilineTextAlignment(.center)
+                        }
+                    }.buttonStyle(ChangeColorButton())
+                    NavigationLink(destination: enterAct(txtTheme: $txtTheme)) {
+                        VStack {
+                            Image("menu_sleep")
+                                .scaledToFit()
+                            Text("Физическая \nактивность и сон")
+                                .foregroundColor(Color.black)
+                                .multilineTextAlignment(.center)
+                        }
+                        
+                    }.buttonStyle(ChangeColorButton())
+                    NavigationLink(destination: history(txtTheme: $txtTheme)) {
+                        VStack {
+                            Image("menu_paper")
+                                .scaledToFit()
+                            Text("История записей")
+                                .foregroundColor(Color.black)
+                                .multilineTextAlignment(.center)
+                        }
+                    }.buttonStyle(ChangeColorButton())
+                    NavigationLink(destination: export()) {
+                        VStack {
+                            Image("menu_chart")
+                                .scaledToFit()
+                            Text("Экспорт данных")
+                                .foregroundColor(Color.black)
+                                .multilineTextAlignment(.center)
+                        }
+                    }.buttonStyle(ChangeColorButton())
                 }
-                if !isLoad {
-                    ProgressView()
-                        .progressViewStyle(.circular)
-                        .scaleEffect(2.5)
-                }
+                .padding()
+                .frame(width: g.size.width)
+                .frame(minHeight: g.size.height)
             }
         }
         .navigationBarTitleDisplayMode(.inline)
@@ -111,6 +90,7 @@ struct mainPage: View {
                     }, label: {
                         Text("Готово")
                             .foregroundColor(Color(red: 0, green: 0.590, blue: 1))
+                            .dynamicTypeSize(txtTheme)
                     })
                 }
             })

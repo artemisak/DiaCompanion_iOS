@@ -15,10 +15,10 @@ struct history: View {
             await hList.FillHistoryList()
         }
         .navigationTitle("История записей")
-//        .toolbar {
-//            EditButton()
-//                .environment(\.locale, Locale.init(identifier: "ru"))
-//        }
+        .toolbar {
+            EditButton()
+                .environment(\.locale, Locale.init(identifier: "ru"))
+        }
     }
     
     func move(from source: IndexSet, to destination: Int) {

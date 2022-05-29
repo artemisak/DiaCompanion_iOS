@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A706DA802843864A00473941 /* emailSender.swift in Sources */ = {isa = PBXBuildFile; fileRef = A706DA7F2843864A00473941 /* emailSender.swift */; };
+		A706DA822843867800473941 /* export.swift in Sources */ = {isa = PBXBuildFile; fileRef = A706DA812843867800473941 /* export.swift */; };
 		A70829BE27FDE39400C74F21 /* help.pdf in Resources */ = {isa = PBXBuildFile; fileRef = A70829BD27FDE39400C74F21 /* help.pdf */; };
 		A70BCC3A27B9471E00C22703 /* loginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A70BCC3927B9471E00C22703 /* loginManager.swift */; };
 		A71CAEF228280F7600C6AC9F /* predictManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71CAEF128280F7600C6AC9F /* predictManager.swift */; };
@@ -63,6 +65,8 @@
 /* Begin PBXFileReference section */
 		6C02743FFD40C5E72C5C050B /* Pods_dia.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_dia.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A316D5BECBE459250AC4A311 /* Pods-dia.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-dia.debug.xcconfig"; path = "Target Support Files/Pods-dia/Pods-dia.debug.xcconfig"; sourceTree = "<group>"; };
+		A706DA7F2843864A00473941 /* emailSender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = emailSender.swift; sourceTree = "<group>"; };
+		A706DA812843867800473941 /* export.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = export.swift; sourceTree = "<group>"; };
 		A70829BD27FDE39400C74F21 /* help.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = help.pdf; sourceTree = "<group>"; };
 		A70BCC3927B9471E00C22703 /* loginManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = loginManager.swift; sourceTree = "<group>"; };
 		A71CAEF128280F7600C6AC9F /* predictManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = predictManager.swift; sourceTree = "<group>"; };
@@ -184,10 +188,12 @@
 				A74A33CF27B7E833003D2EBD /* loginPage.swift */,
 				A7FBB23A27FC257D00828432 /* regHelper.swift */,
 				A7D097692809FE16000A12E1 /* myButtons.swift */,
+				A706DA7F2843864A00473941 /* emailSender.swift */,
 				A70BCC3927B9471E00C22703 /* loginManager.swift */,
 				ACC3798526ECFA7E00E0729E /* massa.swift */,
 				AC37A67A276147AF00558E55 /* foodTable.swift */,
 				ACF2F0A926DEA8300066753D /* history.swift */,
+				A706DA812843867800473941 /* export.swift */,
 				AC6327012751012C00C25E23 /* historyManager.swift */,
 				A7230C7E27705AED00B68244 /* excelManager.swift */,
 				AC2551D5272A887500E1C593 /* Calendar */,
@@ -388,12 +394,14 @@
 				ACF4E413272DB126002D2797 /* RKDate.swift in Sources */,
 				AC2C506127289C360009E8EE /* poldny.swift in Sources */,
 				AC2603202690691E00C4A520 /* diaApp.swift in Sources */,
+				A706DA802843864A00473941 /* emailSender.swift in Sources */,
 				AC6327022751012C00C25E23 /* historyManager.swift in Sources */,
 				AC32A68227260081001DDB9F /* pid.swift in Sources */,
 				A7D27E022815ADDC00DC00E9 /* PDFManager.swift in Sources */,
 				ACEDB4812721AA7F00DBB67C /* fio.swift in Sources */,
 				A7FBB23B27FC257D00828432 /* regHelper.swift in Sources */,
 				ACF4E411272DB126002D2797 /* RKCell.swift in Sources */,
+				A706DA822843867800473941 /* export.swift in Sources */,
 				ACC3798826EE0E1400E0729E /* pacient.swift in Sources */,
 				A74A33D027B7E833003D2EBD /* loginPage.swift in Sources */,
 				AC32A6862726060D001DDB9F /* pHeight.swift in Sources */,

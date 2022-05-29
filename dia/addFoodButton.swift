@@ -42,15 +42,6 @@ struct addFoodButton: View {
                             Divider()
                         }
                     }
-//                    ForEach(items.FoodObj, id: \.id){dish in
-//                        if !searchByWordView {
-//                            DoButton(dish: dish)
-//                            Divider()
-//                        } else {
-//                            DoLink(dish: dish)
-//                            Divider()
-//                        }
-//                    }
                 }
                 .padding(.horizontal, 20)
             }
