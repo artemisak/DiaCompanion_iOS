@@ -4,8 +4,6 @@ import MessageUI
 
 class emailSender: NSObject, MFMailComposeViewControllerDelegate {
     public static let shared = emailSender()
-    private override init() {
-    }
 
     func sendEmail(subject:String, body:String, to:String, xlsxFile: Data){
         if MFMailComposeViewController.canSendMail() {
