@@ -3,9 +3,10 @@ import UIKit
 import MessageUI
 
 class emailSender: NSObject, MFMailComposeViewControllerDelegate {
+    
     public static let shared = emailSender()
 
-    func sendEmail(subject:String, body:String, to:String, xlsxFile: Data){
+    func sendEmail(subject:String, body:String, to:String, xlsxFile: Data) {
         if MFMailComposeViewController.canSendMail() {
             let picker = MFMailComposeViewController()
             picker.mailComposeDelegate = self
