@@ -30,9 +30,9 @@ struct export: View {
                     Button(action:{
                         isLoad.toggle()
                         DispatchQueue.main.asyncAfter(deadline: .now()+0.2){
-                            do{
-                            isLoad.toggle()
-                            emailSender.shared.sendEmail(subject: "Электронный дневник", body: "", to: "amedi.ioakim@gmail.com", xlsxFile: try Data(contentsOf: sheets.generate()))
+                            do {
+                                isLoad.toggle()
+                                emailSender.shared.sendEmail(subject: "Электронный дневник", body: "", to: "amedi.ioakim@gmail.com", xlsxFile: try Data(contentsOf: sheets.generate()))
                             } catch {
                                 print(error)
                             }
