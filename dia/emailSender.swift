@@ -1,13 +1,19 @@
-import Foundation
+import SwiftUI
+import UIKit
 import MessageUI
 
 class emailSender: NSObject, MFMailComposeViewControllerDelegate {
     public static let shared = emailSender()
-    
+    private override init() {
+    }
+
     func sendEmail(subject:String, body:String, to:String, xlsxFile: Data){
         if MFMailComposeViewController.canSendMail() {
             let picker = MFMailComposeViewController()
             picker.mailComposeDelegate = self
+            picker.title = "Электронный дневник"
+            picker.modalPresentationStyle = .fullScreen
+            picker.navigationBar.tintColor = UIColor(red: 0.20, green: 0.47, blue: 0.96, alpha: 1)
             picker.setSubject(subject)
             picker.setMessageBody(body, isHTML: true)
             picker.setToRecipients([to])
@@ -22,5 +28,4 @@ class emailSender: NSObject, MFMailComposeViewControllerDelegate {
     func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
         controller.dismiss(animated: true, completion: nil)
     }
-
 }
