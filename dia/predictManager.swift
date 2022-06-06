@@ -29,7 +29,7 @@ struct inpData {
 
 func getPredict(BG0: Double, gl: Double, carbo: Double, prot: Double, t1: Double, t2: Double, t3: Double, t4: Double, kr: Double, BMI: Double) throws -> Double {
     let config = MLModelConfiguration()
-    guard let bestModel = try? model1(configuration: config) else {
+    guard let bestModel = try? predictModel(configuration: config) else {
         throw modelErorrs.generalError
     }
     let res = try! bestModel.prediction(BG0: BG0, gl: gl, carbo: carbo, prot_b6h: prot, types_food_n_1: t1, types_food_n_2: t2, types_food_n_3: t3, types_food_n_4: t4, f: kr, f1: BMI)

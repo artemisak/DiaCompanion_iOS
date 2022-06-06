@@ -85,7 +85,9 @@ struct enterFood: View {
                     "Дата",
                     selection: $date,
                     displayedComponents: [.date, .hourAndMinute]
-                ).datePickerStyle(.compact)
+                )
+                .datePickerStyle(.compact)
+                .environment(\.locale, .init(identifier: "ru"))
                 .onChange(of: date, perform: { _ in
                     do {
                         if (foodItems.count != 0 && sugar != "") {

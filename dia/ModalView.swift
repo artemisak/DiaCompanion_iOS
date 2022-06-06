@@ -36,7 +36,7 @@ struct ModalView: View {
                             Button("Обучение", action: {})
                         }.foregroundColor(.black)
                     Button("Помощь", action: {
-                        withAnimation {
+                        withAnimation(.easeInOut(duration: 0.2)) {
                             phelper.toggle()
                         }
                     })

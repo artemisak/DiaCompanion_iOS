@@ -1,5 +1,6 @@
 import Foundation
 import SwiftUI
+import CoreHaptics
 
 public extension UIApplication {
     func currentUIWindow() -> UIWindow? {
@@ -51,25 +52,34 @@ public extension String {
 }
 
 struct CustomPopupView<Content, PopupView>: View where Content: View, PopupView: View {
-    
     @Binding var isPresented: Bool
     @ViewBuilder let content: () -> Content
     @ViewBuilder let popupView: () -> PopupView
     let backgroundColor: Color
     let animation: Animation?
-    
+    @State var sc = 1.05
     var body: some View {
-        content()
-            .animation(nil, value: isPresented)
-            .blur(radius: isPresented ? 1.25 : 0)
-            .overlay(isPresented ? backgroundColor.ignoresSafeArea() : nil)
-            .overlay(isPresented ? popupView() : nil)
-            .animation(animation, value: isPresented)
+        ZStack {
+            content()
+            if isPresented {
+                ZStack {
+                    Color.black.opacity(0.2).ignoresSafeArea()
+                    popupView()
+                        .scaleEffect(sc).animation(.spring(), value: sc)
+                }
+                .onAppear(perform: {
+                    sc -= 0.05
+                    let generator = UINotificationFeedbackGenerator()
+                    generator.notificationOccurred(.success)
+                })
+                .onDisappear(perform: {sc += 0.05})
+            }
+        }
     }
 }
 
 public extension View {
-    func customPopupView<PopupView>(isPresented: Binding<Bool>, popupView: @escaping () -> PopupView, backgroundColor: Color = .black.opacity(0.3), animation: Animation? = .default) -> some View where PopupView: View {
+    func customPopupView<PopupView>(isPresented: Binding<Bool>, popupView: @escaping () -> PopupView, backgroundColor: Color = .black.opacity(0.2), animation: Animation? = .default) -> some View where PopupView: View {
         return CustomPopupView(isPresented: isPresented, content: { self }, popupView: popupView, backgroundColor: backgroundColor, animation: animation)
     }
 }

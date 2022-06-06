@@ -1,3 +1,15 @@
-//"Back" = "Назад";
-//"Cancel" = "Отменить";
-//"Done" = "Готово";
+/* 
+  Localizable.strings
+  dia
+
+  Created by Артём Исаков on 06.06.2022.
+  
+*/
+
+"Back" = "Назад";
+"Done" = "Готово";
+"Cancel" = "Отменить";
+"To" = "Кому";
+"Subject" = "Тема";
+"From" = "От";
+
