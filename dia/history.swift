@@ -10,6 +10,7 @@ struct history: View {
             }.onDelete(perform: removeRows)
                 .onMove(perform: move)
         }
+        .lineLimit(2)
         .listStyle(.plain)
         .task {
             await hList.FillHistoryList()
