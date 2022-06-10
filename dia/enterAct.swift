@@ -60,13 +60,6 @@ struct enterAct: View {
                         presentationMode.wrappedValue.dismiss()
                     } catch {
                         isCorrect = true
-//                        let alertController = UIAlertController(title: "Статус операции", message: "Введите ненулевое \nзначение", preferredStyle: UIAlertController.Style.alert)
-//                        alertController.overrideUserInterfaceStyle = .light
-//                        let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) {
-//                            (result : UIAlertAction) -> Void in
-//                        }
-//                        alertController.addAction(okAction)
-//                        UIApplication.shared.currentUIWindow()?.rootViewController?.present(alertController, animated: true, completion: nil)
                     }
                 }) {
                     Text("Сохранить").dynamicTypeSize(txtTheme)

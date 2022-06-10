@@ -6,6 +6,9 @@ struct export: View {
     var sheets = exportTable()
     var columns: [GridItem] =
     Array(repeating: .init(.flexible()), count: 2)
+    @State private var email: String = ""
+    @State private var erMessage: String = ""
+    @State private var emailErrorMessage: Bool = false
     var body: some View {
         ZStack {
             ScrollView {
@@ -28,14 +31,21 @@ struct export: View {
                     }
                     .buttonStyle(ChangeColorButton())
                     Button(action:{
-                        isLoad.toggle()
-                        DispatchQueue.main.asyncAfter(deadline: .now()+0.2){
-                            do {
-                                isLoad.toggle()
-                                emailSender.shared.sendEmail(subject: "Электронный дневник", body: "", to: "amedi.ioakim@gmail.com", xlsxFile: try Data(contentsOf: sheets.generate()))
-                            } catch {
-                                print(error)
+                        email = try! findAdress()
+                        if email != "" {
+                            isLoad.toggle()
+                            DispatchQueue.main.asyncAfter(deadline: .now()+0.2){
+                                do {
+                                    isLoad.toggle()
+                                    try emailSender.shared.sendEmail(subject: "Электронный дневник", body: "", to: email, xlsxFile: try Data(contentsOf: sheets.generate() as URL))
+                                } catch {
+                                    emailErrorMessage = true
+                                    erMessage = "Не установлен почтовый клиент или не указана почта"
+                                }
                             }
+                        } else {
+                            emailErrorMessage = true
+                            erMessage = "Перейдите в карту пациента, чтобы назначить лечащего врача."
                         }
                     }){
                         VStack{
@@ -47,6 +57,7 @@ struct export: View {
                         }
                     }
                     .buttonStyle(ChangeColorButton())
+                    .alert("Статус операции", isPresented: $emailErrorMessage, actions: {Button(role: .cancel, action: {}, label: {Text("OK")})}, message: {Text(erMessage)})
                 }
                 .padding()
             }
@@ -56,13 +67,11 @@ struct export: View {
                     .scaleEffect(2.5)
             }
         }
-        .navigationTitle("Экспорт данных")
-    }
-}
-
-struct export_Previews: PreviewProvider {
-    static var previews: some View {
-        export()
+        .toolbar {
+            ToolbarItem(placement: .principal, content: {
+                Text("Экспорт данных").font(.headline).fixedSize()
+            })
+        }
     }
 }
 
