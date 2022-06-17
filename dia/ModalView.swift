@@ -4,16 +4,6 @@ import PDFKit
 struct ModalView: View {
     @State private var phelper : Bool = false
     @State private var fileUrl = Bundle.main.url(forResource: "help", withExtension: "pdf")!
-    @State private var pFio: Bool = false
-    @State private var pV: Bool = false
-    @State private var pDate: Bool = false
-    @State private var bStart: Bool = false
-    @State private var bWeek: Bool = false
-    @State private var bid: Bool = false
-    @State private var bWeight: Bool = false
-    @State private var bHeight: Bool = false
-    @State private var vDate = Date()
-    @State private var txt: String = ""
     var body: some View {
         NavigationView {
             List {
@@ -24,7 +14,7 @@ struct ModalView: View {
                     NavigationLink(destination: massa()) {
                         Button("Добавить измерение массы тела", action: {})
                     }.foregroundColor(.black)
-                    NavigationLink(destination: pacient(pFio: $pFio, pV: $pV, pDate: $pDate, bStart: $bStart, bWeek: $bWeek, bid: $bid, bWeight: $bWeight, bHeight: $bHeight)) {
+                    NavigationLink(destination: pacientPage()) {
                         Button("Данные пациента", action: {})
                     }.foregroundColor(.black)
                     NavigationLink(destination: poldny()) {
@@ -44,6 +34,7 @@ struct ModalView: View {
                 }
             }
             .listStyle(.insetGrouped)
+            .ignoresSafeArea(.keyboard)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .principal, content: {
@@ -53,14 +44,89 @@ struct ModalView: View {
         }
         .navigationViewStyle(.stack)
         .customPopupView(isPresented: $phelper, popupView: { helper(phelper: $phelper) })
-        .customPopupView(isPresented: $bWeek, popupView: { weekS(bWeek: $bWeek) })
-        .customPopupView(isPresented: $pV, popupView: { currentV(pV:$pV) })
-        .customPopupView(isPresented: $pFio, popupView: { fio(pFio: $pFio, txt: $txt) })
-        .customPopupView(isPresented: $pDate, popupView: { bday(pDate: $pDate, vDate: $vDate) })
-        .customPopupView(isPresented: $bStart, popupView: { dStart(bStart: $bStart, vDate: $vDate) })
-        .customPopupView(isPresented: $bid, popupView: { pid(bid: $bid, txt: $txt) })
-        .customPopupView(isPresented: $bWeight, popupView: { pWeight(bWeight: $bWeight, txt: $txt) })
-        .customPopupView(isPresented: $bHeight, popupView: { pHeight(bHeight: $bHeight, txt: $txt) })
+    }
+}
+
+struct pacientPage: View {
+    @State private var pFio: Bool = false
+    @State private var pV: Bool = false
+    @State private var pDate: Bool = false
+    @State private var bStart: Bool = false
+    @State private var bWeek: Bool = false
+    @State private var bid: Bool = false
+    @State private var bWeight: Bool = false
+    @State private var bHeight: Bool = false
+    @State private var txt: String = ""
+    @State private var vDate = Date()
+    var body: some View {
+        ZStack {
+            List {
+                Section(header: Text("Данные пациента").font(.system(size: 15.5))){
+                    Button(action: {pFio.toggle()}) {
+                        Text("ФИО")
+                    }.foregroundColor(.black)
+                    Button(action: {pDate.toggle()}) {
+                        Text("Дата рождения")
+                    }.foregroundColor(.black)
+                    Button(action: {pV.toggle()}) {
+                        Text("Лечащий врач")
+                    }.foregroundColor(.black)
+                    Button(action: {bStart.toggle()}) {
+                        Text("Дата начала ведения дневника")
+                    }.foregroundColor(.black)
+                    Button(action: {bWeek.toggle()}) {
+                        Text("Неделя берем. на начало исследования")
+                    }.foregroundColor(.black)
+                    Button(action: {bid.toggle()}) {
+                        Text("Индивидуальный номер пациента")
+                    }.foregroundColor(.black)
+                    Button(action: {bWeight.toggle()}) {
+                        Text("Вес до беременности, кг")
+                    }.foregroundColor(.black)
+                    Button(action: {bHeight.toggle()}) {
+                        Text("Рост до беременности, см")
+                    }.foregroundColor(.black)
+                }
+            }
+            .ignoresSafeArea(.keyboard)
+            .listStyle(.insetGrouped)
+            if bWeek {
+                weekS(bWeek: $bWeek)
+            }
+            if pV {
+                currentV(pV:$pV)
+            }
+            if pFio {
+                fio(pFio: $pFio, txt: $txt)
+            }
+            if pDate {
+                bday(pDate: $pDate, vDate: $vDate)
+            }
+            if bStart {
+                dStart(bStart: $bStart, vDate: $vDate)
+            }
+            if bid {
+                pid(bid: $bid, txt: $txt)
+            }
+            if bWeight {
+                pWeight(bWeight: $bWeight, txt: $txt)
+            }
+            if bHeight {
+                pHeight(bHeight: $bHeight, txt: $txt)
+            }
+        }
+        .navigationBarTitleDisplayMode(.inline)
+        .navigationBarTitle("Персональная карта")
+        .toolbar {
+            ToolbarItemGroup(placement: .keyboard, content: {
+                Spacer()
+                Button(action: {
+                    UIApplication.shared.dismissedKeyboard()
+                }, label: {
+                    Text("Готово")
+                })
+            })
+        }
     }
 }
 

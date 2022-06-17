@@ -107,7 +107,7 @@ struct loginPage: View {
             .navigationBarBackButtonHidden(true)
             .toolbar {
                 ToolbarItem(placement: .principal) {
-                    HStack{
+                    HStack {
                         Text("Dia ID")
                             .foregroundColor(Color.black)
                             .font(.title)
@@ -120,7 +120,7 @@ struct loginPage: View {
                     }
                 }
                 ToolbarItem(placement: .keyboard, content: {
-                    HStack{
+                    HStack {
                         Spacer()
                         Button(action: {
                             UIApplication.shared.dismissedKeyboard()

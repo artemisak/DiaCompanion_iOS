@@ -52,6 +52,8 @@ struct massa: View {
                     Alert(title: Text("Статус операции"), message: Text("Введите релевантное \nзначение"), dismissButton: .default(Text("ОК")))
                 }
             }
+        }
+        .toolbar {
             ToolbarItem(placement: .keyboard, content: {
                 HStack{
                     Spacer()

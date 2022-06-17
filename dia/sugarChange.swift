@@ -70,13 +70,6 @@ struct sugarChange: View {
                         self.presentationMode.wrappedValue.dismiss()
                     } catch {
                         isCorrect = true
-//                        let alertController = UIAlertController(title: "Статус операции", message: "Введите релевантное \nзначение", preferredStyle: UIAlertController.Style.alert)
-//                        alertController.overrideUserInterfaceStyle = .light
-//                        let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) {
-//                            (result : UIAlertAction) -> Void in
-//                        }
-//                        alertController.addAction(okAction)
-//                        UIApplication.shared.currentUIWindow()?.rootViewController?.present(alertController, animated: true, completion: nil)
                     }
                 }) {
                     Text("Сохранить")
@@ -86,15 +79,13 @@ struct sugarChange: View {
                     Alert(title: Text("Статус операции"), message: Text("Введите релевантное \nзначение"), dismissButton: .default(Text("ОК")))
                 }
             })
-            ToolbarItem(placement: .keyboard, content: {
-                HStack{
-                    Spacer()
-                    Button(action: {
-                        UIApplication.shared.dismissedKeyboard()
-                    }, label: {
-                        Text("Готово").dynamicTypeSize(txtTheme)
-                    })
-                }
+            ToolbarItemGroup(placement: .keyboard, content: {
+                Spacer()
+                Button(action: {
+                    UIApplication.shared.dismissedKeyboard()
+                }, label: {
+                    Text("Готово").dynamicTypeSize(txtTheme)
+                })
             })
         }
         .ignoresSafeArea(.keyboard)

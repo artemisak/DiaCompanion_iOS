@@ -8,44 +8,47 @@ struct weekS: View {
         Array(stride(from: 0, through: 7, by: 1))
     ]
     var body: some View {
-        VStack(spacing:0){
-            Text("Неделя беременности на начало исследования")
-                .multilineTextAlignment(.center)
-                .padding()
-            Divider()
-            VStack(spacing: 0) {
-                HStack(spacing: 0) {
-                    Spacer()
-                    Text("Неделя")
-                    Spacer()
-                    Text("День")
-                    Spacer()
-                }
-                MultiWheelPicker(selections: $selections1, data: data1)
-            }
-            .padding()
-            Divider()
-            HStack(spacing: 0) {
-                Button(action: {
-                    withAnimation {
-                        bWeek.toggle()
-                    }
-                }){
-                    Text("Отменить")
-                }.buttonStyle(TransparentButton())
+        ZStack {
+            Color.black.opacity(0.2).ignoresSafeArea()
+            VStack(spacing:0){
+                Text("Неделя беременности на начало исследования")
+                    .multilineTextAlignment(.center)
+                    .padding()
                 Divider()
-                Button(action: {
-                    addWeekDay(week: Int(selections1[0]), day: Int(selections1[1]))
-                    withAnimation {
-                        bWeek.toggle()
+                VStack(spacing: 0) {
+                    HStack(spacing: 0) {
+                        Spacer()
+                        Text("Неделя")
+                        Spacer()
+                        Text("День")
+                        Spacer()
                     }
-                }){
-                    Text("Сохранить")
-                }.buttonStyle(TransparentButton())
-            }.frame(height: 50)
+                    MultiWheelPicker(selections: $selections1, data: data1)
+                }
+                .padding()
+                Divider()
+                HStack(spacing: 0) {
+                    Button(action: {
+                        withAnimation {
+                            bWeek.toggle()
+                        }
+                    }){
+                        Text("Отменить")
+                    }.buttonStyle(TransparentButton())
+                    Divider()
+                    Button(action: {
+                        addWeekDay(week: Int(selections1[0]), day: Int(selections1[1]))
+                        withAnimation {
+                            bWeek.toggle()
+                        }
+                    }){
+                        Text("Сохранить")
+                    }.buttonStyle(TransparentButton())
+                }.frame(height: 50)
+            }
+            .background(Color.white.cornerRadius(10))
+            .padding([.leading, .trailing], 15)
         }
-        .background(Color.white.cornerRadius(10))
-        .padding([.leading, .trailing], 15)
     }
 }
 

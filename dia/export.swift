@@ -2,6 +2,7 @@ import SwiftUI
 import MessageUI
 
 struct export: View {
+    @Binding var txtTheme: DynamicTypeSize
     @State private var isLoad: Bool = true
     var sheets = exportTable()
     var columns: [GridItem] =

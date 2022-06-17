@@ -17,8 +17,7 @@ struct history: View {
         }
         .navigationTitle("История записей")
         .toolbar {
-            EditButton()
-                .environment(\.locale, Locale.init(identifier: "ru"))
+            EditButton().dynamicTypeSize(txtTheme)
         }
     }
     

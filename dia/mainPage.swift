@@ -55,7 +55,7 @@ struct mainPage: View {
                                 .multilineTextAlignment(.center)
                         }
                     }.buttonStyle(ChangeColorButton())
-                    NavigationLink(destination: export()) {
+                    NavigationLink(destination: export(txtTheme: $txtTheme)) {
                         VStack {
                             Image("menu_chart")
                                 .scaledToFit()
@@ -82,18 +82,6 @@ struct mainPage: View {
                     ModalView().dynamicTypeSize(txtTheme)
                 }
             }
-            ToolbarItem(placement: .keyboard, content: {
-                HStack{
-                    Spacer()
-                    Button(action: {
-                        UIApplication.shared.dismissedKeyboard()
-                    }, label: {
-                        Text("Готово")
-                            .foregroundColor(Color(red: 0, green: 0.590, blue: 1))
-                            .dynamicTypeSize(txtTheme)
-                    })
-                }
-            })
         }
         .ignoresSafeArea(.keyboard)
     }

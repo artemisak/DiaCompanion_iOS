@@ -4,7 +4,10 @@ struct pid: View {
     @Binding var bid: Bool
     @Binding var txt: String
     @State private var lineColor: Color = Color.black
+    @FocusState var focuseField: Bool
     var body: some View {
+        ZStack{
+            Color.black.opacity(0.2).ignoresSafeArea()
         VStack(spacing:0){
             Text("Индивидуальный номер пациента")
                 .padding()
@@ -14,6 +17,7 @@ struct pid: View {
                     .padding(.leading, 16)
                     .padding(.trailing, 16)
                     .keyboardType(.numberPad)
+                    .focused($focuseField)
                 Rectangle()
                     .frame(height: 1)
                     .foregroundColor(lineColor)
@@ -49,6 +53,10 @@ struct pid: View {
         }
         .background(Color.white.cornerRadius(10))
         .padding([.leading, .trailing], 15)
-        .onAppear(perform: {txt = ""})
+        }
+        .onAppear(perform: {
+            txt = ""
+            focuseField = true
+        })
     }
 }

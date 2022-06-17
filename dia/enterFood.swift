@@ -34,6 +34,7 @@ struct enterFood: View {
     @State private var recColor = Color.white
     @State private var fontColor = Color.black
     @State private var alertMessage: Bool = false
+    @FocusState private var focuseField: Bool
     @Binding var txtTheme: DynamicTypeSize
     var body: some View {
         List {
@@ -150,6 +151,7 @@ struct enterFood: View {
                     .listRowBackground(recColor)
                 TextField("5,0 ммоль/л", text: $sugar)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .focused($focuseField)
                     .keyboardType(.decimalPad)
                     .disabled(enabled == false)
                     .foregroundColor(scolor)
@@ -201,7 +203,7 @@ struct enterFood: View {
                     }
                 })
                 .sheet(isPresented: $isSheetShown) {
-                    addFoodButton(foodItems: $foodItems).dynamicTypeSize(txtTheme)
+                    addFoodButton(foodItems: $foodItems, txtTheme: $txtTheme).dynamicTypeSize(txtTheme)
                 }
             }
             Section {
@@ -266,10 +268,9 @@ struct enterFood: View {
                 HStack{
                     Spacer()
                     Button(action: {
-                        UIApplication.shared.dismissedKeyboard()
+                        focuseField = false
                     }, label: {
                         Text("Готово")
-                            .foregroundColor(Color(red: 0, green: 0.590, blue: 1))
                             .dynamicTypeSize(txtTheme)
                     })
                 }
