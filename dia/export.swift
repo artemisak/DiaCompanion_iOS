@@ -38,15 +38,15 @@ struct export: View {
                             DispatchQueue.main.asyncAfter(deadline: .now()+0.2){
                                 do {
                                     isLoad.toggle()
-                                    try emailSender.shared.sendEmail(subject: "Электронный дневник", body: "", to: email, xlsxFile: try Data(contentsOf: sheets.generate() as URL))
+                                    try emailSender.shared.sendEmail(subject: "DiaCompanion iOS - электронный дневник", body: "", to: email, xlsxFile: try Data(contentsOf: sheets.generate() as URL))
                                 } catch {
                                     emailErrorMessage = true
-                                    erMessage = "Не установлен почтовый клиент или не указана почта"
+                                    erMessage = "На устройстве не установлен почтовый клиент"
                                 }
                             }
                         } else {
                             emailErrorMessage = true
-                            erMessage = "Перейдите в карту пациента, чтобы назначить лечащего врача."
+                            erMessage = "Перейдите в карту пациента, чтобы назначить лечащего врача. В противном случае используйте вариант сохранить на устройстве."
                         }
                     }){
                         VStack{

@@ -6,7 +6,7 @@ struct history: View {
     var body: some View {
         List() {
             ForEach(hList.histList, id: \.id){
-                Text("\($0.name)")
+                doRow(first: $0.name, second: $0.date)
             }.onDelete(perform: removeRows)
                 .onMove(perform: move)
         }
@@ -31,5 +31,18 @@ struct history: View {
         }
         hList.histList.remove(atOffsets: offsets)
     }
-    
+    func doRow(first: String, second: String) -> some View {
+        HStack {
+            Text(first)
+            Spacer()
+            Text(convertToDate(d:second))
+        }
+    }
+    func convertToDate(d:String) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+        let dateFormatter1 = DateFormatter()
+        dateFormatter1.dateFormat = "HH:mm dd.MM.yyyy"
+        return dateFormatter1.string(from: dateFormatter.date(from: d.substring(toIndex: 19))!)
+    }
 }

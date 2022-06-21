@@ -11,21 +11,27 @@ enum emailErorrs: Error {
 class emailSender: NSObject, MFMailComposeViewControllerDelegate {
     
     public static let shared = emailSender()
+    
+    override init() {
+    }
 
     func sendEmail(subject:String, body:String, to:String, xlsxFile: Data) throws {
         guard MFMailComposeViewController.canSendMail() else {
             throw emailErorrs.mailApp
         }
-        let picker = MFMailComposeViewController()
-        picker.mailComposeDelegate = self
-        picker.title = "Электронный дневник"
-        picker.modalPresentationStyle = .fullScreen
-        picker.navigationBar.tintColor = UIColor(red: 0.20, green: 0.47, blue: 0.96, alpha: 1)
-        picker.setSubject(subject)
-        picker.setMessageBody(body, isHTML: true)
-        picker.setToRecipients([to])
-        picker.addAttachmentData(xlsxFile, mimeType: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName: "ИсаковАО.xlsx")
-        UIApplication.shared.currentUIWindow()?.rootViewController?.present(picker, animated: true, completion: nil)
+        let sender = MFMailComposeViewController()
+        let date = Date()
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "ru_RU")
+        dateFormatter.setLocalizedDateFormatFromTemplate("dd.MM.yyyy")
+        sender.mailComposeDelegate = self
+        sender.modalPresentationStyle = .fullScreen
+        sender.navigationBar.tintColor = UIColor(red: 0.20, green: 0.47, blue: 0.96, alpha: 1)
+        sender.setSubject(subject)
+        sender.setMessageBody(body, isHTML: true)
+        sender.setToRecipients([to])
+        sender.addAttachmentData(xlsxFile, mimeType: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName: "Dial\(findPacientname()![0][0]+" "+findPacientname()![0][1]+" "+dateFormatter.string(from: date)).xlsx")
+        UIApplication.shared.currentUIWindow()?.rootViewController?.present(sender, animated: true, completion: nil)
     }
 
     func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
@@ -49,10 +55,47 @@ func findAdress() throws -> String {
             }
             doc_adress.append(i[doc]!)
         }
-        return doc_adress.first!
+        switch doc_adress.first! {
+        case "Анопова Анна Дмитриевна":
+            return "anchylove@mail.com"
+        case "Болотько Яна Алексеевна":
+            return "yanabolotko@gmail.com"
+        case "Дронова Александра Владимировна":
+            return "aleksandra-dronova@yandex.ru"
+        case "Попова Полина Викторовна":
+            return "pvpopova@yandex.ru"
+        case "Ткачук Александра Сергеевна":
+            return "aleksandra.tkachuk.1988@mail.com"
+        case "Васюкова Елена Андреева":
+            return "elenavasukova2@gmail.com"
+        default:
+            return " "
+        }
     }
     catch {
         print(error)
         return ""
+    }
+}
+
+func findPacientname() -> [[String]]? {
+    do {
+        let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
+        let path = documents + "/diacompanion.db"
+        let sourcePath = Bundle.main.path(forResource: "diacompanion", ofType: "db")!
+        _=copyDatabaseIfNeeded(sourcePath: sourcePath)
+        let db = try Connection(path)
+        let users_info = Table("usermac")
+        let fio = Expression<String?>("fio")
+        let id = Expression<Int?>("id")
+        var metaInfo: [[String]] = []
+        for i in try db.prepare(users_info.select(id, fio)){
+            metaInfo.append([String(i[id] ?? 1), i[fio] ?? "Новый пользователь"])
+        }
+        return metaInfo
+    }
+    catch {
+        print(error)
+        return nil
     }
 }
