@@ -6,7 +6,7 @@ struct history: View {
     var body: some View {
         List {
             ForEach(hList.histList, id: \.id){
-                doRow(first: $0.name, second: $0.date, third: $0.metaInfo)
+                doRow(first: $0.name, second: $0.date, third: $0.metaInfo, typeOfRow: $0.type)
             }.onDelete(perform: removeRows)
                 .onMove(perform: move)
         }
@@ -34,14 +34,17 @@ struct history: View {
         hList.histList.remove(atOffsets: offsets)
     }
     
-    func doRow(first: String, second: String, third: [[String]]) -> some View {
-        NavigationLink(destination: doInfoPage(info: third, date: convertToStrDate(d:second)), label: {
-            HStack {
-                Text(first)
-                Spacer()
-                Text(convertToStrDate(d:second))
-            }
-        })
+    @ViewBuilder
+    func doRow(first: String, second: String, third: [[String]], typeOfRow: Int) -> some View {
+        if typeOfRow == 0 {
+            NavigationLink(destination: doInfoPage(info: third, date: convertToStrDate(d:second), titleName: first), label: {
+                HStack {
+                    Text(first)
+                    Spacer()
+                    Text(convertToStrDate(d:second))
+                }
+            }).listRowBackground(Color(red: 240/255, green: 254/255, blue: 237/255))
+        }
     }
     
     func convertToStrDate(d:String) -> String {
@@ -52,7 +55,7 @@ struct history: View {
         return dateFormatter1.string(from: dateFormatter.date(from: d.substring(toIndex: 19))!)
     }
     
-    func doInfoPage(info: [[String]], date: String) -> some View {
+    func doInfoPage(info: [[String]], date: String, titleName: String) -> some View {
         List {
             Section {
                 ForEach(calcSum(info: info), id: \.self){
@@ -63,6 +66,8 @@ struct history: View {
             }
             Section {
                 Text(date)
+            } header: {
+                Text("Время приема")
             }
             Section {
                 ForEach(info, id: \.self){
@@ -72,7 +77,7 @@ struct history: View {
                 Text("Список блюд")
             }
         }
-        .navigationTitle("Прием пищи")
+        .navigationTitle(titleName)
     }
     
     func calcSum(info: [[String]]) -> [String] {
