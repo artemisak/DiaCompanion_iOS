@@ -48,18 +48,20 @@ class historyList: ObservableObject {
                 histList.append(hList(type: 0, name: spl[0], date: spl[1], bdID: [], metaInfo: []))
             }
             
-            for i in 0...histList.count-1 {
-                if histList[i].type == 0 {
-                    for i1 in try db.prepare(diary.select(id, gram, fName).filter(dateTime == histList[i].date && foodType == histList[i].name)){
-                        histList[i].bdID.append(i1[id])
-                        histList[i].metaInfo.append([i1[fName], i1[gram]])
-                    }
-                    for i2 in 0...histList[i].metaInfo.count-1 {
-                        for i3 in try db.prepare(foodInfo.select(prot,fat,carbo,kkal,gi).filter(name == histList[i].metaInfo[i2][0])){
-                            histList[i].metaInfo[i2].append(contentsOf: [String(i3[prot]), String(i3[fat]), String(i3[carbo]), String(i3[kkal]), String(i3[gi])])
+            if !histList.isEmpty {
+                for i in 0...histList.count-1 {
+                    if histList[i].type == 0 {
+                        for i1 in try db.prepare(diary.select(id, gram, fName).filter(dateTime == histList[i].date && foodType == histList[i].name)){
+                            histList[i].bdID.append(i1[id])
+                            histList[i].metaInfo.append([i1[fName], i1[gram]])
                         }
+                        for i2 in 0...histList[i].metaInfo.count-1 {
+                            for i3 in try db.prepare(foodInfo.select(prot,fat,carbo,kkal,gi).filter(name == histList[i].metaInfo[i2][0])){
+                                histList[i].metaInfo[i2].append(contentsOf: [String(i3[prot]), String(i3[fat]), String(i3[carbo]), String(i3[kkal]), String(i3[gi])])
+                            }
+                        }
+                        histList[i].name = histList[i].name + " (\(histList[i].bdID.count) сост.)"
                     }
-                    histList[i].name = histList[i].name + " (\(histList[i].bdID.count) сост.)"
                 }
             }
         }
@@ -68,16 +70,22 @@ class historyList: ObservableObject {
         }
     }
     
-    func updateDB(element: String) -> Void {
+    func updateDB(table: Int, elements: [Int]) -> Void {
         do {
+            var t = ""
+            if table == 0 {
+                t = "diary"
+            }
             let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
             let path = documents + "/diacompanion.db"
             let sourcePath = Bundle.main.path(forResource: "diacompanion", ofType: "db")!
             _=copyDatabaseIfNeeded(sourcePath: sourcePath)
             let db = try Connection(path)
-            let diary = Table("diary")
-            let d_name = Expression<String>("foodName")
-            try db.run(diary.filter(d_name == "\(element)").delete())
+            let sheet = Table(t)
+            let id = Expression<Int>("id")
+            for i in elements {
+                try db.run(sheet.filter(id == i).delete())
+            }
         }
         catch {
             print(error)

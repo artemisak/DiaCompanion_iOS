@@ -29,7 +29,7 @@ struct history: View {
     
     func removeRows(at offsets: IndexSet) {
         offsets.sorted(by: > ).forEach {i in
-            hList.updateDB(element: hList.histList[i].name)
+            hList.updateDB(table: hList.histList[i].type, elements: hList.histList[i].bdID)
         }
         hList.histList.remove(atOffsets: offsets)
     }
