@@ -137,4 +137,20 @@ func SaveToDB(FoodName: String, gram: String, selectedDate: Date, selectedType: 
     }
 }
 
-
+func deleteBeforeUpdate(idToDelete: [Int]) {
+    do {
+        let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
+        let path = documents + "/diacompanion.db"
+        let sourcePath = Bundle.main.path(forResource: "diacompanion", ofType: "db")!
+        _=copyDatabaseIfNeeded(sourcePath: sourcePath)
+        let db = try Connection(path)
+        let diary = Table("diary")
+        let id = Expression<Int>("id")
+        for i in 0...idToDelete.count-1 {
+            try db.run(diary.filter(id == idToDelete[i]).delete())
+        }
+    }
+    catch {
+        print(error)
+    }
+}

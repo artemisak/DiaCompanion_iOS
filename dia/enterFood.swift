@@ -23,19 +23,21 @@ struct enterFood: View {
     @State private var isEditing: Bool = false
     @State private var sugarlvl: String = "УСК не определен"
     @State private var isHidden: Bool = true
-    @State private var date = Date()
+    @State var date: Date
     @State private var foodn: String = ""
     @State private var i: Int = 0
     @State private var isSheetShown: Bool = false
-    @State private var foodItems: [String] = []
-    @State private var ftpreviewIndex = ftype.zavtrak
+    @State var foodItems: [String]
+    @State var ftpreviewIndex: ftype
     @State private var lvlColor: Color?
     @State private var scolor: Color?
     @State private var recColor = Color.white
     @State private var fontColor = Color.black
     @State private var alertMessage: Bool = false
+    @State var idForDelete: [Int]
     @FocusState private var focuseField: Bool
     @Binding var txtTheme: DynamicTypeSize
+    @Binding var hasChanged: Bool
     var body: some View {
         List {
             Section(header: Text("Общая информация").font(.system(size: 15.5))){
@@ -255,6 +257,10 @@ struct enterFood: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing, content: {
                 Button(action: {
+                    if !idForDelete.isEmpty {
+                        deleteBeforeUpdate(idToDelete: idForDelete)
+                        hasChanged = true
+                    }
                     for i in foodItems {
                         let arg = "\(i)".components(separatedBy: "////")
                         SaveToDB(FoodName: arg[0], gram: arg[1], selectedDate: date, selectedType: ftpreviewIndex.rawValue)

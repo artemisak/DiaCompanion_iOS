@@ -2,6 +2,7 @@ import SwiftUI
 
 struct mainPage: View {
     @State private var showModal: Bool = false
+    @State private var hasChanged: Bool = false
     @Binding var txtTheme: DynamicTypeSize
     var columns: [GridItem] =
     Array(repeating: .init(.flexible()), count: 2)
@@ -27,7 +28,7 @@ struct mainPage: View {
                                 .foregroundColor(Color.black)
                         }
                     }.buttonStyle(ChangeColorButton())
-                    NavigationLink(destination: enterFood(txtTheme: $txtTheme)) {
+                    NavigationLink(destination: enterFood(date: Date(), foodItems: [], ftpreviewIndex: ftype.zavtrak, idForDelete: [], txtTheme: $txtTheme, hasChanged: $hasChanged)) {
                         VStack {
                             Image("menu_food")
                                 .scaledToFit()
@@ -84,5 +85,8 @@ struct mainPage: View {
             }
         }
         .ignoresSafeArea(.keyboard)
+        .onAppear(perform: {
+            hasChanged = false
+        })
     }
 }

@@ -69,7 +69,7 @@ class historyList: ObservableObject {
             print(error)
         }
     }
-    
+        
     func updateDB(table: Int, elements: [Int]) -> Void {
         do {
             var t = ""
