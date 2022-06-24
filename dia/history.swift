@@ -7,7 +7,6 @@ struct history: View {
     @State private var date : Date = Date()
     @State private var foodItems: [String] = []
     @State private var idFordelete: [Int] = []
-    @State private var rowToUpdate: [hList] = []
     @State private var ftpreviewIndex: ftype = ftype.zavtrak
     @State private var hasChanged: Bool = false
     var body: some View {
@@ -15,7 +14,7 @@ struct history: View {
         List {
             ForEach(hList.histList, id: \.id){ i in
                 doRow(first: i.name, second: i.date, third: i.metaInfo, typeOfRow: i.type)
-                    .swipeActions(edge: .trailing, allowsFullSwipe: false, content: {
+                    .swipeActions(edge: .trailing, allowsFullSwipe: true, content: {
                         Button {
                             removeRows(at: IndexSet(integer: hList.histList.firstIndex(of: i)!))
                         } label: {
@@ -23,7 +22,7 @@ struct history: View {
                         }
                         .tint(.red)
                     })
-                    .swipeActions(edge: .trailing, allowsFullSwipe: false, content: {
+                    .swipeActions(edge: .trailing, allowsFullSwipe: true, content: {
                         Button {
                             if i.type == 0 {
                                 date = convertToDate(d: i.date)
@@ -49,7 +48,6 @@ struct history: View {
                                 }
                                 redirectToEnterFood = true
                             }
-                            rowToUpdate.append(i)
                         } label: {
                             Image(systemName: "pencil")
                         }
@@ -64,10 +62,9 @@ struct history: View {
                 await hList.FillHistoryList()
             }
             if hasChanged {
-                hasChanged = false
-                removeRows(at: IndexSet(integer: hList.histList.firstIndex(of: rowToUpdate[0])!))
-                rowToUpdate.removeAll()
+                hList.histList.removeAll()
                 await hList.FillHistoryList()
+                hasChanged = false
             }
         }
         .navigationTitle("История записей")

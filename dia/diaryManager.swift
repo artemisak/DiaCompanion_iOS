@@ -130,7 +130,7 @@ func SaveToDB(FoodName: String, gram: String, selectedDate: Date, selectedType: 
         let realDateTime = dateFormatter.string(from: Date.now)
         let selectDate = dateFormatter1.string(from: selectedDate)
         let dtime = dateFormatter2.string(from: selectedDate)
-        try db.run(diary.insert(foodName <- FoodName, g <- gram, date <- selectDate, time <- dtime,timeStamp <- realDateTime, type <- selectedType, picker <- selectedDate))
+        try db.run(diary.insert(foodName <- FoodName, g <- gram, date <- selectDate, time <- dtime,timeStamp <- realDateTime, type <- selectedType, picker <- selectedDate.addingTimeInterval(3*60*60)))
     }
     catch {
         print(error)
