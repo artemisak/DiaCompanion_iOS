@@ -124,7 +124,8 @@ struct addFoodButton: View {
             DispatchQueue.main.asyncAfter(deadline: .now(), execute: {addScreen = true})
         }){
             HStack{
-                Text("\(dish.name)")
+                Text("\(dish.name)").frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+                HStack{
                 VStack{
                     Text("Б")
                         .foregroundColor(Color.gray)
@@ -149,6 +150,7 @@ struct addFoodButton: View {
                         .font(.system(size: 13))
                     Text("\(dish.gi)").foregroundColor(.red)
                 }
+                }.frame(minWidth: 0, maxWidth: .infinity)
             }
         }
         .buttonStyle(TransparentButtonAndLink())

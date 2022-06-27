@@ -4,13 +4,18 @@ struct history: View {
     @Binding var txtTheme: DynamicTypeSize
     @StateObject private var hList = historyList()
     @State private var redirectToEnterFood: Bool = false
+    @State private var redirectToEnterAct: Bool = false
     @State private var date : Date = Date()
     @State private var foodItems: [String] = []
     @State private var idFordelete: [Int] = []
     @State private var ftpreviewIndex: ftype = ftype.zavtrak
+    @State private var actTime: String = ""
+    @State private var actDate: Date = Date()
+    @State private var actPreviewIndex: act = act.zar
     @State private var hasChanged: Bool = false
     var body: some View {
         NavigationLink(isActive: $redirectToEnterFood, destination: {enterFood(date: date, foodItems: foodItems, ftpreviewIndex: ftpreviewIndex, idForDelete: idFordelete, txtTheme: $txtTheme, hasChanged: $hasChanged)}, label: {EmptyView()}).isHidden(true)
+        NavigationLink(isActive: $redirectToEnterAct, destination: {enterAct(t: actTime, date: actDate, actpreviewIndex: actPreviewIndex, idForDelete: idFordelete, txtTheme: $txtTheme, hasChanged: $hasChanged)}, label: {EmptyView()}).isHidden(true)
         List {
             ForEach(hList.histList, id: \.id){ i in
                 doRow(first: i.name, second: i.date, third: i.metaInfo, typeOfRow: i.type)
@@ -25,14 +30,14 @@ struct history: View {
                     .swipeActions(edge: .trailing, allowsFullSwipe: true, content: {
                         Button {
                             if i.type == 0 {
+                                idFordelete = []
+                                for j in i.bdID {
+                                    idFordelete.append(j)
+                                }
                                 date = convertToDate(d: i.date)
                                 foodItems = []
                                 for j in i.metaInfo {
                                     foodItems.append(j[0]+"////"+j[1])
-                                }
-                                idFordelete = []
-                                for j in i.bdID {
-                                    idFordelete.append(j)
                                 }
                                 switch i.name.split(separator: " ")[0] {
                                 case "Завтрак":
@@ -47,6 +52,31 @@ struct history: View {
                                     ftpreviewIndex = .zavtrak
                                 }
                                 redirectToEnterFood = true
+                            }
+                            else if i.type == 1 {
+                                idFordelete = []
+                                for j in i.bdID {
+                                    idFordelete.append(j)
+                                }
+                                actTime = i.metaInfo[0][1]
+                                actDate = convertToDate(d: i.date)
+                                switch i.metaInfo[0][0]{
+                                case "Зарядка":
+                                    actPreviewIndex = act.zar
+                                case "Сон":
+                                    actPreviewIndex = act.sleep
+                                case "Ходьба":
+                                    actPreviewIndex = act.hod
+                                case "Спорт":
+                                    actPreviewIndex = act.sport
+                                case "Уборка в квартире":
+                                    actPreviewIndex = act.uborka
+                                case "Работа в огороде":
+                                    actPreviewIndex = act.rabota
+                                default:
+                                    actPreviewIndex = act.zar
+                                }
+                                redirectToEnterAct = true
                             }
                         } label: {
                             Image(systemName: "pencil")
@@ -73,18 +103,27 @@ struct history: View {
     @ViewBuilder
     func doRow(first: String, second: String, third: [[String]], typeOfRow: Int) -> some View {
         if typeOfRow == 0 {
-            NavigationLink(destination: doInfoPage(info: third, date: convertToStrDate(d:second), titleName: first), label: {
+            NavigationLink(destination: doFoodInfoPage(info: third, date: second, titleName: first), label: {
                 HStack {
                     Text(first)
                     Spacer()
-                    Text(convertToStrDate(d:second))
+                    Text(second)
                 }
             }).listRowBackground(Color(red: 240/255, green: 254/255, blue: 237/255))
+        }
+        else if typeOfRow == 1 {
+            NavigationLink(destination: doActInfoPage(info: third, date: second), label: {
+                HStack {
+                    Text(first)
+                    Spacer()
+                    Text(second)
+                }
+            }).listRowBackground(Color(red: 249/255, green: 252/255, blue: 209/255))
         }
     }
     
     @ViewBuilder
-    func doInfoPage(info: [[String]], date: String, titleName: String) -> some View {
+    func doFoodInfoPage(info: [[String]], date: String, titleName: String) -> some View {
         List {
             Section {
                 ForEach(calcSum(info: info), id: \.self){
@@ -109,20 +148,32 @@ struct history: View {
         .navigationTitle(titleName)
     }
     
-    func convertToStrDate(d:String) -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
-        let dateFormatter1 = DateFormatter()
-        dateFormatter1.dateFormat = "HH:mm dd.MM.yyyy"
-        return dateFormatter1.string(from: dateFormatter.date(from: d.substring(toIndex: 19))!)
+    @ViewBuilder
+    func doActInfoPage(info: [[String]], date: String) -> some View {
+        List {
+            Section {
+                Text(info[0][1])
+            } header: {
+                Text("Длительность, мин.")
+            }
+            Section {
+                Text(date)
+            } header: {
+                Text("Время начала")
+            }
+            Section {
+                Text(info[0][0])
+            } header: {
+                Text("Тип нагрузки")
+            }
+        }
+        .navigationTitle("Физическая активность")
     }
     
     func convertToDate(d: String) -> Date {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
-        let dateFormatter1 = DateFormatter()
-        dateFormatter1.dateFormat = "HH:mm dd.MM.yyyy"
-        return dateFormatter.date(from: d.substring(toIndex: 19))!
+        dateFormatter.dateFormat = "HH:mm dd.MM.yyyy"
+        return dateFormatter.date(from: d)!
     }
     
     func calcSum(info: [[String]]) -> [String] {
@@ -146,9 +197,8 @@ struct history: View {
     
     func removeRows(at offsets: IndexSet) {
         offsets.sorted(by: > ).forEach {i in
-            hList.updateDB(table: hList.histList[i].type, elements: hList.histList[i].bdID)
+            deleteFromBD(idToDelete: hList.histList[i].bdID, table: hList.histList[i].type)
         }
         hList.histList.remove(atOffsets: offsets)
     }
-    
 }

@@ -64,31 +64,50 @@ class historyList: ObservableObject {
                     }
                 }
             }
+            
+            // MARK: Заолняем физическую активность
+            let activity = Table("act")
+            let actId = Expression<Int>("id")
+            let rodz = Expression<String>("rod")
+            let min = Expression<Int>("min")
+            let timeAct = Expression<String>("time")
+            
+            for i in try db.prepare(activity.select(actId, rodz, min, timeAct)) {
+                histList.append(hList(type: 1, name: "\(i[rodz]), \(i[min]) мин.", date:  i[timeAct], bdID: [i[actId]], metaInfo: [[i[rodz],String(i[min])]]))
+            }
+            
+            // MARK: Сортируем от большего к меньшему по дате
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "HH:mm dd.MM.yyyy"
+            histList.sort(by: {dateFormatter.date(from: $1.date)! < dateFormatter.date(from: $0.date)!})
         }
         catch {
             print(error)
         }
     }
-        
-    func updateDB(table: Int, elements: [Int]) -> Void {
-        do {
-            var t = ""
-            if table == 0 {
-                t = "diary"
-            }
-            let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
-            let path = documents + "/diacompanion.db"
-            let sourcePath = Bundle.main.path(forResource: "diacompanion", ofType: "db")!
-            _=copyDatabaseIfNeeded(sourcePath: sourcePath)
-            let db = try Connection(path)
-            let sheet = Table(t)
-            let id = Expression<Int>("id")
-            for i in elements {
-                try db.run(sheet.filter(id == i).delete())
-            }
+}
+
+func deleteFromBD(idToDelete: [Int], table: Int) {
+    do {
+        var t = ""
+        if table == 0 {
+            t = "diary"
         }
-        catch {
-            print(error)
+        else if table == 1 {
+            t = "act"
         }
+        let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
+        let path = documents + "/diacompanion.db"
+        let sourcePath = Bundle.main.path(forResource: "diacompanion", ofType: "db")!
+        _=copyDatabaseIfNeeded(sourcePath: sourcePath)
+        let db = try Connection(path)
+        let diary = Table(t)
+        let id = Expression<Int>("id")
+        for i in 0...idToDelete.count-1 {
+            try db.run(diary.filter(id == idToDelete[i]).delete())
+        }
+    }
+    catch {
+        print(error)
     }
 }

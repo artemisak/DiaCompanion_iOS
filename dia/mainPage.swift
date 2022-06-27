@@ -37,7 +37,7 @@ struct mainPage: View {
                                 .multilineTextAlignment(.center)
                         }
                     }.buttonStyle(ChangeColorButton())
-                    NavigationLink(destination: enterAct(txtTheme: $txtTheme)) {
+                    NavigationLink(destination: enterAct(t: "", date: Date(), actpreviewIndex: act.zar, idForDelete: [], txtTheme: $txtTheme, hasChanged: $hasChanged)) {
                         VStack {
                             Image("menu_sleep")
                                 .scaledToFit()
@@ -45,7 +45,6 @@ struct mainPage: View {
                                 .foregroundColor(Color.black)
                                 .multilineTextAlignment(.center)
                         }
-                        
                     }.buttonStyle(ChangeColorButton())
                     NavigationLink(destination: history(txtTheme: $txtTheme)) {
                         VStack {

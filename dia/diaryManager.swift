@@ -117,7 +117,7 @@ func SaveToDB(FoodName: String, gram: String, selectedDate: Date, selectedType: 
         let time = Expression<String>("time")
         let timeStamp = Expression<String>("timeStamp")
         let type = Expression<String>("foodType")
-        let picker = Expression<Date>("dateTime")
+        let picker = Expression<String>("dateTime")
         let dateFormatter = DateFormatter()
         let dateFormatter1 = DateFormatter()
         let dateFormatter2 = DateFormatter()
@@ -130,25 +130,7 @@ func SaveToDB(FoodName: String, gram: String, selectedDate: Date, selectedType: 
         let realDateTime = dateFormatter.string(from: Date.now)
         let selectDate = dateFormatter1.string(from: selectedDate)
         let dtime = dateFormatter2.string(from: selectedDate)
-        try db.run(diary.insert(foodName <- FoodName, g <- gram, date <- selectDate, time <- dtime,timeStamp <- realDateTime, type <- selectedType, picker <- selectedDate.addingTimeInterval(3*60*60)))
-    }
-    catch {
-        print(error)
-    }
-}
-
-func deleteBeforeUpdate(idToDelete: [Int]) {
-    do {
-        let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
-        let path = documents + "/diacompanion.db"
-        let sourcePath = Bundle.main.path(forResource: "diacompanion", ofType: "db")!
-        _=copyDatabaseIfNeeded(sourcePath: sourcePath)
-        let db = try Connection(path)
-        let diary = Table("diary")
-        let id = Expression<Int>("id")
-        for i in 0...idToDelete.count-1 {
-            try db.run(diary.filter(id == idToDelete[i]).delete())
-        }
+        try db.run(diary.insert(foodName <- FoodName, g <- gram, date <- selectDate, time <- dtime,timeStamp <- realDateTime, type <- selectedType, picker <- dtime+" "+selectDate))
     }
     catch {
         print(error)

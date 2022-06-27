@@ -12,12 +12,14 @@ enum act: String, CaseIterable, Identifiable {
 
 struct enterAct: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    @State private var t: String = ""
-    @State private var date = Date()
+    @State var t: String
+    @State var date: Date
+    @State var actpreviewIndex: act
+    @State var idForDelete: [Int]
     @State private var isCorrect: Bool = false
-    @State private var actpreviewIndex = act.zar
     @FocusState private var focusedField: Bool
     @Binding var txtTheme: DynamicTypeSize
+    @Binding var hasChanged: Bool
     var body: some View {
         List {
             Section(header: Text("Общая информация").font(.system(size: 15.5))){
@@ -52,10 +54,13 @@ struct enterAct: View {
             ToolbarItemGroup(){
                 Button(action: {
                     do {
+                        if !idForDelete.isEmpty {
+                            deleteFromBD(idToDelete: idForDelete, table: 1)
+                            hasChanged = true
+                        }
                         let intT = try convertToInt(txt: t)
                         let dateFormatter = DateFormatter()
-                        dateFormatter.locale = Locale(identifier: "ru_RU")
-                        dateFormatter.setLocalizedDateFormatFromTemplate("dd.MM.yyyy HH:mm")
+                        dateFormatter.dateFormat = "HH:mm dd.MM.yyyy"
                         addAct(min: intT, rod: actpreviewIndex.rawValue, time: dateFormatter.string(from: date))
                         presentationMode.wrappedValue.dismiss()
                     } catch {

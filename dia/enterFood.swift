@@ -258,7 +258,7 @@ struct enterFood: View {
             ToolbarItem(placement: .navigationBarTrailing, content: {
                 Button(action: {
                     if !idForDelete.isEmpty {
-                        deleteBeforeUpdate(idToDelete: idForDelete)
+                        deleteFromBD(idToDelete: idForDelete, table: 0)
                         hasChanged = true
                     }
                     for i in foodItems {
