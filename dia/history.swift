@@ -5,6 +5,7 @@ struct history: View {
     @StateObject private var hList = historyList()
     @State private var redirectToEnterFood: Bool = false
     @State private var redirectToEnterAct: Bool = false
+    @State private var redirectToEnterInject: Bool = false
     @State private var date : Date = Date()
     @State private var foodItems: [String] = []
     @State private var idFordelete: [Int] = []
@@ -12,10 +13,17 @@ struct history: View {
     @State private var actTime: String = ""
     @State private var actDate: Date = Date()
     @State private var actPreviewIndex: act = act.zar
+    
+    @State var tInject : String = ""
+    @State var dateInject : Date = Date()
+    @State var previewIndexInject : injectType = .ultra
+    @State var previewIndexInject1 : injects = .natoshak
+    
     @State private var hasChanged: Bool = false
     var body: some View {
         NavigationLink(isActive: $redirectToEnterFood, destination: {enterFood(date: date, foodItems: foodItems, ftpreviewIndex: ftpreviewIndex, idForDelete: idFordelete, txtTheme: $txtTheme, hasChanged: $hasChanged)}, label: {EmptyView()}).isHidden(true)
         NavigationLink(isActive: $redirectToEnterAct, destination: {enterAct(t: actTime, date: actDate, actpreviewIndex: actPreviewIndex, idForDelete: idFordelete, txtTheme: $txtTheme, hasChanged: $hasChanged)}, label: {EmptyView()}).isHidden(true)
+        NavigationLink(isActive: $redirectToEnterInject, destination: {inject(t: tInject, date: dateInject, previewIndex: previewIndexInject, previewIndex1: previewIndexInject1, idForDelete: idFordelete, txtTheme: $txtTheme, hasChanged: $hasChanged)}, label: {EmptyView()}).isHidden(true)
         List {
             ForEach(hList.histList, id: \.id){ i in
                 doRow(first: i.name, second: i.date, third: i.metaInfo, typeOfRow: i.type)
@@ -78,6 +86,39 @@ struct history: View {
                                 }
                                 redirectToEnterAct = true
                             }
+                            else if i.type == 2 {
+                                idFordelete = []
+                                for j in i.bdID {
+                                    idFordelete.append(j)
+                                }
+                                tInject = i.metaInfo[0][0]
+                                dateInject = convertToDate(d: i.date)
+                                switch i.metaInfo[0][1] {
+                                case "Натощак":
+                                    previewIndexInject1 = injects.natoshak
+                                case "Завтрак":
+                                    previewIndexInject1 = injects.zavtrak
+                                case "Обед":
+                                    previewIndexInject1 = injects.obed
+                                case "Ужин":
+                                    previewIndexInject1 = injects.uzin
+                                case "Дополнительно":
+                                    previewIndexInject1 = injects.dop
+                                default:
+                                    previewIndexInject1 = injects.natoshak
+                                }
+                                switch i.metaInfo[0][2] {
+                                case "Ультракороткий":
+                                    previewIndexInject = injectType.ultra
+                                case "Короткий":
+                                    previewIndexInject = injectType.kor
+                                case "Пролонгированный":
+                                    previewIndexInject = injectType.prolong
+                                default:
+                                    previewIndexInject = injectType.ultra
+                                }
+                                redirectToEnterInject = true
+                            }
                         } label: {
                             Image(systemName: "pencil")
                         }
@@ -119,6 +160,15 @@ struct history: View {
                     Text(second)
                 }
             }).listRowBackground(Color(red: 249/255, green: 252/255, blue: 209/255))
+        }
+        else if typeOfRow == 2 {
+            NavigationLink(destination: doInjectInfoPage(info: third, date: second), label: {
+                HStack {
+                    Text(first)
+                    Spacer()
+                    Text(second)
+                }
+            }).listRowBackground(Color(red: 238/255, green: 249/255, blue: 253/255))
         }
     }
     
@@ -170,6 +220,39 @@ struct history: View {
         .navigationTitle("Физическая активность")
     }
     
+    @ViewBuilder
+    func doInjectInfoPage(info: [[String]], date: String) -> some View {
+        List {
+            Section {
+                Text(info[0][0])
+            } header: {
+                Text("Кол-во ед.")
+            }
+            Section {
+                Text(info[0][1])
+            } header: {
+                Text("Прием пищи")
+            }
+            Section {
+                Text(info[0][2])
+            } header: {
+                Text("Тип действия")
+            }
+            Section {
+                Text(date)
+            } header: {
+                Text("Время измерения")
+            }
+        }.navigationTitle("Введение инсулина")
+    }
+    
+    func removeRows(at offsets: IndexSet) {
+        offsets.sorted(by: > ).forEach {i in
+            deleteFromBD(idToDelete: hList.histList[i].bdID, table: hList.histList[i].type)
+        }
+        hList.histList.remove(atOffsets: offsets)
+    }
+    
     func convertToDate(d: String) -> Date {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "HH:mm dd.MM.yyyy"
@@ -195,10 +278,4 @@ struct history: View {
         return calc
     }
     
-    func removeRows(at offsets: IndexSet) {
-        offsets.sorted(by: > ).forEach {i in
-            deleteFromBD(idToDelete: hList.histList[i].bdID, table: hList.histList[i].type)
-        }
-        hList.histList.remove(atOffsets: offsets)
-    }
 }

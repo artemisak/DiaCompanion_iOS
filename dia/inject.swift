@@ -18,15 +18,14 @@ enum injectType: String, CaseIterable, Identifiable {
 
 struct inject: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    @State private var t: String = ""
-    @State private var date = Date()
-    @State private var hours: Int = 0
-    @State private var minutes: Int = 0
-    @State private var isAct: Bool = false
+    @State var t : String
+    @State var date : Date
+    @State var previewIndex : injectType
+    @State var previewIndex1 : injects
+    @State var idForDelete: [Int]
     @State private var isCorrect: Bool = false
-    @State private var previewIndex1 = injects.natoshak
-    @State private var previewIndex = injectType.ultra
     @Binding var txtTheme: DynamicTypeSize
+    @Binding var hasChanged: Bool
     var body: some View {
         List {
             Section(header: Text("Общая информация").font(.system(size: 15.5))){
@@ -69,9 +68,12 @@ struct inject: View {
             ToolbarItemGroup(){
                 Button(action: {
                     do {
+                        if !idForDelete.isEmpty {
+                            deleteFromBD(idToDelete: idForDelete, table: 2)
+                            hasChanged = true
+                        }
                         let dateFormatter = DateFormatter()
-                        dateFormatter.locale = Locale(identifier: "ru_RU")
-                        dateFormatter.setLocalizedDateFormatFromTemplate("dd.MM.yyyy HH:mm")
+                        dateFormatter.dateFormat = "HH:mm dd.MM.yyyy"
                         addInject(ed: try convert(txt: t), type: previewIndex.rawValue, priem: previewIndex1.rawValue, time: dateFormatter.string(from: date))
                         presentationMode.wrappedValue.dismiss()
                     } catch {

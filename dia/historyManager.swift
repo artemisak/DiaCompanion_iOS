@@ -76,6 +76,18 @@ class historyList: ObservableObject {
                 histList.append(hList(type: 1, name: "\(i[rodz]), \(i[min]) мин.", date:  i[timeAct], bdID: [i[actId]], metaInfo: [[i[rodz],String(i[min])]]))
             }
             
+            // MARK: Заполняем прием инсулина
+            let insulinInject = Table("inject")
+            let injectId = Expression<Int>("id")
+            let ed = Expression<Double>("ed")
+            let type = Expression<String>("type")
+            let priem = Expression<String>("priem")
+            let timeInject = Expression<String>("time")
+            
+            for i in try db.prepare(insulinInject.select(injectId, ed, type, priem, timeInject)){
+                histList.append(hList(type: 2, name: "\(i[ed]) Ед. (\(i[priem]))", date: i[timeInject], bdID: [i[id]], metaInfo: [[String(i[ed]), i[priem], i[type]]]))
+            }
+            
             // MARK: Сортируем от большего к меньшему по дате
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "HH:mm dd.MM.yyyy"
@@ -95,6 +107,9 @@ func deleteFromBD(idToDelete: [Int], table: Int) {
         }
         else if table == 1 {
             t = "act"
+        }
+        else if table == 2 {
+            t = "inject"
         }
         let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
         let path = documents + "/diacompanion.db"

@@ -2,7 +2,6 @@ import SwiftUI
 
 struct mainPage: View {
     @State private var showModal: Bool = false
-    @State private var hasChanged: Bool = false
     @Binding var txtTheme: DynamicTypeSize
     var columns: [GridItem] =
     Array(repeating: .init(.flexible()), count: 2)
@@ -19,7 +18,7 @@ struct mainPage: View {
                                 .foregroundColor(Color.black)
                         }
                     }.buttonStyle(ChangeColorButton())
-                    NavigationLink(destination: inject(txtTheme: $txtTheme)) {
+                    NavigationLink(destination: inject(t: "", date: Date(), previewIndex: injectType.ultra, previewIndex1: injects.natoshak, idForDelete: [], txtTheme: $txtTheme, hasChanged: .constant(false))) {
                         VStack {
                             Image("menu_syringe")
                                 .scaledToFit()
@@ -28,7 +27,7 @@ struct mainPage: View {
                                 .foregroundColor(Color.black)
                         }
                     }.buttonStyle(ChangeColorButton())
-                    NavigationLink(destination: enterFood(date: Date(), foodItems: [], ftpreviewIndex: ftype.zavtrak, idForDelete: [], txtTheme: $txtTheme, hasChanged: $hasChanged)) {
+                    NavigationLink(destination: enterFood(date: Date(), foodItems: [], ftpreviewIndex: ftype.zavtrak, idForDelete: [], txtTheme: $txtTheme, hasChanged: .constant(false))) {
                         VStack {
                             Image("menu_food")
                                 .scaledToFit()
@@ -37,7 +36,7 @@ struct mainPage: View {
                                 .multilineTextAlignment(.center)
                         }
                     }.buttonStyle(ChangeColorButton())
-                    NavigationLink(destination: enterAct(t: "", date: Date(), actpreviewIndex: act.zar, idForDelete: [], txtTheme: $txtTheme, hasChanged: $hasChanged)) {
+                    NavigationLink(destination: enterAct(t: "", date: Date(), actpreviewIndex: act.zar, idForDelete: [], txtTheme: $txtTheme, hasChanged: .constant(false))) {
                         VStack {
                             Image("menu_sleep")
                                 .scaledToFit()
@@ -84,8 +83,5 @@ struct mainPage: View {
             }
         }
         .ignoresSafeArea(.keyboard)
-        .onAppear(perform: {
-            hasChanged = false
-        })
     }
 }
