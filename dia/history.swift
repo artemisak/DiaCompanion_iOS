@@ -7,6 +7,8 @@ struct history: View {
     @State private var redirectToEnterAct: Bool = false
     @State private var redirectToEnterInject: Bool = false
     @State private var redirectToEnterSugar: Bool = false
+    @State private var redirectToEnterKetonur: Bool = false
+    @State private var redirectToEnterMassa: Bool = false
     @State private var date : Date = Date()
     @State private var foodItems: [String] = []
     @State private var idFordelete: [Int] = []
@@ -14,23 +16,27 @@ struct history: View {
     @State private var actTime: String = ""
     @State private var actDate: Date = Date()
     @State private var actPreviewIndex: act = act.zar
-    @State var tInject : String = ""
-    @State var dateInject : Date = Date()
-    @State var previewIndexInject : injectType = .ultra
-    @State var previewIndexInject1 : injects = .natoshak
-    
+    @State private var tInject : String = ""
+    @State private var dateInject : Date = Date()
+    @State private var previewIndexInject : injectType = .ultra
+    @State private var previewIndexInject1 : injects = .natoshak
     @State private var tSugar : String = ""
     @State private var dateSugar : Date = Date()
     @State private var isActSugar : Bool = false
     @State private var bool1Sugar : Int = 0
     @State private var spreviewIndexSugar : selectedvar = selectedvar.natoshak
-    
     @State private var hasChanged: Bool = false
+    @State private var tKetonur: String = ""
+    @State private var dateKetonur: Date = Date()
+    @State private var tMassa: String = ""
+    @State private var dateMassa: Date = Date()
     var body: some View {
         NavigationLink(isActive: $redirectToEnterFood, destination: {enterFood(date: date, foodItems: foodItems, ftpreviewIndex: ftpreviewIndex, idForDelete: idFordelete, txtTheme: $txtTheme, hasChanged: $hasChanged)}, label: {EmptyView()}).isHidden(true)
         NavigationLink(isActive: $redirectToEnterAct, destination: {enterAct(t: actTime, date: actDate, actpreviewIndex: actPreviewIndex, idForDelete: idFordelete, txtTheme: $txtTheme, hasChanged: $hasChanged)}, label: {EmptyView()}).isHidden(true)
         NavigationLink(isActive: $redirectToEnterInject, destination: {inject(t: tInject, date: dateInject, previewIndex: previewIndexInject, previewIndex1: previewIndexInject1, idForDelete: idFordelete, txtTheme: $txtTheme, hasChanged: $hasChanged)}, label: {EmptyView()}).isHidden(true)
         NavigationLink(isActive: $redirectToEnterSugar, destination: {sugarChange(t: tSugar, date: dateSugar, isAct: isActSugar, bool1: bool1Sugar, spreviewIndex: spreviewIndexSugar, idForDelete: idFordelete, txtTheme: $txtTheme, hasChanged: $hasChanged)}, label: {EmptyView()}).isHidden(true)
+        NavigationLink(isActive: $redirectToEnterKetonur, destination: {ketonur(t: tKetonur, date: dateKetonur, idForDelete: idFordelete, hasChanged: $hasChanged, txtTheme: $txtTheme)}, label: {EmptyView()}).isHidden(true)
+        NavigationLink(isActive: $redirectToEnterMassa, destination: {massa(t: tMassa, date: dateMassa, idForDelete: idFordelete, hasChanged: $hasChanged, txtTheme: $txtTheme)}, label: {EmptyView()}).isHidden(true)
         List {
             ForEach(hList.histList, id: \.id){ i in
                 doRow(first: i.name, second: i.date, third: i.metaInfo, typeOfRow: i.type)
@@ -152,6 +158,24 @@ struct history: View {
                                 bool1Sugar = try! convertToInt(txt: i.metaInfo[0][2])
                                 redirectToEnterSugar = true
                             }
+                            else if i.type == 4 {
+                                idFordelete = []
+                                for j in i.bdID {
+                                    idFordelete.append(j)
+                                }
+                                tKetonur = i.metaInfo[0][0]
+                                dateKetonur = convertToDate(d: i.date)
+                                redirectToEnterKetonur = true
+                            }
+                            else if i.type == 5 {
+                                idFordelete = []
+                                for j in i.bdID {
+                                    idFordelete.append(j)
+                                }
+                                tKetonur = i.metaInfo[0][0]
+                                dateKetonur = convertToDate(d: i.date)
+                                redirectToEnterMassa = true
+                            }
                         } label: {
                             Image(systemName: "pencil")
                         }
@@ -211,6 +235,24 @@ struct history: View {
                     Text(second)
                 }
             }).listRowBackground(Color(red: 254/255, green: 242/255, blue: 246/255))
+        }
+        else if typeOfRow == 4 {
+            NavigationLink(destination: doKetonurInfoPage(info: third, date: second), label: {
+                HStack {
+                    Text(first)
+                    Spacer()
+                    Text(second)
+                }
+            })
+        }
+        else if typeOfRow == 5 {
+            NavigationLink(destination: doMassaInfoPage(info: third, date: second), label: {
+                HStack {
+                    Text(first)
+                    Spacer()
+                    Text(second)
+                }
+            })
         }
     }
     
@@ -307,6 +349,40 @@ struct history: View {
                 Text("Период")
             }
         }.navigationTitle("Измерение сахара")
+    }
+    
+    @ViewBuilder
+    func doKetonurInfoPage(info: [[String]], date: String) -> some View {
+        List {
+            Section {
+                Text(info[0][0])
+            } header: {
+                Text("Общая информация")
+            }
+            Section {
+                Text(date)
+            } header: {
+                Text("Время измерения")
+            }
+        }
+        .navigationTitle("Уровень кетонов в моче")
+    }
+    
+    @ViewBuilder
+    func doMassaInfoPage(info: [[String]], date: String) -> some View {
+        List {
+            Section {
+                Text(info[0][0])
+            } header: {
+                Text("Общая информация")
+            }
+            Section {
+                Text(date)
+            } header: {
+                Text("Время измерения")
+            }
+        }
+        .navigationTitle("Измерение массы тела")
     }
     
     func removeRows(at offsets: IndexSet) {

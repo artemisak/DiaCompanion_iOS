@@ -41,7 +41,6 @@
 		AC71760827209863000376FD /* diacompanion.db in Resources */ = {isa = PBXBuildFile; fileRef = AC71760727209863000376FD /* diacompanion.db */; };
 		AC7A53F726DBF77B00FE65E7 /* enterAct.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC7A53F626DBF77B00FE65E7 /* enterAct.swift */; };
 		ACC3798626ECFA7E00E0729E /* massa.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACC3798526ECFA7E00E0729E /* massa.swift */; };
-		ACC3798826EE0E1400E0729E /* pacient.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACC3798726EE0E1400E0729E /* pacient.swift */; };
 		ACCBA996272B1DA300D785F6 /* RKViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACCBA995272B1DA300D785F6 /* RKViewController.swift */; };
 		ACCC5C2E2702190B0057CA7C /* pacientManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACCC5C2D2702190B0057CA7C /* pacientManager.swift */; };
 		ACD86E8126DE820B0027B8ED /* sugarChange.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD86E8026DE820B0027B8ED /* sugarChange.swift */; };
@@ -100,7 +99,6 @@
 		AC71760727209863000376FD /* diacompanion.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = diacompanion.db; sourceTree = "<group>"; };
 		AC7A53F626DBF77B00FE65E7 /* enterAct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = enterAct.swift; sourceTree = "<group>"; };
 		ACC3798526ECFA7E00E0729E /* massa.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = massa.swift; sourceTree = "<group>"; };
-		ACC3798726EE0E1400E0729E /* pacient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = pacient.swift; sourceTree = "<group>"; };
 		ACCBA995272B1DA300D785F6 /* RKViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RKViewController.swift; sourceTree = "<group>"; };
 		ACCC5C2D2702190B0057CA7C /* pacientManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = pacientManager.swift; sourceTree = "<group>"; };
 		ACD86E8026DE820B0027B8ED /* sugarChange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = sugarChange.swift; sourceTree = "<group>"; };
@@ -206,7 +204,6 @@
 				AC631E0E26CEA90D0033CCFF /* ModalView.swift */,
 				A7D27E012815ADDC00DC00E9 /* PDFManager.swift */,
 				AC2C506027289C360009E8EE /* poldny.swift */,
-				ACC3798726EE0E1400E0729E /* pacient.swift */,
 				AC32A6852726060D001DDB9F /* pHeight.swift */,
 				AC32A68327260602001DDB9F /* pWeight.swift */,
 				AC32A68127260081001DDB9F /* pid.swift */,
@@ -397,7 +394,6 @@
 				A7FBB23B27FC257D00828432 /* regHelper.swift in Sources */,
 				ACF4E411272DB126002D2797 /* RKCell.swift in Sources */,
 				A706DA822843867800473941 /* export.swift in Sources */,
-				ACC3798826EE0E1400E0729E /* pacient.swift in Sources */,
 				A74A33D027B7E833003D2EBD /* loginPage.swift in Sources */,
 				AC32A6862726060D001DDB9F /* pHeight.swift in Sources */,
 				AC3B847526EBA1F200E98681 /* ketonur.swift in Sources */,

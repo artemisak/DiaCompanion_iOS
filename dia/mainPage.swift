@@ -78,7 +78,7 @@ struct mainPage: View {
                     Image(systemName: "line.3.horizontal")
                 }
                 .sheet(isPresented: $showModal) {
-                    ModalView().dynamicTypeSize(txtTheme)
+                    ModalView(txtTheme: $txtTheme).dynamicTypeSize(txtTheme)
                 }
             }
         }

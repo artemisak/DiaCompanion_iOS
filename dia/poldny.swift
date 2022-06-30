@@ -4,6 +4,7 @@ struct poldny: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @State private var multipleIsPresented = false
     @State private var rkManager3 = RKManager(calendar: Calendar.current, minimumDate: Calendar.current.date(byAdding: .month, value: -1, to: Date())!, maximumDate: Calendar.current.date(byAdding: .month, value: 1, to: Date())!, mode: 3)
+    @Binding var txtTheme: DynamicTypeSize
     var body: some View {
         RKViewController(isPresented: self.$multipleIsPresented, rkManager: self.rkManager3)
             .interactiveDismissDisabled()
@@ -16,7 +17,7 @@ struct poldny: View {
                         addDatesToDB(dates: rkManager3.selectedDates)
                         presentationMode.wrappedValue.dismiss()
                     }){
-                        Text("Сохранить")
+                        Text("Сохранить").dynamicTypeSize(txtTheme)
                     }
                 }
             }
@@ -30,11 +31,5 @@ struct poldny: View {
         rkManager3.colors.disabledColor = Color.red
         rkManager3.colors.todayBackColor = Color.blue
         rkManager3.colors.weekdayHeaderColor = Color.black
-    }
-}
-
-struct poldny_Previews: PreviewProvider {
-    static var previews: some View {
-        poldny()
     }
 }

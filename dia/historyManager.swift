@@ -99,6 +99,27 @@ class historyList: ObservableObject {
             for i in try db.prepare(sugar.select(sugarId, sugarLvL, sugarPeriod, sugarPhysical, sugarTime)) {
                 histList.append(hList(type: 3, name: "\(i[sugarLvL]) м/л (\(i[sugarPeriod]))", date: i[sugarTime], bdID: [i[sugarId]], metaInfo: [[String(i[sugarLvL]), i[sugarPeriod], String(i[sugarPhysical])]]))
             }
+            
+            // MARK: Заполняем кетоны
+            let keton = Table("ketonur")
+            let ketonId = Expression<Int>("id")
+            let ketonMmol = Expression<Double>("mmol")
+            let ketonTime = Expression<String>("time")
+            
+            for i in try db.prepare(keton.select(id,ketonMmol,ketonTime)) {
+                histList.append(hList(type: 4, name: "Кетоны: \(i[ketonMmol]) ммоль/л", date: i[ketonTime], bdID: [i[ketonId]], metaInfo: [[String(i[ketonMmol])]]))
+            }
+            
+            // MARK: Заполняем измерение массы
+            let massa = Table("massa")
+            let massaId = Expression<Int>("id")
+            let m = Expression<Double>("m")
+            let massaTime = Expression<String>("time")
+            
+            for i in try db.prepare(massa.select(massaId, m, massaTime)){
+                histList.append(hList(type: 5, name: "Вес: \(i[m]) кг", date: i[massaTime], bdID: [i[massaId]], metaInfo: [[String(i[m])]]))
+            }
+            
             // MARK: Сортируем от большего к меньшему по дате
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "HH:mm dd.MM.yyyy"
@@ -124,6 +145,12 @@ func deleteFromBD(idToDelete: [Int], table: Int) {
         }
         else if table == 3 {
             t = "sugarChange"
+        }
+        else if table == 4 {
+            t = "ketonur"
+        }
+        else if table == 5 {
+            t = "massa"
         }
         let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
         let path = documents + "/diacompanion.db"

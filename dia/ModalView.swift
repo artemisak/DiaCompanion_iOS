@@ -4,20 +4,21 @@ import PDFKit
 struct ModalView: View {
     @State private var phelper : Bool = false
     @State private var fileUrl = Bundle.main.url(forResource: "help", withExtension: "pdf")!
+    @Binding var txtTheme: DynamicTypeSize
     var body: some View {
         NavigationView {
             List {
                 Section(header: Text("О пациенте").font(.system(size: 15.5))){
-                    NavigationLink(destination: ketonur()) {
+                    NavigationLink(destination: ketonur(t: "", date: Date(), idForDelete: [], hasChanged: .constant(false), txtTheme: $txtTheme)) {
                         Button("Добавить запись о кетонурии", action: {})
                     }.foregroundColor(.black)
-                    NavigationLink(destination: massa()) {
+                    NavigationLink(destination: massa(t: "", date: Date(), idForDelete: [], hasChanged: .constant(false), txtTheme: $txtTheme)) {
                         Button("Добавить измерение массы тела", action: {})
                     }.foregroundColor(.black)
                     NavigationLink(destination: pacientPage()) {
                         Button("Данные пациента", action: {})
                     }.foregroundColor(.black)
-                    NavigationLink(destination: poldny()) {
+                    NavigationLink(destination: poldny(txtTheme: $txtTheme)) {
                         Button("Отметить полные дни", action: {})
                     }.foregroundColor(.black)
                     NavigationLink(destination: PDFKitView(url: fileUrl)
@@ -127,11 +128,5 @@ struct pacientPage: View {
                 })
             })
         }
-    }
-}
-
-struct ModalView_Previews: PreviewProvider {
-    static var previews: some View {
-        ModalView()
     }
 }
