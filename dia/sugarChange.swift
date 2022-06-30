@@ -12,15 +12,15 @@ enum selectedvar: String, CaseIterable, Identifiable {
 
 struct sugarChange: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    @State private var t: String = ""
-    @State private var date = Date()
-    @State private var hours: Int = 0
-    @State private var minutes: Int = 0
-    @State private var isAct: Bool = false
-    @State private var bool1: Int = 0
-    @State private var isCorrect: Bool = false
-    @State private var spreviewIndex = selectedvar.natoshak
-    @Binding var txtTheme: DynamicTypeSize
+    @State var t : String
+    @State var date : Date
+    @State var isAct : Bool
+    @State var bool1 : Int
+    @State var spreviewIndex : selectedvar
+    @State var idForDelete : [Int]
+    @State private var isCorrect : Bool = false
+    @Binding var txtTheme : DynamicTypeSize
+    @Binding var hasChanged : Bool
     var body: some View {
         List {
             Section(header: Text("Общая информация").font(.system(size: 15.5))){
@@ -58,9 +58,12 @@ struct sugarChange: View {
             ToolbarItem(placement: .navigationBarTrailing, content: {
                 Button(action: {
                     do {
+                        if !idForDelete.isEmpty {
+                            deleteFromBD(idToDelete: idForDelete, table: 3)
+                            hasChanged = true
+                        }
                         let dateFormatter = DateFormatter()
-                        dateFormatter.locale = Locale(identifier: "ru_RU")
-                        dateFormatter.setLocalizedDateFormatFromTemplate("dd.MM.yyyy HH:mm")
+                        dateFormatter.dateFormat = "HH:mm dd.MM.yyyy"
                         if isAct {
                             bool1 = 1
                         } else {

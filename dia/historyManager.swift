@@ -88,6 +88,17 @@ class historyList: ObservableObject {
                 histList.append(hList(type: 2, name: "\(i[ed]) Ед. (\(i[priem]))", date: i[timeInject], bdID: [i[id]], metaInfo: [[String(i[ed]), i[priem], i[type]]]))
             }
             
+            // MARK: Заполняем измерение сахара
+            let sugar = Table("sugarChange")
+            let sugarId = Expression<Int>("id")
+            let sugarLvL = Expression<Double>("lvl")
+            let sugarPeriod = Expression<String>("period")
+            let sugarPhysical = Expression<Int>("period")
+            let sugarTime = Expression<String>("time")
+            
+            for i in try db.prepare(sugar.select(sugarId, sugarLvL, sugarPeriod, sugarPhysical, sugarTime)) {
+                histList.append(hList(type: 3, name: "\(i[sugarLvL]) м/л (\(i[sugarPeriod]))", date: i[sugarTime], bdID: [i[sugarId]], metaInfo: [[String(i[sugarLvL]), i[sugarPeriod], String(i[sugarPhysical])]]))
+            }
             // MARK: Сортируем от большего к меньшему по дате
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "HH:mm dd.MM.yyyy"
@@ -110,6 +121,9 @@ func deleteFromBD(idToDelete: [Int], table: Int) {
         }
         else if table == 2 {
             t = "inject"
+        }
+        else if table == 3 {
+            t = "sugarChange"
         }
         let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
         let path = documents + "/diacompanion.db"

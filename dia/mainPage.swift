@@ -9,7 +9,7 @@ struct mainPage: View {
         GeometryReader { g in
             ScrollView {
                 LazyVGrid(columns: columns) {
-                    NavigationLink(destination: sugarChange(txtTheme: $txtTheme)) {
+                    NavigationLink(destination: sugarChange(t: "", date: Date(), isAct:  false, bool1: 0, spreviewIndex: .natoshak, idForDelete: [], txtTheme: $txtTheme, hasChanged: .constant(false))) {
                         VStack {
                             Image("menu_sugar")
                                 .scaledToFit()
