@@ -26,9 +26,7 @@ struct bday: View {
                 HStack(){
                     Button(action: {
                         vDate = Date.now
-                        withAnimation {
-                            pDate.toggle()
-                        }
+                        pDate.toggle()
                     }){
                         Text("Отменить")
                     }.buttonStyle(TransparentButton())
@@ -39,9 +37,7 @@ struct bday: View {
                         dateFormatter.setLocalizedDateFormatFromTemplate("dd.MM.yyyy")
                         addDate(pDate: dateFormatter.string(from: vDate))
                         vDate = Date.now
-                        withAnimation {
-                            pDate.toggle()
-                        }
+                        pDate.toggle()
                     }){
                         Text("Сохранить")
                     }.buttonStyle(TransparentButton())

@@ -21,17 +21,12 @@ struct ModalView: View {
                     NavigationLink(destination: poldny(txtTheme: $txtTheme)) {
                         Button("Отметить полные дни", action: {})
                     }.foregroundColor(.black)
-                    NavigationLink(destination: PDFKitView(url: fileUrl)
-                        .navigationTitle("Обучение")
-                        .navigationBarTitleDisplayMode(.inline)) {
-                            Button("Обучение", action: {})
-                        }.foregroundColor(.black)
-                    Button("Помощь", action: {
-                        withAnimation(.easeInOut(duration: 0.2)) {
-                            phelper.toggle()
-                        }
-                    })
-                    .foregroundColor(.black)
+                    NavigationLink(destination: PDFKitView(url: fileUrl)) {
+                        Button("Обучение", action: {})
+                    }.foregroundColor(.black)
+                    NavigationLink(destination: helper(phelper: $phelper)) {
+                        Button("Помощь", action: {})
+                    }.foregroundColor(.black)
                 }
             }
             .listStyle(.insetGrouped)
@@ -44,7 +39,6 @@ struct ModalView: View {
             }
         }
         .navigationViewStyle(.stack)
-        .customPopupView(isPresented: $phelper, popupView: { helper(phelper: $phelper) })
     }
 }
 
@@ -66,16 +60,16 @@ struct pacientPage: View {
                     Button(action: {pFio.toggle()}) {
                         Text("ФИО")
                     }.foregroundColor(.black)
-                    Button(action: {pDate.toggle()}) {
+                    Button(action: {withAnimation(.default){pDate.toggle()}}) {
                         Text("Дата рождения")
                     }.foregroundColor(.black)
-                    Button(action: {pV.toggle()}) {
+                    Button(action: {withAnimation(.default){pV.toggle()}}) {
                         Text("Лечащий врач")
                     }.foregroundColor(.black)
-                    Button(action: {bStart.toggle()}) {
+                    Button(action: {withAnimation(.default){bStart.toggle()}}) {
                         Text("Дата начала ведения дневника")
                     }.foregroundColor(.black)
-                    Button(action: {bWeek.toggle()}) {
+                    Button(action: {withAnimation(.default){bWeek.toggle()}}) {
                         Text("Неделя берем. на начало исследования")
                     }.foregroundColor(.black)
                     Button(action: {bid.toggle()}) {

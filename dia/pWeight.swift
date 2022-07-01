@@ -27,7 +27,7 @@ struct pWeight: View {
                 Divider()
                 HStack(){
                     Button(action: {
-                        bWeight = false
+                        bWeight.toggle()
                     }){
                         Text("Отменить")
                     }
@@ -37,7 +37,7 @@ struct pWeight: View {
                         do {
                             lineColor = Color.black
                             addWeight(Weight: try convert(txt: txt))
-                            bWeight = false
+                            bWeight.toggle()
                         } catch {
                             lineColor = Color.red
                         }

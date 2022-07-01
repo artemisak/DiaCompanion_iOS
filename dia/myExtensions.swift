@@ -67,11 +67,7 @@ struct CustomPopupView<Content, PopupView>: View where Content: View, PopupView:
                     popupView()
                         .scaleEffect(sc).animation(.spring(), value: sc)
                 }
-                .onAppear(perform: {
-                    sc -= 0.05
-                    let generator = UINotificationFeedbackGenerator()
-                    generator.notificationOccurred(.success)
-                })
+                .onAppear(perform: {sc -= 0.05})
                 .onDisappear(perform: {sc += 0.05})
             }
         }

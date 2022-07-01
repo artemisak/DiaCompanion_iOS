@@ -26,7 +26,7 @@ struct fio: View {
                 Divider()
                 HStack(){
                     Button(action: {
-                        pFio = false
+                        pFio.toggle()
                     }){
                         Text("Отменить")
                     }
@@ -36,7 +36,7 @@ struct fio: View {
                         do {
                             lineColor = Color.black
                             addName(pName: try checkName(txt: txt))
-                            pFio = false
+                            pFio.toggle()
                         } catch {
                             lineColor = Color.red
                         }

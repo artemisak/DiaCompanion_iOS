@@ -27,7 +27,7 @@ struct pHeight: View {
                 Divider()
                 HStack(){
                     Button(action: {
-                            bHeight = false
+                        bHeight.toggle()
                     }){
                         Text("Отменить")
                     }
@@ -37,7 +37,7 @@ struct pHeight: View {
                         do {
                             lineColor = Color.black
                             addHeight(Height: try convert(txt: txt))
-                            bHeight = false
+                            bHeight.toggle()
                         } catch {
                             lineColor = Color.red
                         }
