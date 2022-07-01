@@ -119,15 +119,13 @@ struct loginPage: View {
                             .zIndex(1)
                     }
                 }
-                ToolbarItem(placement: .keyboard, content: {
-                    HStack {
-                        Spacer()
-                        Button(action: {
-                            UIApplication.shared.dismissedKeyboard()
-                        }, label: {
-                            Text("Готово")
-                        })
-                    }
+                ToolbarItemGroup(placement: .keyboard, content: {
+                    Spacer()
+                    Button(action: {
+                        UIApplication.shared.dismissedKeyboard()
+                    }, label: {
+                        Text("Готово").dynamicTypeSize(txtTheme)
+                    })
                 })
             }
         }

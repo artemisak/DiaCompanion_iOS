@@ -27,9 +27,7 @@ struct pid: View {
             Divider()
             HStack(){
                 Button(action: {
-                    withAnimation {
-                        bid.toggle()
-                    }
+                        bid = false
                 }){
                     Text("Отменить")
                 }
@@ -39,9 +37,7 @@ struct pid: View {
                     do {
                         lineColor = .black
                         addID(id: try convertToInt(txt: txt))
-                        withAnimation {
-                            bid.toggle()
-                        }
+                        bid = false
                     } catch {
                         lineColor = .red
                     }

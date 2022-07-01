@@ -56,15 +56,13 @@ struct massa: View {
             }
         }
         .toolbar {
-            ToolbarItem(placement: .keyboard, content: {
-                HStack{
-                    Spacer()
-                    Button(action: {
-                        focusedField = false
-                    }, label: {
-                        Text("Готово").dynamicTypeSize(txtTheme)
-                    })
-                }
+            ToolbarItemGroup(placement: .keyboard, content: {
+                Spacer()
+                Button(action: {
+                    focusedField = false
+                }, label: {
+                    Text("Готово").dynamicTypeSize(txtTheme)
+                })
             })
         }
         .ignoresSafeArea(.keyboard)

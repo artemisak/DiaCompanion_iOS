@@ -36,9 +36,7 @@ struct fio: View {
                         do {
                             lineColor = Color.black
                             addName(pName: try checkName(txt: txt))
-                            withAnimation {
-                                pFio.toggle()
-                            }
+                            pFio = false
                         } catch {
                             lineColor = Color.red
                         }

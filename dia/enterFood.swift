@@ -270,16 +270,13 @@ struct enterFood: View {
                     Text("Сохранить").dynamicTypeSize(txtTheme)
                 }
             })
-            ToolbarItem(placement: .keyboard, content: {
-                HStack{
-                    Spacer()
-                    Button(action: {
-                        focuseField = false
-                    }, label: {
-                        Text("Готово")
-                            .dynamicTypeSize(txtTheme)
-                    })
-                }
+            ToolbarItemGroup(placement: .keyboard, content: {
+                Spacer()
+                Button(action: {
+                    focuseField = false
+                }, label: {
+                    Text("Готово").dynamicTypeSize(txtTheme)
+                })
             })
         }
         .ignoresSafeArea(.keyboard)
