@@ -172,8 +172,8 @@ struct history: View {
                                 for j in i.bdID {
                                     idFordelete.append(j)
                                 }
-                                tKetonur = i.metaInfo[0][0]
-                                dateKetonur = convertToDate(d: i.date)
+                                tMassa = i.metaInfo[0][0]
+                                dateMassa = convertToDate(d: i.date)
                                 redirectToEnterMassa = true
                             }
                         } label: {
@@ -336,12 +336,12 @@ struct history: View {
             Section {
                 Text(info[0][0])
             } header: {
-                Text("Уровень сахара в кроми ммоль/л")
+                Text("Уровень сахара в крови ммоль/л")
             }
             Section {
                 Text(date)
             } header: {
-                Text("Период")
+                Text("Время")
             }
             Section {
                 Text(info[0][1])

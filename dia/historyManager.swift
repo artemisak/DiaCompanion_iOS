@@ -50,18 +50,12 @@ class historyList: ObservableObject {
             
             if !histList.isEmpty {
                 for i in 0...histList.count-1 {
-                    if histList[i].type == 0 {
-                        for i1 in try db.prepare(diary.select(id, gram, fName).filter(dateTime == histList[i].date && foodType == histList[i].name)){
-                            histList[i].bdID.append(i1[id])
-                            histList[i].metaInfo.append([i1[fName], i1[gram]])
-                        }
-                        for i2 in 0...histList[i].metaInfo.count-1 {
-                            for i3 in try db.prepare(foodInfo.select(prot,fat,carbo,kkal,gi).filter(name == histList[i].metaInfo[i2][0])){
-                                histList[i].metaInfo[i2].append(contentsOf: [String(i3[prot]), String(i3[fat]), String(i3[carbo]), String(i3[kkal]), String(i3[gi])])
-                            }
-                        }
-                        histList[i].name = histList[i].name + " (\(histList[i].bdID.count) сост.)"
+                    for i1 in try db.prepare(diary.select(id, gram, fName).filter(dateTime == histList[i].date && foodType == histList[i].name)){
+                        histList[i].bdID.append(i1[id])
+                        let temp = try db.prepare(foodInfo.select(prot,fat,carbo,kkal,gi).filter(name == i1[fName]))
+                        _ = temp.map{histList[i].metaInfo.append([i1[fName], i1[gram], String($0[prot]), String($0[fat]), String($0[carbo]), String($0[kkal]), String($0[gi])])}
                     }
+                    histList[i].name = histList[i].name + " (\(histList[i].bdID.count) сост.)"
                 }
             }
             
@@ -93,7 +87,7 @@ class historyList: ObservableObject {
             let sugarId = Expression<Int>("id")
             let sugarLvL = Expression<Double>("lvl")
             let sugarPeriod = Expression<String>("period")
-            let sugarPhysical = Expression<Int>("period")
+            let sugarPhysical = Expression<Int>("physical")
             let sugarTime = Expression<String>("time")
             
             for i in try db.prepare(sugar.select(sugarId, sugarLvL, sugarPeriod, sugarPhysical, sugarTime)) {
