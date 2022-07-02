@@ -51,9 +51,13 @@ struct loginPage: View {
                         .disableAutocorrection(true)
                         .focused($focusedField, equals: .password)
                         .onSubmit {
-                            UIApplication.shared.dismissedKeyboard()
-                            isnt = islogin.setlogged(upass: pass, ulogin: login)
-                            isWrong = isnt
+                            DispatchQueue.main.asyncAfter(deadline: .now(), execute: {
+                                isnt = islogin.setlogged(upass: pass, ulogin: login)
+                                isWrong = isnt
+                            })
+                            if !isnt {
+                                focusedField = .username
+                            }
                         }
                     Divider()
                         .background(!isWrong ? Color.red : Color.black)
@@ -76,11 +80,11 @@ struct loginPage: View {
                         .frame(height: 30)
                 }
                 Button(action: {
-                    isnt = islogin.setlogged(upass: pass, ulogin: login)
-                    isWrong = isnt
-                    if isnt {
-                        UIApplication.shared.dismissedKeyboard()
-                    } else {
+                    DispatchQueue.main.asyncAfter(deadline: .now(), execute: {
+                        isnt = islogin.setlogged(upass: pass, ulogin: login)
+                        isWrong = isnt
+                    })
+                    if !isnt {
                         focusedField = .username
                     }
                 }, label: {
