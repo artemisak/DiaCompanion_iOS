@@ -299,6 +299,16 @@ struct sugarlvl {
     var rodi: [[String]]
 }
 
+struct injectlvl {
+    var date: String
+    var natoshak: [String]
+    var zavtrak: [String]
+    var obed: [String]
+    var uzin: [String]
+    var dop: [String]
+    var levemir: [String]
+}
+
 struct recordRow {
     var date: Date
     var time: Date
@@ -306,9 +316,21 @@ struct recordRow {
     var period: String
 }
 
+struct injectRow {
+    var date: Date
+    var time: Date
+    var ed: Double
+    var type: String
+    var priem: String
+}
+
 func getSugarRecords() -> [sugarlvl] {
+    
     var sugarRecords = [sugarlvl]()
     var record = [recordRow]()
+    var tableInjetcs = [injectlvl]()
+    var injRecord = [injectRow]()
+    
     do {
         let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
         let path = documents + "/diacompanion.db"
@@ -322,67 +344,117 @@ func getSugarRecords() -> [sugarlvl] {
         
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "ru_RU")
-        //        dateFormatter.dateFormat = "dd.MM.yyyy"
         dateFormatter.setLocalizedDateFormatFromTemplate("dd.MM.yyyy")
         let dateFormatter1 = DateFormatter()
         dateFormatter1.locale = Locale(identifier: "ru_RU")
-        //        dateFormatter1.dateFormat = "HH:mm"
         dateFormatter1.setLocalizedDateFormatFromTemplate("HH:mm")
         
         for i in try db.prepare(sugarChange.select(lvl,period,time)) {
-            record.append(recordRow(date: dateFormatter.date(from: i[time][0..<10])! , time: dateFormatter1.date(from: i[time][12..<17])!, lvl: i[lvl], period: i[period]))
+            record.append(recordRow(date: dateFormatter.date(from: i[time][6..<16])! , time: dateFormatter1.date(from: i[time][0..<5])!, lvl: i[lvl], period: i[period]))
         }
-        if record.count > 0 {
-            record = record.sorted(by: {($0.date, $0.time) < ($1.date, $1.time)})
-            var unique: [Date] = []
-            var i1 = 0
-            for i in 0..<record.count {
-                if !unique.contains(record[i].date) {
-                    unique.append(record[i].date)
-                    sugarRecords.append(sugarlvl(date: dateFormatter.string(from: record[i].date), natoshak: [], zavtrak: [], obed: [], yzin: [], dop: [], rodi: []))
-                }
-                if record[i].date == unique[i1] {
-                    if record[i].period == "Натощак" {
-                        sugarRecords[i1].natoshak.append([String(record[i].lvl), dateFormatter1.string(from: record[i].time)])
-                    }
-                    if record[i].period == "После завтрака" {
-                        sugarRecords[i1].zavtrak.append([String(record[i].lvl), dateFormatter1.string(from: record[i].time)])
-                    }
-                    if record[i].period == "После обеда" {
-                        sugarRecords[i1].obed.append([String(record[i].lvl), dateFormatter1.string(from: record[i].time)])
-                    }
-                    if record[i].period == "После ужина" {
-                        sugarRecords[i1].yzin.append([String(record[i].lvl), dateFormatter1.string(from: record[i].time)])
-                    }
-                    if record[i].period == "Дополнительно" {
-                        sugarRecords[i1].dop.append([String(record[i].lvl), dateFormatter1.string(from: record[i].time)])
-                    }
-                    if record[i].period == "При родах" {
-                        sugarRecords[i1].rodi.append([String(record[i].lvl), dateFormatter1.string(from: record[i].time)])
-                    }
-                } else {
-                    i1 += 1
-                    if record[i].period == "Натощак" {
-                        sugarRecords[i1].natoshak.append([String(record[i].lvl), dateFormatter1.string(from: record[i].time)])
-                    }
-                    if record[i].period == "После завтрака" {
-                        sugarRecords[i1].zavtrak.append([String(record[i].lvl), dateFormatter1.string(from: record[i].time)])
-                    }
-                    if record[i].period == "После обеда" {
-                        sugarRecords[i1].obed.append([String(record[i].lvl), dateFormatter1.string(from: record[i].time)])
-                    }
-                    if record[i].period == "После ужина" {
-                        sugarRecords[i1].yzin.append([String(record[i].lvl), dateFormatter1.string(from: record[i].time)])
-                    }
-                    if record[i].period == "Дополнительно" {
-                        sugarRecords[i1].dop.append([String(record[i].lvl), dateFormatter1.string(from: record[i].time)])
-                    }
-                    if record[i].period == "При родах" {
-                        sugarRecords[i1].rodi.append([String(record[i].lvl), dateFormatter1.string(from: record[i].time)])
-                    }
-                }
+        record = record.sorted(by: {($0.date, $0.time) < ($1.date, $1.time)})
+        
+        var sugarUniqueDates = [Date]()
+        for i in record {
+            sugarUniqueDates.append(i.date)
+        }
+        sugarUniqueDates = Array(Set(sugarUniqueDates))
+        sugarUniqueDates = sugarUniqueDates.sorted(by: <)
+        
+        let injects = Table("inject")
+        let injectID = Expression<Int>("id")
+        let injectED = Expression<Double>("ed")
+        let injectType = Expression<String>("type")
+        let injectPriem = Expression<String>("priem")
+        let injectTime = Expression<String>("time")
+        
+        for i in try db.prepare(injects.select(injectID, injectED, injectType, injectPriem, injectTime)){
+            injRecord.append(injectRow(date: dateFormatter.date(from: i[time][6..<16])!, time: dateFormatter1.date(from: i[time][0..<5])!, ed: i[injectED], type: i[injectType], priem: i[injectPriem]))
+        }
+        injRecord = injRecord.sorted(by: {($0.date, $0.time) < ($1.date, $1.time)})
+        
+        var injectUniqueDates = [Date]()
+        for i in injRecord {
+            injectUniqueDates.append(i.date)
+        }
+        injectUniqueDates = Array(Set(injectUniqueDates))
+        injectUniqueDates = injectUniqueDates.sorted(by: <)
+        
+        var uniqueDates = [Date]()
+        uniqueDates.append(contentsOf: sugarUniqueDates)
+        uniqueDates.append(contentsOf: injectUniqueDates)
+        uniqueDates = Array(Set(uniqueDates))
+        uniqueDates = uniqueDates.sorted(by: { $0 < $1})
+
+        var i = 0
+        while i < uniqueDates.count-1 {
+            if DateInterval(start: uniqueDates[i], end: uniqueDates[i+1]) > DateInterval(start: uniqueDates[i], duration: 60*60*24) {
+                uniqueDates.insert(uniqueDates[i].addingTimeInterval(60*60*24), at: i+1)
+                i += 1
+            } else {
+                i += 1
             }
         }
+        
+        for i in uniqueDates {
+            sugarRecords.append(sugarlvl(date: dateFormatter.string(from: i), natoshak: [], zavtrak: [], obed: [], yzin: [], dop: [], rodi: []))
+            tableInjetcs.append(injectlvl(date: dateFormatter.string(from: i), natoshak: [], zavtrak: [], obed: [], uzin: [], dop: [], levemir: []))
+        }
+        
+        var i1 = 0
+        var i2 = 0
+        while i2 <= record.count-1 {
+            if record[i2].date == dateFormatter.date(from: sugarRecords[i1].date) {
+                if record[i2].period == "Натощак" {
+                    sugarRecords[i1].natoshak.append([String(record[i2].lvl), dateFormatter1.string(from: record[i2].time)])
+                }
+                if record[i2].period == "После завтрака" {
+                    sugarRecords[i1].zavtrak.append([String(record[i2].lvl), dateFormatter1.string(from: record[i2].time)])
+                }
+                if record[i2].period == "После обеда" {
+                    sugarRecords[i1].obed.append([String(record[i2].lvl), dateFormatter1.string(from: record[i2].time)])
+                }
+                if record[i2].period == "После ужина" {
+                    sugarRecords[i1].yzin.append([String(record[i2].lvl), dateFormatter1.string(from: record[i2].time)])
+                }
+                if record[i2].period == "Дополнительно" {
+                    sugarRecords[i1].dop.append([String(record[i2].lvl), dateFormatter1.string(from: record[i2].time)])
+                }
+                if record[i2].period == "При родах" {
+                    sugarRecords[i1].rodi.append([String(record[i2].lvl), dateFormatter1.string(from: record[i2].time)])
+                }
+                i2 += 1
+            } else {
+                i1 += 1
+            }
+        }
+                
+        var i3 = 0
+        var i4 = 0
+        while i3 <= injRecord.count-1 {
+            if dateFormatter.string(from: injRecord[i3].date) == tableInjetcs[i4].date {
+                if injRecord[i3].priem == "Натощак" {
+                    tableInjetcs[i4].natoshak = [String(injRecord[i3].ed), injRecord[i3].type, dateFormatter1.string(from: injRecord[i3].time)]
+                }
+                if injRecord[i3].priem == "Завтрак" {
+                    tableInjetcs[i4].zavtrak = [String(injRecord[i3].ed), injRecord[i3].type, dateFormatter1.string(from: injRecord[i3].time)]
+                }
+                if injRecord[i3].priem == "Обед" {
+                    tableInjetcs[i4].obed = [String(injRecord[i3].ed), injRecord[i3].type, dateFormatter1.string(from: injRecord[i3].time)]
+                }
+                if injRecord[i3].priem == "Ужин" {
+                    tableInjetcs[i4].uzin = [String(injRecord[i3].ed), injRecord[i3].type, dateFormatter1.string(from: injRecord[i3].time)]
+                }
+                if injRecord[i3].priem == "Дополнительно" {
+                    tableInjetcs[i4].dop = [String(injRecord[i3].ed), injRecord[i3].type, dateFormatter1.string(from: injRecord[i3].time)]
+                }
+                i3 += 1
+            } else {
+                i4 += 1
+            }
+        }
+        print(tableInjetcs)
+        print(sugarRecords)
     }
     catch {
         print(error)

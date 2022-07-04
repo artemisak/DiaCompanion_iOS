@@ -1,10 +1,11 @@
 import SwiftUI
 
+enum Field: Hashable {
+    case username
+    case password
+}
+
 struct loginPage: View {
-    enum Field: Hashable {
-        case username
-        case password
-    }
     @State private var login: String = ""
     @State private var pass: String = ""
     @State private var isWrong: Bool = true
