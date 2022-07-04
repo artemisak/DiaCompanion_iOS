@@ -108,7 +108,24 @@ class exportTable {
         worksheet_set_column(worksheet1, 28, 34, 19.5, nil);
         
         worksheet_set_column(worksheet2, 0, 0, 20, nil);
-        worksheet_set_column(worksheet2, 1, 1, 10, nil);
+        worksheet_set_column(worksheet2, 15, 15, 15, nil);
+        worksheet_set_column(worksheet2, 16, 16, 27, nil);
+        worksheet_set_column(worksheet2, 17, 17, 15, nil);
+        worksheet_set_column(worksheet2, 18, 18, 15, nil);
+        worksheet_set_column(worksheet2, 19, 19, 27, nil);
+        worksheet_set_column(worksheet2, 20, 20, 15, nil);
+        worksheet_set_column(worksheet2, 21, 21, 15, nil);
+        worksheet_set_column(worksheet2, 22, 22, 27, nil);
+        worksheet_set_column(worksheet2, 23, 23, 15, nil);
+        worksheet_set_column(worksheet2, 24, 24, 15, nil);
+        worksheet_set_column(worksheet2, 25, 25, 27, nil);
+        worksheet_set_column(worksheet2, 26, 26, 15, nil);
+        worksheet_set_column(worksheet2, 27, 27, 15, nil);
+        worksheet_set_column(worksheet2, 28, 28, 27, nil);
+        worksheet_set_column(worksheet2, 29, 29, 15, nil);
+        worksheet_set_column(worksheet2, 30, 30, 15, nil);
+        worksheet_set_column(worksheet2, 31, 31, 27, nil);
+        
         
         let tbl = getFoodRecords()
         let userName = getName()
@@ -335,7 +352,8 @@ class exportTable {
             worksheet_write_string(worksheet1, lxw_row_t(3+r1+3+i), 34, "\(round(Array(tbl[i].ne.joined()).compactMap(Double.init).reduce(0,+)/Double(tbl[i].ne.joined().count)*100)/100)", nil)
         }
         
-        let tbl2 = getSugarRecords()
+        let tbl2 = getSugarRecords().0
+        let tbl3 = getSugarRecords().1
         
         worksheet_merge_range(worksheet2, 0, 0, 0, 13, userName, nil);
         worksheet_merge_range(worksheet2, 1, 0, 1, 13, "Измерение сахара", merge_format41);
@@ -346,6 +364,15 @@ class exportTable {
         worksheet_merge_range(worksheet2, 2, 8, 2, 9, "После ужина", merge_format41);
         worksheet_merge_range(worksheet2, 2, 10, 2, 11, "Дополнительно", merge_format41);
         worksheet_merge_range(worksheet2, 2, 12, 2, 13, "При родах", merge_format41);
+        
+        worksheet_merge_range(worksheet2, 1, 15, 1, 32, "Иньекции инсулина", merge_format41);
+        worksheet_merge_range(worksheet2, 2, 15, 2, 17, "Натощак", merge_format41);
+        worksheet_merge_range(worksheet2, 2, 18, 2, 20, "Завтрак", merge_format41);
+        worksheet_merge_range(worksheet2, 2, 21, 2, 23, "Обед", merge_format41);
+        worksheet_merge_range(worksheet2, 2, 24, 2, 26, "Ужин", merge_format41);
+        worksheet_merge_range(worksheet2, 2, 27, 2, 29, "Дополнительно", merge_format41);
+        worksheet_merge_range(worksheet2, 2, 30, 2, 32, "Левемир", merge_format41);
+        
         var i1 = 0
         for i in 0..<tbl2.count {
             worksheet_write_string(worksheet2, lxw_row_t(i1+3), 1, tbl2[i].date, nil)
@@ -543,6 +570,39 @@ class exportTable {
                 worksheet_write_string(worksheet2, lxw_row_t(i1+3), 13, rodi_time.joined(separator: "\n") , merge_format42)
             }
             i1 += 1
+        }
+        
+        for i in 0..<tbl3.count {
+            if !tbl3[i].natoshak.isEmpty {
+                worksheet_write_string(worksheet2, lxw_row_t(i+3), 15, tbl3[i].natoshak[0] , merge_format4)
+                worksheet_write_string(worksheet2, lxw_row_t(i+3), 16, tbl3[i].natoshak[1] , merge_format42)
+                worksheet_write_string(worksheet2, lxw_row_t(i+3), 17, tbl3[i].natoshak[2] , merge_format42)
+            }
+            if !tbl3[i].zavtrak.isEmpty {
+                worksheet_write_string(worksheet2, lxw_row_t(i+3), 18, tbl3[i].zavtrak[0] , merge_format4)
+                worksheet_write_string(worksheet2, lxw_row_t(i+3), 19, tbl3[i].zavtrak[1] , merge_format42)
+                worksheet_write_string(worksheet2, lxw_row_t(i+3), 20, tbl3[i].zavtrak[2] , merge_format42)
+            }
+            if !tbl3[i].obed.isEmpty {
+                worksheet_write_string(worksheet2, lxw_row_t(i+3), 21, tbl3[i].obed[0] , merge_format4)
+                worksheet_write_string(worksheet2, lxw_row_t(i+3), 22, tbl3[i].obed[1] , merge_format42)
+                worksheet_write_string(worksheet2, lxw_row_t(i+3), 23, tbl3[i].obed[2] , merge_format42)
+            }
+            if !tbl3[i].uzin.isEmpty {
+                worksheet_write_string(worksheet2, lxw_row_t(i+3), 24, tbl3[i].uzin[0] , merge_format4)
+                worksheet_write_string(worksheet2, lxw_row_t(i+3), 25, tbl3[i].uzin[1] , merge_format42)
+                worksheet_write_string(worksheet2, lxw_row_t(i+3), 26, tbl3[i].uzin[2] , merge_format42)
+            }
+            if !tbl3[i].dop.isEmpty {
+                worksheet_write_string(worksheet2, lxw_row_t(i+3), 27, tbl3[i].dop[0] , merge_format4)
+                worksheet_write_string(worksheet2, lxw_row_t(i+3), 28, tbl3[i].dop[1] , merge_format42)
+                worksheet_write_string(worksheet2, lxw_row_t(i+3), 29, tbl3[i].dop[2] , merge_format42)
+            }
+            if !tbl3[i].levemir.isEmpty {
+                worksheet_write_string(worksheet2, lxw_row_t(i+3), 30, tbl3[i].levemir[0] , merge_format4)
+                worksheet_write_string(worksheet2, lxw_row_t(i+3), 31, tbl3[i].levemir[1] , merge_format42)
+                worksheet_write_string(worksheet2, lxw_row_t(i+3), 32, tbl3[i].levemir[2] , merge_format42)
+            }
         }
         
         worksheet_protect(worksheet1, "pass123", nil)

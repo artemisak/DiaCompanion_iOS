@@ -324,7 +324,7 @@ struct injectRow {
     var priem: String
 }
 
-func getSugarRecords() -> [sugarlvl] {
+func getSugarRecords() -> ([sugarlvl], [injectlvl]) {
     
     var sugarRecords = [sugarlvl]()
     var record = [recordRow]()
@@ -453,11 +453,9 @@ func getSugarRecords() -> [sugarlvl] {
                 i4 += 1
             }
         }
-        print(tableInjetcs)
-        print(sugarRecords)
     }
     catch {
         print(error)
     }
-    return sugarRecords
+    return (sugarRecords, tableInjetcs)
 }
