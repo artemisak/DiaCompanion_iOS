@@ -385,7 +385,7 @@ func getSugarRecords() -> ([sugarlvl], [injectlvl]) {
         uniqueDates.append(contentsOf: injectUniqueDates)
         uniqueDates = Array(Set(uniqueDates))
         uniqueDates = uniqueDates.sorted(by: { $0 < $1})
-
+        
         var i = 0
         while i < uniqueDates.count-1 {
             if DateInterval(start: uniqueDates[i], end: uniqueDates[i+1]) > DateInterval(start: uniqueDates[i], duration: 60*60*24) {
@@ -428,7 +428,7 @@ func getSugarRecords() -> ([sugarlvl], [injectlvl]) {
                 i1 += 1
             }
         }
-                
+        
         var i3 = 0
         var i4 = 0
         while i3 <= injRecord.count-1 {
@@ -459,3 +459,84 @@ func getSugarRecords() -> ([sugarlvl], [injectlvl]) {
     }
     return (sugarRecords, tableInjetcs)
 }
+
+struct activityRow {
+    var week: Int
+    var data: Date
+    var actStartTime: Date
+    var actDuration: Int
+    var actType: String
+}
+
+struct activity {
+    var week: Int
+    var data: [Date]
+    var actStartTime: [Date]
+    var actDuration: [Int]
+    var actType: [String]
+    var sleepTime: [Date]
+    var sleepDuration: [Int]
+}
+
+func defWeek(date: Date, weekBefore: Int, dayOfWeek: Int) -> Int {
+    return 1
+}
+
+func getActivityRecords() -> [activity] {
+    var actTable = [activityRow]()
+    var act = [activity]()
+    do {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "HH:mm"
+        let dateFormatter1 = DateFormatter()
+        dateFormatter1.dateFormat = "dd.MM.yyyy"
+        
+        let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
+        let path = documents + "/diacompanion.db"
+        let sourcePath = Bundle.main.path(forResource: "diacompanion", ofType: "db")!
+        _=copyDatabaseIfNeeded(sourcePath: sourcePath)
+        let db = try Connection(path)
+        let activitySheet = Table("act")
+        let dateTime = Expression<String>("time")
+        let type = Expression<String>("rod")
+        let duration = Expression<Int>("min")
+
+        for i in try db.prepare(activitySheet.select(dateTime,duration,type)){
+            actTable.append(activityRow(week: defWeek(date: dateFormatter1.date(from: i[dateTime][6..<16])!, weekBefore: 1, dayOfWeek: 1), data: dateFormatter1.date(from: i[dateTime][6..<16])!, actStartTime: dateFormatter.date(from: i[dateTime][0..<6])!, actDuration: i[duration], actType: i[type]))
+        }
+        
+        actTable = actTable.sorted(by: {($0.data, $0.actStartTime) < ($1.data, $1.actStartTime)})
+        
+        var i = 0
+        var i1 = 0
+        while i <= actTable.count-1 {
+            if (i == 0) && (actTable[i].actType != "Сон") {
+                act.append(activity(week: actTable[i].week, data: [actTable[i].data], actStartTime: [actTable[i].actStartTime], actDuration: [actTable[i].actDuration], actType: [actTable[i].actType], sleepTime: [], sleepDuration: []))
+            }
+            if (i == 0) && (actTable[i].actType == "Сон") {
+                act.append(activity(week: actTable[i].week, data: [], actStartTime: [], actDuration: [], actType: [], sleepTime: [actTable[i].actStartTime], sleepDuration: [actTable[i].actDuration]))
+            }
+            if (i >= 1) && (actTable[i].actType != "Сон") && (actTable[i].data == actTable[i-1].data){
+                act[i1].actStartTime.append(actTable[i].actStartTime)
+                act[i1].actDuration.append(actTable[i].actDuration)
+                act[i1].actType.append(actTable[i].actType)
+            } else if (i >= 1) && (actTable[i].actType != "Сон") && (actTable[i].data != actTable[i-1].data){
+                act.append(activity(week: actTable[i].week, data: [actTable[i].data], actStartTime: [actTable[i].actStartTime], actDuration: [actTable[i].actDuration], actType: [actTable[i].actType], sleepTime: [], sleepDuration: []))
+                i1 += 1
+            }
+            if (i >= 1) && (actTable[i].actType == "Сон") && (actTable[i].data == actTable[i-1].data){
+                act[i1].sleepTime.append(actTable[i].actStartTime)
+                act[i1].sleepDuration.append(actTable[i].actDuration)
+            } else if (i >= 1) && (actTable[i].actType == "Сон") && (actTable[i].data != actTable[i-1].data){
+                act.append(activity(week: actTable[i].week, data: [], actStartTime: [], actDuration: [], actType: [], sleepTime: [actTable[i].actStartTime], sleepDuration: [actTable[i].actDuration]))
+                i1 += 1
+            }
+            i += 1
+        }
+    }
+    catch {
+        print(error)
+    }
+    return act
+}
+
