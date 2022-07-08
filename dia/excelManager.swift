@@ -471,11 +471,11 @@ struct activityRow {
 struct activity {
     var week: Int
     var data: [Date]
-    var actStartTime: [Date]
-    var actDuration: [Int]
-    var actType: [String]
-    var sleepTime: [Date]
-    var sleepDuration: [Int]
+    var actStartTime: [[Date]]
+    var actDuration: [[Int]]
+    var actType: [[String]]
+    var sleepTime: [[Date]]
+    var sleepDuration: [[Int]]
 }
 
 func defWeek(date: Date, weekBefore: Int, dayOfWeek: Int) -> Int {
@@ -506,29 +506,52 @@ func getActivityRecords() -> [activity] {
         }
         
         actTable = actTable.sorted(by: {($0.data, $0.actStartTime) < ($1.data, $1.actStartTime)})
-        
+
         var i = 0
         var i1 = 0
+        var i2 = 0
         while i <= actTable.count-1 {
             if (i == 0) && (actTable[i].actType != "Сон") {
-                act.append(activity(week: actTable[i].week, data: [actTable[i].data], actStartTime: [actTable[i].actStartTime], actDuration: [actTable[i].actDuration], actType: [actTable[i].actType], sleepTime: [], sleepDuration: []))
+                act.append(activity(week: actTable[i].week, data: [actTable[i].data], actStartTime: [[actTable[i].actStartTime]], actDuration: [[actTable[i].actDuration]], actType: [[actTable[i].actType]], sleepTime: [[]], sleepDuration: [[]]))
             }
             if (i == 0) && (actTable[i].actType == "Сон") {
-                act.append(activity(week: actTable[i].week, data: [], actStartTime: [], actDuration: [], actType: [], sleepTime: [actTable[i].actStartTime], sleepDuration: [actTable[i].actDuration]))
+                act.append(activity(week: actTable[i].week, data: [actTable[i].data], actStartTime: [[]], actDuration: [[]], actType: [[]], sleepTime: [[actTable[i].actStartTime]], sleepDuration: [[actTable[i].actDuration]]))
             }
-            if (i >= 1) && (actTable[i].actType != "Сон") && (actTable[i].data == actTable[i-1].data){
-                act[i1].actStartTime.append(actTable[i].actStartTime)
-                act[i1].actDuration.append(actTable[i].actDuration)
-                act[i1].actType.append(actTable[i].actType)
-            } else if (i >= 1) && (actTable[i].actType != "Сон") && (actTable[i].data != actTable[i-1].data){
-                act.append(activity(week: actTable[i].week, data: [actTable[i].data], actStartTime: [actTable[i].actStartTime], actDuration: [actTable[i].actDuration], actType: [actTable[i].actType], sleepTime: [], sleepDuration: []))
+            if (i > 0) && (actTable[i].week == act[i1].week) && (actTable[i].data == act[i1].data.last!) && (actTable[i].actType != "Сон"){
+                act[i1].actStartTime[i2].append(actTable[i].actStartTime)
+                act[i1].actDuration[i2].append(actTable[i].actDuration)
+                act[i1].actType[i2].append(actTable[i].actType)
+            }
+            else if (i > 0) && (actTable[i].week == act[i1].week) && (actTable[i].data == act[i1].data.last!) && (actTable[i].actType == "Сон"){
+                act[i1].sleepTime[i2].append(actTable[i].actStartTime)
+                act[i1].sleepDuration[i2].append(actTable[i].actDuration)
+            }
+            else if (i > 0) && (actTable[i].week == act[i1].week) && (actTable[i].data != act[i1].data.last!) && (actTable[i].actType != "Сон"){
+                act[i1].data.append(actTable[i].data)
+                act[i1].actStartTime.append([actTable[i].actStartTime])
+                act[i1].actDuration.append([actTable[i].actDuration])
+                act[i1].actType.append([actTable[i].actType])
+                act[i1].sleepTime.append([])
+                act[i1].sleepDuration.append([])
+                i2 += 1
+            }
+            else if (i > 0) && (actTable[i].week == act[i1].week) && (actTable[i].data != act[i1].data.last!) && (actTable[i].actType == "Сон"){
+                act[i1].data.append(actTable[i].data)
+                act[i1].actStartTime.append([])
+                act[i1].actDuration.append([])
+                act[i1].actType.append([])
+                act[i1].sleepTime.append([actTable[i].actStartTime])
+                act[i1].sleepDuration.append([actTable[i].actDuration])
+                i2 += 1
+            }
+            else if (i > 0) && (actTable[i].week != act[i1].week) && (actTable[i].actType != "Сон"){
+                act.append(activity(week: actTable[i].week, data: [actTable[i].data], actStartTime: [[actTable[i].actStartTime]], actDuration: [[actTable[i].actDuration]], actType: [[actTable[i].actType]], sleepTime: [[]], sleepDuration: [[]]))
+                i2 = 0
                 i1 += 1
             }
-            if (i >= 1) && (actTable[i].actType == "Сон") && (actTable[i].data == actTable[i-1].data){
-                act[i1].sleepTime.append(actTable[i].actStartTime)
-                act[i1].sleepDuration.append(actTable[i].actDuration)
-            } else if (i >= 1) && (actTable[i].actType == "Сон") && (actTable[i].data != actTable[i-1].data){
-                act.append(activity(week: actTable[i].week, data: [], actStartTime: [], actDuration: [], actType: [], sleepTime: [actTable[i].actStartTime], sleepDuration: [actTable[i].actDuration]))
+            else if (i > 0) && (actTable[i].week != act[i1].week) && (actTable[i].actType == "Сон"){
+                act.append(activity(week: actTable[i].week, data: [actTable[i].data], actStartTime: [[]], actDuration: [[]], actType: [[]], sleepTime: [[actTable[i].actStartTime]], sleepDuration: [[actTable[i].actDuration]]))
+                i2 = 0
                 i1 += 1
             }
             i += 1
