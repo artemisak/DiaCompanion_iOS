@@ -478,8 +478,11 @@ struct activity {
     var sleepDuration: [[Int]]
 }
 
-func defWeek(date: Date, weekBefore: Int, dayOfWeek: Int) -> Int {
-    return 1
+func defWeek(nowDate: Date, dateBegin: Date, weekOfStart: Int, dayOfStartWeek: Int) -> Int {
+    let pastInDays = 7*weekOfStart-(7-dayOfStartWeek)
+    let delta = DateInterval(start: dateBegin, end: nowDate)
+    let res = (Double(pastInDays) + Double(delta.duration/(60*60*24)))/7
+    return Int(res.rounded(.up))
 }
 
 func getActivityRecords() -> [activity] {
@@ -501,8 +504,31 @@ func getActivityRecords() -> [activity] {
         let type = Expression<String>("rod")
         let duration = Expression<Int>("min")
 
+        let usermac = Table("usermac")
+        let weekOfStart = Expression<Int?>("week")
+        let dayOfStartweek = Expression<Int?>("day")
+        let dateOfStart = Expression<String?>("datebegin")
+        
+        var pweek = 1
+        var pday = 1
+        var pdate = Date.now
+        for i in try db.prepare(usermac.select(weekOfStart,dayOfStartweek, dateOfStart)) {
+            if i[weekOfStart] != nil {
+                pweek = i[weekOfStart]!
+            }
+            if i[dayOfStartweek] != nil {
+                pday = i[dayOfStartweek]!
+            }
+            if i[dateOfStart] != nil {
+                pdate = dateFormatter1.date(from: i[dateOfStart]!)!
+            }
+        }
+        
         for i in try db.prepare(activitySheet.select(dateTime,duration,type)){
-            actTable.append(activityRow(week: defWeek(date: dateFormatter1.date(from: i[dateTime][6..<16])!, weekBefore: 1, dayOfWeek: 1), data: dateFormatter1.date(from: i[dateTime][6..<16])!, actStartTime: dateFormatter.date(from: i[dateTime][0..<6])!, actDuration: i[duration], actType: i[type]))
+            if pdate > dateFormatter1.date(from: i[dateTime][6..<16])! {
+                pdate = pdate.addingTimeInterval(-DateInterval(start: dateFormatter1.date(from: i[dateTime][6..<16])!, end: pdate).duration)
+            }
+            actTable.append(activityRow(week: defWeek(nowDate: dateFormatter1.date(from: i[dateTime][6..<16])!, dateBegin: pdate, weekOfStart: pweek, dayOfStartWeek: pday), data: dateFormatter1.date(from: i[dateTime][6..<16])!, actStartTime: dateFormatter.date(from: i[dateTime][0..<6])!, actDuration: i[duration], actType: i[type]))
         }
         
         actTable = actTable.sorted(by: {($0.data, $0.actStartTime) < ($1.data, $1.actStartTime)})

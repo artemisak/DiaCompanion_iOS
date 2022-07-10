@@ -184,7 +184,6 @@ func addSugarChange(lvl: Double, period: String, physical: Int, time: String){
         let _period = Expression<String>("period")
         let _physical = Expression<Int>("physical")
         let _time = Expression<String>("time")
-        print(lvl)
         try db.run(sugar.insert(_lvl <- lvl, _period <- period, _physical <- physical, _time <- time))
     }
     catch {
