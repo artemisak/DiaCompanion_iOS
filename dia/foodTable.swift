@@ -3,12 +3,13 @@ import xlsxwriter
 
 class exportTable {
     func generate() -> URL {
-        let documentDirectory = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor:nil, create:false)
+        let documentDirectory = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
         let fileURL = documentDirectory.appendingPathComponent("foodTable.xlsx")
         
         let workbook = workbook_new((fileURL.absoluteString.dropFirst(6) as NSString).fileSystemRepresentation)
         let worksheet1 = workbook_add_worksheet(workbook, "Приемы пищи")
         let worksheet2 = workbook_add_worksheet(workbook, "Изменения сахара")
+        let worksheet3 = workbook_add_worksheet(workbook, "Физическая нагрузка и сон")
         
         let merge_f = workbook_add_format(workbook);
         format_set_border(merge_f, UInt8(LXW_BORDER_DOTTED.rawValue))
@@ -605,8 +606,115 @@ class exportTable {
             }
         }
         
+        worksheet_merge_range(worksheet3, 0, 0, 0, 7, userName, nil)
+        worksheet_write_string(worksheet3, 1, 0, "Физическая нагрузка", merge_format41)
+        worksheet_write_string(worksheet3, 2, 0, "Нед. беременности", merge_format41)
+        worksheet_write_string(worksheet3, 2, 1, "Дата", merge_format41)
+        worksheet_write_string(worksheet3, 2, 2, "Время", merge_format41)
+        worksheet_write_string(worksheet3, 2, 3, "Длительность, мин.", merge_format41)
+        worksheet_write_string(worksheet3, 2, 4, "Тип нагрузки", merge_format41)
+        worksheet_write_string(worksheet3, 1, 6, "Сон", merge_format41)
+        worksheet_write_string(worksheet3, 2, 6, "Время", merge_format41)
+        worksheet_write_string(worksheet3, 2, 7, "Длительность, ч", merge_format41)
+        
+        let tbl4 =  getActivityRecords()
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd.MM.yyyy"
+        let dateFormatter1 = DateFormatter()
+        dateFormatter1.dateFormat = "HH:mm"
+        var temp1 = 3
+        var temp2 = 3
+        var temp3 = 3
+        var temp4 = 3
+        var temp5 = 3
+        var temp6 = 3
+        var temp7 = 3
+        for i in 0..<tbl4.count {
+            var length = tbl4[i].actType.filter{$0 == []}.count
+            length = length + tbl4[i].actType.joined().count
+            if temp1 != temp1+length-1 {
+                worksheet_merge_range(worksheet3, lxw_row_t(temp1), 0, lxw_row_t(temp1+length-1), 0, "\(tbl4[i].week)", merge_format1)
+            } else {
+                worksheet_write_string(worksheet3, lxw_row_t(temp1), 0, "\(tbl4[i].week)", merge_format1)
+            }
+            temp1 = temp1 + length
+            for i1 in 0..<tbl4[i].data.count {
+                if (tbl4[i].actType[i1].count <= 1) {
+                    worksheet_write_string(worksheet3, lxw_row_t(temp2), 1, dateFormatter.string(from: tbl4[i].data[i1]), merge_format1)
+                    temp2 += 1
+                } else {
+                    worksheet_merge_range(worksheet3, lxw_row_t(temp2), 1, lxw_row_t(temp2 + tbl4[i].actType[i1].count - 1), 1, dateFormatter.string(from: tbl4[i].data[i1]), merge_format1)
+                    temp2 = temp2 + tbl4[i].actType[i1].count
+                }
+            }
+            for i2 in tbl4[i].actStartTime {
+                if i2.count == 0 {
+                    worksheet_write_string(worksheet3, lxw_row_t(temp3), 2, nil, nil)
+                    temp3 += 1
+                } else {
+                    _=i2.map {
+                        worksheet_write_string(worksheet3, lxw_row_t(temp3), 2, dateFormatter1.string(from: $0), merge_format)
+                        temp3 += 1
+                    }
+                }
+            }
+            for i3 in tbl4[i].actDuration {
+                if i3.count == 0 {
+                    worksheet_write_string(worksheet3, lxw_row_t(temp4), 3, nil, nil)
+                    temp4 += 1
+                } else {
+                    _=i3.map {
+                        worksheet_write_string(worksheet3, lxw_row_t(temp4), 3, "\($0)", merge_format)
+                        temp4 += 1
+                    }
+                }
+            }
+            for i4 in tbl4[i].actType {
+                if i4.count == 0 {
+                    worksheet_write_string(worksheet3, lxw_row_t(temp5), 4, nil, nil)
+                    temp5 += 1
+                } else {
+                    _=i4.map {
+                        worksheet_write_string(worksheet3, lxw_row_t(temp5), 4, $0, merge_format)
+                        temp5 += 1
+                    }
+                }
+            }
+            for i5 in 0..<tbl4[i].sleepTime.count {
+                if tbl4[i].actType[i5].count <= 1 && !tbl4[i].sleepTime[i5].isEmpty {
+                    let slt = tbl4[i].sleepTime[i5].map{dateFormatter1.string(from: $0)}
+                    worksheet_write_string(worksheet3, lxw_row_t(temp6), 6, slt.joined(separator: "\n"), merge_format2)
+                    temp6 += 1
+                } else if tbl4[i].actType[i5].count > 1 && !tbl4[i].sleepTime[i5].isEmpty {
+                    let slt = tbl4[i].sleepTime[i5].map{dateFormatter1.string(from: $0)}
+                    worksheet_merge_range(worksheet3, lxw_row_t(temp6), 6, lxw_row_t(temp6 + tbl4[i].actType[i5].count - 1), 6, slt.joined(separator: "\n"), merge_format2)
+                    temp6 = temp6 + tbl4[i].actType[i5].count
+                } else if tbl4[i].actType[i5].count <= 1 && tbl4[i].sleepTime[i5].isEmpty {
+                    temp6 += 1
+                } else if tbl4[i].actType[i5].count > 1 && tbl4[i].sleepTime[i5].isEmpty {
+                    temp6 = temp6 + tbl4[i].actType[i5].count
+                }
+            }
+            for i6 in 0..<tbl4[i].sleepDuration.count {
+                if tbl4[i].actType[i6].count <= 1 && !tbl4[i].sleepDuration[i6].isEmpty {
+                    let slt = tbl4[i].sleepDuration[i6].map{"\($0)"}
+                    worksheet_write_string(worksheet3, lxw_row_t(temp7), 7, slt.joined(separator: "\n"), merge_format2)
+                    temp7 += 1
+                } else if tbl4[i].actType[i6].count > 1 && !tbl4[i].sleepDuration[i6].isEmpty {
+                    let slt = tbl4[i].sleepDuration[i6].map{"\($0)"}
+                    worksheet_merge_range(worksheet3, lxw_row_t(temp7), 7, lxw_row_t(temp7 + tbl4[i].actType[i6].count - 1), 7, slt.joined(separator: "\n"), merge_format2)
+                    temp7 = temp7 + tbl4[i].actType[i6].count
+                } else if tbl4[i].actType[i6].count <= 1 && tbl4[i].sleepDuration[i6].isEmpty {
+                    temp7 += 1
+                } else if tbl4[i].actType[i6].count > 1 && tbl4[i].sleepDuration[i6].isEmpty {
+                    temp7 = temp7 + tbl4[i].actType[i6].count
+                }
+            }
+        }
+        
         worksheet_protect(worksheet1, "pass123", nil)
         worksheet_protect(worksheet2, "pass123", nil)
+        worksheet_protect(worksheet3, "pass123", nil)
         let error = workbook_close(workbook)
         
         if (error.rawValue != LXW_NO_ERROR.rawValue){
