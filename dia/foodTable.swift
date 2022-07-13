@@ -1,5 +1,6 @@
 import Foundation
 import xlsxwriter
+import SwiftUI
 
 class exportTable {
     func generate() -> URL {
@@ -126,6 +127,14 @@ class exportTable {
         worksheet_set_column(worksheet2, 29, 29, 15, nil);
         worksheet_set_column(worksheet2, 30, 30, 15, nil);
         worksheet_set_column(worksheet2, 31, 31, 27, nil);
+        
+        worksheet_set_column(worksheet3, 0, 0, 17.5, nil)
+        worksheet_set_column(worksheet3, 1, 1, 14, nil)
+        worksheet_set_column(worksheet3, 2, 2, 10, nil)
+        worksheet_set_column(worksheet3, 3, 3, 17.5, nil)
+        worksheet_set_column(worksheet3, 4, 4, 20, nil)
+        worksheet_set_column(worksheet3, 6, 6, 10, nil)
+        worksheet_set_column(worksheet3, 7, 7, 16.5, nil)
         
         
         let tbl = getFoodRecords()
@@ -629,21 +638,27 @@ class exportTable {
         var temp5 = 3
         var temp6 = 3
         var temp7 = 3
+        var textStyle = (merge_format, merge_format1, merge_format2)
         for i in 0..<tbl4.count {
+            if i % 2 == 0 {
+                textStyle = (merge_format, merge_format1, merge_format2)
+            } else {
+                textStyle = (merge_format_alt, merge_format_alt1, merge_format_alt2)
+            }
             var length = tbl4[i].actType.filter{$0 == []}.count
             length = length + tbl4[i].actType.joined().count
             if temp1 != temp1+length-1 {
-                worksheet_merge_range(worksheet3, lxw_row_t(temp1), 0, lxw_row_t(temp1+length-1), 0, "\(tbl4[i].week)", merge_format1)
+                worksheet_merge_range(worksheet3, lxw_row_t(temp1), 0, lxw_row_t(temp1+length-1), 0, "\(tbl4[i].week)", textStyle.1)
             } else {
-                worksheet_write_string(worksheet3, lxw_row_t(temp1), 0, "\(tbl4[i].week)", merge_format1)
+                worksheet_write_string(worksheet3, lxw_row_t(temp1), 0, "\(tbl4[i].week)", textStyle.1)
             }
             temp1 = temp1 + length
             for i1 in 0..<tbl4[i].data.count {
                 if (tbl4[i].actType[i1].count <= 1) {
-                    worksheet_write_string(worksheet3, lxw_row_t(temp2), 1, dateFormatter.string(from: tbl4[i].data[i1]), merge_format1)
+                    worksheet_write_string(worksheet3, lxw_row_t(temp2), 1, dateFormatter.string(from: tbl4[i].data[i1]), textStyle.1)
                     temp2 += 1
                 } else {
-                    worksheet_merge_range(worksheet3, lxw_row_t(temp2), 1, lxw_row_t(temp2 + tbl4[i].actType[i1].count - 1), 1, dateFormatter.string(from: tbl4[i].data[i1]), merge_format1)
+                    worksheet_merge_range(worksheet3, lxw_row_t(temp2), 1, lxw_row_t(temp2 + tbl4[i].actType[i1].count - 1), 1, dateFormatter.string(from: tbl4[i].data[i1]), textStyle.1)
                     temp2 = temp2 + tbl4[i].actType[i1].count
                 }
             }
@@ -653,7 +668,7 @@ class exportTable {
                     temp3 += 1
                 } else {
                     _=i2.map {
-                        worksheet_write_string(worksheet3, lxw_row_t(temp3), 2, dateFormatter1.string(from: $0), merge_format)
+                        worksheet_write_string(worksheet3, lxw_row_t(temp3), 2, dateFormatter1.string(from: $0), textStyle.0)
                         temp3 += 1
                     }
                 }
@@ -664,7 +679,7 @@ class exportTable {
                     temp4 += 1
                 } else {
                     _=i3.map {
-                        worksheet_write_string(worksheet3, lxw_row_t(temp4), 3, "\($0)", merge_format)
+                        worksheet_write_string(worksheet3, lxw_row_t(temp4), 3, "\($0)", textStyle.0)
                         temp4 += 1
                     }
                 }
@@ -675,7 +690,7 @@ class exportTable {
                     temp5 += 1
                 } else {
                     _=i4.map {
-                        worksheet_write_string(worksheet3, lxw_row_t(temp5), 4, $0, merge_format)
+                        worksheet_write_string(worksheet3, lxw_row_t(temp5), 4, $0, textStyle.0)
                         temp5 += 1
                     }
                 }
@@ -683,11 +698,11 @@ class exportTable {
             for i5 in 0..<tbl4[i].sleepTime.count {
                 if tbl4[i].actType[i5].count <= 1 && !tbl4[i].sleepTime[i5].isEmpty {
                     let slt = tbl4[i].sleepTime[i5].map{dateFormatter1.string(from: $0)}
-                    worksheet_write_string(worksheet3, lxw_row_t(temp6), 6, slt.joined(separator: "\n"), merge_format2)
+                    worksheet_write_string(worksheet3, lxw_row_t(temp6), 6, slt.joined(separator: "\n"), textStyle.2)
                     temp6 += 1
                 } else if tbl4[i].actType[i5].count > 1 && !tbl4[i].sleepTime[i5].isEmpty {
                     let slt = tbl4[i].sleepTime[i5].map{dateFormatter1.string(from: $0)}
-                    worksheet_merge_range(worksheet3, lxw_row_t(temp6), 6, lxw_row_t(temp6 + tbl4[i].actType[i5].count - 1), 6, slt.joined(separator: "\n"), merge_format2)
+                    worksheet_merge_range(worksheet3, lxw_row_t(temp6), 6, lxw_row_t(temp6 + tbl4[i].actType[i5].count - 1), 6, slt.joined(separator: "\n"), textStyle.2)
                     temp6 = temp6 + tbl4[i].actType[i5].count
                 } else if tbl4[i].actType[i5].count <= 1 && tbl4[i].sleepTime[i5].isEmpty {
                     temp6 += 1
@@ -698,11 +713,11 @@ class exportTable {
             for i6 in 0..<tbl4[i].sleepDuration.count {
                 if tbl4[i].actType[i6].count <= 1 && !tbl4[i].sleepDuration[i6].isEmpty {
                     let slt = tbl4[i].sleepDuration[i6].map{"\($0)"}
-                    worksheet_write_string(worksheet3, lxw_row_t(temp7), 7, slt.joined(separator: "\n"), merge_format2)
+                    worksheet_write_string(worksheet3, lxw_row_t(temp7), 7, slt.joined(separator: "\n"), textStyle.2)
                     temp7 += 1
                 } else if tbl4[i].actType[i6].count > 1 && !tbl4[i].sleepDuration[i6].isEmpty {
                     let slt = tbl4[i].sleepDuration[i6].map{"\($0)"}
-                    worksheet_merge_range(worksheet3, lxw_row_t(temp7), 7, lxw_row_t(temp7 + tbl4[i].actType[i6].count - 1), 7, slt.joined(separator: "\n"), merge_format2)
+                    worksheet_merge_range(worksheet3, lxw_row_t(temp7), 7, lxw_row_t(temp7 + tbl4[i].actType[i6].count - 1), 7, slt.joined(separator: "\n"), textStyle.2)
                     temp7 = temp7 + tbl4[i].actType[i6].count
                 } else if tbl4[i].actType[i6].count <= 1 && tbl4[i].sleepDuration[i6].isEmpty {
                     temp7 += 1
