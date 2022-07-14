@@ -9,8 +9,12 @@ class exportTable {
         
         let workbook = workbook_new((fileURL.absoluteString.dropFirst(6) as NSString).fileSystemRepresentation)
         let worksheet1 = workbook_add_worksheet(workbook, "Приемы пищи")
-        let worksheet2 = workbook_add_worksheet(workbook, "Изменения сахара")
+        let worksheet2 = workbook_add_worksheet(workbook, "Изменения сахара и инсулин")
         let worksheet3 = workbook_add_worksheet(workbook, "Физическая нагрузка и сон")
+        let worksheet4 = workbook_add_worksheet(workbook, "Кетоны в моче")
+        let worksheet5 = workbook_add_worksheet(workbook, "Масса тела")
+        let worksheet6 = workbook_add_worksheet(workbook, "Список полных дней")
+        let worksheet7 = workbook_add_worksheet(workbook, "Удаленные записи")
         
         let merge_f = workbook_add_format(workbook);
         format_set_border(merge_f, UInt8(LXW_BORDER_DOTTED.rawValue))
@@ -135,6 +139,16 @@ class exportTable {
         worksheet_set_column(worksheet3, 4, 4, 20, nil)
         worksheet_set_column(worksheet3, 6, 6, 10, nil)
         worksheet_set_column(worksheet3, 7, 7, 16.5, nil)
+        
+        worksheet_set_column(worksheet4, 0, 0, 15, nil)
+        worksheet_set_column(worksheet4, 1, 1, 10, nil)
+        worksheet_set_column(worksheet4, 2, 2, 10, nil)
+        worksheet_set_column(worksheet4, 3, 3, 15, nil)
+        
+        worksheet_set_column(worksheet5, 0, 0, 15, nil)
+        worksheet_set_column(worksheet5, 1, 1, 10, nil)
+        worksheet_set_column(worksheet5, 2, 2, 10, nil)
+        worksheet_set_column(worksheet5, 3, 3, 15, nil)
         
         
         let tbl = getFoodRecords()
@@ -727,9 +741,45 @@ class exportTable {
             }
         }
         
+        let tbl5 = getKetons()
+        let df = DateFormatter()
+        df.dateFormat = "dd.MM.yyyy"
+        let df1 = DateFormatter()
+        df1.dateFormat = "HH:mm"
+        
+        worksheet_merge_range(worksheet4, 0, 0, 0, 3, userName, nil)
+        worksheet_write_string(worksheet4, 1, 0, "Кетоны в моче", merge_format41)
+        worksheet_write_string(worksheet4, 2, 1, "Дата", merge_format41)
+        worksheet_write_string(worksheet4, 2, 2, "Время", merge_format41)
+        worksheet_write_string(worksheet4, 2, 3, "Уровень ммоль/л", merge_format41)
+        
+        for i in 0..<tbl5.count {
+            worksheet_write_string(worksheet4, lxw_row_t(3+i), 1, df.string(from: tbl5[i].date), nil)
+            worksheet_write_string(worksheet4, lxw_row_t(3+i), 2, df1.string(from: tbl5[i].time), nil)
+            worksheet_write_string(worksheet4, lxw_row_t(3+i), 3, "\(tbl5[i].lvl)", nil)
+        }
+        
+        let tbl6 = getMassa()
+        worksheet_merge_range(worksheet5, 0, 0, 0, 3, userName, nil)
+        worksheet_write_string(worksheet5, 1, 0, "Масса тела", merge_format41)
+        worksheet_write_string(worksheet5, 2, 1, "Дата", merge_format41)
+        worksheet_write_string(worksheet5, 2, 2, "Время", merge_format41)
+        worksheet_write_string(worksheet5, 2, 3, "Вес, кг", merge_format41)
+        
+        for i in 0..<tbl6.count {
+            worksheet_write_string(worksheet5, lxw_row_t(3+i), 1, df.string(from: tbl6[i].date), nil)
+            worksheet_write_string(worksheet5, lxw_row_t(3+i), 2, df1.string(from: tbl6[i].time), nil)
+            worksheet_write_string(worksheet5, lxw_row_t(3+i), 3, "\(tbl6[i].weight)", nil)
+        }
+        
         worksheet_protect(worksheet1, "pass123", nil)
         worksheet_protect(worksheet2, "pass123", nil)
         worksheet_protect(worksheet3, "pass123", nil)
+        worksheet_protect(worksheet4, "pass123", nil)
+        worksheet_protect(worksheet5, "pass123", nil)
+        worksheet_protect(worksheet6, "pass123", nil)
+        worksheet_protect(worksheet7, "pass123", nil)
+
         let error = workbook_close(workbook)
         
         if (error.rawValue != LXW_NO_ERROR.rawValue){

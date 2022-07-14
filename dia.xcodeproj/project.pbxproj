@@ -32,7 +32,7 @@
 		AC32A68227260081001DDB9F /* pid.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC32A68127260081001DDB9F /* pid.swift */; };
 		AC32A68427260602001DDB9F /* pWeight.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC32A68327260602001DDB9F /* pWeight.swift */; };
 		AC32A6862726060D001DDB9F /* pHeight.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC32A6852726060D001DDB9F /* pHeight.swift */; };
-		AC37A67B276147AF00558E55 /* foodTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC37A67A276147AF00558E55 /* foodTable.swift */; };
+		AC37A67B276147AF00558E55 /* excelGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC37A67A276147AF00558E55 /* excelGenerator.swift */; };
 		AC3B847526EBA1F200E98681 /* ketonur.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3B847426EBA1F200E98681 /* ketonur.swift */; };
 		AC3C959B26D1B570005B1393 /* enterFood.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3C959A26D1B570005B1393 /* enterFood.swift */; };
 		AC631E0F26CEA90D0033CCFF /* ModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC631E0E26CEA90D0033CCFF /* ModalView.swift */; };
@@ -90,7 +90,7 @@
 		AC32A68127260081001DDB9F /* pid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = pid.swift; sourceTree = "<group>"; };
 		AC32A68327260602001DDB9F /* pWeight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = pWeight.swift; sourceTree = "<group>"; };
 		AC32A6852726060D001DDB9F /* pHeight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = pHeight.swift; sourceTree = "<group>"; };
-		AC37A67A276147AF00558E55 /* foodTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = foodTable.swift; sourceTree = "<group>"; };
+		AC37A67A276147AF00558E55 /* excelGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = excelGenerator.swift; sourceTree = "<group>"; };
 		AC3B847426EBA1F200E98681 /* ketonur.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ketonur.swift; sourceTree = "<group>"; };
 		AC3C959A26D1B570005B1393 /* enterFood.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = enterFood.swift; sourceTree = "<group>"; };
 		AC631E0E26CEA90D0033CCFF /* ModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalView.swift; sourceTree = "<group>"; };
@@ -187,7 +187,7 @@
 				A706DA7F2843864A00473941 /* emailSender.swift */,
 				A70BCC3927B9471E00C22703 /* loginManager.swift */,
 				ACC3798526ECFA7E00E0729E /* massa.swift */,
-				AC37A67A276147AF00558E55 /* foodTable.swift */,
+				AC37A67A276147AF00558E55 /* excelGenerator.swift */,
 				ACF2F0A926DEA8300066753D /* history.swift */,
 				A706DA812843867800473941 /* export.swift */,
 				AC6327012751012C00C25E23 /* historyManager.swift */,
@@ -357,7 +357,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				ACF4E410272DB126002D2797 /* RKMonth.swift in Sources */,
-				AC37A67B276147AF00558E55 /* foodTable.swift in Sources */,
+				AC37A67B276147AF00558E55 /* excelGenerator.swift in Sources */,
 				ACCBA996272B1DA300D785F6 /* RKViewController.swift in Sources */,
 				AC631E0F26CEA90D0033CCFF /* ModalView.swift in Sources */,
 				ACF4E40E272DB126002D2797 /* RKManager.swift in Sources */,
@@ -549,7 +549,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.9.3;
+				MARKETING_VERSION = 1.9.4;
 				PRODUCT_BUNDLE_IDENTIFIER = app.dia;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -578,7 +578,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.9.3;
+				MARKETING_VERSION = 1.9.4;
 				PRODUCT_BUNDLE_IDENTIFIER = app.dia;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;

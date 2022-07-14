@@ -589,3 +589,87 @@ func getActivityRecords() -> [activity] {
     return act
 }
 
+struct ketonsRow {
+    var date: Date
+    var time: Date
+    var lvl: Double
+}
+
+func getKetons() -> [ketonsRow] {
+    var ketTable = [ketonsRow]()
+    do {
+        let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
+        let path = documents + "/diacompanion.db"
+        let sourcePath = Bundle.main.path(forResource: "diacompanion", ofType: "db")!
+        _=copyDatabaseIfNeeded(sourcePath: sourcePath)
+        let db = try Connection(path)
+        let ket = Table("ketonur")
+        let mmol = Expression<Double>("mmol")
+        let dateTime = Expression<String>("time")
+        
+        let dtformatter = DateFormatter()
+        dtformatter.dateFormat = "HH:mm"
+        let dtformatter1 = DateFormatter()
+        dtformatter1.dateFormat = "dd.MM.yyyy"
+        
+        for i in try db.prepare(ket.select(dateTime,mmol)){
+            ketTable.append(ketonsRow(date: dtformatter1.date(from: i[dateTime][6..<16])!, time: dtformatter.date(from: i[dateTime][0..<5])!, lvl: i[mmol]))
+        }
+    }
+    catch {
+        print(error)
+    }
+    return ketTable.sorted(by: {($0.date, $0.time) < ($1.date, $1.time)})
+}
+
+struct massaRow {
+    var date: Date
+    var time: Date
+    var weight: Double
+}
+
+func getMassa() -> [massaRow] {
+    var mTable = [massaRow]()
+    do {
+        let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
+        let path = documents + "/diacompanion.db"
+        let sourcePath = Bundle.main.path(forResource: "diacompanion", ofType: "db")!
+        _=copyDatabaseIfNeeded(sourcePath: sourcePath)
+        let db = try Connection(path)
+        let massa = Table("massa")
+        let m = Expression<Double>("m")
+        let time = Expression<String>("time")
+        
+        let df = DateFormatter()
+        df.dateFormat = "HH:mm"
+        let df1 = DateFormatter()
+        df1.dateFormat = "dd.MM.yyyy"
+        
+        for i in try db.prepare(massa.select(m,time)){
+            mTable.append(massaRow(date: df1.date(from: i[time][6..<16])!, time: df.date(from: i[time][0..<5])!, weight: i[m]))
+        }
+    }
+    catch {
+        print(error)
+    }
+    return mTable.sorted(by: {($0.date, $0.time) < ($1.date, $1.time)})
+}
+
+struct fullDays {
+    var days: Date
+}
+
+func getFullDays() -> [fullDays] {
+    var fdays = [fullDays]()
+    do {
+        let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
+        let path = documents + "/diacompanion.db"
+        let sourcePath = Bundle.main.path(forResource: "diacompanion", ofType: "db")!
+        _=copyDatabaseIfNeeded(sourcePath: sourcePath)
+        let db = try Connection(path)
+    }
+    catch {
+        
+    }
+    return fdays
+}
