@@ -667,9 +667,16 @@ func getFullDays() -> [fullDays] {
         let sourcePath = Bundle.main.path(forResource: "diacompanion", ofType: "db")!
         _=copyDatabaseIfNeeded(sourcePath: sourcePath)
         let db = try Connection(path)
+        let days = Table("fulldays")
+        let day = Expression<String>("day")
+        let df = DateFormatter()
+        df.dateFormat = "dd.MM.yyyy"
+        for i in try db.prepare(days.select(day)){
+            fdays.append(fullDays(days: df.date(from: i[day])!))
+        }
     }
     catch {
-        
+        print(error)
     }
-    return fdays
+    return fdays.sorted(by: {$0.days < $1.days})
 }

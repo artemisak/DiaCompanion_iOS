@@ -150,6 +150,7 @@ class exportTable {
         worksheet_set_column(worksheet5, 2, 2, 10, nil)
         worksheet_set_column(worksheet5, 3, 3, 15, nil)
         
+        worksheet_set_column(worksheet6, 0, 0, 17.5, nil)
         
         let tbl = getFoodRecords()
         let userName = getName()
@@ -770,6 +771,15 @@ class exportTable {
             worksheet_write_string(worksheet5, lxw_row_t(3+i), 1, df.string(from: tbl6[i].date), nil)
             worksheet_write_string(worksheet5, lxw_row_t(3+i), 2, df1.string(from: tbl6[i].time), nil)
             worksheet_write_string(worksheet5, lxw_row_t(3+i), 3, "\(tbl6[i].weight)", nil)
+        }
+        
+        let tbl7 = getFullDays()
+        worksheet_merge_range(worksheet6, 0, 0, 0, 3, userName, nil)
+        worksheet_write_string(worksheet6, 1, 0, "Список полных дней", merge_format41)
+        worksheet_write_string(worksheet6, 2, 0, "Дата", merge_format41)
+        
+        for i in 0..<tbl7.count {
+            worksheet_write_string(worksheet6, lxw_row_t(3+i), 0, df.string(from: tbl7[i].days), nil)
         }
         
         worksheet_protect(worksheet1, "pass123", nil)
