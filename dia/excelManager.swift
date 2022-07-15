@@ -699,7 +699,7 @@ func getDeletedRecords() -> [deletedRecords]{
         let ddeleted = Table("deleted")
         let ddate = Expression<String>("date")
         let dtime = Expression<String>("time")
-        let dtype = Expression<String>("tyle")
+        let dtype = Expression<String>("type")
         let dcontext = Expression<String>("context")
         
         let df = DateFormatter()

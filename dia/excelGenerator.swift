@@ -154,7 +154,7 @@ class exportTable {
         
         worksheet_set_column(worksheet7, 0, 0, 17.5, nil)
         worksheet_set_column(worksheet7, 1, 1, 10, nil)
-        worksheet_set_column(worksheet7, 2, 2, 10, nil)
+        worksheet_set_column(worksheet7, 2, 2, 27, nil)
         worksheet_set_column(worksheet7, 3, 3, 20, nil)
         
         let tbl = getFoodRecords()
