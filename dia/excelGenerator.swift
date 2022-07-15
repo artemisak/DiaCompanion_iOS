@@ -152,6 +152,11 @@ class exportTable {
         
         worksheet_set_column(worksheet6, 0, 0, 17.5, nil)
         
+        worksheet_set_column(worksheet7, 0, 0, 17.5, nil)
+        worksheet_set_column(worksheet7, 1, 1, 10, nil)
+        worksheet_set_column(worksheet7, 2, 2, 10, nil)
+        worksheet_set_column(worksheet7, 3, 3, 20, nil)
+        
         let tbl = getFoodRecords()
         let userName = getName()
         
@@ -780,6 +785,21 @@ class exportTable {
         
         for i in 0..<tbl7.count {
             worksheet_write_string(worksheet6, lxw_row_t(3+i), 0, df.string(from: tbl7[i].days), nil)
+        }
+        
+        let tbl8 = getDeletedRecords()
+        worksheet_merge_range(worksheet7, 0, 0, 0, 3, userName, nil)
+        worksheet_write_string(worksheet7, 1, 0, "Удаленные записи", merge_format41)
+        worksheet_write_string(worksheet7, 2, 0, "Дата", merge_format41)
+        worksheet_write_string(worksheet7, 2, 1, "Время", merge_format41)
+        worksheet_write_string(worksheet7, 2, 2, "Тип", merge_format41)
+        worksheet_write_string(worksheet7, 2, 3, "Описание", merge_format41)
+        
+        for i in 0..<tbl8.count {
+            worksheet_write_string(worksheet7, lxw_row_t(3+i), 0, df.string(from: tbl8[i].date), nil)
+            worksheet_write_string(worksheet7, lxw_row_t(3+i), 1, df1.string(from: tbl8[i].time), nil)
+            worksheet_write_string(worksheet7, lxw_row_t(3+i), 2, tbl8[i].type, nil)
+            worksheet_write_string(worksheet7, lxw_row_t(3+i), 3, tbl8[i].context, nil)
         }
         
         worksheet_protect(worksheet1, "pass123", nil)

@@ -387,7 +387,7 @@ struct history: View {
     
     func removeRows(at offsets: IndexSet) {
         offsets.sorted(by: > ).forEach {i in
-            deleteFromBD(idToDelete: hList.histList[i].bdID, table: hList.histList[i].type)
+            deleteAndSave(idToDelete: hList.histList[i].bdID, table: hList.histList[i].type, info: [hList.histList[i].date, hList.histList[i].name])
         }
         hList.histList.remove(atOffsets: offsets)
     }

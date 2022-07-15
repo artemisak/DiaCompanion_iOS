@@ -146,6 +146,7 @@ func deleteFromBD(idToDelete: [Int], table: Int) {
         else if table == 5 {
             t = "massa"
         }
+        
         let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
         let path = documents + "/diacompanion.db"
         let sourcePath = Bundle.main.path(forResource: "diacompanion", ofType: "db")!
@@ -156,6 +157,62 @@ func deleteFromBD(idToDelete: [Int], table: Int) {
         for i in 0...idToDelete.count-1 {
             try db.run(diary.filter(id == idToDelete[i]).delete())
         }
+    }
+    catch {
+        print(error)
+    }
+}
+
+func deleteAndSave(idToDelete: [Int], table: Int, info: [Any]) {
+    do {
+        var t = ""
+        var type = ""
+        if table == 0 {
+            t = "diary"
+            type = "Приемы пищи"
+        }
+        else if table == 1 {
+            t = "act"
+            type = "Физическая нагрузка и сон"
+        }
+        else if table == 2 {
+            t = "inject"
+            type = "Введение инсулина"
+        }
+        else if table == 3 {
+            t = "sugarChange"
+            type = "Измерение сахара"
+        }
+        else if table == 4 {
+            t = "ketonur"
+            type = "Кетоны в моче"
+        }
+        else if table == 5 {
+            t = "massa"
+            type = "Измерение массы тела"
+        }
+        
+        let day = (info[0] as? String)![6..<16]
+        let time = (info[0] as? String)![0..<6]
+        let name = (info[1] as? String)!
+        
+        let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
+        let path = documents + "/diacompanion.db"
+        let sourcePath = Bundle.main.path(forResource: "diacompanion", ofType: "db")!
+        _=copyDatabaseIfNeeded(sourcePath: sourcePath)
+        let db = try Connection(path)
+        let diary = Table(t)
+        let id = Expression<Int>("id")
+        for i in 0...idToDelete.count-1 {
+            try db.run(diary.filter(id == idToDelete[i]).delete())
+        }
+        
+        let deleted = Table("deleted")
+        let ddate = Expression<String>("date")
+        let dtime = Expression<String>("time")
+        let dtype = Expression<String>("type")
+        let dcontext = Expression<String>("context")
+        try db.run(deleted.insert(ddate <- day, dtime <- time, dtype <- type, dcontext <- name))
     }
     catch {
         print(error)

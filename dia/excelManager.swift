@@ -680,3 +680,39 @@ func getFullDays() -> [fullDays] {
     }
     return fdays.sorted(by: {$0.days < $1.days})
 }
+
+struct deletedRecords {
+    var date: Date
+    var time: Date
+    var type: String
+    var context: String
+}
+
+func getDeletedRecords() -> [deletedRecords]{
+    var deleted = [deletedRecords]()
+    do {
+        let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
+        let path = documents + "/diacompanion.db"
+        let sourcePath = Bundle.main.path(forResource: "diacompanion", ofType: "db")!
+        _=copyDatabaseIfNeeded(sourcePath: sourcePath)
+        let db = try Connection(path)
+        let ddeleted = Table("deleted")
+        let ddate = Expression<String>("date")
+        let dtime = Expression<String>("time")
+        let dtype = Expression<String>("tyle")
+        let dcontext = Expression<String>("context")
+        
+        let df = DateFormatter()
+        df.dateFormat = "dd.MM.yyyy"
+        let df1 = DateFormatter()
+        df1.dateFormat = "HH:mm"
+        
+        for i in try db.prepare(ddeleted.select(ddate,dtime, dtype, dcontext)){
+            deleted.append(deletedRecords(date: df.date(from: i[ddate])!, time: df1.date(from: i[dtime])!, type: i[dtype], context: i[dcontext]))
+        }
+    }
+    catch {
+        print(error)
+    }
+    return deleted.sorted(by: {($0.date, $0.time) < ($1.date, $1.time)})
+}
