@@ -8,8 +8,8 @@ class exportTable {
         let fileURL = documentDirectory.appendingPathComponent("foodTable.xlsx")
         
         let workbook = workbook_new((fileURL.absoluteString.dropFirst(6) as NSString).fileSystemRepresentation)
-        let worksheet1 = workbook_add_worksheet(workbook, "Приемы пищи")
         let worksheet2 = workbook_add_worksheet(workbook, "Изменения сахара и инсулин")
+        let worksheet1 = workbook_add_worksheet(workbook, "Приемы пищи")
         let worksheet3 = workbook_add_worksheet(workbook, "Физическая нагрузка и сон")
         let worksheet4 = workbook_add_worksheet(workbook, "Кетоны в моче")
         let worksheet5 = workbook_add_worksheet(workbook, "Масса тела")
@@ -114,6 +114,7 @@ class exportTable {
         worksheet_set_column(worksheet1, 28, 34, 19.5, nil);
         
         worksheet_set_column(worksheet2, 0, 0, 20, nil);
+        worksheet_set_column(worksheet2, 1, 1, 10, nil);
         worksheet_set_column(worksheet2, 15, 15, 15, nil);
         worksheet_set_column(worksheet2, 16, 16, 27, nil);
         worksheet_set_column(worksheet2, 17, 17, 15, nil);
@@ -315,6 +316,7 @@ class exportTable {
         }
         
         worksheet_write_string(worksheet1, lxw_row_t(3+r1+1), 0, "Среднее по дням", merge_format3)
+        worksheet_write_string(worksheet1, lxw_row_t(3+r1+2), 0, "Неделя бер.", merge_format3)
         worksheet_write_string(worksheet1, lxw_row_t(3+r1+2), 1, "Дата", merge_format3)
         worksheet_merge_range(worksheet1, lxw_row_t(3+r1+2), 2, lxw_row_t(3+r1+2), 4, nil, merge_format3);
         worksheet_write_string(worksheet1, lxw_row_t(3+r1+2), 5, "Масса, гр.", merge_format3)
@@ -348,7 +350,16 @@ class exportTable {
         worksheet_write_string(worksheet1, lxw_row_t(3+r1+2), 33, "Органическая кисл., в г.", merge_format3)
         worksheet_write_string(worksheet1, lxw_row_t(3+r1+2), 34, "Ниациновый экв., в мг.", merge_format3)
         
+        let info = getWeeksInfo()
+        let pweek = info.0
+        let pday = info.1
+        var pdate = info.2
+        
         for i in 0..<tbl.count {
+            if pdate > tbl[i].day {
+                pdate = pdate.addingTimeInterval(-DateInterval(start: tbl[i].day, end: pdate).duration)
+            }
+            worksheet_write_string(worksheet1, lxw_row_t(3+r1+3+i), 0, "\(defWeek(nowDate: tbl[i].day, dateBegin: pdate, weekOfStart: pweek, dayOfStartWeek: pday))", nil)
             worksheet_write_string(worksheet1, lxw_row_t(3+r1+3+i), 1, formater.string(from: tbl[i].day), nil)
             worksheet_write_string(worksheet1, lxw_row_t(3+r1+3+i), 5, "\(round(Array(tbl[i].g.joined()).compactMap(Double.init).reduce(0,+)/Double(tbl[i].g.joined().count)*100)/100)", nil)
             worksheet_write_string(worksheet1, lxw_row_t(3+r1+3+i), 6, "\(round(Array(tbl[i].carbo.joined()).compactMap(Double.init).reduce(0,+)/Double(tbl[i].carbo.joined().count)*100)/100)", nil)
@@ -387,6 +398,7 @@ class exportTable {
         
         worksheet_merge_range(worksheet2, 0, 0, 0, 13, userName, nil);
         worksheet_merge_range(worksheet2, 1, 0, 1, 13, "Измерение сахара", merge_format41);
+        worksheet_write_string(worksheet2, 2, 0, "Неделя бер.", merge_format41);
         worksheet_write_string(worksheet2, 2, 1, "Дата", merge_format41);
         worksheet_merge_range(worksheet2, 2, 2, 2, 3, "Натощак", merge_format41);
         worksheet_merge_range(worksheet2, 2, 4, 2, 5, "После завтрака", merge_format41);
@@ -405,6 +417,10 @@ class exportTable {
         
         var i1 = 0
         for i in 0..<tbl2.count {
+            if pdate > tbl[i].day {
+                pdate = pdate.addingTimeInterval(-DateInterval(start: formater.date(from: tbl2[i].date)!, end: pdate).duration)
+            }
+            worksheet_write_string(worksheet2, lxw_row_t(i1+3), 0, "\(defWeek(nowDate: formater.date(from: tbl2[i].date)!, dateBegin: pdate, weekOfStart: pweek, dayOfStartWeek: pday))", nil)
             worksheet_write_string(worksheet2, lxw_row_t(i1+3), 1, tbl2[i].date, nil)
             // Натощак
             var par = 0
@@ -637,7 +653,7 @@ class exportTable {
         
         worksheet_merge_range(worksheet3, 0, 0, 0, 7, userName, nil)
         worksheet_write_string(worksheet3, 1, 0, "Физическая нагрузка", merge_format41)
-        worksheet_write_string(worksheet3, 2, 0, "Нед. беременности", merge_format41)
+        worksheet_write_string(worksheet3, 2, 0, "Неделя бер.", merge_format41)
         worksheet_write_string(worksheet3, 2, 1, "Дата", merge_format41)
         worksheet_write_string(worksheet3, 2, 2, "Время", merge_format41)
         worksheet_write_string(worksheet3, 2, 3, "Длительность, мин.", merge_format41)
@@ -755,11 +771,16 @@ class exportTable {
         
         worksheet_merge_range(worksheet4, 0, 0, 0, 3, userName, nil)
         worksheet_write_string(worksheet4, 1, 0, "Кетоны в моче", merge_format41)
+        worksheet_write_string(worksheet4, 2, 0, "Неделя бер.", merge_format41)
         worksheet_write_string(worksheet4, 2, 1, "Дата", merge_format41)
         worksheet_write_string(worksheet4, 2, 2, "Время", merge_format41)
         worksheet_write_string(worksheet4, 2, 3, "Уровень ммоль/л", merge_format41)
         
         for i in 0..<tbl5.count {
+            if pdate > tbl[i].day {
+                pdate = pdate.addingTimeInterval(-DateInterval(start: tbl5[i].date, end: pdate).duration)
+            }
+            worksheet_write_string(worksheet4, lxw_row_t(3+i), 0, "\(defWeek(nowDate: tbl5[i].date, dateBegin: pdate, weekOfStart: pweek, dayOfStartWeek: pday))", nil)
             worksheet_write_string(worksheet4, lxw_row_t(3+i), 1, df.string(from: tbl5[i].date), nil)
             worksheet_write_string(worksheet4, lxw_row_t(3+i), 2, df1.string(from: tbl5[i].time), nil)
             worksheet_write_string(worksheet4, lxw_row_t(3+i), 3, "\(tbl5[i].lvl)", nil)
@@ -768,11 +789,16 @@ class exportTable {
         let tbl6 = getMassa()
         worksheet_merge_range(worksheet5, 0, 0, 0, 3, userName, nil)
         worksheet_write_string(worksheet5, 1, 0, "Масса тела", merge_format41)
+        worksheet_write_string(worksheet5, 2, 0, "Неделя бер.", merge_format41)
         worksheet_write_string(worksheet5, 2, 1, "Дата", merge_format41)
         worksheet_write_string(worksheet5, 2, 2, "Время", merge_format41)
         worksheet_write_string(worksheet5, 2, 3, "Вес, кг", merge_format41)
         
         for i in 0..<tbl6.count {
+            if pdate > tbl[i].day {
+                pdate = pdate.addingTimeInterval(-DateInterval(start: tbl6[i].date, end: pdate).duration)
+            }
+            worksheet_write_string(worksheet4, lxw_row_t(3+i), 0, "\(defWeek(nowDate: tbl6[i].date, dateBegin: pdate, weekOfStart: pweek, dayOfStartWeek: pday))", nil)
             worksheet_write_string(worksheet5, lxw_row_t(3+i), 1, df.string(from: tbl6[i].date), nil)
             worksheet_write_string(worksheet5, lxw_row_t(3+i), 2, df1.string(from: tbl6[i].time), nil)
             worksheet_write_string(worksheet5, lxw_row_t(3+i), 3, "\(tbl6[i].weight)", nil)

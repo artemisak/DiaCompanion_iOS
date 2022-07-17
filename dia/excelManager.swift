@@ -129,11 +129,37 @@ func getFoodRecords() -> [TableRecord] {
         let ok = Expression<Double?>("ok")
         let ne = Expression<Double?>("ne")
         
+        // MARK: Добавляем недели беременности к записям
+        let usermac = Table("usermac")
+        let weekOfStart = Expression<Int?>("week")
+        let dayOfStartweek = Expression<Int?>("day")
+        let dateOfStart = Expression<String?>("datebegin")
+        
+        var pweek = 1
+        var pday = 1
+        var pdate = Date.now
+        for i in try db.prepare(usermac.select(weekOfStart,dayOfStartweek, dateOfStart)) {
+            if i[weekOfStart] != nil {
+                pweek = i[weekOfStart]!
+            }
+            if i[dayOfStartweek] != nil {
+                pday = i[dayOfStartweek]!
+            }
+            if i[dateOfStart] != nil {
+                pdate = dateFormatter.date(from: i[dateOfStart]!)!
+            }
+        }
+        
         for i in try db.prepare(foodTable.select(day,time,foodType,foodName,gram)){
             record.append(FoodRecord(day: dateFormatter.date(from: i[day])!, time: dateFormatter1.date(from: i[time])!,foodType: i[foodType], food: [i[foodName]], g: [i[gram]], carbo: [""], prot: [""], fat: [""], ec: [""], gi: [""], empty: [""], water: [""], nzhk: [""], hol: [""], pv: [""], zola: [""], na: [""], k: [""], ca: [""], mg: [""], p: [""], fe: [""], a:[""], b1: [""], b2: [""], rr: [""], c: [""], re: [""], kar: [""], mds: [""], kr: [""], te: [""], ok: [""], ne: [""]))
         }
         
+        var weeks: [Int] = []
         for i in 0..<record.count {
+            if pdate > record[i].day {
+                pdate = pdate.addingTimeInterval(-DateInterval(start: record[i].day, end: pdate).duration)
+            }
+            weeks.append(defWeek(nowDate: record[i].day, dateBegin: pdate, weekOfStart: pweek, dayOfStartWeek: pday))
             for i1 in try db.prepare(foodInfo.select(foodN, carbo, prot, fat, ec, gi, water, nzhk, hol, pv, zola, na, k, ca, mg, p, fe, a, b1, b2, rr, c, re, kar, mds, kr, te, ok, ne).filter(foodN == record[i].food[0])){
                 record[i].carbo = ["\(i1[carbo] ?? 0.0)"]
                 record[i].prot = ["\(i1[prot] ?? 0.0)"]
@@ -165,6 +191,13 @@ func getFoodRecords() -> [TableRecord] {
                 record[i].ne = ["\(i1[ne] ?? 0.0)"]
             }
         }
+        let numberOfWeek = Set(weeks.sorted(by: <))
+        var sheetsOffset: [[Int]] = [[0,0,2]]
+        for i in numberOfWeek {
+            let temp = sheetsOffset[sheetsOffset.endIndex-1][2] + weeks.filter({$0 == i}).count
+            sheetsOffset.append([i,temp-weeks.filter({$0 == i}).count+1, temp])
+        }
+        print(sheetsOffset.dropFirst())
         
         if record.count > 0 {
             record = record.sorted(by: {($0.day, $0.time, $0.foodType) < ($1.day, $1.time, $1.foodType)})
@@ -715,4 +748,41 @@ func getDeletedRecords() -> [deletedRecords]{
         print(error)
     }
     return deleted.sorted(by: {($0.date, $0.time) < ($1.date, $1.time)})
+}
+
+func getWeeksInfo() -> (Int,Int,Date) {
+    var pweek = 1
+    var pday = 1
+    var pdate = Date.now
+    do {
+        let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
+        let path = documents + "/diacompanion.db"
+        let sourcePath = Bundle.main.path(forResource: "diacompanion", ofType: "db")!
+        _=copyDatabaseIfNeeded(sourcePath: sourcePath)
+        let db = try Connection(path)
+
+        let usermac = Table("usermac")
+        let weekOfStart = Expression<Int?>("week")
+        let dayOfStartweek = Expression<Int?>("day")
+        let dateOfStart = Expression<String?>("datebegin")
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd.MM.yyyy"
+        
+        for i in try db.prepare(usermac.select(weekOfStart,dayOfStartweek, dateOfStart)) {
+            if i[weekOfStart] != nil {
+                pweek = i[weekOfStart]!
+            }
+            if i[dayOfStartweek] != nil {
+                pday = i[dayOfStartweek]!
+            }
+            if i[dateOfStart] != nil {
+                pdate = dateFormatter.date(from: i[dateOfStart]!)!
+            }
+        }
+    }
+    catch {
+        print(error)
+    }
+    return (pweek, pday, pdate)
 }
