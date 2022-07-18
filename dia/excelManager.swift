@@ -1,5 +1,6 @@
 import Foundation
 import SQLite
+import os
 
 struct FoodRecord {
     var day: Date
@@ -295,8 +296,9 @@ func getFoodRecords() -> [TableRecord] {
     return table
 }
 
-func getName() -> String {
+func getName() -> (String, String) {
     var fio: String = ""
+    var shortFio: String = ""
     do {
         let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
         let path = documents + "/diacompanion.db"
@@ -304,22 +306,23 @@ func getName() -> String {
         _=copyDatabaseIfNeeded(sourcePath: sourcePath)
         let db = try Connection(path)
         let foodTable = Table("usermac")
+        let id = Expression<Int>("id")
         let userName = Expression<String?>("fio")
-        for i in try db.prepare(foodTable.select(userName)){
-            if i[userName] != nil {
-                fio = i[userName]!
-            } else {
-                fio = "Новый пользователь 1"
-            }
-        }
-        if fio == "" {
-            fio = "Новый пользователь 1"
+        let dateOfBirth = Expression<String?>("birthday")
+        let doc = Expression<String?>("doc")
+        
+        let df = DateFormatter()
+        df.dateFormat = "dd.MM.yyyy"
+        
+        for i in try db.prepare(foodTable.select(id, userName, dateOfBirth, doc)){
+            fio = "Dial\(i[id]) Пациент: \(i[userName] ?? "Новый пользователь 1"); Дата рождения: \(i[dateOfBirth] ?? "01.01.1999"); Лечащий врач: \(i[doc] ?? "Попова Полина Викторовна"); Программа: DiaCompanion iOS Dial v\(Bundle.main.infoDictionary!["CFBundleShortVersionString"]!)"
+            shortFio = "Dial\(i[id]) \(i[userName] ?? "Новый_пользователь 1") \(df.string(from: Date.now))"
         }
     }
     catch {
         print(error)
     }
-    return fio
+    return (fio,transliterate(nonLatin: shortFio).capitalized)
 }
 
 struct sugarlvl {
@@ -785,4 +788,12 @@ func getWeeksInfo() -> (Int,Int,Date) {
         print(error)
     }
     return (pweek, pday, pdate)
+}
+
+func transliterate(nonLatin: String) -> String {
+    return nonLatin
+        .applyingTransform(.toLatin, reverse: false)?
+        .applyingTransform(.stripDiacritics, reverse: false)?
+        .lowercased()
+        .replacingOccurrences(of: " ", with: "-") ?? nonLatin
 }

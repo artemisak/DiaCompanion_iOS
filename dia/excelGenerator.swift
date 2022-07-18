@@ -4,8 +4,11 @@ import SwiftUI
 
 class exportTable {
     func generate() -> URL {
+        let userName = getName().0
+        let shortName = getName().1+".xlsx"
         let documentDirectory = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
-        let fileURL = documentDirectory.appendingPathComponent("foodTable.xlsx")
+        let fileURL = documentDirectory.appendingPathComponent(shortName)
+
         
         let workbook = workbook_new((fileURL.absoluteString.dropFirst(6) as NSString).fileSystemRepresentation)
         let worksheet2 = workbook_add_worksheet(workbook, "Изменения сахара и инсулин")
@@ -159,7 +162,6 @@ class exportTable {
         worksheet_set_column(worksheet7, 3, 3, 20, nil)
         
         let tbl = getFoodRecords()
-        let userName = getName()
         
         let formater = DateFormatter()
         formater.dateFormat = "dd.MM.yyyy"
