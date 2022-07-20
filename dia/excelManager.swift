@@ -198,7 +198,6 @@ func getFoodRecords() -> [TableRecord] {
             let temp = sheetsOffset[sheetsOffset.endIndex-1][2] + weeks.filter({$0 == i}).count
             sheetsOffset.append([i,temp-weeks.filter({$0 == i}).count+1, temp])
         }
-        print(sheetsOffset.dropFirst())
         
         if record.count > 0 {
             record = record.sorted(by: {($0.day, $0.time, $0.foodType) < ($1.day, $1.time, $1.foodType)})
@@ -322,7 +321,7 @@ func getName() -> (String, String) {
     catch {
         print(error)
     }
-    return (fio,transliterate(nonLatin: shortFio).capitalized)
+    return (fio,shortFio)
 }
 
 struct sugarlvl {

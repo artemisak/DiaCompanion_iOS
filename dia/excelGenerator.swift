@@ -5,9 +5,8 @@ import SwiftUI
 class exportTable {
     func generate() -> URL {
         let userName = getName().0
-        let shortName = getName().1+".xlsx"
         let documentDirectory = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
-        let fileURL = documentDirectory.appendingPathComponent(shortName)
+        let fileURL = documentDirectory.appendingPathComponent("tables.xlsx")
 
         
         let workbook = workbook_new((fileURL.absoluteString.dropFirst(6) as NSString).fileSystemRepresentation)
