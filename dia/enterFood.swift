@@ -35,6 +35,10 @@ struct enterFood: View {
     @State private var fontColor = Color.black
     @State private var alertMessage: Bool = false
     @State var idForDelete: [Int]
+    @State var permission: Bool = false
+    @State var correctness: Bool = false
+    @State var res: Double = 0.0
+    @State var errorMessage: String = ""
     @FocusState private var focuseField: Bool
     @Binding var txtTheme: DynamicTypeSize
     @Binding var hasChanged: Bool
@@ -57,7 +61,7 @@ struct enterFood: View {
                                 gram.append( try convert(txt: $0.components(separatedBy: "////")[1]))
                             }
                             let foodNutrients = getData(BG0: try convert(txt: sugar), foodtype: ftpreviewIndex, foodN: food, gram: gram, picker_date: date)
-                            let res = try getPredict(BG0: foodNutrients.BG0, gl: foodNutrients.gl, carbo: foodNutrients.carbo, prot: foodNutrients.protb6h, t1: foodNutrients.food_type1, t2: foodNutrients.food_type2, t3: foodNutrients.food_type3, t4: foodNutrients.food_type4, kr: foodNutrients.kr, BMI: foodNutrients.BMI)
+                            res = try getPredict(BG0: foodNutrients.BG0, gl: foodNutrients.gl, carbo: foodNutrients.carbo, prot: foodNutrients.protb6h, t1: foodNutrients.food_type1, t2: foodNutrients.food_type2, t3: foodNutrients.food_type3, t4: foodNutrients.food_type4, kr: foodNutrients.kr, BMI: foodNutrients.BMI)
                             if res < 6.8 {
                                 sugarlvl = "УСК не превысит норму"
                                 recColor = Color.green.opacity(0.7)
@@ -101,7 +105,7 @@ struct enterFood: View {
                                 gram.append( try convert(txt: $0.components(separatedBy: "////")[1]))
                             }
                             let foodNutrients = getData(BG0: try convert(txt: sugar), foodtype: ftpreviewIndex, foodN: food, gram: gram, picker_date: date)
-                            let res = try getPredict(BG0: foodNutrients.BG0, gl: foodNutrients.gl, carbo: foodNutrients.carbo, prot: foodNutrients.protb6h, t1: foodNutrients.food_type1, t2: foodNutrients.food_type2, t3: foodNutrients.food_type3, t4: foodNutrients.food_type4, kr: foodNutrients.kr, BMI: foodNutrients.BMI)
+                            res = try getPredict(BG0: foodNutrients.BG0, gl: foodNutrients.gl, carbo: foodNutrients.carbo, prot: foodNutrients.protb6h, t1: foodNutrients.food_type1, t2: foodNutrients.food_type2, t3: foodNutrients.food_type3, t4: foodNutrients.food_type4, kr: foodNutrients.kr, BMI: foodNutrients.BMI)
                             if res < 6.8 {
                                 sugarlvl = "УСК не превысит норму"
                                 recColor = Color.green.opacity(0.7)
@@ -167,7 +171,7 @@ struct enterFood: View {
                                     gram.append( try convert(txt: $0.components(separatedBy: "////")[1]))
                                 }
                                 let foodNutrients = getData(BG0: try convert(txt: sugar), foodtype: ftpreviewIndex, foodN: food, gram: gram, picker_date: date)
-                                let res = try getPredict(BG0: foodNutrients.BG0, gl: foodNutrients.gl, carbo: foodNutrients.carbo, prot: foodNutrients.protb6h, t1: foodNutrients.food_type1, t2: foodNutrients.food_type2, t3: foodNutrients.food_type3, t4: foodNutrients.food_type4, kr: foodNutrients.kr, BMI: foodNutrients.BMI)
+                                res = try getPredict(BG0: foodNutrients.BG0, gl: foodNutrients.gl, carbo: foodNutrients.carbo, prot: foodNutrients.protb6h, t1: foodNutrients.food_type1, t2: foodNutrients.food_type2, t3: foodNutrients.food_type3, t4: foodNutrients.food_type4, kr: foodNutrients.kr, BMI: foodNutrients.BMI)
                                 if res < 6.8 {
                                     sugarlvl = "УСК не превысит норму"
                                     recColor = Color.green.opacity(0.7)
@@ -226,7 +230,7 @@ struct enterFood: View {
                         gram.append( try convert(txt: $0.components(separatedBy: "////")[1]))
                     }
                     let foodNutrients = getData(BG0: try convert(txt: sugar), foodtype: ftpreviewIndex, foodN: food, gram: gram, picker_date: date)
-                    let res = try getPredict(BG0: foodNutrients.BG0, gl: foodNutrients.gl, carbo: foodNutrients.carbo, prot: foodNutrients.protb6h, t1: foodNutrients.food_type1, t2: foodNutrients.food_type2, t3: foodNutrients.food_type3, t4: foodNutrients.food_type4, kr: foodNutrients.kr, BMI: foodNutrients.BMI)
+                    res = try getPredict(BG0: foodNutrients.BG0, gl: foodNutrients.gl, carbo: foodNutrients.carbo, prot: foodNutrients.protb6h, t1: foodNutrients.food_type1, t2: foodNutrients.food_type2, t3: foodNutrients.food_type3, t4: foodNutrients.food_type4, kr: foodNutrients.kr, BMI: foodNutrients.BMI)
                     if res < 6.8 {
                         sugarlvl = "УСК не превысит норму"
                         recColor = Color.green.opacity(0.7)
@@ -257,17 +261,47 @@ struct enterFood: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing, content: {
                 Button(action: {
-                    if !idForDelete.isEmpty {
-                        deleteFromBD(idToDelete: idForDelete, table: 0)
-                        hasChanged = true
+                    permission = checkIfAlreadyEx(selectedDate: date, idForDelete: idForDelete)
+                    if permission {
+                        errorMessage = "Удалите или отредактиируйте уже существующий прием пищи"
                     }
-                    for i in foodItems {
-                        let arg = "\(i)".components(separatedBy: "////")
-                        SaveToDB(FoodName: arg[0], gram: arg[1], selectedDate: date, selectedType: ftpreviewIndex.rawValue)
+                    if enabled && !permission {
+                        do {
+                            let _BG0 = try convert(txt: sugar)
+                            if !idForDelete.isEmpty {
+                                deleteFromBD(idToDelete: idForDelete, table: 0)
+                                hasChanged = true
+                            }
+                            for i in foodItems {
+                                let arg = "\(i)".components(separatedBy: "////")
+                                SaveToDB(FoodName: arg[0], gram: arg[1], selectedDate: date, selectedType: ftpreviewIndex.rawValue)
+                            }
+                            addPredictedRecord(selectedDate: date, selectedType: ftpreviewIndex.rawValue, BG0: _BG0, BG1: res)
+                            self.presentationMode.wrappedValue.dismiss()
+                        }
+                        catch {
+                            print(error)
+                            permission = true
+                            errorMessage = "Заполните поля в соотвествии с требованиями"
+                        }
                     }
-                    self.presentationMode.wrappedValue.dismiss()
+                    else if !enabled && !permission {
+                        if !idForDelete.isEmpty {
+                            deleteFromBD(idToDelete: idForDelete, table: 0)
+                            hasChanged = true
+                        }
+                        for i in foodItems {
+                            let arg = "\(i)".components(separatedBy: "////")
+                            SaveToDB(FoodName: arg[0], gram: arg[1], selectedDate: date, selectedType: ftpreviewIndex.rawValue)
+                        }
+                        addPredictedRecord(selectedDate: date, selectedType: ftpreviewIndex.rawValue, BG0: 0.0, BG1: 0.0)
+                        self.presentationMode.wrappedValue.dismiss()
+                    }
                 }) {
                     Text("Сохранить").dynamicTypeSize(txtTheme)
+                }
+                .alert(isPresented: $permission) {
+                    Alert(title: Text("Статус операции"), message: Text(errorMessage), dismissButton: .default(Text("ОК")))
                 }
             })
             ToolbarItemGroup(placement: .keyboard, content: {
