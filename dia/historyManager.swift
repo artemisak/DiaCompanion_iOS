@@ -37,6 +37,12 @@ class historyList: ObservableObject {
             let gi = Expression<Double>("gi")
             let name = Expression<String>("name")
             
+            let sugarR = Table("predicted")
+            let sdate = Expression<String>("date")
+            let stime = Expression<String>("time")
+            let BG0 = Expression<Double>("BG0")
+            let BG1 = Expression<Double>("BG1")
+            
             var temp: [String] = []
             for i in try db.prepare(diary.select(foodType, dateTime)){
                 temp.append(i[foodType]+"/"+i[dateTime])
@@ -47,13 +53,19 @@ class historyList: ObservableObject {
                 let spl = i.components(separatedBy: "/")
                 histList.append(hList(type: 0, name: spl[0], date: spl[1], bdID: [], metaInfo: []))
             }
-            
             if !histList.isEmpty {
                 for i in 0...histList.count-1 {
+                    var temp0 = 0.0
+                    var temp1 = 0.0
+                    for i2 in try db.prepare(sugarR.select(BG0,BG1).filter(sdate == histList[i].date[6..<16] && stime == histList[i].date[0..<5])){
+                        temp0 = i2[BG0]
+                        temp1 = round(i2[BG1]*10)/10
+                    }
                     for i1 in try db.prepare(diary.select(id, gram, fName).filter(dateTime == histList[i].date && foodType == histList[i].name)){
                         histList[i].bdID.append(i1[id])
+                        let gramm = Double(i1[gram]) ?? 100.0
                         let temp = try db.prepare(foodInfo.select(prot,fat,carbo,kkal,gi).filter(name == i1[fName]))
-                        _ = temp.map{histList[i].metaInfo.append([i1[fName], i1[gram], String($0[prot]), String($0[fat]), String($0[carbo]), String($0[kkal]), String($0[gi])])}
+                        _ = temp.map{histList[i].metaInfo.append([i1[fName], i1[gram], String($0[prot]), String($0[fat]), String($0[carbo]), String($0[kkal]), String($0[gi]), "\(round(($0[carbo]*(gramm/100)/100*$0[gi])*100)/100)", String(temp0), String(temp1)])}
                     }
                     histList[i].name = histList[i].name + " (\(histList[i].bdID.count) сост.)"
                 }
@@ -67,7 +79,11 @@ class historyList: ObservableObject {
             let timeAct = Expression<String>("time")
             
             for i in try db.prepare(activity.select(actId, rodz, min, timeAct)) {
-                histList.append(hList(type: 1, name: "\(i[rodz]), \(i[min]) мин.", date:  i[timeAct], bdID: [i[actId]], metaInfo: [[i[rodz],String(i[min])]]))
+                if i[rodz] != "Сон" {
+                    histList.append(hList(type: 1, name: "\(i[rodz]), \(i[min]) мин.", date:  i[timeAct], bdID: [i[actId]], metaInfo: [[i[rodz],String(i[min])]]))
+                } else {
+                    histList.append(hList(type: 1, name: "\(i[rodz]), \(i[min]) ч.", date:  i[timeAct], bdID: [i[actId]], metaInfo: [[i[rodz],String(i[min])]]))
+                }
             }
             
             // MARK: Заполняем прием инсулина

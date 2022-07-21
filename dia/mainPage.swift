@@ -27,7 +27,7 @@ struct mainPage: View {
                                 .foregroundColor(Color.black)
                         }
                     }.buttonStyle(ChangeColorButton())
-                    NavigationLink(destination: enterFood(date: Date(), foodItems: [], ftpreviewIndex: ftype.zavtrak, idForDelete: [], txtTheme: $txtTheme, hasChanged: .constant(false))) {
+                    NavigationLink(destination: enterFood(enabled: false, sugar: "", date: Date(), foodItems: [], ftpreviewIndex: ftype.zavtrak, idForDelete: [], txtTheme: $txtTheme, hasChanged: .constant(false))) {
                         VStack {
                             Image("menu_food")
                                 .scaledToFit()

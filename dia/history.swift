@@ -9,6 +9,8 @@ struct history: View {
     @State private var redirectToEnterSugar: Bool = false
     @State private var redirectToEnterKetonur: Bool = false
     @State private var redirectToEnterMassa: Bool = false
+    @State private var sugar: String = ""
+    @State private var enabled: Bool = false
     @State private var date : Date = Date()
     @State private var foodItems: [String] = []
     @State private var idFordelete: [Int] = []
@@ -31,7 +33,7 @@ struct history: View {
     @State private var tMassa: String = ""
     @State private var dateMassa: Date = Date()
     var body: some View {
-        NavigationLink(isActive: $redirectToEnterFood, destination: {enterFood(date: date, foodItems: foodItems, ftpreviewIndex: ftpreviewIndex, idForDelete: idFordelete, txtTheme: $txtTheme, hasChanged: $hasChanged)}, label: {EmptyView()}).isHidden(true)
+        NavigationLink(isActive: $redirectToEnterFood, destination: {enterFood(enabled: enabled, sugar: sugar, date: date, foodItems: foodItems, ftpreviewIndex: ftpreviewIndex, idForDelete: idFordelete, txtTheme: $txtTheme, hasChanged: $hasChanged)}, label: {EmptyView()}).isHidden(true)
         NavigationLink(isActive: $redirectToEnterAct, destination: {enterAct(t: actTime, date: actDate, actpreviewIndex: actPreviewIndex, idForDelete: idFordelete, txtTheme: $txtTheme, hasChanged: $hasChanged)}, label: {EmptyView()}).isHidden(true)
         NavigationLink(isActive: $redirectToEnterInject, destination: {inject(t: tInject, date: dateInject, previewIndex: previewIndexInject, previewIndex1: previewIndexInject1, idForDelete: idFordelete, txtTheme: $txtTheme, hasChanged: $hasChanged)}, label: {EmptyView()}).isHidden(true)
         NavigationLink(isActive: $redirectToEnterSugar, destination: {sugarChange(t: tSugar, date: dateSugar, isAct: isActSugar, bool1: bool1Sugar, spreviewIndex: spreviewIndexSugar, idForDelete: idFordelete, txtTheme: $txtTheme, hasChanged: $hasChanged)}, label: {EmptyView()}).isHidden(true)
@@ -59,6 +61,13 @@ struct history: View {
                                 foodItems = []
                                 for j in i.metaInfo {
                                     foodItems.append(j[0]+"////"+j[1])
+                                }
+                                if i.metaInfo.last![8] != "0.0" {
+                                    sugar = i.metaInfo.last![8]
+                                    enabled = true
+                                } else {
+                                    sugar = ""
+                                    enabled = false
                                 }
                                 switch i.name.split(separator: " ")[0] {
                                 case "Завтрак":
@@ -399,7 +408,7 @@ struct history: View {
     }
     
     func calcSum(info: [[String]]) -> [String] {
-        var calc: [String] = ["0", "0", "0", "0", "0", "0"]
+        var calc: [String] = ["0", "0", "0", "0", "0", "0", "0"]
         for i in 0...info.count-1 {
             calc[0] = String(round(Double(calc[0])!) + round(Double(info[i][1])!))
             calc[1] = String(round(Double(calc[1])!) + round(Double(info[i][2])!))
@@ -407,13 +416,19 @@ struct history: View {
             calc[3] = String(round(Double(calc[3])!) + round(Double(info[i][4])!))
             calc[4] = String(round(Double(calc[4])!) + round(Double(info[i][5])!))
             calc[5] = String(round(Double(calc[5])!) + round(Double(info[i][6])!))
+            calc[6] = String(round(Double(calc[6])!) + round(Double(info[i][7])!))
         }
-        calc[0] = "Масса: "+calc[0]
-        calc[1] = "Белки: "+calc[1]
-        calc[2] = "Жиры: "+calc[2]
-        calc[3] = "Углводы: "+calc[3]
-        calc[4] = "ККал: "+calc[4]
-        calc[5] = "ГИ: "+calc[5]
+        calc[0] = "Масса: " + calc[0]
+        calc[1] = "Белки: " + calc[1]
+        calc[2] = "Жиры: " + calc[2]
+        calc[3] = "Углводы: " + calc[3]
+        calc[4] = "ККал: " + calc[4]
+        calc[5] = "ГИ: " + calc[5]
+        calc[6] = "ГН: " + calc[6]
+        if info.last![8] != "0.0" && info.last![9] != "0.0" {
+            calc.append("УСК до примема пищи: " + info.last![8])
+            calc.append("Прогнозируемый УСК после: " + info.last![9])
+        }
         return calc
     }
     

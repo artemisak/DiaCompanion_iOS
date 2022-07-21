@@ -18,8 +18,8 @@ enum ftype: String, CaseIterable, Identifiable {
 struct enterFood: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @State private var multiSelection = Set<UUID>()
-    @State private var enabled : Bool = false
-    @State private var sugar: String = ""
+    @State var enabled : Bool
+    @State var sugar: String
     @State private var isEditing: Bool = false
     @State private var sugarlvl: String = "УСК не определен"
     @State private var isHidden: Bool = true
@@ -35,10 +35,10 @@ struct enterFood: View {
     @State private var fontColor = Color.black
     @State private var alertMessage: Bool = false
     @State var idForDelete: [Int]
-    @State var permission: Bool = false
-    @State var correctness: Bool = false
-    @State var res: Double = 0.0
-    @State var errorMessage: String = ""
+    @State private var permission: Bool = false
+    @State private var correctness: Bool = false
+    @State private var res: Double = 0.0
+    @State private var errorMessage: String = ""
     @FocusState private var focuseField: Bool
     @Binding var txtTheme: DynamicTypeSize
     @Binding var hasChanged: Bool
