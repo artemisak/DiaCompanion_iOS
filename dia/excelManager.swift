@@ -64,6 +64,9 @@ struct FoodRecord {
     var w_2ed: [String]
     var op_2ed: [String]
     var proc_prot: [String]
+    var timeStamp: String
+    var BG0: String
+    var BG1: String
 }
 
 struct TableRecord {
@@ -128,6 +131,9 @@ struct TableRecord {
     var w_2ed: [[String]]
     var op_2ed: [[String]]
     var proc_prot: [[String]]
+    var timeStamp: [String]
+    var BG0: [String]
+    var BG1: [String]
 }
 
 func getFoodRecords() -> [TableRecord] {
@@ -211,37 +217,32 @@ func getFoodRecords() -> [TableRecord] {
         let op_2ed = Expression<Double?>("op_2ed")
         let proc_prot = Expression<Double?>("proc_prot")
         
-        // MARK: Добавляем недели беременности к записям
-//        let usermac = Table("usermac")
-//        let weekOfStart = Expression<Int?>("week")
-//        let dayOfStartweek = Expression<Int?>("day")
-//        let dateOfStart = Expression<String?>("datebegin")
-        
-//        var pweek = 1
-//        var pday = 1
-//        var pdate = Date.now
-//        for i in try db.prepare(usermac.select(weekOfStart,dayOfStartweek, dateOfStart)) {
-//            if i[weekOfStart] != nil {
-//                pweek = i[weekOfStart]!
-//            }
-//            if i[dayOfStartweek] != nil {
-//                pday = i[dayOfStartweek]!
-//            }
-//            if i[dateOfStart] != nil {
-//                pdate = dateFormatter.date(from: i[dateOfStart]!)!
-//            }
-//        }
-        
+        let pred = Table("predicted")
+        let timeStamp = Expression<String>("timeStamp")
+        let _date = Expression<String>("date")
+        let _time = Expression<String>("time")
+        let BG0 = Expression<Double>("BG0")
+        let BG1 = Expression<Double>("BG1")
+                
         for i in try db.prepare(foodTable.select(day,time,foodType,foodName,gram)){
-            record.append(FoodRecord(day: dateFormatter.date(from: i[day])!, time: dateFormatter1.date(from: i[time])!,foodType: i[foodType], food: [i[foodName]], g: [i[gram]], carbo: [""], prot: [""], fat: [""], ec: [""], gi: [""], empty: [""], water: [""], nzhk: [""], hol: [""], pv: [""], zola: [""], na: [""], k: [""], ca: [""], mg: [""], p: [""], fe: [""], a:[""], b1: [""], b2: [""], rr: [""], c: [""], re: [""], kar: [""], mds: [""], kr: [""], te: [""], ok: [""], ne: [""], zn: [""], cu: [""], mn: [""], se: [""], b5: [""], b6: [""], fol: [""], b9: [""], dfe: [""], holin: [""], b12: [""], ear: [""], a_kar:[""], b_kript: [""], likopin: [""], lut_z: [""], vit_e: [""], vit_d: [""], d_mezd: [""], vit_k: [""], mzhk: [""], pzhk: [""], w_1ed: [""], op_1ed: [""], w_2ed: [""], op_2ed: [""], proc_prot: [""]))
+            record.append(FoodRecord(day: dateFormatter.date(from: i[day])!, time: dateFormatter1.date(from: i[time])!,foodType: i[foodType], food: [i[foodName]], g: [i[gram]], carbo: [""], prot: [""], fat: [""], ec: [""], gi: [""], empty: [""], water: [""], nzhk: [""], hol: [""], pv: [""], zola: [""], na: [""], k: [""], ca: [""], mg: [""], p: [""], fe: [""], a:[""], b1: [""], b2: [""], rr: [""], c: [""], re: [""], kar: [""], mds: [""], kr: [""], te: [""], ok: [""], ne: [""], zn: [""], cu: [""], mn: [""], se: [""], b5: [""], b6: [""], fol: [""], b9: [""], dfe: [""], holin: [""], b12: [""], ear: [""], a_kar:[""], b_kript: [""], likopin: [""], lut_z: [""], vit_e: [""], vit_d: [""], d_mezd: [""], vit_k: [""], mzhk: [""], pzhk: [""], w_1ed: [""], op_1ed: [""], w_2ed: [""], op_2ed: [""], proc_prot: [""], timeStamp: "", BG0: "", BG1: ""))
         }
         
-//        var weeks: [Int] = []
+        var tempPred: [[String]] = []
+        for i in try db.prepare(pred.select(timeStamp, _date, _time, BG0, BG1)){
+            tempPred.append([i[timeStamp], i[_date], i[_time], String(i[BG0]), String(i[BG1])])
+        }
+        
+        for i in tempPred {
+            let indexOf = record.firstIndex(where: {$0.day == dateFormatter.date(from: i[1])! && $0.time == dateFormatter1.date(from: i[2])!})
+            if indexOf != nil {
+                record[indexOf!].timeStamp = i[0]
+                record[indexOf!].BG0 = i[3]
+                record[indexOf!].BG1 = i[4]
+            }
+        }
+        
         for i in 0..<record.count {
-//            if pdate > record[i].day {
-//                pdate = pdate.addingTimeInterval(-DateInterval(start: record[i].day, end: pdate).duration)
-//            }
-//            weeks.append(defWeek(nowDate: record[i].day, dateBegin: pdate, weekOfStart: pweek, dayOfStartWeek: pday))
             for i1 in try db.prepare(foodInfo.select(foodN, carbo, prot, fat, ec, gi, water, nzhk, hol, pv, zola, na, k, ca, mg, p, fe, a, b1, b2, rr, c, re, kar, mds, kr, te, ok, ne, zn, cu, mn, se, b5, b6, fol, b9, dfe, holin, b12, ear, a_kar, b_kript, likopin, lut_z, vit_e, vit_d, d_mezd, vit_k, mzhk, pzhk, w_1ed, op_1ed, w_2ed, op_2ed, proc_prot).filter(foodN == record[i].food[0])){
                 record[i].carbo = ["\(i1[carbo] ?? 0.0)"]
                 record[i].prot = ["\(i1[prot] ?? 0.0)"]
@@ -291,6 +292,8 @@ func getFoodRecords() -> [TableRecord] {
                 record[i].vit_d = ["\(i1[vit_d] ?? 0.0)"]
                 record[i].d_mezd = ["\(i1[d_mezd] ?? 0.0)"]
                 record[i].vit_k = ["\(i1[vit_k] ?? 0.0)"]
+                record[i].mzhk = ["\(i1[mzhk] ?? 0.0)"]
+                record[i].pzhk = ["\(i1[pzhk] ?? 0.0)"]
                 record[i].w_1ed = ["\(i1[w_1ed] ?? 0.0)"]
                 record[i].op_1ed = ["\(i1[op_1ed] ?? 0.0)"]
                 record[i].w_2ed = ["\(i1[w_2ed] ?? 0.0)"]
@@ -298,12 +301,6 @@ func getFoodRecords() -> [TableRecord] {
                 record[i].proc_prot = ["\(i1[proc_prot] ?? 0.0)"]
             }
         }
-//        let numberOfWeek = Set(weeks.sorted(by: <))
-//        var sheetsOffset: [[Int]] = [[0,0,2]]
-//        for i in numberOfWeek {
-//            let temp = sheetsOffset[sheetsOffset.endIndex-1][2] + weeks.filter({$0 == i}).count
-//            sheetsOffset.append([i,temp-weeks.filter({$0 == i}).count+1, temp])
-//        }
         
         if record.count > 0 {
             record = record.sorted(by: {($0.day, $0.time, $0.foodType) < ($1.day, $1.time, $1.foodType)})
@@ -362,18 +359,23 @@ func getFoodRecords() -> [TableRecord] {
                     record[i].vit_d = record[i-1].vit_d + record[i].vit_d
                     record[i].d_mezd = record[i-1].d_mezd + record[i].d_mezd
                     record[i].vit_k = record[i-1].vit_k + record[i].vit_k
+                    record[i].mzhk = record[i-1].mzhk + record[i].mzhk
+                    record[i].pzhk = record[i-1].pzhk + record[i].pzhk
                     record[i].w_1ed = record[i-1].w_1ed + record[i].w_1ed
                     record[i].op_1ed = record[i-1].op_1ed + record[i].op_1ed
                     record[i].w_2ed = record[i-1].w_2ed + record[i].w_2ed
                     record[i].op_2ed = record[i-1].op_2ed + record[i].op_2ed
                     record[i].proc_prot = record[i-1].proc_prot + record[i].proc_prot
+                    record[i].timeStamp = record[i-1].timeStamp
+                    record[i].BG0 = record[i-1].BG0
+                    record[i].BG1 = record[i-1].BG1
                     record.remove(at: i-1)
                 } else {
                     i += 1
                 }
             }
-            
-            table.append(TableRecord(day: record[0].day, time: [record[0].time], foodType: [record[0].foodType], food: [record[0].food], g: [record[0].g], carbo: [record[0].carbo], prot: [record[0].prot], fat: [record[0].fat], ec: [record[0].ec], gi: [record[0].gi], empty: [record[0].empty], water: [record[0].water], nzhk: [record[0].nzhk], hol: [record[0].hol], pv: [record[0].pv], zola: [record[0].zola], na: [record[0].na], k: [record[0].k], ca: [record[0].ca], mg: [record[0].mg], p: [record[0].p], fe: [record[0].fe], a: [record[0].a], b1: [record[0].b1], b2: [record[0].b2], rr: [record[0].rr], c: [record[0].c], re: [record[0].re], kar: [record[0].kar], mds: [record[0].mds], kr: [record[0].kr], te: [record[0].te], ok: [record[0].ok], ne: [record[0].ne], zn: [record[0].zn], cu: [record[0].cu], mn: [record[0].mn], se: [record[0].se], b5: [record[0].b5], b6: [record[0].b6], fol: [record[0].fol], b9: [record[0].b9], dfe: [record[0].dfe], holin: [record[0].holin], b12: [record[0].b12], ear: [record[0].ear], a_kar: [record[0].a_kar], b_kript: [record[0].b_kript], likopin: [record[0].likopin], lut_z: [record[0].lut_z], vit_e: [record[0].vit_e], vit_d: [record[0].vit_d], d_mezd: [record[0].d_mezd], vit_k: [record[0].vit_k], mzhk: [record[0].mzhk], pzhk: [record[0].pzhk], w_1ed: [record[0].w_1ed], op_1ed: [record[0].op_1ed], w_2ed: [record[0].w_2ed], op_2ed: [record[0].op_2ed], proc_prot: [record[0].proc_prot]))
+                        
+            table.append(TableRecord(day: record[0].day, time: [record[0].time], foodType: [record[0].foodType], food: [record[0].food], g: [record[0].g], carbo: [record[0].carbo], prot: [record[0].prot], fat: [record[0].fat], ec: [record[0].ec], gi: [record[0].gi], empty: [record[0].empty], water: [record[0].water], nzhk: [record[0].nzhk], hol: [record[0].hol], pv: [record[0].pv], zola: [record[0].zola], na: [record[0].na], k: [record[0].k], ca: [record[0].ca], mg: [record[0].mg], p: [record[0].p], fe: [record[0].fe], a: [record[0].a], b1: [record[0].b1], b2: [record[0].b2], rr: [record[0].rr], c: [record[0].c], re: [record[0].re], kar: [record[0].kar], mds: [record[0].mds], kr: [record[0].kr], te: [record[0].te], ok: [record[0].ok], ne: [record[0].ne], zn: [record[0].zn], cu: [record[0].cu], mn: [record[0].mn], se: [record[0].se], b5: [record[0].b5], b6: [record[0].b6], fol: [record[0].fol], b9: [record[0].b9], dfe: [record[0].dfe], holin: [record[0].holin], b12: [record[0].b12], ear: [record[0].ear], a_kar: [record[0].a_kar], b_kript: [record[0].b_kript], likopin: [record[0].likopin], lut_z: [record[0].lut_z], vit_e: [record[0].vit_e], vit_d: [record[0].vit_d], d_mezd: [record[0].d_mezd], vit_k: [record[0].vit_k], mzhk: [record[0].mzhk], pzhk: [record[0].pzhk], w_1ed: [record[0].w_1ed], op_1ed: [record[0].op_1ed], w_2ed: [record[0].w_2ed], op_2ed: [record[0].op_2ed], proc_prot: [record[0].proc_prot], timeStamp: [record[0].timeStamp], BG0: [record[0].BG0], BG1: [record[0].BG1]))
             record.remove(at: 0)
             
             while (record.count>0) {
@@ -431,18 +433,22 @@ func getFoodRecords() -> [TableRecord] {
                     table[table.endIndex-1].vit_d.append(record[0].vit_d)
                     table[table.endIndex-1].d_mezd.append(record[0].d_mezd)
                     table[table.endIndex-1].vit_k.append(record[0].vit_k)
+                    table[table.endIndex-1].mzhk.append(record[0].mzhk)
+                    table[table.endIndex-1].pzhk.append(record[0].pzhk)
                     table[table.endIndex-1].w_1ed.append(record[0].w_1ed)
                     table[table.endIndex-1].op_1ed.append(record[0].op_1ed)
                     table[table.endIndex-1].w_2ed.append(record[0].w_2ed)
                     table[table.endIndex-1].op_2ed.append(record[0].op_2ed)
                     table[table.endIndex-1].proc_prot.append(record[0].proc_prot)
+                    table[table.endIndex-1].timeStamp.append(record[0].timeStamp)
+                    table[table.endIndex-1].BG0.append(record[0].BG0)
+                    table[table.endIndex-1].BG1.append(record[0].BG1)
                     record.remove(at: 0)
                 } else {
-                    table.append(TableRecord(day: record[0].day, time: [record[0].time], foodType: [record[0].foodType], food: [record[0].food], g: [record[0].g], carbo: [record[0].carbo], prot: [record[0].prot], fat: [record[0].fat], ec: [record[0].ec], gi: [record[0].gi], empty: [record[0].empty], water: [record[0].water], nzhk: [record[0].nzhk], hol: [record[0].hol], pv: [record[0].pv], zola: [record[0].zola], na: [record[0].na], k: [record[0].k], ca: [record[0].ca], mg: [record[0].mg], p: [record[0].p], fe: [record[0].fe], a: [record[0].a], b1: [record[0].b1], b2: [record[0].b2], rr: [record[0].rr], c: [record[0].c], re: [record[0].re], kar: [record[0].kar], mds: [record[0].mds], kr: [record[0].kr], te: [record[0].te], ok: [record[0].ok], ne: [record[0].ne], zn: [record[0].zn], cu: [record[0].cu], mn: [record[0].mn], se: [record[0].se], b5: [record[0].b5], b6: [record[0].b6], fol: [record[0].fol], b9: [record[0].b9], dfe: [record[0].dfe], holin: [record[0].holin], b12: [record[0].b12], ear: [record[0].ear], a_kar: [record[0].a_kar], b_kript: [record[0].b_kript], likopin: [record[0].likopin], lut_z: [record[0].lut_z], vit_e: [record[0].vit_e], vit_d: [record[0].vit_d], d_mezd: [record[0].d_mezd], vit_k: [record[0].vit_k], mzhk: [record[0].mzhk], pzhk: [record[0].pzhk], w_1ed: [record[0].w_1ed], op_1ed: [record[0].op_1ed], w_2ed: [record[0].w_2ed], op_2ed: [record[0].op_2ed], proc_prot: [record[0].proc_prot]))
+                    table.append(TableRecord(day: record[0].day, time: [record[0].time], foodType: [record[0].foodType], food: [record[0].food], g: [record[0].g], carbo: [record[0].carbo], prot: [record[0].prot], fat: [record[0].fat], ec: [record[0].ec], gi: [record[0].gi], empty: [record[0].empty], water: [record[0].water], nzhk: [record[0].nzhk], hol: [record[0].hol], pv: [record[0].pv], zola: [record[0].zola], na: [record[0].na], k: [record[0].k], ca: [record[0].ca], mg: [record[0].mg], p: [record[0].p], fe: [record[0].fe], a: [record[0].a], b1: [record[0].b1], b2: [record[0].b2], rr: [record[0].rr], c: [record[0].c], re: [record[0].re], kar: [record[0].kar], mds: [record[0].mds], kr: [record[0].kr], te: [record[0].te], ok: [record[0].ok], ne: [record[0].ne], zn: [record[0].zn], cu: [record[0].cu], mn: [record[0].mn], se: [record[0].se], b5: [record[0].b5], b6: [record[0].b6], fol: [record[0].fol], b9: [record[0].b9], dfe: [record[0].dfe], holin: [record[0].holin], b12: [record[0].b12], ear: [record[0].ear], a_kar: [record[0].a_kar], b_kript: [record[0].b_kript], likopin: [record[0].likopin], lut_z: [record[0].lut_z], vit_e: [record[0].vit_e], vit_d: [record[0].vit_d], d_mezd: [record[0].d_mezd], vit_k: [record[0].vit_k], mzhk: [record[0].mzhk], pzhk: [record[0].pzhk], w_1ed: [record[0].w_1ed], op_1ed: [record[0].op_1ed], w_2ed: [record[0].w_2ed], op_2ed: [record[0].op_2ed], proc_prot: [record[0].proc_prot], timeStamp: [record[0].timeStamp], BG0: [record[0].BG0], BG1: [record[0].BG1]))
                     record.remove(at: 0)
                 }
             }
-            
         }
     }
     catch {

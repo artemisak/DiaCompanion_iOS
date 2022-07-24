@@ -266,10 +266,20 @@ class exportTable {
             d = d + tbl[i].food.joined().count
             for i1 in 0..<tbl[i].time.count {
                 worksheet_merge_range(worksheet1, lxw_row_t(r1+3), 2, lxw_row_t(r1+listOfIndex1[rr]-1+3), 2, nil, merge_f);
+                worksheet_merge_range(worksheet1, lxw_row_t(r1+3), 66, lxw_row_t(r1+listOfIndex1[rr]-1+3), 66, nil, merge_f);
+                worksheet_merge_range(worksheet1, lxw_row_t(r1+3), 67, lxw_row_t(r1+listOfIndex1[rr]-1+3), 67, nil, merge_f);
+                worksheet_merge_range(worksheet1, lxw_row_t(r1+3), 68, lxw_row_t(r1+listOfIndex1[rr]-1+3), 68, nil, merge_f);
                 if kk == i {
                     worksheet_write_string(worksheet1, lxw_row_t(r1+3), 2, formater1.string(from: tbl[i].time[i1]), merge_format1)
-                } else {
+                    worksheet_write_string(worksheet1, lxw_row_t(r1+3), 66, tbl[i].BG0[i1], merge_format1)
+                    worksheet_write_string(worksheet1, lxw_row_t(r1+3), 67, tbl[i].BG1[i1], merge_format1)
+                    worksheet_write_string(worksheet1, lxw_row_t(r1+3), 68, tbl[i].timeStamp[i1], merge_format1)
+                }
+                else {
                     worksheet_write_string(worksheet1, lxw_row_t(r1+3), 2, formater1.string(from: tbl[i].time[i1]), merge_format_alt1)
+                    worksheet_write_string(worksheet1, lxw_row_t(r1+3), 66, tbl[i].BG0[i1], merge_format_alt1)
+                    worksheet_write_string(worksheet1, lxw_row_t(r1+3), 67, tbl[i].BG1[i1], merge_format_alt1)
+                    worksheet_write_string(worksheet1, lxw_row_t(r1+3), 68, tbl[i].timeStamp[i1], merge_format_alt1)
                 }
                 worksheet_merge_range(worksheet1, lxw_row_t(r1+3), 3, lxw_row_t(r1+listOfIndex1[rr]-1+3), 3, nil, merge_f);
                 if kk == i {
