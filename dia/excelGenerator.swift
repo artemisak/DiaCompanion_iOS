@@ -113,7 +113,10 @@ class exportTable {
         worksheet_set_column(worksheet1, 16, 24, 12.5, nil);
         worksheet_set_column(worksheet1, 25, 26, 19.5, nil);
         worksheet_set_column(worksheet1, 27, 27, 21.5, nil);
-        worksheet_set_column(worksheet1, 28, 34, 19.5, nil);
+        worksheet_set_column(worksheet1, 28, 54, 23.5, nil);
+        worksheet_set_column(worksheet1, 55, 56, 32.5, nil);
+        worksheet_set_column(worksheet1, 58, 62, 19.5, nil);
+        worksheet_set_column(worksheet1, 63, 68, 21.5, nil);
         
         worksheet_set_column(worksheet2, 0, 0, 20, nil);
         worksheet_set_column(worksheet2, 1, 1, 10, nil);
