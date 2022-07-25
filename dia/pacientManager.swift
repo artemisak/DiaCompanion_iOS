@@ -398,3 +398,39 @@ func checkBMI() -> Bool {
     }
     return res
 }
+
+func deleteAccaunt() {
+    do {
+        let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
+        let path = documents + "/diacompanion.db"
+        let sourcePath = Bundle.main.path(forResource: "diacompanion", ofType: "db")!
+        _=copyDatabaseIfNeeded(sourcePath: sourcePath)
+        let db = try Connection(path)
+        let act = Table("act")
+        try db.run(act.delete())
+        let deleted = Table("deleted")
+        try db.run(deleted.delete())
+        let diary = Table("diary")
+        try db.run(diary.delete())
+        let fulldays = Table("fulldays")
+        try db.run(fulldays.delete())
+        let inject = Table("inject")
+        try db.run(inject.delete())
+        let ketonur = Table("ketonur")
+        try db.run(ketonur.delete())
+        let massa = Table("massa")
+        try db.run(massa.delete())
+        let predicted = Table("predicted")
+        try db.run(predicted.delete())
+        let sugarChange = Table("sugarChange")
+        try db.run(sugarChange.delete())
+        let usermac = Table("usermac")
+        let id = Expression<Int>("id")
+        let loggedin = Expression<Int>("loggedin")
+        try db.run(usermac.delete())
+        try db.run(usermac.insert(id <- 1, loggedin <- 0))
+    }
+    catch {
+        print(error)
+    }
+}

@@ -13,9 +13,12 @@ struct startPage: View {
             }
         }
         .navigationViewStyle(StackNavigationViewStyle())
-        .onAppear(perform: {
+        .navigationBarBackButtonHidden(true)
+        .navigationBarHidden(true)
+        .task {
             islogin.checklog()
-        })
+            
+        }
         .customPopupView(isPresented: $reg, popupView: { regHelper(phelper: $reg) })
     }
 }

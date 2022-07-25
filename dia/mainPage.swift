@@ -2,10 +2,13 @@ import SwiftUI
 
 struct mainPage: View {
     @State private var showModal: Bool = false
+    @State private var redirectToStart: Bool = false
     @Binding var txtTheme: DynamicTypeSize
     var columns: [GridItem] =
     Array(repeating: .init(.flexible()), count: 2)
     var body: some View {
+        Group {
+        NavigationLink(isActive: $redirectToStart, destination: {startPage(txtTheme: $txtTheme)}, label: {EmptyView()}).hidden()
         GeometryReader { g in
             ScrollView {
                 LazyVGrid(columns: columns) {
@@ -69,8 +72,6 @@ struct mainPage: View {
                 .frame(minHeight: g.size.height)
             }
         }
-        .navigationBarTitleDisplayMode(.inline)
-        .navigationBarBackButtonHidden(true)
         .toolbar {
             ToolbarItem(placement: .principal, content: {Text("ДиаКомпаньон").font(.headline).fixedSize()})
             ToolbarItem(placement: .navigationBarTrailing){
@@ -78,10 +79,13 @@ struct mainPage: View {
                     Image(systemName: "line.3.horizontal")
                 }
                 .sheet(isPresented: $showModal) {
-                    ModalView(txtTheme: $txtTheme).dynamicTypeSize(txtTheme)
+                    ModalView(redirectToStart: $redirectToStart, txtTheme: $txtTheme).dynamicTypeSize(txtTheme)
                 }
             }
         }
+        .navigationBarTitleDisplayMode(.inline)
+        .navigationBarBackButtonHidden(true)
         .ignoresSafeArea(.keyboard)
+        }
     }
 }

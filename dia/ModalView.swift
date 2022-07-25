@@ -2,8 +2,11 @@ import SwiftUI
 import PDFKit
 
 struct ModalView: View {
+    @Environment(\.dismiss) var dismiss
     @State private var phelper : Bool = false
-    @State private var fileUrl = Bundle.main.url(forResource: "help", withExtension: "pdf")!
+    @State private var fileUrl = Bundle.main.url(forResource: "Education", withExtension: "pdf")!
+    @State private var eraseAccount = false
+    @Binding var redirectToStart: Bool
     @Binding var txtTheme: DynamicTypeSize
     var body: some View {
         NavigationView {
@@ -27,6 +30,17 @@ struct ModalView: View {
                     NavigationLink(destination: helper(phelper: $phelper)) {
                         Button("Помощь", action: {})
                     }.foregroundColor(.black)
+                    Button("Удалить аккаунт", role: .destructive, action: {
+                        eraseAccount = true
+                    }).confirmationDialog("Удаляя аккаунт вы не потеряете доступ к приложению, однаок, вся информация в нем будет удалена.", isPresented: $eraseAccount, titleVisibility: .visible, actions: {
+                        Button("ОК", action: {
+                            dismiss()
+                            redirectToStart = true
+                            DispatchQueue.main.asyncAfter(deadline: .now(), execute: {
+                                deleteAccaunt()
+                            })
+                        })
+                    })
                 }
             }
             .listStyle(.insetGrouped)
