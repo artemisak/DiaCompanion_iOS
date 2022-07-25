@@ -17,7 +17,6 @@ struct startPage: View {
         .navigationBarHidden(true)
         .task {
             islogin.checklog()
-            
         }
         .customPopupView(isPresented: $reg, popupView: { regHelper(phelper: $reg) })
     }
