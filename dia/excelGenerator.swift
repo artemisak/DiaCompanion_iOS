@@ -520,6 +520,28 @@ class exportTable {
             worksheet_write_string(worksheet1, lxw_row_t(3+r1+3+i), 32, "\(round(Array(tbl[i].te.joined()).compactMap(Double.init).reduce(0,+)/Double(tbl[i].te.joined().count)*100)/100)", nil)
             worksheet_write_string(worksheet1, lxw_row_t(3+r1+3+i), 33, "\(round(Array(tbl[i].ok.joined()).compactMap(Double.init).reduce(0,+)/Double(tbl[i].ok.joined().count)*100)/100)", nil)
             worksheet_write_string(worksheet1, lxw_row_t(3+r1+3+i), 34, "\(round(Array(tbl[i].ne.joined()).compactMap(Double.init).reduce(0,+)/Double(tbl[i].ne.joined().count)*100)/100)", nil)
+            worksheet_write_string(worksheet1, lxw_row_t(3+r1+3+i), 35, "\(round(Array(tbl[i].zn.joined()).compactMap(Double.init).reduce(0,+)/Double(tbl[i].zn.joined().count)*100)/100)", nil)
+            worksheet_write_string(worksheet1, lxw_row_t(3+r1+3+i), 36, "\(round(Array(tbl[i].cu.joined()).compactMap(Double.init).reduce(0,+)/Double(tbl[i].cu.joined().count)*100)/100)", nil)
+            worksheet_write_string(worksheet1, lxw_row_t(3+r1+3+i), 37, "\(round(Array(tbl[i].mn.joined()).compactMap(Double.init).reduce(0,+)/Double(tbl[i].mn.joined().count)*100)/100)", nil)
+            worksheet_write_string(worksheet1, lxw_row_t(3+r1+3+i), 38, "\(round(Array(tbl[i].se.joined()).compactMap(Double.init).reduce(0,+)/Double(tbl[i].se.joined().count)*100)/100)", nil)
+            worksheet_write_string(worksheet1, lxw_row_t(3+r1+3+i), 39, "\(round(Array(tbl[i].b5.joined()).compactMap(Double.init).reduce(0,+)/Double(tbl[i].b5.joined().count)*100)/100)", nil)
+            worksheet_write_string(worksheet1, lxw_row_t(3+r1+3+i), 40, "\(round(Array(tbl[i].b6.joined()).compactMap(Double.init).reduce(0,+)/Double(tbl[i].b6.joined().count)*100)/100)", nil)
+            worksheet_write_string(worksheet1, lxw_row_t(3+r1+3+i), 41, "\(round(Array(tbl[i].fol.joined()).compactMap(Double.init).reduce(0,+)/Double(tbl[i].fol.joined().count)*100)/100)", nil)
+            worksheet_write_string(worksheet1, lxw_row_t(3+r1+3+i), 42, "\(round(Array(tbl[i].b9.joined()).compactMap(Double.init).reduce(0,+)/Double(tbl[i].b9.joined().count)*100)/100)", nil)
+            worksheet_write_string(worksheet1, lxw_row_t(3+r1+3+i), 43, "\(round(Array(tbl[i].dfe.joined()).compactMap(Double.init).reduce(0,+)/Double(tbl[i].dfe.joined().count)*100)/100)", nil)
+            worksheet_write_string(worksheet1, lxw_row_t(3+r1+3+i), 44, "\(round(Array(tbl[i].holin.joined()).compactMap(Double.init).reduce(0,+)/Double(tbl[i].holin.joined().count)*100)/100)", nil)
+            worksheet_write_string(worksheet1, lxw_row_t(3+r1+3+i), 45, "\(round(Array(tbl[i].b12.joined()).compactMap(Double.init).reduce(0,+)/Double(tbl[i].b12.joined().count)*100)/100)", nil)
+            worksheet_write_string(worksheet1, lxw_row_t(3+r1+3+i), 46, "\(round(Array(tbl[i].ear.joined()).compactMap(Double.init).reduce(0,+)/Double(tbl[i].ear.joined().count)*100)/100)", nil)
+            worksheet_write_string(worksheet1, lxw_row_t(3+r1+3+i), 47, "\(round(Array(tbl[i].a_kar.joined()).compactMap(Double.init).reduce(0,+)/Double(tbl[i].a_kar.joined().count)*100)/100)", nil)
+            worksheet_write_string(worksheet1, lxw_row_t(3+r1+3+i), 48, "\(round(Array(tbl[i].b_kript.joined()).compactMap(Double.init).reduce(0,+)/Double(tbl[i].b_kript.joined().count)*100)/100)", nil)
+            worksheet_write_string(worksheet1, lxw_row_t(3+r1+3+i), 49, "\(round(Array(tbl[i].likopin.joined()).compactMap(Double.init).reduce(0,+)/Double(tbl[i].likopin.joined().count)*100)/100)", nil)
+            worksheet_write_string(worksheet1, lxw_row_t(3+r1+3+i), 50, "\(round(Array(tbl[i].lut_z.joined()).compactMap(Double.init).reduce(0,+)/Double(tbl[i].lut_z.joined().count)*100)/100)", nil)
+            worksheet_write_string(worksheet1, lxw_row_t(3+r1+3+i), 51, "\(round(Array(tbl[i].vit_e.joined()).compactMap(Double.init).reduce(0,+)/Double(tbl[i].vit_e.joined().count)*100)/100)", nil)
+            worksheet_write_string(worksheet1, lxw_row_t(3+r1+3+i), 52, "\(round(Array(tbl[i].vit_d.joined()).compactMap(Double.init).reduce(0,+)/Double(tbl[i].vit_d.joined().count)*100)/100)", nil)
+            worksheet_write_string(worksheet1, lxw_row_t(3+r1+3+i), 53, "\(round(Array(tbl[i].d_mezd.joined()).compactMap(Double.init).reduce(0,+)/Double(tbl[i].d_mezd.joined().count)*100)/100)", nil)
+            worksheet_write_string(worksheet1, lxw_row_t(3+r1+3+i), 54, "\(round(Array(tbl[i].vit_k.joined()).compactMap(Double.init).reduce(0,+)/Double(tbl[i].vit_k.joined().count)*100)/100)", nil)
+            worksheet_write_string(worksheet1, lxw_row_t(3+r1+3+i), 55, "\(round(Array(tbl[i].mzhk.joined()).compactMap(Double.init).reduce(0,+)/Double(tbl[i].mzhk.joined().count)*100)/100)", nil)
+            worksheet_write_string(worksheet1, lxw_row_t(3+r1+3+i), 56, "\(round(Array(tbl[i].pzhk.joined()).compactMap(Double.init).reduce(0,+)/Double(tbl[i].pzhk.joined().count)*100)/100)", nil)
         }
         
         let tbl2 = getSugarRecords().0
@@ -535,7 +557,6 @@ class exportTable {
         worksheet_merge_range(worksheet2, 2, 8, 2, 9, "После ужина", merge_format41);
         worksheet_merge_range(worksheet2, 2, 10, 2, 11, "Дополнительно", merge_format41);
         worksheet_merge_range(worksheet2, 2, 12, 2, 13, "При родах", merge_format41);
-        
         worksheet_merge_range(worksheet2, 1, 15, 1, 32, "Иньекции инсулина", merge_format41);
         worksheet_merge_range(worksheet2, 2, 15, 2, 17, "Натощак", merge_format41);
         worksheet_merge_range(worksheet2, 2, 18, 2, 20, "Завтрак", merge_format41);
