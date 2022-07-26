@@ -18,7 +18,7 @@ struct CategoryList: Identifiable, Hashable {
 class Food: ObservableObject {
     @Published var FoodObj = [FoodList]()
     @Published var CatObj = [CategoryList]()
-    
+
     func GetFoodItemsByName(_name: String) -> Void {
         do {
             var Food1 = [FoodList]()
@@ -48,7 +48,7 @@ class Food: ObservableObject {
             print(error)
         }
     }
-    
+
     func FillFoodCategoryList() async -> Void {
         do {
             var Food1 = [CategoryList]()
@@ -68,7 +68,7 @@ class Food: ObservableObject {
             print(error)
         }
     }
-    
+
     func GetFoodCategoryItems(_category: String) -> [FoodList] {
         do {
             var FoodObj = [FoodList]()
@@ -118,7 +118,7 @@ func SaveToDB(FoodName: String, gram: String, selectedDate: Date, selectedType: 
         let timeStamp = Expression<String>("timeStamp")
         let type = Expression<String>("foodType")
         let picker = Expression<String>("dateTime")
-        
+
         let dateFormatter = DateFormatter()
         let dateFormatter1 = DateFormatter()
         let dateFormatter2 = DateFormatter()
@@ -128,7 +128,7 @@ func SaveToDB(FoodName: String, gram: String, selectedDate: Date, selectedType: 
         dateFormatter1.setLocalizedDateFormatFromTemplate("dd.MM.yyyy")
         dateFormatter2.locale = Locale(identifier: "ru_RU")
         dateFormatter2.setLocalizedDateFormatFromTemplate("HH:mm")
-        
+
         let realDateTime = dateFormatter.string(from: Date.now)
         let selectDate = dateFormatter1.string(from: selectedDate)
         let dtime = dateFormatter2.string(from: selectedDate)

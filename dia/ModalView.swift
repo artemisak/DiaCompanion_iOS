@@ -6,8 +6,8 @@ struct ModalView: View {
     @State private var phelper : Bool = false
     @State private var fileUrl = Bundle.main.url(forResource: "Education", withExtension: "pdf")!
     @State private var eraseAccount = false
-    @Binding var redirectToStart: Bool
     @Binding var txtTheme: DynamicTypeSize
+    @Binding var isnt: Bool
     var body: some View {
         NavigationView {
             List {
@@ -35,10 +35,8 @@ struct ModalView: View {
                     }).confirmationDialog("Удаляя аккаунт вы не потеряете доступ к приложению, однаок, вся информация в нем будет удалена.", isPresented: $eraseAccount, titleVisibility: .visible, actions: {
                         Button("ОК", action: {
                             dismiss()
-                            redirectToStart = true
-                            DispatchQueue.main.asyncAfter(deadline: .now(), execute: {
-                                deleteAccaunt()
-                            })
+                            deleteAccaunt()
+                            isnt = false
                         })
                     })
                 }

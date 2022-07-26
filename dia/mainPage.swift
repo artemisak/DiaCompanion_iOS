@@ -2,13 +2,10 @@ import SwiftUI
 
 struct mainPage: View {
     @State private var showModal: Bool = false
-    @State private var redirectToStart: Bool = false
+    @State private var columns: [GridItem] = Array(repeating: .init(.flexible()), count: 2)
     @Binding var txtTheme: DynamicTypeSize
-    var columns: [GridItem] =
-    Array(repeating: .init(.flexible()), count: 2)
+    @Binding var isnt: Bool
     var body: some View {
-        Group {
-        NavigationLink(isActive: $redirectToStart, destination: {startPage(txtTheme: $txtTheme)}, label: {EmptyView()}).hidden()
         GeometryReader { g in
             ScrollView {
                 LazyVGrid(columns: columns) {
@@ -79,13 +76,12 @@ struct mainPage: View {
                     Image(systemName: "line.3.horizontal")
                 }
                 .sheet(isPresented: $showModal) {
-                    ModalView(redirectToStart: $redirectToStart, txtTheme: $txtTheme).dynamicTypeSize(txtTheme)
+                    ModalView(txtTheme: $txtTheme, isnt: $isnt).dynamicTypeSize(txtTheme)
                 }
             }
         }
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
         .ignoresSafeArea(.keyboard)
-        }
     }
 }
