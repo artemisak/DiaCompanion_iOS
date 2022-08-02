@@ -14,7 +14,6 @@ struct loginPage: View {
     @Binding var txtTheme: DynamicTypeSize
     @FocusState private var focusedField: Field?
     @StateObject private var islogin = check()
-
     var body: some View {
         NavigationView {
             ZStack {
@@ -151,7 +150,7 @@ struct loginPage: View {
         .navigationViewStyle(StackNavigationViewStyle())
         .navigationBarBackButtonHidden(true)
         .customPopupView(isPresented: $reg, popupView: { regHelper(phelper: $reg) })
-        .task {
+        .onAppear {
             login = ""
             pass = ""
             islogin.checklog()

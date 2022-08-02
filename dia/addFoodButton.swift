@@ -5,6 +5,7 @@ struct addFoodButton: View {
     @Binding var foodItems: [String]
     @State public var addScreen: Bool = false
     @State public var selectedFoodTemp: String = ""
+    @State public var selectedFoodTempRating: Int = 0
     @State public var selectedFoodCategoryTemp: String = ""
     @State public var gram: String = ""
     @State private var selectedFood: String = ""
@@ -35,7 +36,7 @@ struct addFoodButton: View {
                             })
                         Divider()
                         if !searchByWordView {
-                            ForEach(items.FoodObj, id: \.id){dish in
+                            ForEach(items.FoodObj.sorted(by: {$0.rating > $1.rating}), id: \.id){dish in
                                 DoButton(dish: dish)
                                 Divider()
                             }
@@ -50,7 +51,7 @@ struct addFoodButton: View {
                 }
                 .ignoresSafeArea(.keyboard)
                 if addScreen {
-                    addSreenView(addScreen: $addScreen, gram: $gram, selectedFood: $selectedFoodTemp, foodItems: $foodItems)
+                    addSreenView(foodList: items, addScreen: $addScreen, gram: $gram, selectedFood: $selectedFoodTemp, rating: $selectedFoodTempRating, foodItems: $foodItems)
                 }
             }
             .navigationBarTitleDisplayMode(.inline)
@@ -82,6 +83,7 @@ struct addFoodButton: View {
         .navigationViewStyle(StackNavigationViewStyle())
     }
     
+    @ViewBuilder
     func GetFoodCategoryItemsView(category: String) -> some View {
         ZStack {
             ScrollView {
@@ -91,7 +93,7 @@ struct addFoodButton: View {
                         .disableAutocorrection(true)
                         .padding(.vertical, 10)
                     Divider()
-                    ForEach(items.GetFoodCategoryItems(_category: category).filter{$0.name.contains(selectedFoodCategoryItem) || selectedFoodCategoryItem.isEmpty}, id: \.id){dish in
+                    ForEach(items.FoodObj.filter{$0.name.contains(selectedFoodCategoryItem) || selectedFoodCategoryItem.isEmpty}.sorted(by: {$0.rating > $1.rating}), id: \.id){dish in
                         DoButton(dish: dish)
                         Divider()
                     }
@@ -99,7 +101,7 @@ struct addFoodButton: View {
             }
             .ignoresSafeArea(.keyboard)
             if addScreen {
-                addSreenView(addScreen: $addScreen, gram: $gram, selectedFood: $selectedFoodTemp, foodItems: $foodItems)
+                addSreenView(foodList: items, addScreen: $addScreen, gram: $gram, selectedFood: $selectedFoodTemp, rating: $selectedFoodTempRating, foodItems: $foodItems)
             }
         }
         .navigationBarTitleDisplayMode(.inline)
@@ -116,11 +118,16 @@ struct addFoodButton: View {
                 }
             })
         }
+        .onAppear(perform: {
+            items.GetFoodCategoryItems(_category: category)
+        })
     }
     
+    @ViewBuilder
     func DoButton(dish: FoodList) -> some View {
         Button(action: {
             selectedFoodTemp = dish.name
+            selectedFoodTempRating = dish.rating
             DispatchQueue.main.asyncAfter(deadline: .now(), execute: {addScreen = true})
         }){
             HStack{
@@ -154,8 +161,10 @@ struct addFoodButton: View {
             }
         }
         .buttonStyle(TransparentButtonAndLink())
+        .background(dish.rating == 0 ? nil : Color.green.opacity(0.3))
     }
     
+    @ViewBuilder
     func DoLink(dish: CategoryList) -> some View {
         NavigationLink(destination: GetFoodCategoryItemsView(category: "\(dish.name)")) {
             Text("\(dish.name)")

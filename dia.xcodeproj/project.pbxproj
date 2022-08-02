@@ -14,6 +14,8 @@
 		A71CAEF228280F7600C6AC9F /* predictManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71CAEF128280F7600C6AC9F /* predictManager.swift */; };
 		A7230C7F27705AED00B68244 /* excelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7230C7E27705AED00B68244 /* excelManager.swift */; };
 		A74A33D027B7E833003D2EBD /* loginPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74A33CF27B7E833003D2EBD /* loginPage.swift */; };
+		A76206B528944D42001E76AC /* fruitsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A76206B428944D42001E76AC /* fruitsView.swift */; };
+		A76206B728950801001E76AC /* my_fruits.swift in Sources */ = {isa = PBXBuildFile; fileRef = A76206B628950801001E76AC /* my_fruits.swift */; };
 		A76CF8642825AEC40028FC85 /* predictModel.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = A76CF8632825AEC40028FC85 /* predictModel.mlmodel */; };
 		A78E381E2813F0680096E2E2 /* myExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A78E381D2813F0680096E2E2 /* myExtensions.swift */; };
 		A7BD994727CA46FC0090D9D7 /* helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7BD994627CA46FC0090D9D7 /* helper.swift */; };
@@ -70,6 +72,8 @@
 		A71CAEF128280F7600C6AC9F /* predictManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = predictManager.swift; sourceTree = "<group>"; };
 		A7230C7E27705AED00B68244 /* excelManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = excelManager.swift; sourceTree = "<group>"; };
 		A74A33CF27B7E833003D2EBD /* loginPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = loginPage.swift; sourceTree = "<group>"; };
+		A76206B428944D42001E76AC /* fruitsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = fruitsView.swift; sourceTree = "<group>"; };
+		A76206B628950801001E76AC /* my_fruits.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = my_fruits.swift; sourceTree = "<group>"; };
 		A76CF8632825AEC40028FC85 /* predictModel.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = predictModel.mlmodel; sourceTree = "<group>"; };
 		A78E381D2813F0680096E2E2 /* myExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = myExtensions.swift; sourceTree = "<group>"; };
 		A79A9354284D58F300C0A1AE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = /Users/artemisakov/Documents/swiftDia/dia/Info.plist; sourceTree = "<absolute>"; };
@@ -199,6 +203,8 @@
 				AC3B847426EBA1F200E98681 /* ketonur.swift */,
 				AC3C959A26D1B570005B1393 /* enterFood.swift */,
 				AC2D32E1273594630022AFD9 /* addFoodButton.swift */,
+				A76206B428944D42001E76AC /* fruitsView.swift */,
+				A76206B628950801001E76AC /* my_fruits.swift */,
 				ACF7E7C22736F12C0027DD11 /* addSreenView.swift */,
 				AC2D32E327359EC50022AFD9 /* diaryManager.swift */,
 				AC631E0E26CEA90D0033CCFF /* ModalView.swift */,
@@ -378,6 +384,7 @@
 				ACF2F0A826DE9A1D0066753D /* inject.swift in Sources */,
 				ACC3798626ECFA7E00E0729E /* massa.swift in Sources */,
 				A7230C7F27705AED00B68244 /* excelManager.swift in Sources */,
+				A76206B528944D42001E76AC /* fruitsView.swift in Sources */,
 				AC2D32E2273594630022AFD9 /* addFoodButton.swift in Sources */,
 				ACF4E40F272DB126002D2797 /* RKWeekdayHeader.swift in Sources */,
 				ACEDB47D2721A19400DBB67C /* dStart.swift in Sources */,
@@ -385,6 +392,7 @@
 				AC71760627204582000376FD /* currentV.swift in Sources */,
 				ACF4E413272DB126002D2797 /* RKDate.swift in Sources */,
 				AC2C506127289C360009E8EE /* poldny.swift in Sources */,
+				A76206B728950801001E76AC /* my_fruits.swift in Sources */,
 				AC2603202690691E00C4A520 /* diaApp.swift in Sources */,
 				A706DA802843864A00473941 /* emailSender.swift in Sources */,
 				AC6327022751012C00C25E23 /* historyManager.swift in Sources */,

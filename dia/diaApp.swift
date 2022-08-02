@@ -48,7 +48,4 @@ struct diaApp: App {
                 })
         }
     }
-    init(){
-        Thread.sleep(forTimeInterval: 0.20)
-    }
 }

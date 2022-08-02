@@ -7,6 +7,7 @@ struct FoodList: Identifiable, Hashable {
     let carbo: String
     let fat: String
     let gi: String
+    var rating: Int
     let id = UUID()
 }
 
@@ -33,14 +34,15 @@ class Food: ObservableObject {
             let car = Expression<Double>("carbo")
             let f = Expression<Double>("fat")
             let g = Expression<Double?>("gi")
+            let rating = Expression<Int?>("favor")
             var GI = ""
-            for i in try db.prepare(foodItems.select(food, pr, car, f, g).filter(food.like("%\(_name)%")).order(food).limit(30)){
+            for i in try db.prepare(foodItems.select(food, pr, car, f, g, rating).filter(food.like("%\(_name)%")).order(food).limit(30)){
                 if i[g] != nil {
                     GI = "\(i[g]!)"
                 } else {
                     GI = ""
                 }
-                Food1.append(FoodList(name: "\(i[food])", prot: "\(i[pr])", carbo: "\(i[car])", fat: "\(i[f])", gi: GI))
+                Food1.append(FoodList(name: "\(i[food])", prot: "\(i[pr])", carbo: "\(i[car])", fat: "\(i[f])", gi: GI, rating: i[rating] ?? 0))
             }
             self.FoodObj = Food1
         }
@@ -69,8 +71,9 @@ class Food: ObservableObject {
         }
     }
 
-    func GetFoodCategoryItems(_category: String) -> [FoodList] {
+    func GetFoodCategoryItems(_category: String) -> Void {
         do {
+            self.FoodObj.removeAll()
             var FoodObj = [FoodList]()
             FoodObj.removeAll()
             let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
@@ -85,20 +88,20 @@ class Food: ObservableObject {
             let car = Expression<Double>("carbo")
             let f = Expression<Double>("fat")
             let g = Expression<Double?>("gi")
+            let rating = Expression<Int?>("favor")
             var GI = ""
-            for i in try db.prepare(foodItems.select(food, pr, car, f, g).filter(categoryRow == _category)){
+            for i in try db.prepare(foodItems.select(food, pr, car, f, g, rating).filter(categoryRow == _category)){
                 if i[g] != nil {
                     GI = "\(i[g]!)"
                 } else {
                     GI = ""
                 }
-                FoodObj.append(FoodList(name: "\(i[food])", prot: "\(i[pr])", carbo: "\(i[car])", fat: "\(i[f])", gi: GI))
+                FoodObj.append(FoodList(name: "\(i[food])", prot: "\(i[pr])", carbo: "\(i[car])", fat: "\(i[f])", gi: GI, rating: i[rating] ?? 0))
             }
-            return FoodObj
+            self.FoodObj = FoodObj
         }
         catch {
             print(error)
-            return []
         }
     }
 }
@@ -198,6 +201,27 @@ func addPredictedRecord(selectedDate: Date, selectedType: String, BG0: Double, B
         let selectDate = dateFormatter1.string(from: selectedDate)
         let dtime = dateFormatter2.string(from: selectedDate)
         try db.run(predicted.insert(_timeStamp <- realDateTime, _date <- selectDate, _time <- dtime, _priem <- selectedType, _BG0 <- BG0, _BG1 <- BG1))
+    }
+    catch {
+        print(error)
+    }
+}
+
+func changeRating(_name: String, _rating: Int) -> Void {
+    do {
+        let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
+        let path = documents + "/diacompanion.db"
+        let sourcePath = Bundle.main.path(forResource: "diacompanion", ofType: "db")!
+        _=copyDatabaseIfNeeded(sourcePath: sourcePath)
+        let db = try Connection(path)
+        let food = Table("food")
+        let rating = Expression<Int?>("favor")
+        let name = Expression<String>("name")
+        if _rating == 0 {
+            try db.run(food.filter(name == _name).update(rating <- 1))
+        } else {
+            try db.run(food.filter(name == _name).update(rating <- 0))
+        }
     }
     catch {
         print(error)
