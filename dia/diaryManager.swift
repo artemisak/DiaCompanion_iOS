@@ -1,24 +1,28 @@
 import Foundation
 import SQLite
 
-struct FoodList: Identifiable, Hashable {
+struct FoodList: Identifiable {
+    let id = UUID()
     let name: String
     let prot: String
     let carbo: String
     let fat: String
     let gi: String
     var rating: Int
-    let id = UUID()
+    
 }
 
-struct CategoryList: Identifiable, Hashable {
-    let name: String
+struct CategoryList: Identifiable {
     let id = UUID()
+    let name: String
+    
 }
 
 class Food: ObservableObject {
     @Published var FoodObj = [FoodList]()
     @Published var CatObj = [CategoryList]()
+    var catId = UUID()
+    var foodId = UUID()
 
     func GetFoodItemsByName(_name: String) -> Void {
         do {
@@ -51,7 +55,7 @@ class Food: ObservableObject {
         }
     }
 
-    func FillFoodCategoryList() async -> Void {
+    func FillFoodCategoryList() -> Void {
         do {
             var Food1 = [CategoryList]()
             let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!

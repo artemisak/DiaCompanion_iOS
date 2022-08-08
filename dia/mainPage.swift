@@ -63,7 +63,6 @@ struct mainPage: View {
                                 .multilineTextAlignment(.center)
                         }
                     }.buttonStyle(ChangeColorButton())
-//                    NavigationLink(destination: testingView(), label: {Text("TEST")})
                 }
                 .padding()
                 .frame(width: g.size.width)

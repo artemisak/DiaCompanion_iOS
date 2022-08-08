@@ -17,45 +17,44 @@ struct addFoodButton: View {
     var body: some View {
         NavigationView {
             ZStack {
-                ScrollView {
-                    LazyVStack(alignment: .leading, spacing: 0){
-                        Divider()
-                        TextField("Поиск по слову", text: $selectedFood)
-                            .disableAutocorrection(true)
-                            .padding(.vertical, 10)
-                            .onChange(of: selectedFood, perform: {selectedFood in
-                                if !selectedFood.isEmpty {
-                                    items.GetFoodItemsByName(_name: selectedFood)
-                                    searchByWordView = false
-                                } else {
-                                    Task {
-                                        await items.FillFoodCategoryList()
-                                        searchByWordView = true
-                                    }
-                                }
-                            })
-                        Divider()
-                        if !searchByWordView {
-                            ForEach(items.FoodObj.sorted(by: {$0.rating > $1.rating}), id: \.id){dish in
-                                DoButton(dish: dish)
-                                Divider()
-                            }
-                        } else {
-                            ForEach(items.CatObj, id: \.id){ dish in
-                                DoLink(dish: dish)
-                                Divider()
-                            }
-                        }
+                if searchByWordView {
+                    List(items.CatObj, id: \.id){dish in
+                        DoLink(dish: dish)
                     }
-                    .padding(.horizontal, 20)
+                    .ignoresSafeArea(.keyboard)
+                    .listStyle(.plain)
+                } else {
+                    List(items.FoodObj.sorted(by: {$0.rating > $1.rating}), id: \.id) {dish in
+                        DoButton(dish: dish)
+                            .contextMenu {
+                                Button(action: {
+                                    if items.FoodObj[items.FoodObj.firstIndex(where: {$0.name == dish.name})!].rating == 0 {
+                                        items.FoodObj[items.FoodObj.firstIndex(where: {$0.name == dish.name})!].rating = 1
+                                    } else {
+                                        items.FoodObj[items.FoodObj.firstIndex(where: {$0.name == dish.name})!].rating = 0
+                                    }
+                                    changeRating(_name: dish.name, _rating: dish.rating)
+                                    items.foodId = UUID()
+                                }, label: {
+                                    HStack {
+                                        Text(dish.rating == 0 ? "Добавить в избранное" : "Удалить из избранного")
+                                        Image(systemName: dish.rating == 0 ? "star" : "star.fill")
+                                    }
+                                })
+                            }
+                    }
+                    .id(items.foodId)
+                    .ignoresSafeArea(.keyboard)
+                    .listStyle(.plain)
                 }
-                .ignoresSafeArea(.keyboard)
                 if addScreen {
-                    addSreenView(foodList: items, addScreen: $addScreen, gram: $gram, selectedFood: $selectedFoodTemp, rating: $selectedFoodTempRating, foodItems: $foodItems)
+                    addSreenView(addScreen: $addScreen, gram: $gram, selectedFood: $selectedFoodTemp, foodItems: $foodItems)
                 }
             }
             .navigationBarTitleDisplayMode(.inline)
             .navigationTitle("Добавить блюдо")
+            .interactiveDismissDisabled()
+            .searchable(text: $selectedFood, placement: .navigationBarDrawer(displayMode: .always))
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing, content: {
                     Button(action: {
@@ -76,9 +75,18 @@ struct addFoodButton: View {
                 })
             }
             .task {
-                await items.FillFoodCategoryList()
+                items.FillFoodCategoryList()
             }
-            .interactiveDismissDisabled()
+            .onChange(of: selectedFood, perform: {selectedFood in
+                if !selectedFood.isEmpty {
+                    searchByWordView = false
+                    items.foodId = UUID()
+                    items.GetFoodItemsByName(_name: selectedFood)
+                } else {
+                    searchByWordView = true
+                    items.FillFoodCategoryList()
+                }
+            })
         }
         .navigationViewStyle(StackNavigationViewStyle())
     }
@@ -86,24 +94,38 @@ struct addFoodButton: View {
     @ViewBuilder
     func GetFoodCategoryItemsView(category: String) -> some View {
         ZStack {
-            ScrollView {
-                LazyVStack(alignment: .leading, spacing: 0){
-                    Divider()
-                    TextField("Поиск по слову", text: $selectedFoodCategoryItem)
-                        .disableAutocorrection(true)
-                        .padding(.vertical, 10)
-                    Divider()
-                    ForEach(items.FoodObj.filter{$0.name.contains(selectedFoodCategoryItem) || selectedFoodCategoryItem.isEmpty}.sorted(by: {$0.rating > $1.rating}), id: \.id){dish in
-                        DoButton(dish: dish)
-                        Divider()
-                    }
-                }.padding(.horizontal, 20)
+            List {
+                ForEach(items.FoodObj.filter{$0.name.contains(selectedFoodCategoryItem) || selectedFoodCategoryItem.isEmpty}.sorted(by: {$0.rating > $1.rating}), id: \.id){dish in
+                    DoButton(dish: dish)
+                        .contextMenu {
+                            Button(action: {
+                                if items.FoodObj[items.FoodObj.firstIndex(where: {$0.name == dish.name})!].rating == 0 {
+                                    items.FoodObj[items.FoodObj.firstIndex(where: {$0.name == dish.name})!].rating = 1
+                                } else {
+                                    items.FoodObj[items.FoodObj.firstIndex(where: {$0.name == dish.name})!].rating = 0
+                                }
+                                changeRating(_name: dish.name, _rating: dish.rating)
+                                items.catId = UUID()
+                            }, label: {
+                                HStack {
+                                    Text(dish.rating == 0 ? "Добавить в избранное" : "Удалить из избранного")
+                                    Image(systemName: dish.rating == 0 ? "star" : "star.fill")
+                                }
+                            })
+                        }
+                }
             }
             .ignoresSafeArea(.keyboard)
+            .listStyle(.plain)
             if addScreen {
-                addSreenView(foodList: items, addScreen: $addScreen, gram: $gram, selectedFood: $selectedFoodTemp, rating: $selectedFoodTempRating, foodItems: $foodItems)
+                addSreenView(addScreen: $addScreen, gram: $gram, selectedFood: $selectedFoodTemp, foodItems: $foodItems)
             }
         }
+        .id(items.catId)
+        .searchable(text: $selectedFoodCategoryItem, placement: .navigationBarDrawer(displayMode: .always))
+        .onChange(of: selectedFoodCategoryItem, perform: {i in
+            items.catId = UUID()
+        })
         .navigationBarTitleDisplayMode(.inline)
         .navigationTitle(category)
         .toolbar {
@@ -118,9 +140,9 @@ struct addFoodButton: View {
                 }
             })
         }
-        .onAppear(perform: {
+        .task {
             items.GetFoodCategoryItems(_category: category)
-        })
+        }
     }
     
     @ViewBuilder
@@ -128,40 +150,35 @@ struct addFoodButton: View {
         Button(action: {
             selectedFoodTemp = dish.name
             selectedFoodTempRating = dish.rating
-            DispatchQueue.main.asyncAfter(deadline: .now(), execute: {addScreen = true})
+            addScreen = true
         }){
-            HStack{
-                Text("\(dish.name)").frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+            VStack(alignment: .leading) {
                 HStack{
-                VStack{
-                    Text("Б")
-                        .foregroundColor(Color.gray)
-                        .font(.system(size: 13))
-                    Text("\(dish.prot)").foregroundColor(.orange)
+                    VStack{
+                        Text("Б")
+                            .foregroundColor(Color.gray)
+                        Text("\(dish.prot)").foregroundColor(.orange)
+                    }.font(.system(size: 18.5))
+                    VStack{
+                        Text("Ж")
+                            .foregroundColor(Color.gray)
+                        Text("\(dish.fat)").foregroundColor(.green)
+                    }.font(.system(size: 18.5))
+                    VStack{
+                        Text("У")
+                            .foregroundColor(Color.gray)
+                        Text("\(dish.carbo)").foregroundColor(.blue)
+                    }.font(.system(size: 18.5))
+                    VStack{
+                        Text("ГИ")
+                            .foregroundColor(Color.gray)
+                        Text("\(dish.gi)").foregroundColor(.red)
+                    }.font(.system(size: 18.5))
                 }
-                VStack{
-                    Text("Ж")
-                        .foregroundColor(Color.gray)
-                        .font(.system(size: 13))
-                    Text("\(dish.fat)").foregroundColor(.green)
-                }
-                VStack{
-                    Text("У")
-                        .foregroundColor(Color.gray)
-                        .font(.system(size: 13))
-                    Text("\(dish.carbo)").foregroundColor(.blue)
-                }
-                VStack{
-                    Text("ГИ")
-                        .foregroundColor(Color.gray)
-                        .font(.system(size: 13))
-                    Text("\(dish.gi)").foregroundColor(.red)
-                }
-                }.frame(minWidth: 0, maxWidth: .infinity)
+                Text("\(dish.name)").frame(minWidth: 0, maxWidth: .infinity, alignment: .leading).font(.system(size: 20))
             }
         }
-        .buttonStyle(TransparentButtonAndLink())
-        .background(dish.rating == 0 ? nil : Color.green.opacity(0.3))
+        .listRowBackground(dish.rating == 0 ? nil : Color.green.opacity(0.3))
     }
     
     @ViewBuilder
@@ -169,6 +186,6 @@ struct addFoodButton: View {
         NavigationLink(destination: GetFoodCategoryItemsView(category: "\(dish.name)")) {
             Text("\(dish.name)")
         }
-        .buttonStyle(TransparentButtonAndLink())
     }
 }
+
