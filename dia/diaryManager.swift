@@ -1,7 +1,7 @@
 import Foundation
 import SQLite
 
-struct FoodList: Identifiable {
+struct FoodList: Identifiable, Hashable {
     let id = UUID()
     let name: String
     let prot: String
@@ -12,7 +12,7 @@ struct FoodList: Identifiable {
     
 }
 
-struct CategoryList: Identifiable {
+struct CategoryList: Identifiable, Hashable {
     let id = UUID()
     let name: String
     

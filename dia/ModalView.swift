@@ -32,7 +32,7 @@ struct ModalView: View {
                     }.foregroundColor(.black)
                     Button("Удалить аккаунт", role: .destructive, action: {
                         eraseAccount = true
-                    }).confirmationDialog("Удаляя аккаунт вы не потеряете доступ к приложению, однаок, вся информация в нем будет удалена.", isPresented: $eraseAccount, titleVisibility: .visible, actions: {
+                    }).confirmationDialog("Удаляя аккаунт вы не потеряете доступ к приложению, однако, вся информация в нем будет удалена.", isPresented: $eraseAccount, titleVisibility: .visible, actions: {
                         Button("ОК", action: {
                             dismiss()
                             deleteAccaunt()

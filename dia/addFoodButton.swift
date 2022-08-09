@@ -3,6 +3,7 @@ import SwiftUI
 struct addFoodButton: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @Binding var foodItems: [String]
+    @State var listOfCatID: UUID = UUID()
     @State public var addScreen: Bool = false
     @State public var selectedFoodTemp: String = ""
     @State public var selectedFoodTempRating: Int = 0
@@ -21,6 +22,7 @@ struct addFoodButton: View {
                     List(items.CatObj, id: \.id){dish in
                         DoLink(dish: dish)
                     }
+                    .id(listOfCatID)
                     .ignoresSafeArea(.keyboard)
                     .listStyle(.plain)
                 } else {
@@ -94,8 +96,7 @@ struct addFoodButton: View {
     @ViewBuilder
     func GetFoodCategoryItemsView(category: String) -> some View {
         ZStack {
-            List {
-                ForEach(items.FoodObj.filter{$0.name.contains(selectedFoodCategoryItem) || selectedFoodCategoryItem.isEmpty}.sorted(by: {$0.rating > $1.rating}), id: \.id){dish in
+            List(items.FoodObj.filter{$0.name.contains(selectedFoodCategoryItem) || selectedFoodCategoryItem.isEmpty}.sorted(by: {$0.rating > $1.rating}), id: \.id){dish in
                     DoButton(dish: dish)
                         .contextMenu {
                             Button(action: {
@@ -113,16 +114,15 @@ struct addFoodButton: View {
                                 }
                             })
                         }
-                }
             }
+            .id(items.catId)
             .ignoresSafeArea(.keyboard)
             .listStyle(.plain)
             if addScreen {
                 addSreenView(addScreen: $addScreen, gram: $gram, selectedFood: $selectedFoodTemp, foodItems: $foodItems)
             }
         }
-        .id(items.catId)
-        .searchable(text: $selectedFoodCategoryItem, placement: .navigationBarDrawer(displayMode: .always))
+        .searchable(text: $selectedFoodCategoryItem, placement: .navigationBarDrawer(displayMode: .automatic))
         .onChange(of: selectedFoodCategoryItem, perform: {i in
             items.catId = UUID()
         })
