@@ -20,7 +20,7 @@ struct addFoodButton: View {
                 VStack(spacing: 0) {
                     VStack(spacing:0){
                         Divider()
-                            .overlay(.blue.opacity(0.2))
+                            .overlay(.blue.opacity(0.1))
                         HStack {
                             TextField(text: $selectedFood, prompt: Text("Поиск по слову"), label: {EmptyView()})
                                 .padding(.leading, 16)
@@ -112,7 +112,7 @@ struct addFoodButton: View {
         ZStack {
             VStack(spacing: 0) {
                 Divider()
-                    .overlay(.blue.opacity(0.2))
+                    .overlay(.blue.opacity(0.1))
                 HStack{
                     TextField(text: $selectedFoodCategoryItem, prompt: Text("Поиск по слову"), label: {EmptyView()})
                         .padding(.leading, 16)
