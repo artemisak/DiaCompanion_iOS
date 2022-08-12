@@ -19,21 +19,16 @@ struct addFoodButton: View {
         NavigationView {
             ZStack {
                 VStack(spacing: 0) {
-                    VStack(spacing:0){
-                        Divider()
-                            .padding(.leading, 16)
-                        HStack {
-                            TextField(text: $selectedFood, prompt: Text("Поиск по слову"), label: {EmptyView()})
-                                .padding(.leading, 16)
-                            Image(systemName: "delete.left.fill").foregroundColor(Color.gray)
-                                .padding(.trailing, 16)
-                                .onTapGesture {
-                                    selectedFood = ""
-                                }
-                        }.padding(.vertical, 13.5)
-                        Divider()
-                            .padding(.leading, 16)
+                    HStack {
+                        TextField(text: $selectedFood, prompt: Text("Поиск по слову"), label: {EmptyView()}).disableAutocorrection(true)
+                        Image(systemName: "xmark").foregroundColor(Color(red: 87/255, green: 165/255, blue: 248/255))
+                            .onTapGesture {
+                                selectedFood = ""
+                            }
                     }
+                    .padding(.vertical, 13.5)
+                    .padding(.horizontal, 16)
+                    .border(Color(red: 87/255, green: 165/255, blue: 248/255))
                     if searchByWordView {
                         List(items.CatObj, id: \.id){dish in
                             DoLink(dish: dish)
@@ -115,19 +110,16 @@ struct addFoodButton: View {
     func GetFoodCategoryItemsView(category: String) -> some View {
         ZStack {
             VStack(spacing: 0) {
-                Divider()
-                    .padding(.leading, 16)
-                HStack{
-                    TextField(text: $selectedFoodCategoryItem, prompt: Text("Поиск по слову"), label: {EmptyView()})
-                        .padding(.leading, 16)
-                    Image(systemName: "delete.left.fill").foregroundColor(Color.gray)
-                        .padding(.trailing, 16)
+                HStack {
+                    TextField(text: $selectedFoodCategoryItem, prompt: Text("Поиск по слову"), label: {EmptyView()}).disableAutocorrection(true)
+                    Image(systemName: "xmark").foregroundColor(Color(red: 87/255, green: 165/255, blue: 248/255))
                         .onTapGesture {
                             selectedFoodCategoryItem = ""
                         }
-                }.padding(.vertical, 13.5)
-                Divider()
-                    .padding(.leading, 16)
+                }
+                .padding(.vertical, 13.5)
+                .padding(.horizontal, 16)
+                .border(Color(red: 87/255, green: 165/255, blue: 248/255))
                 List(items.FoodObj.filter{$0.name.contains(selectedFoodCategoryItem) || selectedFoodCategoryItem.isEmpty}.sorted(by: {$0.rating > $1.rating}), id: \.id){dish in
                     DoButton(dish: dish)
                         .contextMenu {
