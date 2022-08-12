@@ -12,6 +12,7 @@ struct addFoodButton: View {
     @State private var selectedFoodCategoryItem: String = ""
     @State private var searchByWordView: Bool = true
     @State private var searchByWordCategoryView: Bool = true
+    @State public var successedSave: Bool = false
     @StateObject private var items = Food()
     @Binding var txtTheme: DynamicTypeSize
     var body: some View {
@@ -65,7 +66,10 @@ struct addFoodButton: View {
                     }
                 }
                 if addScreen {
-                    addSreenView(addScreen: $addScreen, gram: $gram, selectedFood: $selectedFoodTemp, foodItems: $foodItems)
+                    addSreenView(addScreen: $addScreen, gram: $gram, selectedFood: $selectedFoodTemp, foodItems: $foodItems, successedSave: $successedSave)
+                }
+                if successedSave {
+                    savedNotice()
                 }
             }
             .navigationBarTitleDisplayMode(.inline)
@@ -148,7 +152,10 @@ struct addFoodButton: View {
                 .listStyle(.plain)
             }
             if addScreen {
-                addSreenView(addScreen: $addScreen, gram: $gram, selectedFood: $selectedFoodTemp, foodItems: $foodItems)
+                addSreenView(addScreen: $addScreen, gram: $gram, selectedFood: $selectedFoodTemp, foodItems: $foodItems, successedSave: $successedSave)
+            }
+            if successedSave {
+                savedNotice()
             }
         }
         .navigationBarTitleDisplayMode(.inline)

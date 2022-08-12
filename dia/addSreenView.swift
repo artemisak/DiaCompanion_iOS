@@ -6,6 +6,7 @@ struct addSreenView: View {
     @Binding var gram: String
     @Binding var selectedFood: String
     @Binding var foodItems: [String]
+    @Binding var successedSave: Bool
     @FocusState var focusedField: Bool
     var body: some View {
         ZStack {
@@ -41,6 +42,14 @@ struct addSreenView: View {
                             isCorrect = true
                             foodItems.append("\(selectedFood)////\(gram)")
                             addScreen = false
+                            withAnimation(.spring()){
+                                successedSave = true
+                            }
+                            DispatchQueue.main.asyncAfter(deadline: .now()+1, execute: {
+                                withAnimation(.spring()){
+                                    successedSave = false
+                                }
+                            })
                         } catch {
                             isCorrect = false
                         }
