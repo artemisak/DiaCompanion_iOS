@@ -102,6 +102,15 @@ struct addFoodButton: View {
                     items.FillFoodCategoryList()
                 }
             })
+            .onChange(of: successedSave, perform: {i in
+                if i {
+                    DispatchQueue.main.asyncAfter(deadline: .now()+1.75, execute: {
+                        withAnimation(.spring()){
+                            successedSave = false
+                        }
+                    })
+                }
+            })
         }
         .navigationViewStyle(StackNavigationViewStyle())
     }
@@ -169,6 +178,15 @@ struct addFoodButton: View {
         }
         .onChange(of: selectedFoodCategoryItem, perform: {i in
             items.catId = UUID()
+        })
+        .onChange(of: successedSave, perform: {i in
+            if i {
+                DispatchQueue.main.asyncAfter(deadline: .now()+1.75, execute: {
+                    withAnimation(.spring()){
+                        successedSave = false
+                    }
+                })
+            }
         })
     }
     

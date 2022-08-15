@@ -42,14 +42,10 @@ struct addSreenView: View {
                             isCorrect = true
                             foodItems.append("\(selectedFood)////\(gram)")
                             addScreen = false
+                            focusedField = false
                             withAnimation(.spring()){
                                 successedSave = true
                             }
-                            DispatchQueue.main.asyncAfter(deadline: .now()+1, execute: {
-                                withAnimation(.spring()){
-                                    successedSave = false
-                                }
-                            })
                         } catch {
                             isCorrect = false
                         }
