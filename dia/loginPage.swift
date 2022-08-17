@@ -9,7 +9,7 @@ struct loginPage: View {
     @State private var login: String = ""
     @State private var pass: String = ""
     @State private var isWrong: Bool = true
-    @State private var isnt: Bool = false
+    @State public var isnt: Bool = false
     @State private var reg: Bool = false
     @Binding var txtTheme: DynamicTypeSize
     @FocusState private var focusedField: Field?
