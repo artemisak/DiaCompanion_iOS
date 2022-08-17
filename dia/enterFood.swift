@@ -39,9 +39,9 @@ struct enterFood: View {
     @State private var correctness: Bool = false
     @State private var res: Double = 0.0
     @State private var errorMessage: String = ""
+    @State private var recommendMessage: String = ""
+    @State private var isVisible: Bool = false
     @FocusState private var focuseField: Bool
-    @Binding var recommendMessage: String
-    @Binding var isVisible: Bool
     @Binding var txtTheme: DynamicTypeSize
     @Binding var hasChanged: Bool
     var body: some View {
@@ -317,11 +317,49 @@ struct enterFood: View {
                 })
             })
         }
+        .alert(isPresented: $isVisible) {
+            Alert(title: Text("Рекомендации"), message: Text(recommendMessage), dismissButton: .default(Text("ОК")))
+        }
         .ignoresSafeArea(.keyboard)
-        .onAppear(perform: {
+        .task {
             UIScrollView.appearance().keyboardDismissMode = .onDrag
             UITableView.appearance().showsVerticalScrollIndicator = false
-        })
+            do {
+                if (foodItems.count != 0 && sugar != "") {
+                    var food: [String] = []
+                    var gram: [Double] = []
+                    try foodItems.forEach {
+                        food.append($0.components(separatedBy: "////")[0])
+                        gram.append( try convert(txt: $0.components(separatedBy: "////")[1]))
+                    }
+                    let foodNutrients = getData(BG0: try convert(txt: sugar), foodtype: ftpreviewIndex, foodN: food, gram: gram, picker_date: date)
+                    res = try getPredict(BG0: foodNutrients.BG0, gl: foodNutrients.gl, carbo: foodNutrients.carbo, prot: foodNutrients.protb6h, t1: foodNutrients.food_type1, t2: foodNutrients.food_type2, t3: foodNutrients.food_type3, t4: foodNutrients.food_type4, kr: foodNutrients.kr, BMI: foodNutrients.BMI)
+                    if res < 6.8 {
+                        sugarlvl = "УСК не превысит норму"
+                        recColor = Color.green.opacity(0.7)
+                        fontColor = Color.white
+                    } else {
+                        sugarlvl = "УСК превысит норму"
+                        recColor = Color(red: 255/255, green: 91/255, blue: 36/255)
+                        fontColor = Color.white
+                    }
+                    scolor = .black
+                } else {
+                    sugarlvl = "УСК не определен"
+                    recColor = Color.white
+                    fontColor = Color.black
+                }
+            }
+            catch inputErorrs.decimalError {
+                scolor = .red
+            }
+            catch modelErorrs.generalError {
+                scolor = .red
+            }
+            catch {
+                scolor = .red
+            }
+        }
     }
     func removeRows(at offsets: IndexSet){
         foodItems.remove(atOffsets: offsets)

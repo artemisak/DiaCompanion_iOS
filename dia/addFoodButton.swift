@@ -116,6 +116,9 @@ struct addFoodButton: View {
                     })
                 }
             })
+            .onAppear(perform: {
+                successedSave = false
+            })
         }
         .navigationViewStyle(StackNavigationViewStyle())
     }
