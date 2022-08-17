@@ -321,9 +321,11 @@ struct enterFood: View {
             Alert(title: Text("Рекомендации"), message: Text(recommendMessage), dismissButton: .default(Text("ОК")))
         }
         .ignoresSafeArea(.keyboard)
-        .task {
+        .onAppear {
             UIScrollView.appearance().keyboardDismissMode = .onDrag
             UITableView.appearance().showsVerticalScrollIndicator = false
+        }
+        .task {
             do {
                 if (foodItems.count != 0 && sugar != "") {
                     var food: [String] = []
