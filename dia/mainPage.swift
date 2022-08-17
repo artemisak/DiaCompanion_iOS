@@ -3,6 +3,8 @@ import SwiftUI
 struct mainPage: View {
     @State private var showModal: Bool = false
     @State private var columns: [GridItem] = Array(repeating: .init(.flexible()), count: 2)
+    @State public var recommendMessage: String = ""
+    @State public var isVisible: Bool = false
     @Binding var txtTheme: DynamicTypeSize
     @Binding var isnt: Bool
     var body: some View {
@@ -27,7 +29,7 @@ struct mainPage: View {
                                 .foregroundColor(Color.black)
                         }
                     }.buttonStyle(ChangeColorButton())
-                    NavigationLink(destination: enterFood(enabled: false, sugar: "", date: Date(), foodItems: [], ftpreviewIndex: ftype.zavtrak, idForDelete: [], txtTheme: $txtTheme, hasChanged: .constant(false))) {
+                    NavigationLink(destination: enterFood(enabled: false, sugar: "", date: Date(), foodItems: [], ftpreviewIndex: ftype.zavtrak, idForDelete: [], recommendMessage: $recommendMessage, isVisible: $isVisible, txtTheme: $txtTheme, hasChanged: .constant(false))) {
                         VStack {
                             Image("menu_food")
                                 .scaledToFit()
@@ -67,6 +69,9 @@ struct mainPage: View {
                 .padding()
                 .frame(width: g.size.width)
                 .frame(minHeight: g.size.height)
+            }
+            .alert(isPresented: $isVisible) {
+                Alert(title: Text("Рекомендации"), message: Text(recommendMessage), dismissButton: .default(Text("ОК")))
             }
         }
         .toolbar {

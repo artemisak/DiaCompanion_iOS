@@ -18,6 +18,7 @@ struct addFoodButton: View {
     var body: some View {
         NavigationView {
             ZStack {
+                Color.white.ignoresSafeArea()
                 VStack(spacing: 0) {
                     HStack {
                         TextField(text: $selectedFood, prompt: Text("Поиск по слову"), label: {EmptyView()}).disableAutocorrection(true)
@@ -28,13 +29,16 @@ struct addFoodButton: View {
                     }
                     .padding(.vertical, 13.5)
                     .padding(.horizontal, 16)
-                    .border(Color(red: 87/255, green: 165/255, blue: 248/255))
+                    .border(Color(red: 233/255, green: 233/255, blue: 234/255), width: 1)
+                    .padding(.bottom, -0.5)
+                    .zIndex(2)
                     if searchByWordView {
                         List(items.CatObj, id: \.id){dish in
                             DoLink(dish: dish)
                         }
                         .ignoresSafeArea(.keyboard)
                         .listStyle(.plain)
+                        .zIndex(1)
                     } else {
                         List(items.FoodObj.sorted(by: {$0.rating > $1.rating}), id: \.id) {dish in
                             DoButton(dish: dish)
@@ -58,6 +62,7 @@ struct addFoodButton: View {
                         .id(items.foodId)
                         .ignoresSafeArea(.keyboard)
                         .listStyle(.plain)
+                        .zIndex(1)
                     }
                 }
                 if addScreen {
@@ -118,6 +123,7 @@ struct addFoodButton: View {
     @ViewBuilder
     func GetFoodCategoryItemsView(category: String) -> some View {
         ZStack {
+            Color.white.ignoresSafeArea()
             VStack(spacing: 0) {
                 HStack {
                     TextField(text: $selectedFoodCategoryItem, prompt: Text("Поиск по слову"), label: {EmptyView()}).disableAutocorrection(true)
@@ -128,7 +134,9 @@ struct addFoodButton: View {
                 }
                 .padding(.vertical, 13.5)
                 .padding(.horizontal, 16)
-                .border(Color(red: 87/255, green: 165/255, blue: 248/255))
+                .border(Color(red: 233/255, green: 233/255, blue: 234/255), width: 1)
+                .padding(.bottom, -0.5)
+                .zIndex(2)
                 List(items.FoodObj.filter{$0.name.contains(selectedFoodCategoryItem) || selectedFoodCategoryItem.isEmpty}.sorted(by: {$0.rating > $1.rating}), id: \.id){dish in
                     DoButton(dish: dish)
                         .contextMenu {
@@ -151,6 +159,7 @@ struct addFoodButton: View {
                 .id(items.catId)
                 .ignoresSafeArea(.keyboard)
                 .listStyle(.plain)
+                .zIndex(1)
             }
             if addScreen {
                 addSreenView(addScreen: $addScreen, gram: $gram, selectedFood: $selectedFoodTemp, foodItems: $foodItems, successedSave: $successedSave)

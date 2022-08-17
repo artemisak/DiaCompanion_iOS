@@ -40,6 +40,8 @@ struct enterFood: View {
     @State private var res: Double = 0.0
     @State private var errorMessage: String = ""
     @FocusState private var focuseField: Bool
+    @Binding var recommendMessage: String
+    @Binding var isVisible: Bool
     @Binding var txtTheme: DynamicTypeSize
     @Binding var hasChanged: Bool
     var body: some View {
@@ -277,6 +279,7 @@ struct enterFood: View {
                                 SaveToDB(FoodName: arg[0], gram: arg[1], selectedDate: date, selectedType: ftpreviewIndex.rawValue)
                             }
                             addPredictedRecord(selectedDate: date, selectedType: ftpreviewIndex.rawValue, BG0: _BG0, BG1: res)
+                            recommendMessage = getMessage(highGI: checkGI(listOfFood: foodItems), manyCarbo: checkCarbo(foodType: ftpreviewIndex.rawValue, listOfFood: foodItems), highBGBefore: checkBGBefore(BG0: _BG0), lowPV: checkPV(listOfFood: foodItems, date: date), bg_pred: res, isTrue: &isVisible)
                             self.presentationMode.wrappedValue.dismiss()
                         }
                         catch {
@@ -295,6 +298,7 @@ struct enterFood: View {
                             SaveToDB(FoodName: arg[0], gram: arg[1], selectedDate: date, selectedType: ftpreviewIndex.rawValue)
                         }
                         addPredictedRecord(selectedDate: date, selectedType: ftpreviewIndex.rawValue, BG0: 0.0, BG1: 0.0)
+                        recommendMessage = getMessage(highGI: checkGI(listOfFood: foodItems), manyCarbo: checkCarbo(foodType: ftpreviewIndex.rawValue, listOfFood: foodItems), highBGBefore: checkBGBefore(BG0: 5.0), lowPV: checkPV(listOfFood: foodItems, date: date), bg_pred: res, isTrue: &isVisible)
                         self.presentationMode.wrappedValue.dismiss()
                     }
                 }) {
