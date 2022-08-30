@@ -49,6 +49,9 @@ struct weekS: View {
             .background(Color.white.cornerRadius(10))
             .padding([.leading, .trailing], 15)
         }
+        .onAppear{
+            selections1 = getPreloadWeek()
+        }
     }
 }
 

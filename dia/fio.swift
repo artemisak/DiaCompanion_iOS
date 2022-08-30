@@ -3,7 +3,7 @@ import SwiftUI
 struct fio: View {
     @Binding var pFio: Bool
     @Binding var txt: String
-    @State var lineColor = Color.black
+    @State private var lineColor = Color.black
     @FocusState var focuseField: Bool
     var body: some View {
         ZStack{
@@ -23,7 +23,7 @@ struct fio: View {
                         .padding(.leading, 16)
                         .padding(.trailing, 16)
                 }.padding()
-                Divider()
+                Divider().frame(height: 1)
                 HStack(){
                     Button(action: {
                         pFio.toggle()
@@ -50,7 +50,7 @@ struct fio: View {
             .padding([.leading, .trailing])
         }
         .onAppear(perform: {
-            txt = ""
+            txt = getPreloadDFIO()
             focuseField = true
         })
     }

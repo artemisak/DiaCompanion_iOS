@@ -7,7 +7,7 @@ struct export: View {
     var sheets = exportTable()
     var columns: [GridItem] =
     Array(repeating: .init(.flexible()), count: 2)
-    @State private var email: String = ""
+    @State private var email: [String] = [""]
     @State private var erMessage: String = ""
     @State private var emailErrorMessage: Bool = false
     var body: some View {
@@ -33,7 +33,7 @@ struct export: View {
                     .buttonStyle(ChangeColorButton())
                     Button(action:{
                         email = try! findAdress()
-                        if email != "" {
+                        if email != [""] {
                             isLoad.toggle()
                             DispatchQueue.main.asyncAfter(deadline: .now()+0.2){
                                 do {

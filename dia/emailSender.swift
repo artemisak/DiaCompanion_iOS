@@ -15,7 +15,7 @@ class emailSender: NSObject, MFMailComposeViewControllerDelegate {
     override init() {
     }
 
-    func sendEmail(subject:String, body:String, to:String, xlsxFile: Data) throws {
+    func sendEmail(subject:String, body:String, to: [String], xlsxFile: Data) throws {
         guard MFMailComposeViewController.canSendMail() else {
             throw emailErorrs.mailApp
         }
@@ -29,7 +29,7 @@ class emailSender: NSObject, MFMailComposeViewControllerDelegate {
         sender.navigationBar.tintColor = UIColor(red: 0.20, green: 0.47, blue: 0.96, alpha: 1)
         sender.setSubject(subject)
         sender.setMessageBody(body, isHTML: true)
-        sender.setToRecipients([to])
+        sender.setToRecipients(to)
         sender.addAttachmentData(xlsxFile, mimeType: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName: "Dial\(findPacientname()![0][0]+" "+findPacientname()![0][1]+" "+dateFormatter.string(from: date)).xlsx")
         UIApplication.shared.currentUIWindow()?.rootViewController?.present(sender, animated: true, completion: nil)
     }
@@ -39,7 +39,7 @@ class emailSender: NSObject, MFMailComposeViewControllerDelegate {
     }
 }
 
-func findAdress() throws -> String {
+func findAdress() throws -> [String] {
     do {
         let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
         let path = documents + "/diacompanion.db"
@@ -57,24 +57,24 @@ func findAdress() throws -> String {
         }
         switch doc_adress.first! {
         case "Анопова Анна Дмитриевна":
-            return "anchylove@mail.com"
+            return ["anchylove@mail.com","diacompanion@gmail.com"]
         case "Болотько Яна Алексеевна":
-            return "yanabolotko@gmail.com"
+            return ["yanabolotko@gmail.com","diacompanion@gmail.com"]
         case "Дронова Александра Владимировна":
-            return "aleksandra-dronova@yandex.ru"
+            return ["aleksandra-dronova@yandex.ru","diacompanion@gmail.com"]
         case "Попова Полина Викторовна":
-            return "pvpopova@yandex.ru"
+            return ["pvpopova@yandex.ru","diacompanion@gmail.com"]
         case "Ткачук Александра Сергеевна":
-            return "aleksandra.tkachuk.1988@mail.com"
+            return ["aleksandra.tkachuk.1988@mail.com","diacompanion@gmail.com"]
         case "Васюкова Елена Андреева":
-            return "elenavasukova2@gmail.com"
+            return ["elenavasukova2@gmail.com","diacompanion@gmail.com"]
         default:
-            return " "
+            return [""]
         }
     }
     catch {
         print(error)
-        return ""
+        return [""]
     }
 }
 

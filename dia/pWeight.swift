@@ -51,7 +51,7 @@ struct pWeight: View {
             .padding([.leading, .trailing], 15)
         }
         .onAppear(perform: {
-            txt = ""
+            txt = getPreloadDWeight()
             focusedField = true
         })
     }

@@ -14,10 +14,10 @@ struct pHeight: View {
                 Divider()
                 VStack(spacing:0){
                     TextField("см", text: $txt)
+                        .focused($focusedField)
                         .padding(.leading, 16)
                         .padding(.trailing, 16)
                         .keyboardType(.decimalPad)
-                        .focused($focusedField)
                     Rectangle()
                         .frame(height: 1)
                         .foregroundColor(lineColor)
@@ -51,7 +51,7 @@ struct pHeight: View {
             .padding([.leading, .trailing], 15)
         }
         .onAppear(perform: {
-            txt = ""
+            txt = getPreloadDHeight()
             focusedField = true
         })
     }

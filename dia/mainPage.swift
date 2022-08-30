@@ -3,8 +3,8 @@ import SwiftUI
 struct mainPage: View {
     @State private var showModal: Bool = false
     @State private var columns: [GridItem] = Array(repeating: .init(.flexible()), count: 2)
+    @ObservedObject var islogin: check
     @Binding var txtTheme: DynamicTypeSize
-    @Binding var isnt: Bool
     var body: some View {
         GeometryReader { g in
             ScrollView {
@@ -69,14 +69,14 @@ struct mainPage: View {
                 .frame(minHeight: g.size.height)
             }
         }
+        .navigationTitle("ДиаКомпаньон")
         .toolbar {
-            ToolbarItem(placement: .principal, content: {Text("ДиаКомпаньон").font(.headline).fixedSize()})
             ToolbarItem(placement: .navigationBarTrailing){
                 Button(action: {showModal.toggle()}){
                     Image(systemName: "line.3.horizontal")
                 }
                 .sheet(isPresented: $showModal) {
-                    ModalView(txtTheme: $txtTheme, isnt: $isnt).dynamicTypeSize(txtTheme)
+                    ModalView(islogin: islogin, txtTheme: $txtTheme).dynamicTypeSize(txtTheme)
                 }
             }
         }

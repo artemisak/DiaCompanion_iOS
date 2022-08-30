@@ -399,7 +399,7 @@ func checkBMI() -> Bool {
     return res
 }
 
-func deleteAccaunt() {
+func deleteAccaunt() async -> Void {
     do {
         let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
         let path = documents + "/diacompanion.db"
@@ -432,5 +432,199 @@ func deleteAccaunt() {
     }
     catch {
         print(error)
+    }
+}
+
+func getPreloadDFIO() -> String {
+    do {
+        var txt = ""
+        let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
+        let path = documents + "/diacompanion.db"
+        let sourcePath = Bundle.main.path(forResource: "diacompanion", ofType: "db")!
+        _=copyDatabaseIfNeeded(sourcePath: sourcePath)
+        let db = try Connection(path)
+        let macUser = Table("usermac")
+        let fio = Expression<String?>("fio")
+        for i in try db.prepare(macUser.select(fio)){
+            txt = i[fio] ?? ""
+        }
+        return txt
+    }
+    catch {
+        print(error)
+        return ""
+    }
+}
+
+func getPreloadDID() -> String {
+    do {
+        var txt = "1"
+        let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
+        let path = documents + "/diacompanion.db"
+        let sourcePath = Bundle.main.path(forResource: "diacompanion", ofType: "db")!
+        _=copyDatabaseIfNeeded(sourcePath: sourcePath)
+        let db = try Connection(path)
+        let macUser = Table("usermac")
+        let id = Expression<Int>("id")
+        for i in try db.prepare(macUser.select(id)){
+            txt = "\(i[id])"
+        }
+        return txt
+    }
+    catch {
+        print(error)
+        return "1"
+    }
+}
+
+func getPreloadDWeight() -> String {
+    do {
+        var txt = ""
+        let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
+        let path = documents + "/diacompanion.db"
+        let sourcePath = Bundle.main.path(forResource: "diacompanion", ofType: "db")!
+        _=copyDatabaseIfNeeded(sourcePath: sourcePath)
+        let db = try Connection(path)
+        let macUser = Table("usermac")
+        let w = Expression<Double?>("weight")
+        for i in try db.prepare(macUser.select(w)){
+            if i[w] != nil {
+                txt = "\(i[w]!)".replacingOccurrences(of: ".", with: ",")
+            }
+        }
+        return txt
+    }
+    catch {
+        print(error)
+        return ""
+    }
+}
+
+func getPreloadDHeight() -> String {
+    do {
+        var txt = ""
+        let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
+        let path = documents + "/diacompanion.db"
+        let sourcePath = Bundle.main.path(forResource: "diacompanion", ofType: "db")!
+        _=copyDatabaseIfNeeded(sourcePath: sourcePath)
+        let db = try Connection(path)
+        let macUser = Table("usermac")
+        let h = Expression<Double?>("height")
+        for i in try db.prepare(macUser.select(h)){
+            if i[h] != nil {
+                txt = "\(i[h]!)".replacingOccurrences(of: ".", with: ",")
+            }
+        }
+        return txt
+    }
+    catch {
+        print(error)
+        return ""
+    }
+}
+
+func getPreloadBD() -> Date {
+    do {
+        var txt: String = ""
+        let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
+        let path = documents + "/diacompanion.db"
+        let sourcePath = Bundle.main.path(forResource: "diacompanion", ofType: "db")!
+        _=copyDatabaseIfNeeded(sourcePath: sourcePath)
+        let db = try Connection(path)
+        let macUser = Table("usermac")
+        let birthDay = Expression<String?>("birthday")
+        let DF = DateFormatter()
+        DF.dateFormat = "dd.MM.yyyy"
+        for i in try db.prepare(macUser.select(birthDay)){
+            txt = i[birthDay] ?? DF.string(from: Date.now)
+        }
+        return DF.date(from: txt)!
+    }
+    catch {
+        print(error)
+        return Date.now
+    }
+}
+
+func getPreloadDoc() -> Vrachi {
+    do {
+        var vrach = ""
+        let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
+        let path = documents + "/diacompanion.db"
+        let sourcePath = Bundle.main.path(forResource: "diacompanion", ofType: "db")!
+        _=copyDatabaseIfNeeded(sourcePath: sourcePath)
+        let db = try Connection(path)
+        let macUser = Table("usermac")
+        let _vrach = Expression<String?>("doc")
+        for i in try db.prepare(macUser.select(_vrach)){
+            vrach = i[_vrach] ?? "Попова Полина Викторовна"
+        }
+        switch vrach {
+        case "Анопова Анна Дмитриевна":
+            return Vrachi.Anopova
+        case "Болотько Яна Алексеевна":
+            return Vrachi.Bolotko
+        case "Дронова Александра Владимировна":
+            return Vrachi.Dronova
+        case "Попова Полина Викторовна":
+            return Vrachi.Popova
+        case "Ткачут Александра Сергеевна":
+            return Vrachi.Tkachuk
+        case "Васюкова Елена Андреева":
+            return Vrachi.Vasukova
+        default:
+            return Vrachi.without
+        }
+    }
+    catch {
+        print(error)
+        return Vrachi.Popova
+    }
+}
+
+func getPreloadStartDate() -> Date {
+    do {
+        var txt: String = ""
+        let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
+        let path = documents + "/diacompanion.db"
+        let sourcePath = Bundle.main.path(forResource: "diacompanion", ofType: "db")!
+        _=copyDatabaseIfNeeded(sourcePath: sourcePath)
+        let db = try Connection(path)
+        let macUser = Table("usermac")
+        let datebegin = Expression<String?>("datebegin")
+        let DF = DateFormatter()
+        DF.dateFormat = "dd.MM.yyyy"
+        for i in try db.prepare(macUser.select(datebegin)){
+            txt = i[datebegin] ?? DF.string(from: Date.now)
+        }
+        return DF.date(from: txt)!
+    }
+    catch {
+        print(error)
+        return Date.now
+    }
+}
+
+func getPreloadWeek() -> [Double] {
+    do {
+        var w = 20
+        var d = 3
+        let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
+        let path = documents + "/diacompanion.db"
+        let sourcePath = Bundle.main.path(forResource: "diacompanion", ofType: "db")!
+        _=copyDatabaseIfNeeded(sourcePath: sourcePath)
+        let db = try Connection(path)
+        let macUser = Table("usermac")
+        let weekOfStart = Expression<Int?>("week")
+        let dayOfStart = Expression<Int?>("day")
+        for i in try db.prepare(macUser.select(weekOfStart, dayOfStart)){
+            w = i[weekOfStart] ?? 20
+            d = i[dayOfStart] ?? 3
+        }
+        return [Double(w), Double(d)]
+    }
+    catch {
+        print(error)
+        return [20, 3]
     }
 }

@@ -45,5 +45,8 @@ struct dStart: View {
             .background(Color.white.cornerRadius(10))
             .padding([.leading, .trailing], 15)
         }
+        .onAppear {
+            vDate = getPreloadStartDate()
+        }
     }
 }

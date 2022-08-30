@@ -51,7 +51,7 @@ struct pid: View {
             .padding([.leading, .trailing], 15)
         }
         .onAppear(perform: {
-            txt = ""
+            txt = getPreloadDID()
             focuseField = true
         })
     }

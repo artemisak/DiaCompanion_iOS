@@ -676,9 +676,18 @@ struct activity {
 }
 
 func defWeek(nowDate: Date, dateBegin: Date, weekOfStart: Int, dayOfStartWeek: Int) -> Int {
-    let pastInDays = 7*weekOfStart-(7-dayOfStartWeek)
+    let pastInDays = Double(7*weekOfStart-(7-dayOfStartWeek))
+    if dateBegin > nowDate {
+        let delta = Double(DateInterval(start: nowDate, end: dateBegin).duration/(60*60*24))
+        if pastInDays - delta < 0 {
+            return 0
+        }
+        else {
+            return Int(((Double(pastInDays) - delta)/7).rounded(.up))
+        }
+    }
     let delta = DateInterval(start: dateBegin, end: nowDate)
-    let res = (Double(pastInDays) + Double(delta.duration/(60*60*24)))/7
+    let res = (pastInDays + Double(delta.duration/(60*60*24)))/7
     return Int(res.rounded(.up))
 }
 
@@ -722,9 +731,6 @@ func getActivityRecords() -> [activity] {
         }
         
         for i in try db.prepare(activitySheet.select(dateTime,duration,type)){
-            if pdate > dateFormatter1.date(from: i[dateTime][6..<16])! {
-                pdate = pdate.addingTimeInterval(-DateInterval(start: dateFormatter1.date(from: i[dateTime][6..<16])!, end: pdate).duration)
-            }
             actTable.append(activityRow(week: defWeek(nowDate: dateFormatter1.date(from: i[dateTime][6..<16])!, dateBegin: pdate, weekOfStart: pweek, dayOfStartWeek: pday), data: dateFormatter1.date(from: i[dateTime][6..<16])!, actStartTime: dateFormatter.date(from: i[dateTime][0..<6])!, actDuration: i[duration], actType: i[type]))
         }
         
