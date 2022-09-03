@@ -32,7 +32,7 @@ func getMessage(highGI: Bool, manyCarbo: Bool, highBGBefore: Bool, lowPV: Bool, 
     return txt
 }
 
-func checkGI(listOfFood: [String]) -> Bool {
+func checkGI(listOfFood: [foodToSave]) -> Bool {
     var highGI = false
     do {
         var sum = 0.0
@@ -46,7 +46,7 @@ func checkGI(listOfFood: [String]) -> Bool {
         let name = Expression<String>("name")
         let gi = Expression<Double?>("gi")
         for i in listOfFood {
-            for i1 in try db.prepare(food.select(gi).filter(name == i)){
+            for i1 in try db.prepare(food.select(gi).filter(name == i.name)){
                 listOfGI.append(i1[gi] ?? 0.0)
             }
         }
@@ -61,7 +61,7 @@ func checkGI(listOfFood: [String]) -> Bool {
     return highGI
 }
 
-func checkCarbo(foodType: String, listOfFood: [String]) -> Bool {
+func checkCarbo(foodType: String, listOfFood: [foodToSave]) -> Bool {
     var manyCarbo = false
     do {
         var sum = 0.0
@@ -75,7 +75,7 @@ func checkCarbo(foodType: String, listOfFood: [String]) -> Bool {
         let name = Expression<String>("name")
         let carbo = Expression<Double?>("carbo")
         for i in listOfFood {
-            for i1 in try db.prepare(food.select(carbo).filter(name == i)){
+            for i1 in try db.prepare(food.select(carbo).filter(name == i.name)){
                 listOfCarbo.append(i1[carbo] ?? 0.0)
             }
         }
@@ -100,7 +100,7 @@ func checkBGBefore(BG0: Double) -> Bool {
     }
 }
 
-func checkPV(listOfFood: [String], date: Date) -> Bool {
+func checkPV(listOfFood: [foodToSave], date: Date) -> Bool {
     var lowPV = false
     do {
         var sum = 0.0
@@ -116,7 +116,7 @@ func checkPV(listOfFood: [String], date: Date) -> Bool {
         let name = Expression<String>("name")
         let pv = Expression<Double?>("pv")
         for i in listOfFood {
-            for i1 in try db.prepare(food.select(pv).filter(name == i)){
+            for i1 in try db.prepare(food.select(pv).filter(name == i.name)){
                 listOfPV.append(i1[pv] ?? 0.0)
             }
         }

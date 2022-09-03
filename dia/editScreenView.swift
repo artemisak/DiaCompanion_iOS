@@ -1,19 +1,24 @@
+//
+//  editeSreenView.swift
+//  dia
+//
+//  Created by Артём Исаков on 31.08.2022.
+//
+
 import SwiftUI
 
-struct addSreenView: View {
-    @State private var isCorrect: Bool = true
-    @Binding var addScreen: Bool
-    @Binding var gram: String
-    @Binding var selectedFood: String
+struct editScreenView: View {
+    @State private var gram = ""
+    @Binding var id: Int
     @Binding var foodItems: [foodToSave]
-    @Binding var successedSave: Bool
+    @Binding var showEditView: Bool
     @FocusState var focusedField: Bool
     var body: some View {
         ZStack {
             Color.black.opacity(0.2).ignoresSafeArea()
             VStack(spacing:0){
                 Text("Добавить блюдо/продукт")
-                .padding()
+                    .padding()
                 Divider()
                 VStack(){
                     TextField("Вес, в граммах", text: $gram)
@@ -23,35 +28,27 @@ struct addSreenView: View {
                         .keyboardType(.numberPad)
                     Rectangle()
                         .frame(height: 1)
-                        .foregroundColor(isCorrect ? .black : .red)
+                        .foregroundColor(.black)
                         .padding(.leading, 16)
                         .padding(.trailing, 16)
-                }.padding()
+                }
+                .padding()
                 Divider()
                 HStack(){
                     Button(action: {
-                        addScreen = false
+                        showEditView = false
                     }){
                         Text("Назад")
                     }
                     .buttonStyle(TransparentButton())
                     Divider()
                     Button(action: {
-                        do {
-                            _ = try convertToInt(txt: gram)
-                            isCorrect = true
-                            foodItems.append(foodToSave(name: "\(selectedFood)////\(gram)"))
-                            addScreen = false
-                            focusedField = false
-                            withAnimation(.spring()){
-                                successedSave = true
-                            }
-                        } catch {
-                            isCorrect = false
-                        }
-                    }){
-                        Text("Сохранить")
-                    }
+                        let arg = "\(foodItems[id].name)".components(separatedBy: "////")
+                        foodItems[id].name = arg[0] + "////" + "\(gram)"
+                        showEditView = false
+                    }, label: {
+                        Text("Изменить")
+                    })
                     .buttonStyle(TransparentButton())
                 }.frame(height: 50)
             }
@@ -61,11 +58,5 @@ struct addSreenView: View {
         .task {
             focusedField = true
         }
-        .onAppear(perform: {
-            gram = ""
-        })
-        .onDisappear(perform: {
-            selectedFood = ""
-        })
     }
 }

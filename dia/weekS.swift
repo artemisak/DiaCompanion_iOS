@@ -29,18 +29,14 @@ struct weekS: View {
                 Divider()
                 HStack(spacing: 0) {
                     Button(action: {
-                        withAnimation {
-                            bWeek.toggle()
-                        }
+                        bWeek.toggle()
                     }){
                         Text("Отменить")
                     }.buttonStyle(TransparentButton())
                     Divider()
                     Button(action: {
                         addWeekDay(week: Int(selections1[0]), day: Int(selections1[1]))
-                        withAnimation {
-                            bWeek.toggle()
-                        }
+                        bWeek.toggle()
                     }){
                         Text("Сохранить")
                     }.buttonStyle(TransparentButton())

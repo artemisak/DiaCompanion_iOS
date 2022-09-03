@@ -12,7 +12,7 @@ class emailSender: NSObject, MFMailComposeViewControllerDelegate {
     
     public static let shared = emailSender()
     
-    override init() {
+    private override init() {
     }
 
     func sendEmail(subject:String, body:String, to: [String], xlsxFile: Data) throws {
@@ -24,12 +24,12 @@ class emailSender: NSObject, MFMailComposeViewControllerDelegate {
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "ru_RU")
         dateFormatter.setLocalizedDateFormatFromTemplate("dd.MM.yyyy")
+        sender.view.tintColor = UIColor(red: 51/255, green: 119/255, blue: 246/255, alpha: 1)
         sender.mailComposeDelegate = self
-        sender.modalPresentationStyle = .fullScreen
-        sender.navigationBar.tintColor = UIColor(red: 0.20, green: 0.47, blue: 0.96, alpha: 1)
         sender.setSubject(subject)
         sender.setMessageBody(body, isHTML: true)
         sender.setToRecipients(to)
+        sender.overrideUserInterfaceStyle = .light
         sender.addAttachmentData(xlsxFile, mimeType: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName: "Dial\(findPacientname()![0][0]+" "+findPacientname()![0][1]+" "+dateFormatter.string(from: date)).xlsx")
         UIApplication.shared.currentUIWindow()?.rootViewController?.present(sender, animated: true, completion: nil)
     }

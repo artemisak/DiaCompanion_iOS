@@ -2,7 +2,7 @@ import SwiftUI
 
 struct addFoodButton: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    @Binding var foodItems: [String]
+    @Binding var foodItems: [foodToSave]
     @State public var addScreen: Bool = false
     @State public var selectedFoodTemp: String = ""
     @State public var selectedFoodTempRating: Int = 0

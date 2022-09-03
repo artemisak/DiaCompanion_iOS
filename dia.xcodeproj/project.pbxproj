@@ -9,11 +9,11 @@
 /* Begin PBXBuildFile section */
 		A706DA802843864A00473941 /* emailSender.swift in Sources */ = {isa = PBXBuildFile; fileRef = A706DA7F2843864A00473941 /* emailSender.swift */; };
 		A706DA822843867800473941 /* export.swift in Sources */ = {isa = PBXBuildFile; fileRef = A706DA812843867800473941 /* export.swift */; };
-		A70829BE27FDE39400C74F21 /* help.pdf in Resources */ = {isa = PBXBuildFile; fileRef = A70829BD27FDE39400C74F21 /* help.pdf */; };
 		A70BCC3A27B9471E00C22703 /* loginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A70BCC3927B9471E00C22703 /* loginManager.swift */; };
 		A70FC0FB28AA969E00E154DB /* recommendationMesssage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A70FC0FA28AA969E00E154DB /* recommendationMesssage.swift */; };
 		A71CAEF228280F7600C6AC9F /* predictManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71CAEF128280F7600C6AC9F /* predictManager.swift */; };
 		A7230C7F27705AED00B68244 /* excelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7230C7E27705AED00B68244 /* excelManager.swift */; };
+		A73DAF3C28BFDA9E00995E66 /* editScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A73DAF3B28BFDA9E00995E66 /* editScreenView.swift */; };
 		A74A1CC228B1016C0038C79F /* startPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74A1CC128B1016C0038C79F /* startPage.swift */; };
 		A74A33D027B7E833003D2EBD /* loginPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74A33CF27B7E833003D2EBD /* loginPage.swift */; };
 		A76CF8642825AEC40028FC85 /* predictModel.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = A76CF8632825AEC40028FC85 /* predictModel.mlmodel */; };
@@ -68,11 +68,11 @@
 		A316D5BECBE459250AC4A311 /* Pods-dia.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-dia.debug.xcconfig"; path = "Target Support Files/Pods-dia/Pods-dia.debug.xcconfig"; sourceTree = "<group>"; };
 		A706DA7F2843864A00473941 /* emailSender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = emailSender.swift; sourceTree = "<group>"; };
 		A706DA812843867800473941 /* export.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = export.swift; sourceTree = "<group>"; };
-		A70829BD27FDE39400C74F21 /* help.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = help.pdf; sourceTree = "<group>"; };
 		A70BCC3927B9471E00C22703 /* loginManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = loginManager.swift; sourceTree = "<group>"; };
 		A70FC0FA28AA969E00E154DB /* recommendationMesssage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = recommendationMesssage.swift; sourceTree = "<group>"; };
 		A71CAEF128280F7600C6AC9F /* predictManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = predictManager.swift; sourceTree = "<group>"; };
 		A7230C7E27705AED00B68244 /* excelManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = excelManager.swift; sourceTree = "<group>"; };
+		A73DAF3B28BFDA9E00995E66 /* editScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = editScreenView.swift; sourceTree = "<group>"; };
 		A74A1CC128B1016C0038C79F /* startPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = startPage.swift; sourceTree = "<group>"; };
 		A74A33CF27B7E833003D2EBD /* loginPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = loginPage.swift; sourceTree = "<group>"; };
 		A76CF8632825AEC40028FC85 /* predictModel.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = predictModel.mlmodel; sourceTree = "<group>"; };
@@ -181,7 +181,6 @@
 			isa = PBXGroup;
 			children = (
 				AC71760727209863000376FD /* diacompanion.db */,
-				A70829BD27FDE39400C74F21 /* help.pdf */,
 				A7F8A596288ED30100C13F36 /* Education.pdf */,
 				AC26031F2690691E00C4A520 /* diaApp.swift */,
 				A71CAEF128280F7600C6AC9F /* predictManager.swift */,
@@ -205,6 +204,7 @@
 				ACF2F0A726DE9A1D0066753D /* inject.swift */,
 				AC3B847426EBA1F200E98681 /* ketonur.swift */,
 				AC3C959A26D1B570005B1393 /* enterFood.swift */,
+				A73DAF3B28BFDA9E00995E66 /* editScreenView.swift */,
 				AC2D32E1273594630022AFD9 /* addFoodButton.swift */,
 				A70FC0FA28AA969E00E154DB /* recommendationMesssage.swift */,
 				A770675728A459F800457195 /* savedNotice.swift */,
@@ -309,7 +309,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				A7F8A597288ED30100C13F36 /* Education.pdf in Resources */,
-				A70829BE27FDE39400C74F21 /* help.pdf in Resources */,
 				AC2603242690691F00C4A520 /* Assets.xcassets in Resources */,
 				AC2603272690691F00C4A520 /* Preview Assets.xcassets in Resources */,
 				AC71760827209863000376FD /* diacompanion.db in Resources */,
@@ -368,6 +367,7 @@
 			files = (
 				ACF4E410272DB126002D2797 /* RKMonth.swift in Sources */,
 				AC37A67B276147AF00558E55 /* excelGenerator.swift in Sources */,
+				A73DAF3C28BFDA9E00995E66 /* editScreenView.swift in Sources */,
 				A770675828A459F800457195 /* savedNotice.swift in Sources */,
 				ACCBA996272B1DA300D785F6 /* RKViewController.swift in Sources */,
 				AC631E0F26CEA90D0033CCFF /* ModalView.swift in Sources */,

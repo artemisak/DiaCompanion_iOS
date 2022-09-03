@@ -43,18 +43,14 @@ struct currentV: View {
                 Divider()
                 HStack(){
                     Button(action: {
-                        withAnimation {
-                            pV.toggle()
-                        }
+                        pV.toggle()
                     }){
                         Text("Отменить")
                     }.buttonStyle(TransparentButton())
                     Divider()
                     Button(action: {
                         addVrach(pVrach: selectedVrach.rawValue)
-                        withAnimation {
-                            pV.toggle()
-                        }
+                        pV.toggle()
                     }){
                         Text("Сохранить")
                     }.buttonStyle(TransparentButton())

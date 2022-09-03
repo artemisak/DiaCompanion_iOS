@@ -48,11 +48,7 @@ struct ModalView: View {
             .listStyle(.insetGrouped)
             .ignoresSafeArea(.keyboard)
             .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .principal, content: {
-                    Text("Дополнительно").bold()
-                })
-            }
+            .navigationTitle("Дополнительно")
         }
         .navigationViewStyle(.stack)
     }

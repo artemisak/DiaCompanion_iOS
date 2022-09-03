@@ -12,7 +12,7 @@ struct history: View {
     @State private var sugar: String = ""
     @State private var enabled: Bool = false
     @State private var date : Date = Date()
-    @State private var foodItems: [String] = []
+    @State private var foodItems: [foodToSave] = []
     @State private var idFordelete: [Int] = []
     @State private var ftpreviewIndex: ftype = ftype.zavtrak
     @State private var actTime: String = ""
@@ -62,7 +62,7 @@ struct history: View {
                                 date = convertToDate(d: i.date)
                                 foodItems = []
                                 for j in i.metaInfo {
-                                    foodItems.append(j[0]+"////"+j[1])
+                                    foodItems.append(foodToSave(name: j[0]+"////"+j[1]))
                                 }
                                 if i.metaInfo.last![8] != "0.0" {
                                     sugar = i.metaInfo.last![8]
@@ -423,12 +423,12 @@ struct history: View {
         calc[0] = "Масса: " + calc[0]
         calc[1] = "Белки: " + calc[1]
         calc[2] = "Жиры: " + calc[2]
-        calc[3] = "Углводы: " + calc[3]
+        calc[3] = "Углеводы: " + calc[3]
         calc[4] = "ККал: " + calc[4]
         calc[5] = "ГИ: " + calc[5]
         calc[6] = "ГН: " + calc[6]
         if info.last![8] != "0.0" && info.last![9] != "0.0" {
-            calc.append("УСК до примема пищи: " + info.last![8])
+            calc.append("УСК до приема пищи: " + info.last![8])
             calc.append("Прогнозируемый УСК после: " + info.last![9])
         }
         return calc
