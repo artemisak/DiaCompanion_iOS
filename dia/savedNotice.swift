@@ -8,9 +8,8 @@
 import SwiftUI
 
 struct savedNotice: View {
-    @State var isAnimate = false
     var body: some View {
-        VStack(spacing:0){
+        VStack(spacing: .zero){
             Spacer()
             HStack {
                 Image(systemName: "checkmark.circle")
@@ -20,15 +19,10 @@ struct savedNotice: View {
             .padding()
             .background(
                 Color(red: 232/255, green: 242/255, blue: 254/255).cornerRadius(20)
+                    .shadow(radius: 2.5)
             )
             Spacer()
-                .frame(height: UIScreen.main.bounds.height/10)
+                .frame(height: UIScreen.main.bounds.height/8)
         }
-    }
-}
-
-struct savedNotice_Previews: PreviewProvider {
-    static var previews: some View {
-        savedNotice()
     }
 }

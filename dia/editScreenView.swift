@@ -56,6 +56,7 @@ struct editScreenView: View {
             .padding([.leading, .trailing], 15)
         }
         .task {
+            gram = ""
             focusedField = true
         }
     }

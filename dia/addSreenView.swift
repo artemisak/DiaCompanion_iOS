@@ -43,10 +43,9 @@ struct addSreenView: View {
                             foodItems.append(foodToSave(name: "\(selectedFood)////\(gram)"))
                             addScreen = false
                             focusedField = false
-                            withAnimation(.spring()){
-                                successedSave = true
-                            }
-                        } catch {
+                            successedSave = true
+                        }
+                        catch {
                             isCorrect = false
                         }
                     }){

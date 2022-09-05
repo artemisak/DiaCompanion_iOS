@@ -10,6 +10,7 @@ import SwiftUI
 struct startPage: View {
     @StateObject private var islogin = check()
     @Binding var txtTheme: DynamicTypeSize
+    @ViewBuilder
     var body: some View {
         NavigationView {
             if !islogin.istrue {
@@ -19,9 +20,9 @@ struct startPage: View {
             }
         }
         .navigationViewStyle(.stack)
-        .onAppear(perform: {
+        .onAppear {
             islogin.checklog()
-        })
+        }
     }
 }
 
