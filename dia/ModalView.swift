@@ -69,7 +69,7 @@ struct pacientPage: View {
         ZStack {
             List {
                 Section(header: Text("Данные пациента").font(.system(size: 15.5))){
-                    Button(action: {pFio.toggle()}) {
+                    Button(action: {withAnimation(.default){pFio.toggle()}}) {
                         Text("ФИО")
                     }.foregroundColor(.black)
                     Button(action: {withAnimation(.default){pDate.toggle()}}) {
@@ -84,13 +84,13 @@ struct pacientPage: View {
                     Button(action: {withAnimation(.default){bWeek.toggle()}}) {
                         Text("Неделя берем. на начало исследования")
                     }.foregroundColor(.black)
-                    Button(action: {bid.toggle()}) {
+                    Button(action: {withAnimation(.default){bid.toggle()}}) {
                         Text("Индивидуальный номер пациента")
                     }.foregroundColor(.black)
-                    Button(action: {bWeight.toggle()}) {
+                    Button(action: {withAnimation(.default){bWeight.toggle()}}) {
                         Text("Вес до беременности, кг")
                     }.foregroundColor(.black)
-                    Button(action: {bHeight.toggle()}) {
+                    Button(action: {withAnimation(.default){bHeight.toggle()}}) {
                         Text("Рост до беременности, см")
                     }.foregroundColor(.black)
                 }

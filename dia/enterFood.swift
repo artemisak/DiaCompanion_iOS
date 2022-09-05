@@ -229,7 +229,10 @@ struct enterFood: View {
                             }
                             .swipeActions {
                                 Button(action: {
-                                    editeRow(i: foodItems.firstIndex(where: {$0.id == i.id})!)
+                                    id0 = foodItems.firstIndex(where: {$0.id == i.id})!
+                                    withAnimation(.default){
+                                        showEditView = true
+                                    }
                                 }, label: {
                                     Image(systemName: "pencil")
                                 })
@@ -385,12 +388,6 @@ struct enterFood: View {
     }
     func removeRows(i: Int){
         foodItems.remove(at: i)
-    }
-    func editeRow(i: Int){
-        id0 = i
-        withAnimation(){
-            showEditView = true
-        }
     }
 }
 

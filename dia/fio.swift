@@ -8,11 +8,11 @@ struct fio: View {
     var body: some View {
         ZStack{
             Color.black.opacity(0.2).ignoresSafeArea()
-            VStack(spacing:0){
+            VStack(spacing: .zero){
                 Text("ФИО пациента")
                     .padding()
                 Divider()
-                VStack(spacing: 0){
+                VStack(spacing: .zero){
                     TextField("Фамилия И.О.", text: $txt)
                         .focused($focuseField)
                         .padding(.leading, 16)

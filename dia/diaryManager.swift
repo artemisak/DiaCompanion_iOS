@@ -21,7 +21,8 @@ struct CategoryList: Identifiable, Hashable {
 class Food: ObservableObject {
     @Published var FoodObj = [FoodList]()
     @Published var CatObj = [CategoryList]()
-
+    @Published var FoodID = UUID()
+    @Published var CatID = UUID()
     func GetFoodItemsByName(_name: String) -> Void {
         do {
             var Food1 = [FoodList]()

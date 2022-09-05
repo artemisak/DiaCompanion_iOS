@@ -23,6 +23,8 @@
 		A7D0976A2809FE16000A12E1 /* myButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7D097692809FE16000A12E1 /* myButtons.swift */; };
 		A7D27E022815ADDC00DC00E9 /* PDFManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7D27E012815ADDC00DC00E9 /* PDFManager.swift */; };
 		A7DCBBB327BD8AD4009A3A16 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A7DCBBB227BD8AD4009A3A16 /* Launch Screen.storyboard */; };
+		A7DCCA4728C63FBA00D104F5 /* foodCategoryItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7DCCA4628C63FBA00D104F5 /* foodCategoryItemView.swift */; };
+		A7DCCA4928C6446B00D104F5 /* foodButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7DCCA4828C6446B00D104F5 /* foodButton.swift */; };
 		A7F8A597288ED30100C13F36 /* Education.pdf in Resources */ = {isa = PBXBuildFile; fileRef = A7F8A596288ED30100C13F36 /* Education.pdf */; };
 		A7FBB23B27FC257D00828432 /* regHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7FBB23A27FC257D00828432 /* regHelper.swift */; };
 		AC2603202690691E00C4A520 /* diaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC26031F2690691E00C4A520 /* diaApp.swift */; };
@@ -83,6 +85,8 @@
 		A7D097692809FE16000A12E1 /* myButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = myButtons.swift; sourceTree = "<group>"; };
 		A7D27E012815ADDC00DC00E9 /* PDFManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFManager.swift; sourceTree = "<group>"; };
 		A7DCBBB227BD8AD4009A3A16 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
+		A7DCCA4628C63FBA00D104F5 /* foodCategoryItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = foodCategoryItemView.swift; sourceTree = "<group>"; };
+		A7DCCA4828C6446B00D104F5 /* foodButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = foodButton.swift; sourceTree = "<group>"; };
 		A7F8A596288ED30100C13F36 /* Education.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = Education.pdf; sourceTree = "<group>"; };
 		A7FBB23A27FC257D00828432 /* regHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = regHelper.swift; sourceTree = "<group>"; };
 		AC26031C2690691E00C4A520 /* dia.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = dia.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -206,6 +210,8 @@
 				AC3C959A26D1B570005B1393 /* enterFood.swift */,
 				A73DAF3B28BFDA9E00995E66 /* editScreenView.swift */,
 				AC2D32E1273594630022AFD9 /* addFoodButton.swift */,
+				A7DCCA4628C63FBA00D104F5 /* foodCategoryItemView.swift */,
+				A7DCCA4828C6446B00D104F5 /* foodButton.swift */,
 				A70FC0FA28AA969E00E154DB /* recommendationMesssage.swift */,
 				A770675728A459F800457195 /* savedNotice.swift */,
 				ACF7E7C22736F12C0027DD11 /* addSreenView.swift */,
@@ -390,6 +396,7 @@
 				A7230C7F27705AED00B68244 /* excelManager.swift in Sources */,
 				AC2D32E2273594630022AFD9 /* addFoodButton.swift in Sources */,
 				ACF4E40F272DB126002D2797 /* RKWeekdayHeader.swift in Sources */,
+				A7DCCA4728C63FBA00D104F5 /* foodCategoryItemView.swift in Sources */,
 				ACEDB47D2721A19400DBB67C /* dStart.swift in Sources */,
 				A78E381E2813F0680096E2E2 /* myExtensions.swift in Sources */,
 				AC71760627204582000376FD /* currentV.swift in Sources */,
@@ -411,6 +418,7 @@
 				AC3B847526EBA1F200E98681 /* ketonur.swift in Sources */,
 				A7BD994727CA46FC0090D9D7 /* helper.swift in Sources */,
 				A71CAEF228280F7600C6AC9F /* predictManager.swift in Sources */,
+				A7DCCA4928C6446B00D104F5 /* foodButton.swift in Sources */,
 				ACEDB47F2721A7E400DBB67C /* bday.swift in Sources */,
 				AC3C959B26D1B570005B1393 /* enterFood.swift in Sources */,
 			);
