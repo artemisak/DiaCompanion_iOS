@@ -49,5 +49,6 @@ struct foodButton : View {
             .padding(.vertical, 12.5)
             .background(dish.rating == 0 ? nil : Color.green.opacity(0.3))
         }
+        .buttonStyle(ButtonAndLink())
     }
 }

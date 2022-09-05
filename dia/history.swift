@@ -35,164 +35,162 @@ struct history: View {
     @State private var recommendMessage: String = ""
     @State private var isVisible: Bool = false
     var body: some View {
-        NavigationLink(isActive: $redirectToEnterFood, destination: {enterFood(enabled: enabled, sugar: sugar, date: date, foodItems: foodItems, ftpreviewIndex: ftpreviewIndex, idForDelete: idFordelete, txtTheme: $txtTheme, hasChanged: $hasChanged)}, label: {EmptyView()}).isHidden(true)
-        NavigationLink(isActive: $redirectToEnterAct, destination: {enterAct(t: actTime, date: actDate, actpreviewIndex: actPreviewIndex, idForDelete: idFordelete, txtTheme: $txtTheme, hasChanged: $hasChanged)}, label: {EmptyView()}).isHidden(true)
-        NavigationLink(isActive: $redirectToEnterInject, destination: {inject(t: tInject, date: dateInject, previewIndex: previewIndexInject, previewIndex1: previewIndexInject1, idForDelete: idFordelete, txtTheme: $txtTheme, hasChanged: $hasChanged)}, label: {EmptyView()}).isHidden(true)
-        NavigationLink(isActive: $redirectToEnterSugar, destination: {sugarChange(t: tSugar, date: dateSugar, isAct: isActSugar, bool1: bool1Sugar, spreviewIndex: spreviewIndexSugar, idForDelete: idFordelete, txtTheme: $txtTheme, hasChanged: $hasChanged)}, label: {EmptyView()}).isHidden(true)
-        NavigationLink(isActive: $redirectToEnterKetonur, destination: {ketonur(t: tKetonur, date: dateKetonur, idForDelete: idFordelete, hasChanged: $hasChanged, txtTheme: $txtTheme)}, label: {EmptyView()}).isHidden(true)
-        NavigationLink(isActive: $redirectToEnterMassa, destination: {massa(t: tMassa, date: dateMassa, idForDelete: idFordelete, hasChanged: $hasChanged, txtTheme: $txtTheme)}, label: {EmptyView()}).isHidden(true)
-        List {
-            ForEach(hList.histList, id: \.id){ i in
-                doRow(first: i.name, second: i.date, third: i.metaInfo, typeOfRow: i.type)
-                    .swipeActions(edge: .trailing, allowsFullSwipe: true, content: {
-                        Button {
-                            removeRows(at: IndexSet(integer: hList.histList.firstIndex(of: i)!))
-                        } label: {
-                            Image(systemName: "trash.fill")
+        NavigationLink(isActive: $redirectToEnterFood, destination: {enterFood(enabled: enabled, sugar: sugar, date: date, foodItems: foodItems, ftpreviewIndex: ftpreviewIndex, idForDelete: idFordelete, txtTheme: $txtTheme, hasChanged: $hasChanged)}, label: {EmptyView()}).buttonStyle(TransparentButton()).isHidden(true)
+        NavigationLink(isActive: $redirectToEnterAct, destination: {enterAct(t: actTime, date: actDate, actpreviewIndex: actPreviewIndex, idForDelete: idFordelete, txtTheme: $txtTheme, hasChanged: $hasChanged)}, label: {EmptyView()}).buttonStyle(TransparentButton()).isHidden(true)
+        NavigationLink(isActive: $redirectToEnterInject, destination: {inject(t: tInject, date: dateInject, previewIndex: previewIndexInject, previewIndex1: previewIndexInject1, idForDelete: idFordelete, txtTheme: $txtTheme, hasChanged: $hasChanged)}, label: {EmptyView()}).buttonStyle(TransparentButton()).isHidden(true)
+        NavigationLink(isActive: $redirectToEnterSugar, destination: {sugarChange(t: tSugar, date: dateSugar, isAct: isActSugar, bool1: bool1Sugar, spreviewIndex: spreviewIndexSugar, idForDelete: idFordelete, txtTheme: $txtTheme, hasChanged: $hasChanged)}, label: {EmptyView()}).buttonStyle(TransparentButton()).isHidden(true)
+        NavigationLink(isActive: $redirectToEnterKetonur, destination: {ketonur(t: tKetonur, date: dateKetonur, idForDelete: idFordelete, hasChanged: $hasChanged, txtTheme: $txtTheme)}, label: {EmptyView()}).buttonStyle(TransparentButton()).isHidden(true)
+        NavigationLink(isActive: $redirectToEnterMassa, destination: {massa(t: tMassa, date: dateMassa, idForDelete: idFordelete, hasChanged: $hasChanged, txtTheme: $txtTheme)}, label: {EmptyView()}).buttonStyle(TransparentButton()).isHidden(true)
+        List (hList.histList, id: \.id){ i in
+            doRow(first: i.name, second: i.date, third: i.metaInfo, typeOfRow: i.type)
+                .swipeActions(edge: .trailing, allowsFullSwipe: true, content: {
+                    Button {
+                        removeRows(at: IndexSet(integer: hList.histList.firstIndex(of: i)!))
+                    } label: {
+                        Image(systemName: "trash.fill")
+                    }
+                    .tint(.red)
+                })
+                .swipeActions(edge: .trailing, allowsFullSwipe: true, content: {
+                    Button {
+                        if i.type == 0 {
+                            idFordelete = []
+                            for j in i.bdID {
+                                idFordelete.append(j)
+                            }
+                            date = convertToDate(d: i.date)
+                            foodItems = []
+                            for j in i.metaInfo {
+                                foodItems.append(foodToSave(name: j[0]+"////"+j[1]))
+                            }
+                            if i.metaInfo.last![8] != "0.0" {
+                                sugar = i.metaInfo.last![8]
+                                enabled = true
+                            } else {
+                                sugar = ""
+                                enabled = false
+                            }
+                            switch i.name.split(separator: " ")[0] {
+                            case "Завтрак":
+                                ftpreviewIndex = .zavtrak
+                            case "Обед":
+                                ftpreviewIndex = .obed
+                            case "Ужин":
+                                ftpreviewIndex = .uzin
+                            case "Перекусы":
+                                ftpreviewIndex = .perekus
+                            default:
+                                ftpreviewIndex = .zavtrak
+                            }
+                            redirectToEnterFood = true
                         }
-                        .tint(.red)
-                    })
-                    .swipeActions(edge: .trailing, allowsFullSwipe: true, content: {
-                        Button {
-                            if i.type == 0 {
-                                idFordelete = []
-                                for j in i.bdID {
-                                    idFordelete.append(j)
-                                }
-                                date = convertToDate(d: i.date)
-                                foodItems = []
-                                for j in i.metaInfo {
-                                    foodItems.append(foodToSave(name: j[0]+"////"+j[1]))
-                                }
-                                if i.metaInfo.last![8] != "0.0" {
-                                    sugar = i.metaInfo.last![8]
-                                    enabled = true
-                                } else {
-                                    sugar = ""
-                                    enabled = false
-                                }
-                                switch i.name.split(separator: " ")[0] {
-                                case "Завтрак":
-                                    ftpreviewIndex = .zavtrak
-                                case "Обед":
-                                    ftpreviewIndex = .obed
-                                case "Ужин":
-                                    ftpreviewIndex = .uzin
-                                case "Перекусы":
-                                    ftpreviewIndex = .perekus
-                                default:
-                                    ftpreviewIndex = .zavtrak
-                                }
-                                redirectToEnterFood = true
+                        else if i.type == 1 {
+                            idFordelete = []
+                            for j in i.bdID {
+                                idFordelete.append(j)
                             }
-                            else if i.type == 1 {
-                                idFordelete = []
-                                for j in i.bdID {
-                                    idFordelete.append(j)
-                                }
-                                actTime = i.metaInfo[0][1]
-                                actDate = convertToDate(d: i.date)
-                                switch i.metaInfo[0][0]{
-                                case "Зарядка":
-                                    actPreviewIndex = act.zar
-                                case "Сон":
-                                    actPreviewIndex = act.sleep
-                                case "Ходьба":
-                                    actPreviewIndex = act.hod
-                                case "Спорт":
-                                    actPreviewIndex = act.sport
-                                case "Уборка в квартире":
-                                    actPreviewIndex = act.uborka
-                                case "Работа в огороде":
-                                    actPreviewIndex = act.rabota
-                                default:
-                                    actPreviewIndex = act.zar
-                                }
-                                redirectToEnterAct = true
+                            actTime = i.metaInfo[0][1]
+                            actDate = convertToDate(d: i.date)
+                            switch i.metaInfo[0][0]{
+                            case "Зарядка":
+                                actPreviewIndex = act.zar
+                            case "Сон":
+                                actPreviewIndex = act.sleep
+                            case "Ходьба":
+                                actPreviewIndex = act.hod
+                            case "Спорт":
+                                actPreviewIndex = act.sport
+                            case "Уборка в квартире":
+                                actPreviewIndex = act.uborka
+                            case "Работа в огороде":
+                                actPreviewIndex = act.rabota
+                            default:
+                                actPreviewIndex = act.zar
                             }
-                            else if i.type == 2 {
-                                idFordelete = []
-                                for j in i.bdID {
-                                    idFordelete.append(j)
-                                }
-                                tInject = i.metaInfo[0][0]
-                                dateInject = convertToDate(d: i.date)
-                                switch i.metaInfo[0][1] {
-                                case "Натощак":
-                                    previewIndexInject1 = injects.natoshak
-                                case "Завтрак":
-                                    previewIndexInject1 = injects.zavtrak
-                                case "Обед":
-                                    previewIndexInject1 = injects.obed
-                                case "Ужин":
-                                    previewIndexInject1 = injects.uzin
-                                case "Дополнительно":
-                                    previewIndexInject1 = injects.dop
-                                default:
-                                    previewIndexInject1 = injects.natoshak
-                                }
-                                switch i.metaInfo[0][2] {
-                                case "Ультракороткий":
-                                    previewIndexInject = injectType.ultra
-                                case "Короткий":
-                                    previewIndexInject = injectType.kor
-                                case "Пролонгированный":
-                                    previewIndexInject = injectType.prolong
-                                default:
-                                    previewIndexInject = injectType.ultra
-                                }
-                                redirectToEnterInject = true
-                            }
-                            else if i.type == 3 {
-                                idFordelete = []
-                                for j in i.bdID {
-                                    idFordelete.append(j)
-                                }
-                                tSugar = i.metaInfo[0][0]
-                                dateSugar = convertToDate(d: i.date)
-                                switch i.metaInfo[0][1] {
-                                case "Натощак":
-                                    spreviewIndexSugar = .natoshak
-                                case "После завтрака":
-                                    spreviewIndexSugar = .zavtrak
-                                case "После обеда":
-                                    spreviewIndexSugar = .obed
-                                case "После ужина":
-                                    spreviewIndexSugar = .uzin
-                                case "Дополнительно":
-                                    spreviewIndexSugar = .dop
-                                case "При родах":
-                                    spreviewIndexSugar = .rodi
-                                default:
-                                    spreviewIndexSugar = .natoshak
-                                }
-                                bool1Sugar = try! convertToInt(txt: i.metaInfo[0][2])
-                                redirectToEnterSugar = true
-                            }
-                            else if i.type == 4 {
-                                idFordelete = []
-                                for j in i.bdID {
-                                    idFordelete.append(j)
-                                }
-                                tKetonur = i.metaInfo[0][0]
-                                dateKetonur = convertToDate(d: i.date)
-                                redirectToEnterKetonur = true
-                            }
-                            else if i.type == 5 {
-                                idFordelete = []
-                                for j in i.bdID {
-                                    idFordelete.append(j)
-                                }
-                                tMassa = i.metaInfo[0][0]
-                                dateMassa = convertToDate(d: i.date)
-                                redirectToEnterMassa = true
-                            }
-                        } label: {
-                            Image(systemName: "pencil")
+                            redirectToEnterAct = true
                         }
-                        .tint(.orange)
-                    })
-            }
+                        else if i.type == 2 {
+                            idFordelete = []
+                            for j in i.bdID {
+                                idFordelete.append(j)
+                            }
+                            tInject = i.metaInfo[0][0]
+                            dateInject = convertToDate(d: i.date)
+                            switch i.metaInfo[0][1] {
+                            case "Натощак":
+                                previewIndexInject1 = injects.natoshak
+                            case "Завтрак":
+                                previewIndexInject1 = injects.zavtrak
+                            case "Обед":
+                                previewIndexInject1 = injects.obed
+                            case "Ужин":
+                                previewIndexInject1 = injects.uzin
+                            case "Дополнительно":
+                                previewIndexInject1 = injects.dop
+                            default:
+                                previewIndexInject1 = injects.natoshak
+                            }
+                            switch i.metaInfo[0][2] {
+                            case "Ультракороткий":
+                                previewIndexInject = injectType.ultra
+                            case "Короткий":
+                                previewIndexInject = injectType.kor
+                            case "Пролонгированный":
+                                previewIndexInject = injectType.prolong
+                            default:
+                                previewIndexInject = injectType.ultra
+                            }
+                            redirectToEnterInject = true
+                        }
+                        else if i.type == 3 {
+                            idFordelete = []
+                            for j in i.bdID {
+                                idFordelete.append(j)
+                            }
+                            tSugar = i.metaInfo[0][0]
+                            dateSugar = convertToDate(d: i.date)
+                            switch i.metaInfo[0][1] {
+                            case "Натощак":
+                                spreviewIndexSugar = .natoshak
+                            case "После завтрака":
+                                spreviewIndexSugar = .zavtrak
+                            case "После обеда":
+                                spreviewIndexSugar = .obed
+                            case "После ужина":
+                                spreviewIndexSugar = .uzin
+                            case "Дополнительно":
+                                spreviewIndexSugar = .dop
+                            case "При родах":
+                                spreviewIndexSugar = .rodi
+                            default:
+                                spreviewIndexSugar = .natoshak
+                            }
+                            bool1Sugar = try! convertToInt(txt: i.metaInfo[0][2])
+                            redirectToEnterSugar = true
+                        }
+                        else if i.type == 4 {
+                            idFordelete = []
+                            for j in i.bdID {
+                                idFordelete.append(j)
+                            }
+                            tKetonur = i.metaInfo[0][0]
+                            dateKetonur = convertToDate(d: i.date)
+                            redirectToEnterKetonur = true
+                        }
+                        else if i.type == 5 {
+                            idFordelete = []
+                            for j in i.bdID {
+                                idFordelete.append(j)
+                            }
+                            tMassa = i.metaInfo[0][0]
+                            dateMassa = convertToDate(d: i.date)
+                            redirectToEnterMassa = true
+                        }
+                    } label: {
+                        Image(systemName: "pencil")
+                    }
+                    .tint(.orange)
+                })
         }
         .lineLimit(2)
         .listStyle(.plain)
@@ -275,19 +273,19 @@ struct history: View {
                     Text("\($0)")
                 }
             } header: {
-                Text("Дополнительная информация")
+                Text("Дополнительная информация").font(.system(size: 15.5))
             }
             Section {
                 Text(date)
             } header: {
-                Text("Время приема")
+                Text("Время приема").font(.system(size: 15.5))
             }
             Section {
                 ForEach(info, id: \.self){
                     Text("\($0[0])")
                 }
             } header: {
-                Text("Список блюд")
+                Text("Список блюд").font(.system(size: 15.5))
             }
         }
         .navigationTitle(titleName)
@@ -299,17 +297,17 @@ struct history: View {
             Section {
                 Text(info[0][1])
             } header: {
-                Text("Длительность, мин.")
+                Text("Длительность, мин.").font(.system(size: 15.5))
             }
             Section {
                 Text(date)
             } header: {
-                Text("Время начала")
+                Text("Время начала").font(.system(size: 15.5))
             }
             Section {
                 Text(info[0][0])
             } header: {
-                Text("Тип нагрузки")
+                Text("Тип нагрузки").font(.system(size: 15.5))
             }
         }
         .navigationTitle("Физическая активность")
@@ -321,22 +319,22 @@ struct history: View {
             Section {
                 Text(info[0][0])
             } header: {
-                Text("Кол-во ед.")
+                Text("Кол-во ед.").font(.system(size: 15.5))
             }
             Section {
                 Text(info[0][1])
             } header: {
-                Text("Прием пищи")
+                Text("Прием пищи").font(.system(size: 15.5))
             }
             Section {
                 Text(info[0][2])
             } header: {
-                Text("Тип действия")
+                Text("Тип действия").font(.system(size: 15.5))
             }
             Section {
                 Text(date)
             } header: {
-                Text("Время измерения")
+                Text("Время измерения").font(.system(size: 15.5))
             }
         }.navigationTitle("Введение инсулина")
     }
@@ -347,17 +345,17 @@ struct history: View {
             Section {
                 Text(info[0][0])
             } header: {
-                Text("Уровень сахара в крови ммоль/л")
+                Text("Уровень сахара в крови ммоль/л").font(.system(size: 15.5))
             }
             Section {
                 Text(date)
             } header: {
-                Text("Время")
+                Text("Время").font(.system(size: 15.5))
             }
             Section {
                 Text(info[0][1])
             } header: {
-                Text("Период")
+                Text("Период").font(.system(size: 15.5))
             }
         }.navigationTitle("Измерение сахара")
     }
@@ -368,12 +366,12 @@ struct history: View {
             Section {
                 Text(info[0][0])
             } header: {
-                Text("Общая информация")
+                Text("Общая информация").font(.system(size: 15.5))
             }
             Section {
                 Text(date)
             } header: {
-                Text("Время измерения")
+                Text("Время измерения").font(.system(size: 15.5))
             }
         }
         .navigationTitle("Уровень кетонов в моче")
@@ -385,12 +383,12 @@ struct history: View {
             Section {
                 Text(info[0][0])
             } header: {
-                Text("Общая информация")
+                Text("Общая информация").font(.system(size: 15.5))
             }
             Section {
                 Text(date)
             } header: {
-                Text("Время измерения")
+                Text("Время измерения").font(.system(size: 15.5))
             }
         }
         .navigationTitle("Измерение массы тела")

@@ -40,6 +40,7 @@ struct addFoodButton: View {
                                         NavigationLink(destination: foodCategoryItemView(category: "\(dish.name)", foodItems: $foodItems, txtTheme: $txtTheme)) {
                                             Text("\(dish.name)").frame(minWidth: 0, maxWidth: .infinity, alignment: .leading).font(.system(size: 20)).multilineTextAlignment(.leading).foregroundColor(.black).padding(.horizontal).padding(.vertical, 12.5)
                                         }
+                                        .buttonStyle(ButtonAndLink())
                                         Divider()
                                     }
                                 }
@@ -59,7 +60,7 @@ struct addFoodButton: View {
                                                     items.FoodID = UUID()
                                                 }, label: {
                                                     HStack {
-                                                        Text(dish.rating == 0 ? "Добавить в избранное" : "Удалить из избранного")
+                                                        Text(dish.rating == 0 ? "Добавить в избранное" : "Удалить из избранного").font(.system(size: 18.5))
                                                         Image(systemName: dish.rating == 0 ? "star" : "star.fill")
                                                     }
                                                 })

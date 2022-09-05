@@ -46,7 +46,7 @@ struct foodCategoryItemView: View {
                                             items.CatID = UUID()
                                         }, label: {
                                             HStack {
-                                                Text(dish.rating == 0 ? "Добавить в избранное" : "Удалить из избранного")
+                                                Text(dish.rating == 0 ? "Добавить в избранное" : "Удалить из избранного").font(.system(size: 18.5))
                                                 Image(systemName: dish.rating == 0 ? "star" : "star.fill")
                                             }
                                         })

@@ -32,12 +32,9 @@ struct TransparentButton: ButtonStyle {
     }
 }
 
-struct TransparentButtonAndLink: ButtonStyle {
+struct ButtonAndLink: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
-            .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-            .background(Color.white.opacity(0.0001))
-            .foregroundColor(.black)
-            .padding(.vertical, 10)
+            .background(Color.white)
     }
 }
