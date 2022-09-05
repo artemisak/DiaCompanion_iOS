@@ -107,6 +107,14 @@ class Food: ObservableObject {
             print(error)
         }
     }
+    
+    func handleRatingChange(i: Int) -> Void {
+        if self.FoodObj[i].rating == 0 {
+            self.FoodObj[i].rating = 1
+        } else {
+            self.FoodObj[i].rating = 0
+        }
+    }
 }
 
 func SaveToDB(FoodName: String, gram: String, selectedDate: Date, selectedType: String) {

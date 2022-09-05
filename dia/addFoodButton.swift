@@ -54,11 +54,7 @@ struct addFoodButton: View {
                                         foodButton(dish: dish, selectedFoodTemp: $selectedFoodTemp, addScreen: $addScreen, successedSave: $successedSave)
                                             .contextMenu {
                                                 Button(action: {
-                                                    if items.FoodObj[items.FoodObj.firstIndex(where: {$0.id == dish.id})!].rating == 0 {
-                                                        items.FoodObj[items.FoodObj.firstIndex(where: {$0.id == dish.id})!].rating = 1
-                                                    } else {
-                                                        items.FoodObj[items.FoodObj.firstIndex(where: {$0.id == dish.id})!].rating = 0
-                                                    }
+                                                    items.handleRatingChange(i: items.FoodObj.firstIndex(where: {$0.id == dish.id})!)
                                                     changeRating(_name: dish.name, _rating: dish.rating)
                                                     items.FoodID = UUID()
                                                 }, label: {
