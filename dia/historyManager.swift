@@ -12,9 +12,9 @@ struct hList: Identifiable, Hashable {
 
 class historyList: ObservableObject {
     @Published var histList = [hList]()
+    @Published var fillterList = [hList]()
     
-    @MainActor
-    func FillHistoryList() async -> Void {
+    func FillHistoryList() -> Void {
         do {
             let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
             let path = documents + "/diacompanion.db"
@@ -47,8 +47,8 @@ class historyList: ObservableObject {
             for i in try db.prepare(diary.select(foodType, dateTime)){
                 temp.append(i[foodType]+"/"+i[dateTime])
             }
-            
             let uniqueValue = Array(Set(temp))
+            
             for i in uniqueValue {
                 let spl = i.components(separatedBy: "/")
                 histList.append(hList(type: 0, name: spl[0], date: spl[1], bdID: [], metaInfo: []))
@@ -138,6 +138,11 @@ class historyList: ObservableObject {
         catch {
             print(error)
         }
+    }
+    
+    func refillHistoryList() -> Void {
+        histList.removeAll()
+        FillHistoryList()
     }
 }
 

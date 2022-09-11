@@ -16,9 +16,10 @@ struct export: View {
                 LazyVGrid(columns: columns) {
                     Button(action:{
                         isLoad.toggle()
-                        DispatchQueue.main.asyncAfter(deadline: .now()+0.2){
+                        DispatchQueue.main.asyncAfter(deadline: .now()+0.1){
+                            let content = sheets.generate()
                             isLoad.toggle()
-                            let AV = UIActivityViewController(activityItems: [sheets.generate()], applicationActivities: nil)
+                            let AV = UIActivityViewController(activityItems: [content], applicationActivities: nil)
                             UIApplication.shared.currentUIWindow()?.rootViewController?.present(AV, animated: true, completion: nil)
                         }
                     }){
@@ -35,10 +36,11 @@ struct export: View {
                         email = try! findAdress()
                         if email != [""] {
                             isLoad.toggle()
-                            DispatchQueue.main.asyncAfter(deadline: .now()+0.2){
+                            DispatchQueue.main.asyncAfter(deadline: .now()+0.1){
                                 do {
+                                    let content = try Data(contentsOf: sheets.generate() as URL)
                                     isLoad.toggle()
-                                    try emailSender.shared.sendEmail(subject: "DiaCompanion iOS - электронный дневник", body: "", to: email, xlsxFile: try Data(contentsOf: sheets.generate() as URL))
+                                    try emailSender.shared.sendEmail(subject: "DiaCompanion iOS - электронный дневник", body: "", to: email, xlsxFile: content)
                                 } catch {
                                     emailErrorMessage = true
                                     erMessage = "На устройстве не установлен почтовый клиент"

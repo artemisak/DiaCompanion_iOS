@@ -35,6 +35,6 @@ struct TransparentButton: ButtonStyle {
 struct ButtonAndLink: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
-            .background(Color.white)
+            .background(Color.white.opacity(0.0001))
     }
 }
