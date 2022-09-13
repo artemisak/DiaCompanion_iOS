@@ -54,16 +54,28 @@ struct addFoodButton: View {
                                     VStack(spacing: .zero) {
                                         foodButton(dish: dish, selectedFoodTemp: $selectedFoodTemp, addScreen: $addScreen, successedSave: $successedSave)
                                             .contextMenu {
-                                                Button(action: {
-                                                    items.handleRatingChange(i: items.FoodObj.firstIndex(where: {$0.id == dish.id})!)
-                                                    changeRating(_name: dish.name, _rating: dish.rating)
-                                                    items.FoodID = UUID()
-                                                }, label: {
-                                                    HStack {
-                                                        Text(dish.rating == 0 ? "Добавить в избранное" : "Удалить из избранного").font(.system(size: 18.5))
-                                                        Image(systemName: dish.rating == 0 ? "star" : "star.fill")
-                                                    }
-                                                })
+                                                VStack{
+                                                    Button(action: {
+                                                        items.handleRatingChange(i: items.FoodObj.firstIndex(where: {$0.id == dish.id})!)
+                                                        changeRating(_name: dish.name, _rating: dish.rating)
+                                                        items.FoodID = UUID()
+                                                    }, label: {
+                                                        HStack {
+                                                            Text(dish.rating == 0 ? "Добавить в избранное" : "Удалить из избранного").font(.system(size: 18.5))
+                                                            Image(systemName: dish.rating == 0 ? "star" : "star.fill")
+                                                        }
+                                                    }).foregroundColor(Color.blue)
+                                                    Button(role: .destructive, action: {
+                                                        items.handleDeleting(i: items.FoodObj.firstIndex(where: {$0.id == dish.id})!)
+                                                        deleteFood(name: dish.name)
+                                                        items.FoodID = UUID()
+                                                    }, label: {
+                                                        HStack{
+                                                            Text("Удалить из базы данных")
+                                                            Image(systemName: "trash.fill")
+                                                        }
+                                                    })
+                                                }
                                             }
                                         Divider()
                                     }
