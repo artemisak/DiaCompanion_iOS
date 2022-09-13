@@ -19,6 +19,7 @@
 		A74A33D027B7E833003D2EBD /* loginPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74A33CF27B7E833003D2EBD /* loginPage.swift */; };
 		A76CF8642825AEC40028FC85 /* predictModel.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = A76CF8632825AEC40028FC85 /* predictModel.mlmodel */; };
 		A770675828A459F800457195 /* savedNotice.swift in Sources */ = {isa = PBXBuildFile; fileRef = A770675728A459F800457195 /* savedNotice.swift */; };
+		A783B43728D1384000059BBD /* reserved.db in Resources */ = {isa = PBXBuildFile; fileRef = A783B43628D1384000059BBD /* reserved.db */; };
 		A78E381E2813F0680096E2E2 /* myExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A78E381D2813F0680096E2E2 /* myExtensions.swift */; };
 		A7BD994727CA46FC0090D9D7 /* helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7BD994627CA46FC0090D9D7 /* helper.swift */; };
 		A7D0976A2809FE16000A12E1 /* myButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7D097692809FE16000A12E1 /* myButtons.swift */; };
@@ -81,6 +82,7 @@
 		A74A33CF27B7E833003D2EBD /* loginPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = loginPage.swift; sourceTree = "<group>"; };
 		A76CF8632825AEC40028FC85 /* predictModel.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = predictModel.mlmodel; sourceTree = "<group>"; };
 		A770675728A459F800457195 /* savedNotice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = savedNotice.swift; sourceTree = "<group>"; };
+		A783B43628D1384000059BBD /* reserved.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = reserved.db; sourceTree = "<group>"; };
 		A78E381D2813F0680096E2E2 /* myExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = myExtensions.swift; sourceTree = "<group>"; };
 		A79A9354284D58F300C0A1AE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = /Users/artemisakov/Documents/swiftDia/dia/Info.plist; sourceTree = "<absolute>"; };
 		A7BD994627CA46FC0090D9D7 /* helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = helper.swift; sourceTree = "<group>"; };
@@ -150,24 +152,9 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		AC2551D5272A887500E1C593 /* Calendar */ = {
-			isa = PBXGroup;
-			children = (
-				ACCBA995272B1DA300D785F6 /* RKViewController.swift */,
-				ACF4E407272DB126002D2797 /* RKManager.swift */,
-				ACF4E408272DB126002D2797 /* RKWeekdayHeader.swift */,
-				ACF4E409272DB126002D2797 /* RKMonth.swift */,
-				ACF4E40A272DB126002D2797 /* RKCell.swift */,
-				ACF4E40B272DB126002D2797 /* RKColorSettings.swift */,
-				ACF4E40C272DB126002D2797 /* RKDate.swift */,
-			);
-			path = Calendar;
-			sourceTree = "<group>";
-		};
 		AC2603132690691E00C4A520 = {
 			isa = PBXGroup;
 			children = (
-				A76CF8632825AEC40028FC85 /* predictModel.mlmodel */,
 				AC26031E2690691E00C4A520 /* dia */,
 				AC26031D2690691E00C4A520 /* Products */,
 				C0D553CA378A488FD7608214 /* Pods */,
@@ -186,6 +173,8 @@
 		AC26031E2690691E00C4A520 /* dia */ = {
 			isa = PBXGroup;
 			children = (
+				A76CF8632825AEC40028FC85 /* predictModel.mlmodel */,
+				A783B43628D1384000059BBD /* reserved.db */,
 				AC71760727209863000376FD /* diacompanion.db */,
 				A7F8A596288ED30100C13F36 /* Education.pdf */,
 				AC26031F2690691E00C4A520 /* diaApp.swift */,
@@ -205,7 +194,13 @@
 				A706DA812843867800473941 /* export.swift */,
 				AC6327012751012C00C25E23 /* historyManager.swift */,
 				A7230C7E27705AED00B68244 /* excelManager.swift */,
-				AC2551D5272A887500E1C593 /* Calendar */,
+				ACCBA995272B1DA300D785F6 /* RKViewController.swift */,
+				ACF4E407272DB126002D2797 /* RKManager.swift */,
+				ACF4E408272DB126002D2797 /* RKWeekdayHeader.swift */,
+				ACF4E409272DB126002D2797 /* RKMonth.swift */,
+				ACF4E40A272DB126002D2797 /* RKCell.swift */,
+				ACF4E40B272DB126002D2797 /* RKColorSettings.swift */,
+				ACF4E40C272DB126002D2797 /* RKDate.swift */,
 				AC7A53F626DBF77B00FE65E7 /* enterAct.swift */,
 				ACD86E8026DE820B0027B8ED /* sugarChange.swift */,
 				ACF2F0A726DE9A1D0066753D /* inject.swift */,
@@ -317,6 +312,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A783B43728D1384000059BBD /* reserved.db in Resources */,
 				A7F8A597288ED30100C13F36 /* Education.pdf in Resources */,
 				AC2603242690691F00C4A520 /* Assets.xcassets in Resources */,
 				AC2603272690691F00C4A520 /* Preview Assets.xcassets in Resources */,

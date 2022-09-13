@@ -17,7 +17,7 @@ struct ModalView: View {
                         Button("Добавить запись о кетонурии", action: {})
                     }.foregroundColor(.black)
                     NavigationLink(destination: massa(t: "", date: Date(), idForDelete: [], hasChanged: .constant(false), txtTheme: $txtTheme)) {
-                        Button("Добавить измерение массы тела", action: {})
+                        Button("Измерение массы тела", action: {})
                     }.foregroundColor(.black)
                     NavigationLink(destination: pacientPage()) {
                         Button("Данные пациента", action: {})
