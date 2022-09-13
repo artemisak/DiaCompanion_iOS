@@ -6,6 +6,7 @@ struct ModalView: View {
     @State private var phelper : Bool = false
     @State private var fileUrl = Bundle.main.url(forResource: "Education", withExtension: "pdf")!
     @State private var eraseAccount = false
+    @State private var eraseDB = false
     @ObservedObject var islogin: check
     @Binding var txtTheme: DynamicTypeSize
     var body: some View {
@@ -30,8 +31,32 @@ struct ModalView: View {
                     NavigationLink(destination: helper(phelper: $phelper)) {
                         Button("Помощь", action: {})
                     }.foregroundColor(.black)
-                    Button("Удалить аккаунт", role: .destructive, action: {
+                }
+                Section(header: Text("Управление аккаунтом").font(.system(size: 15.5))){
+                    Button {
+                        eraseDB = true
+                    } label: {
+                        HStack{
+                            Text("Восстановить базу данных")
+                            Spacer()
+                            Image(systemName: "arrow.clockwise")
+                        }.foregroundColor(Color.accentColor)
+                    }
+                    .confirmationDialog("Восстановление подразумевает отмену всех вносимых в вами в базу данных имзенений.", isPresented: $eraseDB, titleVisibility: .visible, actions: {
+                        Button("ОК", action: {
+                            print("")
+                        })
+                    })
+                }
+                Section {
+                    Button(action: {
                         eraseAccount = true
+                    }, label: {
+                        HStack{
+                            Text("Удалить аккаунт")
+                            Spacer()
+                            Image(systemName: "trash.fill")
+                        }.foregroundColor(Color.red)
                     }).confirmationDialog("Удаляя аккаунт вы потеряете доступ к приложению, вся информация в нем будет удалена.", isPresented: $eraseAccount, titleVisibility: .visible, actions: {
                         Button("ОК", action: {
                             dismiss()

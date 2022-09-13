@@ -8,6 +8,5 @@ struct helper: View {
         }
         .padding()
         .navigationTitle("Помощь")
-        .interactiveDismissDisabled()
     }
 }

@@ -373,6 +373,7 @@ struct history: View {
                 Text("Список блюд").font(.system(size: 15.5))
             }
         }
+        .navigationBarTitleDisplayMode(.large)
         .navigationTitle(titleName)
     }
     

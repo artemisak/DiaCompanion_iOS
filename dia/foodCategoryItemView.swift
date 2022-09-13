@@ -24,7 +24,7 @@ struct foodCategoryItemView: View {
                 VStack(spacing: .zero) {
                     Divider()
                     HStack{
-                        TextField(text: $selectedFoodCategoryItem, prompt: Text("Поиск по слову"), label: {EmptyView()}).disableAutocorrection(true)
+                        TextField(text: $selectedFoodCategoryItem, label: {Text("Поиск по слову").dynamicTypeSize(txtTheme)}).disableAutocorrection(true)
                         Image(systemName: "xmark").foregroundColor(Color(red: 87/255, green: 165/255, blue: 248/255))
                             .onTapGesture {
                                 selectedFoodCategoryItem = ""

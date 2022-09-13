@@ -13,6 +13,7 @@
 		A70FC0FB28AA969E00E154DB /* recommendationMesssage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A70FC0FA28AA969E00E154DB /* recommendationMesssage.swift */; };
 		A71CAEF228280F7600C6AC9F /* predictManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71CAEF128280F7600C6AC9F /* predictManager.swift */; };
 		A7230C7F27705AED00B68244 /* excelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7230C7E27705AED00B68244 /* excelManager.swift */; };
+		A73C74F628CF2BF2008D09BF /* addCustomMeal.swift in Sources */ = {isa = PBXBuildFile; fileRef = A73C74F528CF2BF2008D09BF /* addCustomMeal.swift */; };
 		A73DAF3C28BFDA9E00995E66 /* editScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A73DAF3B28BFDA9E00995E66 /* editScreenView.swift */; };
 		A74A1CC228B1016C0038C79F /* startPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74A1CC128B1016C0038C79F /* startPage.swift */; };
 		A74A33D027B7E833003D2EBD /* loginPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74A33CF27B7E833003D2EBD /* loginPage.swift */; };
@@ -74,6 +75,7 @@
 		A70FC0FA28AA969E00E154DB /* recommendationMesssage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = recommendationMesssage.swift; sourceTree = "<group>"; };
 		A71CAEF128280F7600C6AC9F /* predictManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = predictManager.swift; sourceTree = "<group>"; };
 		A7230C7E27705AED00B68244 /* excelManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = excelManager.swift; sourceTree = "<group>"; };
+		A73C74F528CF2BF2008D09BF /* addCustomMeal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = addCustomMeal.swift; sourceTree = "<group>"; };
 		A73DAF3B28BFDA9E00995E66 /* editScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = editScreenView.swift; sourceTree = "<group>"; };
 		A74A1CC128B1016C0038C79F /* startPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = startPage.swift; sourceTree = "<group>"; };
 		A74A33CF27B7E833003D2EBD /* loginPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = loginPage.swift; sourceTree = "<group>"; };
@@ -189,6 +191,7 @@
 				AC26031F2690691E00C4A520 /* diaApp.swift */,
 				A71CAEF128280F7600C6AC9F /* predictManager.swift */,
 				AC2603212690691E00C4A520 /* mainPage.swift */,
+				A73C74F528CF2BF2008D09BF /* addCustomMeal.swift */,
 				A78E381D2813F0680096E2E2 /* myExtensions.swift */,
 				A74A33CF27B7E833003D2EBD /* loginPage.swift */,
 				A74A1CC128B1016C0038C79F /* startPage.swift */,
@@ -373,6 +376,7 @@
 			files = (
 				ACF4E410272DB126002D2797 /* RKMonth.swift in Sources */,
 				AC37A67B276147AF00558E55 /* excelGenerator.swift in Sources */,
+				A73C74F628CF2BF2008D09BF /* addCustomMeal.swift in Sources */,
 				A73DAF3C28BFDA9E00995E66 /* editScreenView.swift in Sources */,
 				A770675828A459F800457195 /* savedNotice.swift in Sources */,
 				ACCBA996272B1DA300D785F6 /* RKViewController.swift in Sources */,

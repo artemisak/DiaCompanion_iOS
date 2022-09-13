@@ -13,7 +13,9 @@ struct PDFKitView: View {
     var url: URL
     var body: some View {
         PDFKitRepresentedView(url)
+            .navigationBarTitleDisplayMode(.inline)
             .navigationTitle("Обучение")
+            .interactiveDismissDisabled()
     }
 }
 

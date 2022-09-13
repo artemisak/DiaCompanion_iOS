@@ -122,7 +122,7 @@ struct injectPicker: View {
     @Binding var previewIndex1: injects
     var body: some View {
         Form {
-            Picker("Прием пищи", selection: $previewIndex1) {
+            Picker(selection: $previewIndex1, label: Text("Прием пищи").font(.system(size: 15.5))) {
                 Text("Натощак").tag(injects.natoshak)
                 Text("Завтрак").tag(injects.zavtrak)
                 Text("Обед").tag(injects.obed)

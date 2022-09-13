@@ -30,6 +30,7 @@ struct loginPage: View {
                             UIApplication.shared.dismissedKeyboard()
                         }
                     TextField("example@mail.ru", text: $login)
+                        .foregroundColor(.black)
                         .textInputAutocapitalization(.never)
                         .disableAutocorrection(true)
                         .focused($focusedField, equals: .username)
