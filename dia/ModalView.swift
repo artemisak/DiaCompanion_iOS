@@ -3,10 +3,12 @@ import PDFKit
 
 struct ModalView: View {
     @Environment(\.dismiss) var dismiss
-    @State private var phelper : Bool = false
     @State private var fileUrl = Bundle.main.url(forResource: "Education", withExtension: "pdf")!
+    @State private var phelper : Bool = false
     @State private var eraseAccount = false
     @State private var eraseDB = false
+    @State private var eraseDBprogress = false
+    @State private var arrowAngle = 0.0
     @ObservedObject var islogin: check
     @Binding var txtTheme: DynamicTypeSize
     var body: some View {
@@ -32,30 +34,37 @@ struct ModalView: View {
                         Button("Помощь", action: {})
                     }.foregroundColor(.black)
                 }
-                Section(header: Text("Управление аккаунтом").font(.system(size: 15.5))){
+                Section(header: Text("Параметры восстановления").font(.system(size: 15.5))){
                     Button {
                         eraseDB = true
                     } label: {
                         HStack{
-                            Text("Восстановить базу данных")
+                            if eraseDBprogress {
+                                ProgressView().frame(width: 22.5)
+                            } else {
+                                Image(systemName: "arrow.clockwise").frame(width: 22.5)
+                            }
+                            Text("Восстановить базу данных").padding(.leading)
                             Spacer()
-                            Image(systemName: "arrow.clockwise")
                         }.foregroundColor(Color.accentColor)
                     }
                     .confirmationDialog("Восстановление подразумевает отмену всех вносимых в вами в базу данных имзенений.", isPresented: $eraseDB, titleVisibility: .visible, actions: {
                         Button("ОК", action: {
-                            print("")
+                            eraseDBprogress = true
+                            Task {
+                                eraseDBprogress = await restoreDB()
+                            }
                         })
                     })
                 }
-                Section {
+                Section(header: Text("Управление аккаунтом").font(.system(size: 15.5))) {
                     Button(action: {
                         eraseAccount = true
                     }, label: {
                         HStack{
-                            Text("Удалить аккаунт")
-                            Spacer()
                             Image(systemName: "trash.fill")
+                            Text("Удалить аккаунт").padding(.leading)
+                            Spacer()
                         }.foregroundColor(Color.red)
                     }).confirmationDialog("Удаляя аккаунт вы потеряете доступ к приложению, вся информация в нем будет удалена.", isPresented: $eraseAccount, titleVisibility: .visible, actions: {
                         Button("ОК", action: {

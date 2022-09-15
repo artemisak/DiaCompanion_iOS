@@ -407,3 +407,92 @@ func deleteFood(name: String) -> Void {
         print(error)
     }
 }
+
+func restoreDB() async -> Bool {
+    do {
+        let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
+        let path = documents + "/reserved.db"
+        let sourcePath = Bundle.main.path(forResource: "reserved", ofType: "db")!
+        _=copyBackDatabaseIfNeeded(sourcePath: sourcePath)
+        let db = try Connection(path)
+        let foodTable = Table("food")
+        let foodN = Expression<String>("name")
+        let cat = Expression<String>("category")
+        let carbo = Expression<Double?>("carbo")
+        let prot = Expression<Double?>("prot")
+        let fat = Expression<Double?>("fat")
+        let ec = Expression<Double?>("ec")
+        let gi = Expression<Double?>("gi")
+        let water = Expression<Double?>("water")
+        let nzhk = Expression<Double?>("nzhk")
+        let hol = Expression<Double?>("hol")
+        let pv = Expression<Double?>("pv")
+        let zola = Expression<Double?>("zola")
+        let na = Expression<Double?>("na")
+        let k = Expression<Double?>("k")
+        let ca = Expression<Double?>("ca")
+        let mg = Expression<Double?>("mg")
+        let p = Expression<Double?>("p")
+        let fe = Expression<Double?>("fe")
+        let a = Expression<Double?>("a")
+        let b1 = Expression<Double?>("b1")
+        let b2 = Expression<Double?>("b2")
+        let rr = Expression<Double?>("rr")
+        let c = Expression<Double?>("c")
+        let re = Expression<Double?>("re")
+        let kar = Expression<Double?>("kar")
+        let mds = Expression<Double?>("mds")
+        let kr = Expression<Double?>("kr")
+        let te = Expression<Double?>("te")
+        let ok = Expression<Double?>("ok")
+        let ne = Expression<Double?>("ne")
+        let zn = Expression<Double?>("zn")
+        let cu = Expression<Double?>("cu")
+        let mn = Expression<Double?>("mn")
+        let se = Expression<Double?>("se")
+        let b5 = Expression<Double?>("b5")
+        let b6 = Expression<Double?>("b6")
+        let fol = Expression<Double?>("fol")
+        let b9 = Expression<Double?>("b9")
+        let dfe = Expression<Double?>("dfe")
+        let holin = Expression<Double?>("holin")
+        let b12 = Expression<Double?>("b12")
+        let ear = Expression<Double?>("ear")
+        let a_kar = Expression<Double?>("a_kar")
+        let b_kript = Expression<Double?>("b_kript")
+        let likopin = Expression<Double?>("likopin")
+        let lut_z = Expression<Double?>("lut_z")
+        let vit_e = Expression<Double?>("vit_e")
+        let vit_d = Expression<Double?>("vit_d")
+        let d_mezd = Expression<Double?>("d_mezd")
+        let vit_k = Expression<Double?>("vit_k")
+        let mzhk = Expression<Double?>("mzhk")
+        let pzhk = Expression<Double?>("pzhk")
+        let w_1ed = Expression<Double?>("w_1ed")
+        let op_1ed = Expression<Double?>("op_1ed")
+        let w_2ed = Expression<Double?>("w_2ed")
+        let op_2ed = Expression<Double?>("op_2ed")
+        let proc_pot = Expression<Double?>("proc_pot")
+        let additional = Expression<Int?>("additional")
+        let rating = Expression<Int?>("rating")
+        let favor = Expression<Int?>("favor")
+        
+        let allDataCopy = Array(try db.prepare(foodTable))
+        
+        let documents2 = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
+        let path2 = documents2 + "/diacompanion.db"
+        let sourcePath2 = Bundle.main.path(forResource: "diacompanion", ofType: "db")!
+        _=copyDatabaseIfNeeded(sourcePath: sourcePath2)
+        let db2 = try Connection(path2)
+
+        try db2.run(foodTable.delete())
+        for i in allDataCopy {
+            try db2.run(foodTable.insert(foodN <- i[foodN], cat <- i[cat], carbo <- i[carbo], prot <- i[prot], fat <- i[fat], ec <- i[ec], gi <- i[gi], water <- i[water], nzhk <- i[nzhk], hol <- i[hol], pv <- i[pv], zola <- i[zola], na <- i[na], k <- i[k], ca <- i[ca], mg <- i[mg], p <- i[p], fe <- i[fe], a <- i[a], b1 <- i[b1], b2 <- i[b2], rr <- i[rr], c <- i[c], re <- i[re], kar <- i[kar], mds <- i[mds], kr <- i[kr], te <- i[te], ok <- i[ok], ne <- i[ne], zn <- i[zn], cu <- i[cu], mn <- i[mn], se <- i[se], b5 <- i[b5], b6 <- i[b6], fol <- i[fol], b9 <- i[b9], dfe <- i[dfe], holin <- i[holin], b12 <- i[b12], ear <- i[ear], a_kar <- i[a_kar], b_kript <- i[b_kript], likopin <- i[likopin], lut_z <- i[lut_z], vit_e <- i[vit_e], vit_d <- i[vit_d], d_mezd <- i[d_mezd], vit_k <- i[vit_k], mzhk <- i[mzhk], pzhk <- i[pzhk], w_1ed <- i[w_1ed], op_1ed <- i[op_1ed], w_2ed <- i[w_2ed], op_2ed <- i[op_2ed], proc_pot <- i[proc_pot], additional <- i[additional], rating <- i[rating], favor <- i[favor]))
+        }
+        return false
+    }
+    catch {
+        print(error)
+        return true
+    }
+}

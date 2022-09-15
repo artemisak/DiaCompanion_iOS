@@ -334,6 +334,20 @@ func copyDatabaseIfNeeded(sourcePath: String) -> Bool {
     }
 }
 
+func copyBackDatabaseIfNeeded(sourcePath: String) -> Bool {
+    let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
+    let destinationPath = documents + "/reserved.db"
+    let exists = FileManager.default.fileExists(atPath: destinationPath)
+    guard !exists else { return false }
+    do {
+        try FileManager.default.copyItem(atPath: sourcePath, toPath: destinationPath)
+        return true
+    } catch {
+        print("error during file copy: \(error)")
+        return false
+    }
+}
+
 enum inputErorrs: Error {
     case decimalError
     case EmptyError
