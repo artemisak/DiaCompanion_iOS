@@ -10,6 +10,7 @@ struct loginPage: View {
     @State private var pass: String = ""
     @State private var isnt: Bool = false
     @State private var reg: Bool = false
+    @State private var isLoading: Bool = false
     @ObservedObject var islogin: check
     @Binding var txtTheme: DynamicTypeSize
     @FocusState private var focusedField: Field?
@@ -34,7 +35,6 @@ struct loginPage: View {
                                 .onSubmit {
                                     focusedField = .password
                                 }
-                            
                         }
                         .padding()
                         .background(RoundedRectangle(cornerRadius: 10)
@@ -58,7 +58,6 @@ struct loginPage: View {
                                         }
                                     })
                                 }
-                            
                         }
                         .padding()
                         .background(RoundedRectangle(cornerRadius: 10)
@@ -71,13 +70,19 @@ struct loginPage: View {
                             .frame(maxWidth: .infinity, alignment: .leading)
                     }
                     Button(action: {
+                        isLoading = true
                         DispatchQueue.main.asyncAfter(deadline: .now()+0.001, execute: {
+                            isLoading = false
                             withAnimation(){
                                 isnt = islogin.setlogged(upass: pass, ulogin: login)
                             }
                         })
                     }, label: {
-                        Text("Войти")
+                        if isLoading {
+                            ProgressView().tint(.white)
+                        } else {
+                            Text("Войти")
+                        }
                     })
                     .buttonStyle(RoundedRectangleButtonStyle())
                     NavigationLink(destination: {
@@ -115,7 +120,7 @@ struct loginPage: View {
             ToolbarItemGroup(placement: .keyboard, content: {
                 Spacer()
                 Button(action: {
-                    UIApplication.shared.dismissedKeyboard()
+                    focusedField = nil
                 }, label: {
                     Text("Готово").dynamicTypeSize(txtTheme)
                 })
