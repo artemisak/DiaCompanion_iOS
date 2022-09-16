@@ -31,7 +31,7 @@ struct inject: View {
             Section(header: Text("Общая информация").font(.system(size: 15.5))){
                 TextField("Ед.", text: $t)
                     .keyboardType(.decimalPad)
-                NavigationLink(destination: injectTypePicker(previewIndex: $previewIndex), label: {
+                NavigationLink(destination: injectTypePicker(previewIndex: $previewIndex).navigationBarTitleDisplayMode(.inline), label: {
                     HStack{
                         Text("Тип действия")
                         Spacer()
@@ -39,7 +39,7 @@ struct inject: View {
                             .foregroundColor(.gray)
                     }
                 })
-                NavigationLink(destination: injectPicker(previewIndex1: $previewIndex1), label: {
+                NavigationLink(destination: injectPicker(previewIndex1: $previewIndex1).navigationBarTitleDisplayMode(.inline), label: {
                     HStack{
                         Text("Прием пищи")
                         Spacer()
@@ -108,7 +108,7 @@ struct inject: View {
 struct injectTypePicker: View {
     @Binding var previewIndex: injectType
     var body: some View {
-        Form {
+        List {
             Picker(selection: $previewIndex, label: Text("Тип действия").font(.system(size: 15.5))) {
                 Text("Ультракороткий").tag(injectType.ultra)
                 Text("Короткий").tag(injectType.kor)
@@ -121,7 +121,7 @@ struct injectTypePicker: View {
 struct injectPicker: View {
     @Binding var previewIndex1: injects
     var body: some View {
-        Form {
+        List {
             Picker(selection: $previewIndex1, label: Text("Прием пищи").font(.system(size: 15.5))) {
                 Text("Натощак").tag(injects.natoshak)
                 Text("Завтрак").tag(injects.zavtrak)

@@ -408,7 +408,7 @@ func deleteFood(name: String) -> Void {
     }
 }
 
-func restoreDB() async -> Bool {
+func restoreDB() -> Bool {
     do {
         let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
         let path = documents + "/reserved.db"

@@ -284,7 +284,7 @@ struct history: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing, content: {
                 NavigationLink {
-                    fillterPicker(listOfValues: $deselected)
+                    fillterPicker(listOfValues: $deselected).navigationBarTitleDisplayMode(.inline)
                 } label: {
                     Image(systemName: "gear")
                 }

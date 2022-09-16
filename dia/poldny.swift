@@ -7,7 +7,6 @@ struct poldny: View {
     @Binding var txtTheme: DynamicTypeSize
     var body: some View {
         RKViewController(isPresented: self.$multipleIsPresented, rkManager: self.rkManager3)
-            .interactiveDismissDisabled()
             .onAppear(perform: startUp)
             .navigationTitle("Выбрать дни")
             .navigationBarTitleDisplayMode(.inline)

@@ -50,7 +50,7 @@ struct enterFood: View {
         ZStack{
             List {
                 Section(header: Text("Общая информация").font(.system(size: 15.5))){
-                    NavigationLink(destination: ftPicker(ftpreviewIndex: $ftpreviewIndex), label: {
+                    NavigationLink(destination: ftPicker(ftpreviewIndex: $ftpreviewIndex).navigationBarTitleDisplayMode(.inline), label: {
                         HStack{
                             Text("Прием пищи")
                             Spacer()

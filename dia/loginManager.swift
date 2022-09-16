@@ -23,7 +23,7 @@ class check: ObservableObject {
         }
     }
     
-    func setlogged(upass: String, ulogin: String) async -> Bool {
+    func setlogged(upass: String, ulogin: String) -> Bool {
         do {
             let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
             let path = documents + "/diacompanion.db"

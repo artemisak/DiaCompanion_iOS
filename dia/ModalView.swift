@@ -27,7 +27,7 @@ struct ModalView: View {
                     NavigationLink(destination: poldny(txtTheme: $txtTheme)) {
                         Button("Отметить полные дни", action: {})
                     }.foregroundColor(.black)
-                    NavigationLink(destination: PDFKitView(url: fileUrl)) {
+                    NavigationLink(destination: PDFKitView(url: fileUrl).ignoresSafeArea(.all, edges: .bottom).navigationTitle("Обучение").navigationBarTitleDisplayMode(.inline)) {
                         Button("Обучение", action: {})
                     }.foregroundColor(.black)
                     NavigationLink(destination: helper(phelper: $phelper)) {
@@ -51,9 +51,7 @@ struct ModalView: View {
                     .confirmationDialog("Восстановление подразумевает отмену всех вносимых в вами в базу данных имзенений.", isPresented: $eraseDB, titleVisibility: .visible, actions: {
                         Button("ОК", action: {
                             eraseDBprogress = true
-                            Task {
-                                eraseDBprogress = await restoreDB()
-                            }
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.001, execute: {eraseDBprogress = restoreDB()})
                         })
                     })
                 }

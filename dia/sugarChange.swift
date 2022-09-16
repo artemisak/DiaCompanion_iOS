@@ -26,7 +26,7 @@ struct sugarChange: View {
             Section(header: Text("Общая информация").font(.system(size: 15.5))){
                 TextField("Уровень сахара в крови, ммоль/л", text: $t)
                     .keyboardType(.decimalPad)
-                NavigationLink(destination: sugarPicker(spreviewIndex: $spreviewIndex), label: {
+                NavigationLink(destination: sugarPicker(spreviewIndex: $spreviewIndex).navigationBarTitleDisplayMode(.inline), label: {
                     HStack {
                         Text("Период")
                         Spacer()
@@ -102,7 +102,7 @@ struct sugarChange: View {
 struct sugarPicker: View {
     @Binding var spreviewIndex: selectedvar
     var body: some View {
-        Form {
+        List {
             Picker(selection: $spreviewIndex , label: Text("Период").font(.system(size: 15.5))) {
                 Text("Натощак").tag(selectedvar.natoshak)
                 Text("После завтрака").tag(selectedvar.zavtrak)

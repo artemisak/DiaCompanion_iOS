@@ -26,7 +26,7 @@ struct enterAct: View {
                 TextField("Длительность, мин.", text: $t)
                     .keyboardType(.numberPad)
                     .focused($focusedField)
-                NavigationLink(destination: actPicker(actpreviewIndex: $actpreviewIndex), label: {
+                NavigationLink(destination: actPicker(actpreviewIndex: $actpreviewIndex).navigationBarTitleDisplayMode(.inline), label: {
                     HStack{
                         Text("Род занятий")
                         Spacer()
