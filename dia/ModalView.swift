@@ -10,6 +10,7 @@ struct ModalView: View {
     @State private var eraseDBprogress = false
     @State private var arrowAngle = 0.0
     @ObservedObject var islogin: check
+    @Binding var showModal: Bool
     @Binding var txtTheme: DynamicTypeSize
     var body: some View {
         NavigationView {
@@ -83,6 +84,9 @@ struct ModalView: View {
             .navigationTitle("Дополнительно")
         }
         .navigationViewStyle(.stack)
+        .onDisappear(perform: {
+            showModal = false
+        })
     }
 }
 

@@ -77,7 +77,7 @@ struct mainPage: View {
                 }
                 .buttonStyle(ButtonAndLink()).foregroundColor(Color.accentColor)
                 .sheet(isPresented: $showModal) {
-                    ModalView(islogin: islogin, txtTheme: $txtTheme).dynamicTypeSize(txtTheme)
+                    ModalView(islogin: islogin, showModal: $showModal, txtTheme: $txtTheme).dynamicTypeSize(txtTheme)
                 }
             }
             ToolbarItem(placement: .navigationBarLeading) {
