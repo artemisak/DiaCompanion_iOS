@@ -8,22 +8,22 @@ enum Field: Hashable {
 struct loginPage: View {
     @State private var login: String = ""
     @State private var pass: String = ""
-    @State private var isnt: Bool = false
+    @State private var isnt: Bool = true
     @State private var reg: Bool = false
     @State private var isLoading: Bool = false
-    @ObservedObject var islogin: check
     @Binding var txtTheme: DynamicTypeSize
     @FocusState private var focusedField: Field?
+    @EnvironmentObject var islogin: check
     var body: some View {
-        GeometryReader {g in
+        GeometryReader { g in
             ScrollView {
                 VStack(spacing: 20) {
                     VStack(spacing: 20) {
                         VStack(alignment: .leading, spacing: .zero) {
                             TextField("Логин", text: $login)
                                 .onChange(of: login, perform: {i in
-                                    if isnt {
-                                        withAnimation(){
+                                    if !isnt {
+                                        withAnimation(.default){
                                             isnt.toggle()
                                         }
                                     }
@@ -33,17 +33,22 @@ struct loginPage: View {
                                 .disableAutocorrection(true)
                                 .focused($focusedField, equals: .username)
                                 .onSubmit {
-                                    focusedField = .password
+                                    withAnimation(.easeIn){
+                                        focusedField = .password
+                                    }
                                 }
                         }
                         .padding()
                         .background(RoundedRectangle(cornerRadius: 10)
-                            .stroke(isnt ? Color.red : Color.gray.opacity(0.5), lineWidth: 1))
+                            .stroke(isnt ? Color.gray.opacity(0.5) : Color.red, lineWidth: 1))
+                        .onTapGesture {
+                            focusedField = .username
+                        }
                         VStack(alignment: .leading, spacing: .zero) {
                             SecureField("Пароль", text: $pass)
                                 .onChange(of: pass, perform: {i in
-                                    if isnt {
-                                        withAnimation(){
+                                    if !isnt {
+                                        withAnimation(.default){
                                             isnt.toggle()
                                         }
                                     }
@@ -52,8 +57,10 @@ struct loginPage: View {
                                 .disableAutocorrection(true)
                                 .focused($focusedField, equals: .password)
                                 .onSubmit {
+                                    isLoading = true
                                     DispatchQueue.main.asyncAfter(deadline: .now()+0.001, execute: {
-                                        withAnimation(){
+                                        isLoading = false
+                                        withAnimation(.default){
                                             isnt = islogin.setlogged(upass: pass, ulogin: login)
                                         }
                                     })
@@ -61,9 +68,12 @@ struct loginPage: View {
                         }
                         .padding()
                         .background(RoundedRectangle(cornerRadius: 10)
-                            .stroke(isnt ? Color.red : Color.gray.opacity(0.5), lineWidth: 1))
+                            .stroke(isnt ? Color.gray.opacity(0.5) : Color.red, lineWidth: 1))
+                        .onTapGesture {
+                            focusedField = .password
+                        }
                     }
-                    if isnt {
+                    if !isnt {
                         Text("Неверный логин или пароль")
                             .font(.system(size: 20))
                             .foregroundColor(.red)
@@ -73,7 +83,7 @@ struct loginPage: View {
                         isLoading = true
                         DispatchQueue.main.asyncAfter(deadline: .now()+0.001, execute: {
                             isLoading = false
-                            withAnimation(){
+                            withAnimation(.default){
                                 isnt = islogin.setlogged(upass: pass, ulogin: login)
                             }
                         })
@@ -98,7 +108,6 @@ struct loginPage: View {
                 .padding()
                 .frame(width: g.size.width)
                 .frame(minHeight: g.size.height)
-
             }
         }
         .navigationBarTitleDisplayMode(.inline)

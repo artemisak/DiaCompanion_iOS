@@ -11,14 +11,12 @@ struct ChangeColorButton: ButtonStyle {
 
 struct RoundedRectangleButtonStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
-        HStack {
-            Spacer()
-            configuration.label.foregroundColor(.white)
-            Spacer()
-        }
-        .padding()
-        .background(Color.blue.cornerRadius(8))
-        .opacity(configuration.isPressed ? 0.75 : 1)
+        configuration.label
+            .frame(minWidth: 0, maxWidth: .infinity)
+            .padding()
+            .foregroundColor(.white)
+            .background(Color.blue.cornerRadius(8))
+            .opacity(configuration.isPressed ? 0.75 : 1)
     }
 }
 

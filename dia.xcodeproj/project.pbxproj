@@ -19,6 +19,7 @@
 		A74A33D027B7E833003D2EBD /* loginPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74A33CF27B7E833003D2EBD /* loginPage.swift */; };
 		A76CF8642825AEC40028FC85 /* predictModel.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = A76CF8632825AEC40028FC85 /* predictModel.mlmodel */; };
 		A770675828A459F800457195 /* savedNotice.swift in Sources */ = {isa = PBXBuildFile; fileRef = A770675728A459F800457195 /* savedNotice.swift */; };
+		A777150028D71931005C5793 /* versionChoose.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77714FF28D71931005C5793 /* versionChoose.swift */; };
 		A783B43728D1384000059BBD /* reserved.db in Resources */ = {isa = PBXBuildFile; fileRef = A783B43628D1384000059BBD /* reserved.db */; };
 		A78E381E2813F0680096E2E2 /* myExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A78E381D2813F0680096E2E2 /* myExtensions.swift */; };
 		A7BD994727CA46FC0090D9D7 /* helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7BD994627CA46FC0090D9D7 /* helper.swift */; };
@@ -82,6 +83,7 @@
 		A74A33CF27B7E833003D2EBD /* loginPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = loginPage.swift; sourceTree = "<group>"; };
 		A76CF8632825AEC40028FC85 /* predictModel.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = predictModel.mlmodel; sourceTree = "<group>"; };
 		A770675728A459F800457195 /* savedNotice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = savedNotice.swift; sourceTree = "<group>"; };
+		A77714FF28D71931005C5793 /* versionChoose.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = versionChoose.swift; sourceTree = "<group>"; };
 		A783B43628D1384000059BBD /* reserved.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = reserved.db; sourceTree = "<group>"; };
 		A78E381D2813F0680096E2E2 /* myExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = myExtensions.swift; sourceTree = "<group>"; };
 		A79A9354284D58F300C0A1AE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = /Users/artemisakov/Documents/swiftDia/dia/Info.plist; sourceTree = "<absolute>"; };
@@ -183,6 +185,7 @@
 				A73C74F528CF2BF2008D09BF /* addCustomMeal.swift */,
 				A78E381D2813F0680096E2E2 /* myExtensions.swift */,
 				A74A33CF27B7E833003D2EBD /* loginPage.swift */,
+				A77714FF28D71931005C5793 /* versionChoose.swift */,
 				A74A1CC128B1016C0038C79F /* startPage.swift */,
 				A7FBB23A27FC257D00828432 /* regHelper.swift */,
 				A7D097692809FE16000A12E1 /* myButtons.swift */,
@@ -403,6 +406,7 @@
 				ACF4E413272DB126002D2797 /* RKDate.swift in Sources */,
 				AC2C506127289C360009E8EE /* poldny.swift in Sources */,
 				AC2603202690691E00C4A520 /* diaApp.swift in Sources */,
+				A777150028D71931005C5793 /* versionChoose.swift in Sources */,
 				A706DA802843864A00473941 /* emailSender.swift in Sources */,
 				AC6327022751012C00C25E23 /* historyManager.swift in Sources */,
 				AC32A68227260081001DDB9F /* pid.swift in Sources */,

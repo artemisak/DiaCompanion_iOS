@@ -10,19 +10,23 @@ import SwiftUI
 struct startPage: View {
     @StateObject private var islogin = check()
     @Binding var txtTheme: DynamicTypeSize
-    @ViewBuilder
     var body: some View {
         NavigationView {
-            if !islogin.istrue {
-                loginPage(islogin: islogin, txtTheme: $txtTheme)
+            if islogin.istrue {
+                if islogin.isChoosed {
+                    mainPage(txtTheme: $txtTheme)
+                } else {
+                    versionChoose()
+                }
             } else {
-                mainPage(islogin: islogin, txtTheme: $txtTheme)
+                loginPage(txtTheme: $txtTheme)
             }
         }
         .navigationViewStyle(.stack)
         .onAppear {
             islogin.checklog()
         }
+        .environmentObject(islogin)
     }
 }
 
