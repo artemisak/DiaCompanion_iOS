@@ -57,8 +57,9 @@ struct loginPage: View {
                                 .disableAutocorrection(true)
                                 .focused($focusedField, equals: .password)
                                 .onSubmit {
+                                    focusedField = nil
                                     isLoading = true
-                                    DispatchQueue.main.asyncAfter(deadline: .now()+0.001, execute: {
+                                    DispatchQueue.main.asyncAfter(deadline: .now()+0.1, execute: {
                                         isLoading = false
                                         withAnimation(.default){
                                             isnt = islogin.setlogged(upass: pass, ulogin: login)
@@ -80,8 +81,9 @@ struct loginPage: View {
                             .frame(maxWidth: .infinity, alignment: .leading)
                     }
                     Button(action: {
+                        focusedField = nil
                         isLoading = true
-                        DispatchQueue.main.asyncAfter(deadline: .now()+0.001, execute: {
+                        DispatchQueue.main.asyncAfter(deadline: .now()+0.1, execute: {
                             isLoading = false
                             withAnimation(.default){
                                 isnt = islogin.setlogged(upass: pass, ulogin: login)

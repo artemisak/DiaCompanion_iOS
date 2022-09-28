@@ -37,7 +37,6 @@ struct versionChoose: View {
                     Text("Синдром ПЯ (PCOS)")
                 }.buttonStyle(RoundedRectangleButtonStyle()).padding(.horizontal)
             }
-            .ignoresSafeArea(.keyboard)
         }
         .navigationBarTitleDisplayMode(.large)
         .navigationTitle("Конфигурация")
