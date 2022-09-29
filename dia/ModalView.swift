@@ -101,6 +101,7 @@ struct pacientPage: View {
     @State private var bHeight: Bool = false
     @State private var txt: String = ""
     @State private var vDate = Date()
+    @EnvironmentObject var islogin: check
     var body: some View {
         ZStack {
             List {
@@ -117,17 +118,27 @@ struct pacientPage: View {
                     Button(action: {withAnimation(.default){bStart.toggle()}}) {
                         Text("Дата начала ведения дневника")
                     }.foregroundColor(.black)
-                    Button(action: {withAnimation(.default){bWeek.toggle()}}) {
-                        Text("Неделя берем. на начало исследования")
-                    }.foregroundColor(.black)
+                    if islogin.version != 3 || islogin.version != 4 {
+                        Button(action: {withAnimation(.default){bWeek.toggle()}}) {
+                            Text("Неделя берем. на начало исследования")
+                        }.foregroundColor(.black)
+                    }
                     Button(action: {withAnimation(.default){bid.toggle()}}) {
                         Text("Индивидуальный номер пациента")
                     }.foregroundColor(.black)
                     Button(action: {withAnimation(.default){bWeight.toggle()}}) {
-                        Text("Вес до беременности, кг")
+                        if islogin.version != 3 || islogin.version != 4 {
+                            Text("Вес, кг")
+                        } else {
+                            Text("Вес до беременности, кг")
+                        }
                     }.foregroundColor(.black)
                     Button(action: {withAnimation(.default){bHeight.toggle()}}) {
-                        Text("Рост до беременности, см")
+                        if islogin.version != 3 || islogin.version != 4 {
+                            Text("Рост до беременности, см")
+                        } else {
+                            Text("Рост, см")
+                        }
                     }.foregroundColor(.black)
                 }
             }

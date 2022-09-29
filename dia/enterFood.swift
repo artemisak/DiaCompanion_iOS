@@ -46,6 +46,7 @@ struct enterFood: View {
     @FocusState private var focuseField: Bool
     @Binding var txtTheme: DynamicTypeSize
     @Binding var hasChanged: Bool
+    @EnvironmentObject var islogin: check
     var body: some View {
         ZStack{
             List {
@@ -58,7 +59,7 @@ struct enterFood: View {
                         }
                     }).onChange(of: ftpreviewIndex, perform: { _ in
                         do {
-                            if (foodItems.count != 0 && sugar != "") {
+                            if (foodItems.count != 0 && sugar != "" && islogin.version != 2) {
                                 var food: [String] = []
                                 var gram: [Double] = []
                                 try foodItems.forEach {
@@ -102,7 +103,7 @@ struct enterFood: View {
                     .environment(\.locale, .init(identifier: "ru"))
                     .onChange(of: date, perform: { _ in
                         do {
-                            if (foodItems.count != 0 && sugar != "") {
+                            if (foodItems.count != 0 && sugar != "" && islogin.version != 2) {
                                 var food: [String] = []
                                 var gram: [Double] = []
                                 try foodItems.forEach {
@@ -139,70 +140,72 @@ struct enterFood: View {
                     })
                     .environment(\.locale, Locale.init(identifier: "ru")).frame(height: 42.7)
                 }
-                Section(header: Text("Уровень сахара в крови").font(.system(size: 15.5))) {
-                    Toggle(isOn: $enabled) {Text("Записать текущий УСК")}
-                        .onChange(of: enabled){ _ in
-                            if (!checkBMI() && enabled) {
-                                alertMessage = true
-                                enabled = false
+                if islogin.version != 2 {
+                    Section(header: Text("Уровень сахара в крови").font(.system(size: 15.5))) {
+                        Toggle(isOn: $enabled) {Text("Записать текущий УСК")}
+                            .onChange(of: enabled){ _ in
+                                if (!checkBMI() && enabled) {
+                                    alertMessage = true
+                                    enabled = false
+                                }
+                                sugar = ""
+                                sugarlvl = "УСК не определен"
                             }
-                            sugar = ""
-                            sugarlvl = "УСК не определен"
-                        }
-                        .alert(isPresented: $alertMessage) {
-                            Alert(title: Text("Статус операции"), message: Text("Необходимо указать рост и вес \nдо беременности в карте пациента"), dismissButton: .default(Text("ОК")))
-                        }
-                }
-                Section {
-                    Text("\(sugarlvl)")
-                        .foregroundColor(fontColor)
-                        .bold()
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
-                        .foregroundColor(lvlColor)
-                        .listRowBackground(recColor)
-                    TextField("5,0 ммоль/л", text: $sugar)
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
-                        .focused($focuseField)
-                        .keyboardType(.decimalPad)
-                        .disabled(enabled == false)
-                        .foregroundColor(scolor)
-                        .onChange(of: sugar){_ in
-                            do {
-                                if (foodItems.count != 0 && sugar != "") {
-                                    var food: [String] = []
-                                    var gram: [Double] = []
-                                    try foodItems.forEach {
-                                        food.append($0.name.components(separatedBy: "////")[0])
-                                        gram.append( try convert(txt: $0.name.components(separatedBy: "////")[1]))
-                                    }
-                                    let foodNutrients = getData(BG0: try convert(txt: sugar), foodtype: ftpreviewIndex, foodN: food, gram: gram, picker_date: date)
-                                    res = try getPredict(BG0: foodNutrients.BG0, gl: foodNutrients.gl, carbo: foodNutrients.carbo, prot: foodNutrients.protb6h, t1: foodNutrients.food_type1, t2: foodNutrients.food_type2, t3: foodNutrients.food_type3, t4: foodNutrients.food_type4, kr: foodNutrients.kr, BMI: foodNutrients.BMI)
-                                    if res < 6.8 {
-                                        sugarlvl = "УСК не превысит норму"
-                                        recColor = Color.green.opacity(0.7)
-                                        fontColor = Color.white
+                            .alert(isPresented: $alertMessage) {
+                                Alert(title: Text("Статус операции"), message: Text("Необходимо указать рост и вес \nдо беременности в карте пациента"), dismissButton: .default(Text("ОК")))
+                            }
+                    }
+                    Section {
+                        Text("\(sugarlvl)")
+                            .foregroundColor(fontColor)
+                            .bold()
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                            .foregroundColor(lvlColor)
+                            .listRowBackground(recColor)
+                        TextField("5,0 ммоль/л", text: $sugar)
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                            .focused($focuseField)
+                            .keyboardType(.decimalPad)
+                            .disabled(enabled == false)
+                            .foregroundColor(scolor)
+                            .onChange(of: sugar){_ in
+                                do {
+                                    if (foodItems.count != 0 && sugar != "" && islogin.version != 2) {
+                                        var food: [String] = []
+                                        var gram: [Double] = []
+                                        try foodItems.forEach {
+                                            food.append($0.name.components(separatedBy: "////")[0])
+                                            gram.append( try convert(txt: $0.name.components(separatedBy: "////")[1]))
+                                        }
+                                        let foodNutrients = getData(BG0: try convert(txt: sugar), foodtype: ftpreviewIndex, foodN: food, gram: gram, picker_date: date)
+                                        res = try getPredict(BG0: foodNutrients.BG0, gl: foodNutrients.gl, carbo: foodNutrients.carbo, prot: foodNutrients.protb6h, t1: foodNutrients.food_type1, t2: foodNutrients.food_type2, t3: foodNutrients.food_type3, t4: foodNutrients.food_type4, kr: foodNutrients.kr, BMI: foodNutrients.BMI)
+                                        if res < 6.8 {
+                                            sugarlvl = "УСК не превысит норму"
+                                            recColor = Color.green.opacity(0.7)
+                                            fontColor = Color.white
+                                        } else {
+                                            sugarlvl = "УСК превысит норму"
+                                            recColor = Color(red: 255/255, green: 91/255, blue: 36/255)
+                                            fontColor = Color.white
+                                        }
+                                        scolor = .black
                                     } else {
-                                        sugarlvl = "УСК превысит норму"
-                                        recColor = Color(red: 255/255, green: 91/255, blue: 36/255)
-                                        fontColor = Color.white
+                                        sugarlvl = "УСК не определен"
+                                        recColor = Color.white
+                                        fontColor = Color.black
                                     }
-                                    scolor = .black
-                                } else {
-                                    sugarlvl = "УСК не определен"
-                                    recColor = Color.white
-                                    fontColor = Color.black
+                                }
+                                catch inputErorrs.decimalError {
+                                    scolor = .red
+                                }
+                                catch modelErorrs.generalError {
+                                    scolor = .red
+                                }
+                                catch {
+                                    scolor = .red
                                 }
                             }
-                            catch inputErorrs.decimalError {
-                                scolor = .red
-                            }
-                            catch modelErorrs.generalError {
-                                scolor = .red
-                            }
-                            catch {
-                                scolor = .red
-                            }
-                        }
+                    }
                 }
                 Section(header: Text("Потребленные продукты").font(.system(size: 15.5))){
                     Button(action:{
@@ -243,7 +246,7 @@ struct enterFood: View {
             }
             .onChange(of: foodItems, perform: { _ in
                 do {
-                    if (foodItems.count != 0 && sugar != "") {
+                    if (foodItems.count != 0 && sugar != "" && islogin.version != 2) {
                         var food: [String] = []
                         var gram: [Double] = []
                         try foodItems.forEach {
@@ -346,7 +349,7 @@ struct enterFood: View {
             }
             .task {
                 do {
-                    if (foodItems.count != 0 && sugar != "") {
+                    if (foodItems.count != 0 && sugar != "" && islogin.version != 2) {
                         var food: [String] = []
                         var gram: [Double] = []
                         try foodItems.forEach {

@@ -10,6 +10,7 @@ struct export: View {
     @State private var email: [String] = [""]
     @State private var erMessage: String = ""
     @State private var emailErrorMessage: Bool = false
+    @EnvironmentObject var islogin: check
     var body: some View {
         ZStack {
             ScrollView {
@@ -17,7 +18,7 @@ struct export: View {
                     Button(action:{
                         isLoad.toggle()
                         DispatchQueue.main.asyncAfter(deadline: .now()+0.1){
-                            let content = sheets.generate()
+                            let content = sheets.generate(version: islogin.version)
                             isLoad.toggle()
                             let AV = UIActivityViewController(activityItems: [content], applicationActivities: nil)
                             UIApplication.shared.currentUIWindow()?.rootViewController?.present(AV, animated: true, completion: nil)
@@ -38,7 +39,7 @@ struct export: View {
                             isLoad.toggle()
                             DispatchQueue.main.asyncAfter(deadline: .now()+0.1){
                                 do {
-                                    let content = try Data(contentsOf: sheets.generate() as URL)
+                                    let content = try Data(contentsOf: sheets.generate(version: islogin.version) as URL)
                                     isLoad.toggle()
                                     try emailSender.shared.sendEmail(subject: "DiaCompanion iOS - электронный дневник", body: "", to: email, xlsxFile: content)
                                 } catch {
