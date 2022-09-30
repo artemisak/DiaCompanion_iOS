@@ -5,7 +5,7 @@ class check: ObservableObject {
     
     @Published var istrue = false
     @Published var isChoosed = false
-    @Published var version = 0
+    @Published var version = 1
     
     func checklog() {
         do {
