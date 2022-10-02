@@ -2,7 +2,7 @@ import SwiftUI
 import PDFKit
 
 struct ModalView: View {
-    @Environment(\.dismiss) var dismiss
+    @Environment(\.presentationMode) var presentationMode
     @State private var fileUrl = Bundle.main.url(forResource: "Education", withExtension: "pdf")!
     @State private var phelper : Bool = false
     @State private var eraseAccount = false
@@ -10,7 +10,6 @@ struct ModalView: View {
     @State private var eraseDBprogress = false
     @State private var arrowAngle = 0.0
     @ObservedObject var islogin: check
-    @Binding var showModal: Bool
     @Binding var txtTheme: DynamicTypeSize
     var body: some View {
         NavigationView {
@@ -67,7 +66,7 @@ struct ModalView: View {
                         }.foregroundColor(Color.red)
                     }).confirmationDialog("Удаляя аккаунт вы потеряете доступ к приложению, вся информация в нем будет удалена.", isPresented: $eraseAccount, titleVisibility: .visible, actions: {
                         Button("ОК", action: {
-                            dismiss()
+                            presentationMode.wrappedValue.dismiss()
                             withAnimation() {
                                 islogin.istrue = false
                                 islogin.isChoosed = false
@@ -84,11 +83,16 @@ struct ModalView: View {
             .ignoresSafeArea(.keyboard)
             .navigationBarTitleDisplayMode(.inline)
             .navigationTitle("Дополнительно")
+            .interactiveDismissDisabled()
+            .toolbar{
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button(action: {presentationMode.wrappedValue.dismiss()}) {
+                        Text("Закрыть")
+                    }
+                }
+            }
         }
         .navigationViewStyle(.stack)
-        .onDisappear(perform: {
-            showModal = false
-        })
     }
 }
 

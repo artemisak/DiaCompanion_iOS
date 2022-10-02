@@ -71,25 +71,27 @@ struct mainPage: View {
                 .frame(minHeight: g.size.height)
             }
         }
+        .navigationBarTitleDisplayMode(.inline)
         .navigationTitle("ДиаКомпаньон")
+        .navigationBarBackButtonHidden(true)
+        .ignoresSafeArea(.keyboard)
         .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing){
-                Button(action: {showModal = true}){
+            ToolbarItem(placement: .automatic) {
+                Button(action: {showModal.toggle()}){
                     Image(systemName: "line.3.horizontal")
                 }
                 .buttonStyle(ButtonAndLink()).foregroundColor(Color.accentColor)
                 .sheet(isPresented: $showModal) {
-                    ModalView(islogin: islogin, showModal: $showModal, txtTheme: $txtTheme).dynamicTypeSize(txtTheme)
+                    ModalView(islogin: islogin, txtTheme: $txtTheme).dynamicTypeSize(txtTheme)
                 }
             }
+        }
+        .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
                 NavigationLink(destination: addCustomMeal(txtTheme: $txtTheme)) {
                     Image(systemName: "plus")
                 }.buttonStyle(ButtonAndLink()).foregroundColor(Color.accentColor)
             }
         }
-        .navigationBarTitleDisplayMode(.inline)
-        .navigationBarBackButtonHidden(true)
-        .ignoresSafeArea(.keyboard)
     }
 }

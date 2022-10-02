@@ -39,7 +39,7 @@ class Food: ObservableObject {
             let g = Expression<Double?>("gi")
             let rating = Expression<Int?>("favor")
             var GI = ""
-            for i in try db.prepare(foodItems.select(food, pr, car, f, g, rating).filter(food.like("%\(_name)%")).order(food).limit(30)){
+            for i in try db.prepare(foodItems.select(food, pr, car, f, g, rating).filter(food.like("%\(_name)%") || food.like("%\(_name.lowercased())%")).order(food).limit(30)){
                 if i[g] != nil {
                     GI = "\(i[g]!)"
                 } else {
