@@ -441,8 +441,10 @@ func deleteAccaunt() async -> Void {
         let usermac = Table("usermac")
         let id = Expression<Int>("id")
         let loggedin = Expression<Int>("loggedin")
+        let vesrionChoosed = Expression<Int>("versionChoosed")
+        let version = Expression<Int>("version")
         try db.run(usermac.delete())
-        try db.run(usermac.insert(id <- 1, loggedin <- 0))
+        try db.run(usermac.insert(id <- 1, loggedin <- 0, vesrionChoosed <- 0, version <- 1))
     }
     catch {
         print(error)

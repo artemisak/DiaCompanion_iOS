@@ -555,7 +555,7 @@ class exportTable {
             
             worksheet_merge_range(worksheet2, 0, 0, 0, 13, userName, nil);
             worksheet_merge_range(worksheet2, 1, 0, 1, 13, "Измерение сахара", merge_format41);
-            if (version == 3 || version == 4){
+            if (version == 3 && version == 4){
                 worksheet_write_string(worksheet2, 2, 0, "Неделя бер.", merge_format41);
             }
             worksheet_write_string(worksheet2, 2, 1, "Дата", merge_format41);
@@ -575,7 +575,7 @@ class exportTable {
             
             var i1 = 0
             for i in 0..<tbl2.count {
-                if (version == 3 || version == 4){
+                if (version == 3 && version == 4){
                     worksheet_write_string(worksheet2, lxw_row_t(i1+3), 0, "\(defWeek(nowDate: formater.date(from: tbl2[i].date)!, dateBegin: pdate, weekOfStart: pweek, dayOfStartWeek: pday))", nil)
                 }
                 worksheet_write_string(worksheet2, lxw_row_t(i1+3), 1, tbl2[i].date, nil)
@@ -813,7 +813,7 @@ class exportTable {
         let tbl4 =  getActivityRecords()
         worksheet_merge_range(worksheet3, 0, 0, 0, 7, userName, nil)
         worksheet_write_string(worksheet3, 1, 0, "Физическая нагрузка", merge_format41)
-        if (version == 3 || version == 4){
+        if (version == 3 && version == 4){
             worksheet_write_string(worksheet3, 2, 0, "Неделя бер.", merge_format41)
         }
         worksheet_write_string(worksheet3, 2, 1, "Дата", merge_format41)

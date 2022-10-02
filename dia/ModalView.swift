@@ -70,6 +70,8 @@ struct ModalView: View {
                             dismiss()
                             withAnimation() {
                                 islogin.istrue = false
+                                islogin.isChoosed = false
+                                islogin.version = 1
                             }
                             Task {
                                 await deleteAccaunt()
@@ -118,7 +120,7 @@ struct pacientPage: View {
                     Button(action: {withAnimation(.default){bStart.toggle()}}) {
                         Text("Дата начала ведения дневника")
                     }.foregroundColor(.black)
-                    if islogin.version != 3 || islogin.version != 4 {
+                    if islogin.version != 3 && islogin.version != 4 {
                         Button(action: {withAnimation(.default){bWeek.toggle()}}) {
                             Text("Неделя берем. на начало исследования")
                         }.foregroundColor(.black)
@@ -127,14 +129,14 @@ struct pacientPage: View {
                         Text("Индивидуальный номер пациента")
                     }.foregroundColor(.black)
                     Button(action: {withAnimation(.default){bWeight.toggle()}}) {
-                        if islogin.version != 3 || islogin.version != 4 {
-                            Text("Вес, кг")
-                        } else {
+                        if islogin.version != 3 && islogin.version != 4 {
                             Text("Вес до беременности, кг")
+                        } else {
+                            Text("Вес, кг")
                         }
                     }.foregroundColor(.black)
                     Button(action: {withAnimation(.default){bHeight.toggle()}}) {
-                        if islogin.version != 3 || islogin.version != 4 {
+                        if islogin.version != 3 && islogin.version != 4 {
                             Text("Рост до беременности, см")
                         } else {
                             Text("Рост, см")
