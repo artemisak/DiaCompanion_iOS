@@ -113,13 +113,11 @@ struct addCustomMeal: View {
                 }
             }
             ToolbarItemGroup(placement: .keyboard) {
-                HStack {
-                    Spacer()
-                    Button {
-                        focus = false
-                    } label: {
-                        Text("Готово")
-                    }
+                Spacer()
+                Button {
+                    focus = false
+                } label: {
+                    Text("Готово")
                 }
             }
         }

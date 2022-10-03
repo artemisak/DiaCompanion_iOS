@@ -23,7 +23,16 @@ class Food: ObservableObject {
     @Published var CatObj = [CategoryList]()
     @Published var FoodID = UUID()
     @Published var CatID = UUID()
+    
     func GetFoodItemsByName(_name: String) -> Void {
+        var name1 = _name.components(separatedBy: " ")
+        var fullname = ""
+        name1.removeAll(where: {$0.isEmpty})
+        if name1.count > 1 {
+            fullname = name1.joined(separator: " ")
+        } else {
+            fullname = name1[0]
+        }
         do {
             var Food1 = [FoodList]()
             let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
@@ -39,13 +48,27 @@ class Food: ObservableObject {
             let g = Expression<Double?>("gi")
             let rating = Expression<Int?>("favor")
             var GI = ""
-            for i in try db.prepare(foodItems.select(food, pr, car, f, g, rating).filter(food.like("%\(_name)%") || food.like("%\(_name.lowercased())%")).order(food).limit(30)){
+            for i in try db.prepare(foodItems.select(food, pr, car, f, g, rating).filter(food.like("\(fullname)%")).order(food).limit(20)){
                 if i[g] != nil {
-                    GI = "\(i[g]!)"
-                } else {
-                    GI = ""
+                    GI = "\(round(i[g]!*10)/10)"
                 }
-                Food1.append(FoodList(name: "\(i[food])", prot: "\(i[pr])", carbo: "\(i[car])", fat: "\(i[f])", gi: GI, rating: i[rating] ?? 0))
+                Food1.append(FoodList(name: "\(i[food])", prot: "\(round(i[pr]*10)/10)", carbo: "\(round(i[car]*10)/10)", fat: "\(round(i[f]*10)/10)", gi: GI, rating: i[rating] ?? 0))
+            }
+            for i in try db.prepare(foodItems.select(food, pr, car, f, g, rating).filter(food.like("%\(fullname)")).order(food).limit(5)){
+                if i[g] != nil {
+                    GI = "\(round(i[g]!*10)/10)"
+                }
+                if Set(Food1.map({$0.name == i[food]})) == [false] || Food1 == [] {
+                    Food1.append(FoodList(name: "\(i[food])", prot: "\(i[pr])", carbo: "\(i[car])", fat: "\(i[f])", gi: GI, rating: i[rating] ?? 0))
+                }
+            }
+            for i in try db.prepare(foodItems.select(food, pr, car, f, g, rating).filter(food.like("%\(fullname)%") || food.like("%\(fullname.lowercased())%")).order(food).limit(5)){
+                if i[g] != nil {
+                    GI = "\(round(i[g]!*10)/10)"
+                }
+                if Set(Food1.map({$0.name == i[food]})) == [false] || Food1 == [] {
+                    Food1.append(FoodList(name: "\(i[food])", prot: "\(i[pr])", carbo: "\(i[car])", fat: "\(i[f])", gi: GI, rating: i[rating] ?? 0))
+                }
             }
             self.FoodObj = Food1
         }
@@ -308,11 +331,12 @@ func addNewFoodN(items: [foodToSave], newReceitName: String, category: String) {
         let w_2ed = Expression<Double?>("w_2ed")
         let op_2ed = Expression<Double?>("op_2ed")
         let proc_pot = Expression<Double?>("proc_pot")
-        let rating = Expression<Int?>("favor")
+        let additional = Expression<Double?>("additional")
+        let favor = Expression<Int?>("favor")
         var parameters: [[Double]] = []
         for i in items {
             let arg = "\(i.name)".components(separatedBy: "////")
-            for j in try db.prepare(food.filter(foodName == arg[0])){
+            for j in try db.prepare(food.filter(foodName == arg[0]).limit(1)){
                 parameters.append([j[carbo] ?? 0.0 * Double(arg[1])!/100,
                                    j[prot] ?? 0.0 * Double(arg[1])!/100,
                                    j[fat] ?? 0.0 * Double(arg[1])!/100,
@@ -370,6 +394,7 @@ func addNewFoodN(items: [foodToSave], newReceitName: String, category: String) {
                                    j[proc_pot] ?? 0.0 * Double(arg[1])!/100])
             }
         }
+                
         for i in 0..<parameters.count-1 {
             for j in 0..<parameters[i].count {
                 parameters[i+1][j] = parameters[i][j] + parameters[i+1][j]
@@ -385,7 +410,9 @@ func addNewFoodN(items: [foodToSave], newReceitName: String, category: String) {
             num += 1
         }
         
-        try db.run(food.insert(foodName <- resultingName, cat <- category, carbo <- summOfParam[0], prot <- summOfParam[1], fat <- summOfParam[2], ec <- summOfParam[3], gi <- summOfParam[4], water <- summOfParam[5], nzhk <- summOfParam[6], hol <- summOfParam[7], pv <- summOfParam[8], zola <- summOfParam[9], na <- summOfParam[10], k <- summOfParam[11], ca <- summOfParam[12], mg <- summOfParam[13], p <- summOfParam[14], fe <- summOfParam[15], a <- summOfParam[16], b1 <- summOfParam[17], b2 <- summOfParam[18], rr <- summOfParam[19], c <- summOfParam[20], re <- summOfParam[21], kar <- summOfParam[22], mds <- summOfParam[23], kr <- summOfParam[24], te <- summOfParam[25], ok <- summOfParam[26], ne <- summOfParam[27], zn <- summOfParam[28], cu <- summOfParam[29], mn <- summOfParam[30], se <- summOfParam[31], b5 <- summOfParam[32], b6 <- summOfParam[33], fol <- summOfParam[34], b9 <- summOfParam[35], dfe <- summOfParam[36], holin <- summOfParam[37], b12 <- summOfParam[38], ear <- summOfParam[39], a_kar <- summOfParam[40], b_kript <- summOfParam[41], likopin <- summOfParam[42], lut_z <- summOfParam[43], vit_e <- summOfParam[44], vit_d <- summOfParam[45], d_mezd <- summOfParam[46], vit_k <- summOfParam[47], mzhk <- summOfParam[48], pzhk <- summOfParam[49], w_1ed <- summOfParam[50], op_1ed <- summOfParam[51], w_2ed <- summOfParam[52], op_2ed <- summOfParam[53], proc_pot <- summOfParam[54], rating <- 1))
+        summOfParam = summOfParam.map({round($0*10)/10})
+        
+        try db.run(food.insert(foodName <- resultingName, cat <- category, carbo <- summOfParam[0], prot <- summOfParam[1], fat <- summOfParam[2], ec <- summOfParam[3], gi <- summOfParam[4], water <- summOfParam[5], nzhk <- summOfParam[6], hol <- summOfParam[7], pv <- summOfParam[8], zola <- summOfParam[9], na <- summOfParam[10], k <- summOfParam[11], ca <- summOfParam[12], mg <- summOfParam[13], p <- summOfParam[14], fe <- summOfParam[15], a <- summOfParam[16], b1 <- summOfParam[17], b2 <- summOfParam[18], rr <- summOfParam[19], c <- summOfParam[20], re <- summOfParam[21], kar <- summOfParam[22], mds <- summOfParam[23], kr <- summOfParam[24], te <- summOfParam[25], ok <- summOfParam[26], ne <- summOfParam[27], zn <- summOfParam[28], cu <- summOfParam[29], mn <- summOfParam[30], se <- summOfParam[31], b5 <- summOfParam[32], b6 <- summOfParam[33], fol <- summOfParam[34], b9 <- summOfParam[35], dfe <- summOfParam[36], holin <- summOfParam[37], b12 <- summOfParam[38], ear <- summOfParam[39], a_kar <- summOfParam[40], b_kript <- summOfParam[41], likopin <- summOfParam[42], lut_z <- summOfParam[43], vit_e <- summOfParam[44], vit_d <- summOfParam[45], d_mezd <- summOfParam[46], vit_k <- summOfParam[47], mzhk <- summOfParam[48], pzhk <- summOfParam[49], w_1ed <- summOfParam[50], op_1ed <- summOfParam[51], w_2ed <- summOfParam[52], op_2ed <- summOfParam[53], proc_pot <- summOfParam[54], additional <- 0, favor <- 1))
     }
     catch {
         print(error)
@@ -474,7 +501,6 @@ func restoreDB() -> Bool {
         let op_2ed = Expression<Double?>("op_2ed")
         let proc_pot = Expression<Double?>("proc_pot")
         let additional = Expression<Int?>("additional")
-        let rating = Expression<Int?>("rating")
         let favor = Expression<Int?>("favor")
         
         let allDataCopy = Array(try db.prepare(foodTable))
@@ -487,7 +513,7 @@ func restoreDB() -> Bool {
 
         try db2.run(foodTable.delete())
         for i in allDataCopy {
-            try db2.run(foodTable.insert(foodN <- i[foodN], cat <- i[cat], carbo <- i[carbo], prot <- i[prot], fat <- i[fat], ec <- i[ec], gi <- i[gi], water <- i[water], nzhk <- i[nzhk], hol <- i[hol], pv <- i[pv], zola <- i[zola], na <- i[na], k <- i[k], ca <- i[ca], mg <- i[mg], p <- i[p], fe <- i[fe], a <- i[a], b1 <- i[b1], b2 <- i[b2], rr <- i[rr], c <- i[c], re <- i[re], kar <- i[kar], mds <- i[mds], kr <- i[kr], te <- i[te], ok <- i[ok], ne <- i[ne], zn <- i[zn], cu <- i[cu], mn <- i[mn], se <- i[se], b5 <- i[b5], b6 <- i[b6], fol <- i[fol], b9 <- i[b9], dfe <- i[dfe], holin <- i[holin], b12 <- i[b12], ear <- i[ear], a_kar <- i[a_kar], b_kript <- i[b_kript], likopin <- i[likopin], lut_z <- i[lut_z], vit_e <- i[vit_e], vit_d <- i[vit_d], d_mezd <- i[d_mezd], vit_k <- i[vit_k], mzhk <- i[mzhk], pzhk <- i[pzhk], w_1ed <- i[w_1ed], op_1ed <- i[op_1ed], w_2ed <- i[w_2ed], op_2ed <- i[op_2ed], proc_pot <- i[proc_pot], additional <- i[additional], rating <- i[rating], favor <- i[favor]))
+            try db2.run(foodTable.insert(foodN <- i[foodN], cat <- i[cat], carbo <- i[carbo], prot <- i[prot], fat <- i[fat], ec <- i[ec], gi <- i[gi], water <- i[water], nzhk <- i[nzhk], hol <- i[hol], pv <- i[pv], zola <- i[zola], na <- i[na], k <- i[k], ca <- i[ca], mg <- i[mg], p <- i[p], fe <- i[fe], a <- i[a], b1 <- i[b1], b2 <- i[b2], rr <- i[rr], c <- i[c], re <- i[re], kar <- i[kar], mds <- i[mds], kr <- i[kr], te <- i[te], ok <- i[ok], ne <- i[ne], zn <- i[zn], cu <- i[cu], mn <- i[mn], se <- i[se], b5 <- i[b5], b6 <- i[b6], fol <- i[fol], b9 <- i[b9], dfe <- i[dfe], holin <- i[holin], b12 <- i[b12], ear <- i[ear], a_kar <- i[a_kar], b_kript <- i[b_kript], likopin <- i[likopin], lut_z <- i[lut_z], vit_e <- i[vit_e], vit_d <- i[vit_d], d_mezd <- i[d_mezd], vit_k <- i[vit_k], mzhk <- i[mzhk], pzhk <- i[pzhk], w_1ed <- i[w_1ed], op_1ed <- i[op_1ed], w_2ed <- i[w_2ed], op_2ed <- i[op_2ed], proc_pot <- i[proc_pot], additional <- i[additional], favor <- i[favor]))
         }
         return false
     }

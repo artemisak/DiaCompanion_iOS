@@ -86,12 +86,13 @@ struct history: View {
             })
             .onChange(of: fillterDefault, perform: {i in
                 let df = DateFormatter()
+                let calendar = Calendar.current
                 df.dateFormat = "HH:mm dd.MM.yyyy"
                 let now = Date.now
                 let weekAgo = now.addingTimeInterval(-60*60*24*7)
                 switch i {
                 case .day:
-                    hList.fillterList = hList.histList.filter({df.date(from: $0.date) == now})
+                    hList.fillterList = hList.histList.filter({calendar.dateComponents([.day, .month, .year], from: df.date(from: $0.date)!) == calendar.dateComponents([.day, .month, .year], from: now)})
                 case .week:
                     hList.fillterList = hList.histList.filter({df.date(from: $0.date)! >= weekAgo})
                 case .all:
@@ -482,9 +483,10 @@ struct history: View {
     
     func removeRows(at offsets: IndexSet) {
         offsets.sorted(by: > ).forEach {i in
-            deleteAndSave(idToDelete: hList.histList[i].bdID, table: hList.histList[i].type, info: [hList.histList[i].date, hList.histList[i].name])
+            deleteAndSave(idToDelete: hList.fillterList[i].bdID, table: hList.fillterList[i].type, info: [hList.fillterList[i].date, hList.fillterList[i].name])
+            hList.histList.removeAll(where: {$0.bdID == hList.fillterList[i].bdID && $0.type == hList.fillterList[i].type && $0.date == hList.fillterList[i].date && $0.name == hList.fillterList[i].name})
         }
-        hList.histList.remove(atOffsets: offsets)
+        hList.fillterList.remove(atOffsets: offsets)
     }
     
     func convertToDate(d: String) -> Date {

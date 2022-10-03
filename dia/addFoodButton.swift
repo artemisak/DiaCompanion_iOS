@@ -104,15 +104,13 @@ struct addFoodButton: View {
                         Text("Закрыть").dynamicTypeSize(txtTheme)
                     }
                 })
-                ToolbarItem(placement: .keyboard, content: {
-                    HStack {
-                        Spacer()
-                        Button(action: {
-                            UIApplication.shared.dismissedKeyboard()
-                        }, label: {
-                            Text("Готово").dynamicTypeSize(txtTheme)
-                        })
-                    }
+                ToolbarItemGroup(placement: .keyboard, content: {
+                    Spacer()
+                    Button(action: {
+                        UIApplication.shared.dismissedKeyboard()
+                    }, label: {
+                        Text("Готово").dynamicTypeSize(txtTheme)
+                    })
                 })
             }
             .task {
