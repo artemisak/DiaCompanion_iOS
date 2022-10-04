@@ -15,103 +15,87 @@ struct loginPage: View {
     @FocusState private var focusedField: Field?
     @EnvironmentObject var islogin: check
     var body: some View {
-        GeometryReader { g in
-            ScrollView {
-                VStack(spacing: 20) {
-                    VStack(spacing: 20) {
-                        VStack(alignment: .leading, spacing: .zero) {
-                            TextField("Логин", text: $login)
-                                .onChange(of: login, perform: {i in
-                                    if !isnt {
-                                        withAnimation(.default){
-                                            isnt.toggle()
-                                        }
-                                    }
-                                })
-                                .foregroundColor(.black)
-                                .textInputAutocapitalization(.never)
-                                .disableAutocorrection(true)
-                                .focused($focusedField, equals: .username)
-                                .onSubmit {
-                                    withAnimation(.easeIn){
-                                        focusedField = .password
-                                    }
+        VStack(spacing: 20) {
+            VStack(spacing: 20) {
+                VStack(alignment: .leading, spacing: .zero) {
+                    TextField("Логин", text: $login)
+                        .onChange(of: login, perform: {i in
+                            if !isnt {
+                                withAnimation(.default){
+                                    isnt.toggle()
                                 }
-                        }
-                        .padding()
-                        .background(RoundedRectangle(cornerRadius: 10)
-                            .stroke(isnt ? Color.gray.opacity(0.5) : Color.red, lineWidth: 1))
-                        .onTapGesture {
-                            focusedField = .username
-                        }
-                        VStack(alignment: .leading, spacing: .zero) {
-                            SecureField("Пароль", text: $pass)
-                                .onChange(of: pass, perform: {i in
-                                    if !isnt {
-                                        withAnimation(.default){
-                                            isnt.toggle()
-                                        }
-                                    }
-                                })
-                                .textInputAutocapitalization(.never)
-                                .disableAutocorrection(true)
-                                .focused($focusedField, equals: .password)
-                                .onSubmit {
-                                    focusedField = nil
-                                    isLoading = true
-                                    DispatchQueue.main.asyncAfter(deadline: .now()+0.1, execute: {
-                                        isLoading = false
-                                        withAnimation(.default){
-                                            isnt = islogin.setlogged(upass: pass, ulogin: login)
-                                        }
-                                    })
-                                }
-                        }
-                        .padding()
-                        .background(RoundedRectangle(cornerRadius: 10)
-                            .stroke(isnt ? Color.gray.opacity(0.5) : Color.red, lineWidth: 1))
-                        .onTapGesture {
-                            focusedField = .password
-                        }
-                    }
-                    if !isnt {
-                        Text("Неверный логин или пароль")
-                            .font(.system(size: 20))
-                            .foregroundColor(.red)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                    }
-                    Button(action: {
-                        focusedField = nil
-                        isLoading = true
-                        DispatchQueue.main.asyncAfter(deadline: .now()+0.1, execute: {
-                            isLoading = false
-                            withAnimation(.default){
-                                isnt = islogin.setlogged(upass: pass, ulogin: login)
                             }
                         })
-                    }, label: {
-                        if isLoading {
-                            ProgressView().tint(.white)
-                        } else {
-                            Text("Войти")
-                        }
-                    })
-                    .buttonStyle(RoundedRectangleButtonStyle())
-                    NavigationLink(destination: {
-                        regHelper(phelper: $reg)
-                    }, label: {
-                        HStack{
-                            Text("Регистрация")
-                            Image(systemName: "questionmark.circle")
-                        }
-                    })
-                    .buttonStyle(ChangeColorButton())
+                        .foregroundColor(.black)
+                        .textInputAutocapitalization(.never)
+                        .disableAutocorrection(true)
+                        .focused($focusedField, equals: .username)
                 }
                 .padding()
-                .frame(width: g.size.width)
-                .frame(minHeight: g.size.height)
+                .background(RoundedRectangle(cornerRadius: 10)
+                    .stroke(isnt ? Color.gray.opacity(0.5) : Color.red, lineWidth: 1))
+                .onTapGesture {
+                    focusedField = .username
+                }
+                VStack(alignment: .leading, spacing: .zero) {
+                    SecureField("Пароль", text: $pass)
+                        .onChange(of: pass, perform: {i in
+                            if !isnt {
+                                withAnimation(.default){
+                                    isnt.toggle()
+                                }
+                            }
+                        })
+                        .textInputAutocapitalization(.never)
+                        .disableAutocorrection(true)
+                        .focused($focusedField, equals: .password)
+                }
+                .padding()
+                .background(RoundedRectangle(cornerRadius: 10)
+                    .stroke(isnt ? Color.gray.opacity(0.5) : Color.red, lineWidth: 1))
+                .onTapGesture {
+                    focusedField = .password
+                }
             }
+            if !isnt {
+                Text("Неверный логин или пароль")
+                    .font(.system(size: 20))
+                    .foregroundColor(.red)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+            }
+            Button(action: {
+                if login.isEmpty {
+                    focusedField = .username
+                } else if pass.isEmpty {
+                    focusedField = .password
+                } else {
+                    isLoading = true
+                    DispatchQueue.main.asyncAfter(deadline: .now()+0.1, execute: {
+                        isLoading = false
+                        withAnimation(.default){
+                            isnt = islogin.setlogged(upass: pass, ulogin: login)
+                        }
+                    })
+                }
+            }, label: {
+                if isLoading {
+                    ProgressView().tint(.white)
+                } else {
+                    Text(focusedField == .username ? "Далее" : "Войти")
+                }
+            })
+            .buttonStyle(RoundedRectangleButtonStyle())
+            NavigationLink(destination: {
+                regHelper(phelper: $reg)
+            }, label: {
+                HStack{
+                    Text("Регистрация")
+                    Image(systemName: "questionmark.circle")
+                }
+            })
+            .buttonStyle(ChangeColorButton())
         }
+        .padding()
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
         .toolbar {
@@ -141,6 +125,6 @@ struct loginPage: View {
             login = ""
             pass = ""
         }
-        .ignoresSafeArea()
+        .ignoresSafeArea(.keyboard)
     }
 }

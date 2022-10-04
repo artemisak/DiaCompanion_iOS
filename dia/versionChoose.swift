@@ -16,6 +16,7 @@ struct versionChoose: View {
                 Spacer()
             }
             VStack{
+                Spacer()
                 Button(action: {
                     islogin.setChoosed(v: 1)
                 }) {
@@ -36,8 +37,10 @@ struct versionChoose: View {
                 }) {
                     Text("Синдром ПЯ (PCOS)")
                 }.buttonStyle(RoundedRectangleButtonStyle()).padding(.horizontal)
+                Spacer()
             }
         }
+        .ignoresSafeArea(.keyboard)
         .navigationBarTitleDisplayMode(.large)
         .navigationTitle("Конфигурация")
         .navigationBarBackButtonHidden()

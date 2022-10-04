@@ -15,10 +15,12 @@ struct startPage: View {
             if islogin.istrue {
                 if islogin.isChoosed {
                     mainPage(txtTheme: $txtTheme)
-                } else {
+                }
+                if !islogin.isChoosed {
                     versionChoose()
                 }
-            } else {
+            }
+            if !islogin.istrue {
                 loginPage(txtTheme: $txtTheme)
             }
         }
@@ -27,11 +29,5 @@ struct startPage: View {
             islogin.checklog()
         }
         .environmentObject(islogin)
-    }
-}
-
-struct startPage_Previews: PreviewProvider {
-    static var previews: some View {
-        startPage(txtTheme: .constant(.medium))
     }
 }
