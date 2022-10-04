@@ -1,0 +1,10 @@
+{
+  "MLModelVersionStringKey" : "--",
+  "MLModelDescriptionKey" : "--",
+  "MLModelCreatorDefinedKey" : {
+    "com.github.apple.coremltools.version" : "5.2.0",
+    "com.github.apple.coremltools.source" : "xgboost==1.4.2"
+  },
+  "MLModelAuthorKey" : "--",
+  "MLModelLicenseKey" : "--"
+}

@@ -33,7 +33,7 @@ struct enterFood: View {
     @State var ftpreviewIndex: ftype
     @State private var lvlColor: Color?
     @State private var scolor: Color?
-    @State private var recColor = Color.white
+    @State private var recColor = Color.gray.opacity(0.3)
     @State private var fontColor = Color.black
     @State private var alertMessage: Bool = false
     @State var idForDelete: [Int]
@@ -80,7 +80,7 @@ struct enterFood: View {
                                 scolor = .black
                             } else {
                                 sugarlvl = "УСК не определен"
-                                recColor = Color.white
+                                recColor = Color.gray.opacity(0.3)
                                 fontColor = Color.black
                             }
                         }
@@ -124,7 +124,7 @@ struct enterFood: View {
                                 scolor = .black
                             } else {
                                 sugarlvl = "УСК не определен"
-                                recColor = Color.white
+                                recColor = Color.gray.opacity(0.3)
                                 fontColor = Color.black
                             }
                         }
@@ -159,7 +159,7 @@ struct enterFood: View {
                         Text("\(sugarlvl)")
                             .foregroundColor(fontColor)
                             .bold()
-                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                            .frame(maxWidth: .infinity)
                             .foregroundColor(lvlColor)
                             .listRowBackground(recColor)
                         TextField("5,0 ммоль/л", text: $sugar)
@@ -191,7 +191,7 @@ struct enterFood: View {
                                         scolor = .black
                                     } else {
                                         sugarlvl = "УСК не определен"
-                                        recColor = Color.white
+                                        recColor = Color.gray.opacity(0.3)
                                         fontColor = Color.black
                                     }
                                 }
@@ -267,7 +267,7 @@ struct enterFood: View {
                         scolor = .black
                     } else {
                         sugarlvl = "УСК не определен"
-                        recColor = Color.white
+                        recColor = Color.gray.opacity(0.3)
                         fontColor = Color.black
                     }
                 }
@@ -370,7 +370,7 @@ struct enterFood: View {
                         scolor = .black
                     } else {
                         sugarlvl = "УСК не определен"
-                        recColor = Color.white
+                        recColor = Color.gray.opacity(0.3)
                         fontColor = Color.black
                     }
                 }

@@ -17,11 +17,11 @@
 		A73DAF3C28BFDA9E00995E66 /* editScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A73DAF3B28BFDA9E00995E66 /* editScreenView.swift */; };
 		A74A1CC228B1016C0038C79F /* startPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74A1CC128B1016C0038C79F /* startPage.swift */; };
 		A74A33D027B7E833003D2EBD /* loginPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74A33CF27B7E833003D2EBD /* loginPage.swift */; };
-		A76CF8642825AEC40028FC85 /* predictModel.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = A76CF8632825AEC40028FC85 /* predictModel.mlmodel */; };
 		A770675828A459F800457195 /* savedNotice.swift in Sources */ = {isa = PBXBuildFile; fileRef = A770675728A459F800457195 /* savedNotice.swift */; };
 		A777150028D71931005C5793 /* versionChoose.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77714FF28D71931005C5793 /* versionChoose.swift */; };
 		A783B43728D1384000059BBD /* reserved.db in Resources */ = {isa = PBXBuildFile; fileRef = A783B43628D1384000059BBD /* reserved.db */; };
 		A78E381E2813F0680096E2E2 /* myExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A78E381D2813F0680096E2E2 /* myExtensions.swift */; };
+		A7A4A45728EC5CCC0032652C /* predictModel.mlpackage in Sources */ = {isa = PBXBuildFile; fileRef = A7A4A45628EC5CCC0032652C /* predictModel.mlpackage */; };
 		A7BD994727CA46FC0090D9D7 /* helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7BD994627CA46FC0090D9D7 /* helper.swift */; };
 		A7D0976A2809FE16000A12E1 /* myButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7D097692809FE16000A12E1 /* myButtons.swift */; };
 		A7D27E022815ADDC00DC00E9 /* PDFManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7D27E012815ADDC00DC00E9 /* PDFManager.swift */; };
@@ -81,12 +81,12 @@
 		A73DAF3B28BFDA9E00995E66 /* editScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = editScreenView.swift; sourceTree = "<group>"; };
 		A74A1CC128B1016C0038C79F /* startPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = startPage.swift; sourceTree = "<group>"; };
 		A74A33CF27B7E833003D2EBD /* loginPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = loginPage.swift; sourceTree = "<group>"; };
-		A76CF8632825AEC40028FC85 /* predictModel.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = predictModel.mlmodel; sourceTree = "<group>"; };
 		A770675728A459F800457195 /* savedNotice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = savedNotice.swift; sourceTree = "<group>"; };
 		A77714FF28D71931005C5793 /* versionChoose.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = versionChoose.swift; sourceTree = "<group>"; };
 		A783B43628D1384000059BBD /* reserved.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = reserved.db; sourceTree = "<group>"; };
 		A78E381D2813F0680096E2E2 /* myExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = myExtensions.swift; sourceTree = "<group>"; };
 		A79A9354284D58F300C0A1AE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = /Users/artemisakov/Documents/swiftDia/dia/Info.plist; sourceTree = "<absolute>"; };
+		A7A4A45628EC5CCC0032652C /* predictModel.mlpackage */ = {isa = PBXFileReference; lastKnownFileType = folder.mlpackage; path = predictModel.mlpackage; sourceTree = "<group>"; };
 		A7BD994627CA46FC0090D9D7 /* helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = helper.swift; sourceTree = "<group>"; };
 		A7D097692809FE16000A12E1 /* myButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = myButtons.swift; sourceTree = "<group>"; };
 		A7D27E012815ADDC00DC00E9 /* PDFManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFManager.swift; sourceTree = "<group>"; };
@@ -175,7 +175,7 @@
 		AC26031E2690691E00C4A520 /* dia */ = {
 			isa = PBXGroup;
 			children = (
-				A76CF8632825AEC40028FC85 /* predictModel.mlmodel */,
+				A7A4A45628EC5CCC0032652C /* predictModel.mlpackage */,
 				A783B43628D1384000059BBD /* reserved.db */,
 				AC71760727209863000376FD /* diacompanion.db */,
 				A7F8A596288ED30100C13F36 /* Education.pdf */,
@@ -375,6 +375,7 @@
 			files = (
 				ACF4E410272DB126002D2797 /* RKMonth.swift in Sources */,
 				AC37A67B276147AF00558E55 /* excelGenerator.swift in Sources */,
+				A7A4A45728EC5CCC0032652C /* predictModel.mlpackage in Sources */,
 				A73C74F628CF2BF2008D09BF /* addCustomMeal.swift in Sources */,
 				A73DAF3C28BFDA9E00995E66 /* editScreenView.swift in Sources */,
 				A770675828A459F800457195 /* savedNotice.swift in Sources */,
@@ -392,7 +393,6 @@
 				ACCC5C2E2702190B0057CA7C /* pacientManager.swift in Sources */,
 				AC32A68427260602001DDB9F /* pWeight.swift in Sources */,
 				A7D0976A2809FE16000A12E1 /* myButtons.swift in Sources */,
-				A76CF8642825AEC40028FC85 /* predictModel.mlmodel in Sources */,
 				ACF7E7C32736F12C0027DD11 /* addSreenView.swift in Sources */,
 				ACF2F0A826DE9A1D0066753D /* inject.swift in Sources */,
 				ACC3798626ECFA7E00E0729E /* massa.swift in Sources */,
