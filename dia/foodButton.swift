@@ -10,11 +10,13 @@ import SwiftUI
 struct foodButton : View {
     @State var dish : FoodList
     @Binding var selectedFoodTemp : String
+    @Binding var table_id: Int
     @Binding var addScreen: Bool
     @Binding var successedSave: Bool
     var body: some View {
         Button(action: {
             selectedFoodTemp = dish.name
+            table_id = dish.table_id
             successedSave = false
             withAnimation(.default){
                 addScreen = true

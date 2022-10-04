@@ -8,6 +8,7 @@ struct addFoodButton: View {
     @State public var selectedFoodTempRating: Int = 0
     @State public var selectedFoodCategoryTemp: String = ""
     @State public var gram: String = ""
+    @State public var table_id: Int = 0
     @State private var selectedFood: String = ""
     @State private var selectedFoodCategoryItem: String = ""
     @State private var searchByWordView: Bool = true
@@ -52,7 +53,7 @@ struct addFoodButton: View {
                             VStack(spacing: .zero) {
                                 ForEach(items.FoodObj.sorted(by: {$0.rating > $1.rating}), id: \.id) {dish in
                                     VStack(spacing: .zero) {
-                                        foodButton(dish: dish, selectedFoodTemp: $selectedFoodTemp, addScreen: $addScreen, successedSave: $successedSave)
+                                        foodButton(dish: dish, selectedFoodTemp: $selectedFoodTemp, table_id: $table_id, addScreen: $addScreen, successedSave: $successedSave)
                                             .contextMenu {
                                                 VStack{
                                                     Button(action: {
@@ -87,7 +88,7 @@ struct addFoodButton: View {
                     }
                 }
                 if addScreen {
-                    addSreenView(addScreen: $addScreen, gram: $gram, selectedFood: $selectedFoodTemp, foodItems: $foodItems, successedSave: $successedSave)
+                    addSreenView(addScreen: $addScreen, gram: $gram, selectedFood: $selectedFoodTemp, table_id: $table_id, foodItems: $foodItems, successedSave: $successedSave)
                 }
                 if successedSave {
                     savedNotice()

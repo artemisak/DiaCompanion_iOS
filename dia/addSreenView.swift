@@ -5,6 +5,7 @@ struct addSreenView: View {
     @Binding var addScreen: Bool
     @Binding var gram: String
     @Binding var selectedFood: String
+    @Binding var table_id: Int
     @Binding var foodItems: [foodToSave]
     @Binding var successedSave: Bool
     @FocusState var focusedField: Bool
@@ -40,7 +41,7 @@ struct addSreenView: View {
                         do {
                             _ = try convertToInt(txt: gram)
                             isCorrect = true
-                            foodItems.append(foodToSave(name: "\(selectedFood)////\(gram)"))
+                            foodItems.append(foodToSave(name: "\(selectedFood)////\(gram)////\(table_id)"))
                             addScreen = false
                             focusedField = false
                             DispatchQueue.main.asyncAfter(deadline: .now()+0.1, execute: {

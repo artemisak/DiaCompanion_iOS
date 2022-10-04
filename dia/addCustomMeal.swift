@@ -73,6 +73,7 @@ struct addCustomMeal: View {
             Section(header: Text("Общая информация").font(.system(size: 15.5))){
                 TextField("Название блюда", text: $foodNotation)
                     .focused($focus)
+                    .autocorrectionDisabled()
                 NavigationLink(destination: categoryPicker(selectedCat: $selectedCat)) {
                     Text(selectedCat.rawValue)
                 }

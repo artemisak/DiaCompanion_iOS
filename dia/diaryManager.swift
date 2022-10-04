@@ -3,6 +3,7 @@ import SQLite
 
 struct FoodList: Identifiable, Hashable {
     let id = UUID()
+    let table_id: Int
     let name: String
     let prot: String
     let carbo: String
@@ -31,7 +32,7 @@ class Food: ObservableObject {
         if name1.count > 1 {
             fullname = name1.joined(separator: " ")
         } else {
-            fullname = name1[0]
+            fullname = name1.joined()
         }
         do {
             var Food1 = [FoodList]()
@@ -41,6 +42,7 @@ class Food: ObservableObject {
             _=copyDatabaseIfNeeded(sourcePath: sourcePath)
             let db = try Connection(path)
             let foodItems = Table("food")
+            let table_id = Expression<Int>("_id")
             let food = Expression<String>("name")
             let pr = Expression<Double>("prot")
             let car = Expression<Double>("carbo")
@@ -48,26 +50,26 @@ class Food: ObservableObject {
             let g = Expression<Double?>("gi")
             let rating = Expression<Int?>("favor")
             var GI = ""
-            for i in try db.prepare(foodItems.select(food, pr, car, f, g, rating).filter(food.like("\(fullname)%")).order(food).limit(20)){
+            for i in try db.prepare(foodItems.select(table_id, food, pr, car, f, g, rating).filter(food.like("\(fullname)%")).order(food).limit(20)){
                 if i[g] != nil {
                     GI = "\(round(i[g]!*10)/10)"
                 }
-                Food1.append(FoodList(name: "\(i[food])", prot: "\(round(i[pr]*10)/10)", carbo: "\(round(i[car]*10)/10)", fat: "\(round(i[f]*10)/10)", gi: GI, rating: i[rating] ?? 0))
+                Food1.append(FoodList(table_id: i[table_id], name: "\(i[food])", prot: "\(round(i[pr]*10)/10)", carbo: "\(round(i[car]*10)/10)", fat: "\(round(i[f]*10)/10)", gi: GI, rating: i[rating] ?? 0))
             }
-            for i in try db.prepare(foodItems.select(food, pr, car, f, g, rating).filter(food.like("%\(fullname)")).order(food).limit(5)){
+            for i in try db.prepare(foodItems.select(table_id, food, pr, car, f, g, rating).filter(food.like("%\(fullname)")).order(food).limit(5)){
                 if i[g] != nil {
                     GI = "\(round(i[g]!*10)/10)"
                 }
                 if Set(Food1.map({$0.name == i[food]})) == [false] || Food1 == [] {
-                    Food1.append(FoodList(name: "\(i[food])", prot: "\(i[pr])", carbo: "\(i[car])", fat: "\(i[f])", gi: GI, rating: i[rating] ?? 0))
+                    Food1.append(FoodList(table_id: i[table_id], name: "\(i[food])", prot: "\(i[pr])", carbo: "\(i[car])", fat: "\(i[f])", gi: GI, rating: i[rating] ?? 0))
                 }
             }
-            for i in try db.prepare(foodItems.select(food, pr, car, f, g, rating).filter(food.like("%\(fullname)%") || food.like("%\(fullname.lowercased())%")).order(food).limit(5)){
+            for i in try db.prepare(foodItems.select(table_id, food, pr, car, f, g, rating).filter(food.like("%\(fullname)%") || food.like("%\(fullname.lowercased())%")).order(food).limit(5)){
                 if i[g] != nil {
                     GI = "\(round(i[g]!*10)/10)"
                 }
                 if Set(Food1.map({$0.name == i[food]})) == [false] || Food1 == [] {
-                    Food1.append(FoodList(name: "\(i[food])", prot: "\(i[pr])", carbo: "\(i[car])", fat: "\(i[f])", gi: GI, rating: i[rating] ?? 0))
+                    Food1.append(FoodList(table_id: i[table_id], name: "\(i[food])", prot: "\(i[pr])", carbo: "\(i[car])", fat: "\(i[f])", gi: GI, rating: i[rating] ?? 0))
                 }
             }
             self.FoodObj = Food1
@@ -108,6 +110,7 @@ class Food: ObservableObject {
             _=copyDatabaseIfNeeded(sourcePath: sourcePath)
             let db = try Connection(path)
             let foodItems = Table("food")
+            let table_id = Expression<Int>("_id")
             let food = Expression<String>("name")
             let categoryRow = Expression<String>("category")
             let pr = Expression<Double>("prot")
@@ -116,13 +119,13 @@ class Food: ObservableObject {
             let g = Expression<Double?>("gi")
             let rating = Expression<Int?>("favor")
             var GI = ""
-            for i in try db.prepare(foodItems.select(food, pr, car, f, g, rating).filter(categoryRow == _category)){
+            for i in try db.prepare(foodItems.select(table_id, food, pr, car, f, g, rating).filter(categoryRow == _category)){
                 if i[g] != nil {
                     GI = "\(i[g]!)"
                 } else {
                     GI = ""
                 }
-                FoodObj.append(FoodList(name: "\(i[food])", prot: "\(i[pr])", carbo: "\(i[car])", fat: "\(i[f])", gi: GI, rating: i[rating] ?? 0))
+                FoodObj.append(FoodList(table_id: i[table_id], name: "\(i[food])", prot: "\(i[pr])", carbo: "\(i[car])", fat: "\(i[f])", gi: GI, rating: i[rating] ?? 0))
             }
             self.FoodObj = FoodObj
         }
@@ -274,6 +277,7 @@ func addNewFoodN(items: [foodToSave], newReceitName: String, category: String) {
         _=copyDatabaseIfNeeded(sourcePath: sourcePath)
         let db = try Connection(path)
         let food = Table("food")
+        let table_id = Expression<Int>("_id")
         let foodName = Expression<String>("name")
         let cat = Expression<String>("category")
         let carbo = Expression<Double?>("carbo")
@@ -336,62 +340,62 @@ func addNewFoodN(items: [foodToSave], newReceitName: String, category: String) {
         var parameters: [[Double]] = []
         for i in items {
             let arg = "\(i.name)".components(separatedBy: "////")
-            for j in try db.prepare(food.filter(foodName == arg[0]).limit(1)){
-                parameters.append([j[carbo] ?? 0.0 * Double(arg[1])!/100,
-                                   j[prot] ?? 0.0 * Double(arg[1])!/100,
-                                   j[fat] ?? 0.0 * Double(arg[1])!/100,
-                                   j[ec] ?? 0.0 * Double(arg[1])!/100,
-                                   (j[gi] ?? 0.0) * Double(arg[1])!/100 * (j[carbo] ?? 0.0) * Double(arg[1])!/100,
-                                   j[water] ?? 0.0 * Double(arg[1])!/100,
-                                   j[nzhk] ?? 0.0 * Double(arg[1])!/100,
-                                   j[hol] ?? 0.0 * Double(arg[1])!/100,
-                                   j[pv] ?? 0.0 * Double(arg[1])!/100,
-                                   j[zola] ?? 0.0 * Double(arg[1])!/100,
-                                   j[na] ?? 0.0 * Double(arg[1])!/100,
-                                   j[k] ?? 0.0 * Double(arg[1])!/100,
-                                   j[ca] ?? 0.0 * Double(arg[1])!/100,
-                                   j[mg] ?? 0.0 * Double(arg[1])!/100,
-                                   j[p] ?? 0.0 * Double(arg[1])!/100,
-                                   j[fe] ?? 0.0 * Double(arg[1])!/100,
-                                   j[a] ?? 0.0 * Double(arg[1])!/100,
-                                   j[b1] ?? 0.0 * Double(arg[1])!/100,
-                                   j[b2] ?? 0.0 * Double(arg[1])!/100,
-                                   j[rr] ?? 0.0 * Double(arg[1])!/100,
-                                   j[c] ?? 0.0 * Double(arg[1])!/100,
-                                   j[re] ?? 0.0 * Double(arg[1])!/100,
-                                   j[kar] ?? 0.0 * Double(arg[1])!/100,
-                                   j[mds] ?? 0.0 * Double(arg[1])!/100,
-                                   j[kr] ?? 0.0 * Double(arg[1])!/100,
-                                   j[te] ?? 0.0 * Double(arg[1])!/100,
-                                   j[ok] ?? 0.0 * Double(arg[1])!/100,
-                                   j[ne] ?? 0.0 * Double(arg[1])!/100,
-                                   j[zn] ?? 0.0 * Double(arg[1])!/100,
-                                   j[cu] ?? 0.0 * Double(arg[1])!/100,
-                                   j[mn] ?? 0.0 * Double(arg[1])!/100,
-                                   j[se] ?? 0.0 * Double(arg[1])!/100,
-                                   j[b5] ?? 0.0 * Double(arg[1])!/100,
-                                   j[b6] ?? 0.0 * Double(arg[1])!/100,
-                                   j[fol] ?? 0.0 * Double(arg[1])!/100,
-                                   j[b9] ?? 0.0 * Double(arg[1])!/100,
-                                   j[dfe] ?? 0.0 * Double(arg[1])!/100,
-                                   j[holin] ?? 0.0 * Double(arg[1])!/100,
-                                   j[b12] ?? 0.0 * Double(arg[1])!/100,
-                                   j[ear] ?? 0.0 * Double(arg[1])!/100,
-                                   j[a_kar] ?? 0.0 * Double(arg[1])!/100,
-                                   j[b_kript] ?? 0.0 * Double(arg[1])!/100,
-                                   j[likopin] ?? 0.0 * Double(arg[1])!/100,
-                                   j[lut_z] ?? 0.0 * Double(arg[1])!/100,
-                                   j[vit_e] ?? 0.0 * Double(arg[1])!/100,
-                                   j[vit_d] ?? 0.0 * Double(arg[1])!/100,
-                                   j[d_mezd] ?? 0.0 * Double(arg[1])!/100,
-                                   j[vit_k] ?? 0.0 * Double(arg[1])!/100,
-                                   j[mzhk] ?? 0.0 * Double(arg[1])!/100,
-                                   j[pzhk] ?? 0.0 * Double(arg[1])!/100,
-                                   j[w_1ed] ?? 0.0 * Double(arg[1])!/100,
-                                   j[op_1ed] ?? 0.0 * Double(arg[1])!/100,
-                                   j[w_2ed] ?? 0.0 * Double(arg[1])!/100,
-                                   j[op_2ed] ?? 0.0 * Double(arg[1])!/100,
-                                   j[proc_pot] ?? 0.0 * Double(arg[1])!/100])
+            for j in try db.prepare(food.filter(table_id == convertToInt(txt: arg[2]) && foodName == arg[0]).limit(1)){
+                parameters.append([(j[carbo] ?? 0.0) * Double(arg[1])!/100,
+                                   (j[prot] ?? 0.0) * Double(arg[1])!/100,
+                                   (j[fat] ?? 0.0) * Double(arg[1])!/100,
+                                   (j[ec] ?? 0.0) * Double(arg[1])!/100,
+                                   (j[gi] ?? 0.0) * (j[carbo] ?? 0.0) * Double(arg[1])!/100,
+                                   (j[water] ?? 0.0) * Double(arg[1])!/100,
+                                   (j[nzhk] ?? 0.0) * Double(arg[1])!/100,
+                                   (j[hol] ?? 0.0) * Double(arg[1])!/100,
+                                   (j[pv] ?? 0.0) * Double(arg[1])!/100,
+                                   (j[zola] ?? 0.0) * Double(arg[1])!/100,
+                                   (j[na] ?? 0.0) * Double(arg[1])!/100,
+                                   (j[k] ?? 0.0) * Double(arg[1])!/100,
+                                   (j[ca] ?? 0.0) * Double(arg[1])!/100,
+                                   (j[mg] ?? 0.0) * Double(arg[1])!/100,
+                                   (j[p] ?? 0.0) * Double(arg[1])!/100,
+                                   (j[fe] ?? 0.0) * Double(arg[1])!/100,
+                                   (j[a] ?? 0.0) * Double(arg[1])!/100,
+                                   (j[b1] ?? 0.0) * Double(arg[1])!/100,
+                                   (j[b2] ?? 0.0) * Double(arg[1])!/100,
+                                   (j[rr] ?? 0.0) * Double(arg[1])!/100,
+                                   (j[c] ?? 0.0) * Double(arg[1])!/100,
+                                   (j[re] ?? 0.0) * Double(arg[1])!/100,
+                                   (j[kar] ?? 0.0) * Double(arg[1])!/100,
+                                   (j[mds] ?? 0.0) * Double(arg[1])!/100,
+                                   (j[kr] ?? 0.0) * Double(arg[1])!/100,
+                                   (j[te] ?? 0.0) * Double(arg[1])!/100,
+                                   (j[ok] ?? 0.0) * Double(arg[1])!/100,
+                                   (j[ne] ?? 0.0) * Double(arg[1])!/100,
+                                   (j[zn] ?? 0.0) * Double(arg[1])!/100,
+                                   (j[cu] ?? 0.0) * Double(arg[1])!/100,
+                                   (j[mn] ?? 0.0) * Double(arg[1])!/100,
+                                   (j[se] ?? 0.0) * Double(arg[1])!/100,
+                                   (j[b5] ?? 0.0) * Double(arg[1])!/100,
+                                   (j[b6] ?? 0.0) * Double(arg[1])!/100,
+                                   (j[fol] ?? 0.0) * Double(arg[1])!/100,
+                                   (j[b9] ?? 0.0) * Double(arg[1])!/100,
+                                   (j[dfe] ?? 0.0) * Double(arg[1])!/100,
+                                   (j[holin] ?? 0.0) * Double(arg[1])!/100,
+                                   (j[b12] ?? 0.0) * Double(arg[1])!/100,
+                                   (j[ear] ?? 0.0) * Double(arg[1])!/100,
+                                   (j[a_kar] ?? 0.0) * Double(arg[1])!/100,
+                                   (j[b_kript] ?? 0.0) * Double(arg[1])!/100,
+                                   (j[likopin] ?? 0.0) * Double(arg[1])!/100,
+                                   (j[lut_z] ?? 0.0) * Double(arg[1])!/100,
+                                   (j[vit_e] ?? 0.0) * Double(arg[1])!/100,
+                                   (j[vit_d] ?? 0.0) * Double(arg[1])!/100,
+                                   (j[d_mezd] ?? 0.0) * Double(arg[1])!/100,
+                                   (j[vit_k] ?? 0.0) * Double(arg[1])!/100,
+                                   (j[mzhk] ?? 0.0) * Double(arg[1])!/100,
+                                   (j[pzhk] ?? 0.0) * Double(arg[1])!/100,
+                                   (j[w_1ed] ?? 0.0) * Double(arg[1])!/100,
+                                   (j[op_1ed] ?? 0.0) * Double(arg[1])!/100,
+                                   (j[w_2ed] ?? 0.0) * Double(arg[1])!/100,
+                                   (j[op_2ed] ?? 0.0) * Double(arg[1])!/100,
+                                   (j[proc_pot] ?? 0.0) * Double(arg[1])!/100])
             }
         }
                 
