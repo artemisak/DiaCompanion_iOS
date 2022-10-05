@@ -1010,10 +1010,12 @@ class exportTable {
         }
         return fileURL
     }
+    
+    func computeGI(gi: [Double], carbo: [Double]) -> Double {
+        let sumGIC = zip(gi,carbo).map(*).reduce(0,+)
+        let sumC = carbo.reduce(0,+)
+        return round((sumGIC/sumC)*100)/100
+    }
 }
 
-func computeGI(gi: [Double], carbo: [Double]) -> Double {
-    var sumGIC = zip(gi,carbo).map(*).reduce(0,+)
-    var sumC = carbo.reduce(0,+)
-    return round((sumGIC/sumC)*100)/100
-}
+
