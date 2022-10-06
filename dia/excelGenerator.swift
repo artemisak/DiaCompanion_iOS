@@ -405,7 +405,7 @@ class exportTable {
         }
         
         worksheet_write_string(worksheet1, lxw_row_t(3+r1+1), 0, "Среднее по дням", merge_format3)
-        if (version != 3 || version != 4){
+        if (version != 3 && version != 4){
             worksheet_write_string(worksheet1, lxw_row_t(3+r1+2), 0, "Неделя бер.", merge_format3)
         }
         worksheet_write_string(worksheet1, lxw_row_t(3+r1+2), 1, "Дата", merge_format3)
@@ -469,7 +469,7 @@ class exportTable {
         let pdate = info.2
         
         for i in 0..<tbl.count {
-            if (version != 3 || version != 4){
+            if (version != 3 && version != 4){
                 worksheet_write_string(worksheet1, lxw_row_t(3+r1+3+i), 0, "\(defWeek(nowDate: tbl[i].day, dateBegin: pdate, weekOfStart: pweek, dayOfStartWeek: pday))", nil)
             }
             worksheet_write_string(worksheet1, lxw_row_t(3+r1+3+i), 1, formater.string(from: tbl[i].day), nil)
