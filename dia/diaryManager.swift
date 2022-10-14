@@ -147,7 +147,7 @@ class Food: ObservableObject {
     }
 }
 
-func SaveToDB(FoodName: String, gram: String, selectedDate: Date, selectedType: String) {
+func SaveToDB(FoodName: String, gram: String, table_id: String, selectedDate: Date, selectedType: String) {
     do {
         let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
         let path = documents + "/diacompanion.db"
@@ -155,6 +155,7 @@ func SaveToDB(FoodName: String, gram: String, selectedDate: Date, selectedType: 
         _=copyDatabaseIfNeeded(sourcePath: sourcePath)
         let db = try Connection(path)
         let diary = Table("diary")
+        let id_food = Expression<Int>("id_food")
         let foodName = Expression<String>("foodName")
         let g = Expression<String>("g")
         let date = Expression<String>("date")
@@ -176,7 +177,7 @@ func SaveToDB(FoodName: String, gram: String, selectedDate: Date, selectedType: 
         let realDateTime = dateFormatter.string(from: Date.now)
         let selectDate = dateFormatter1.string(from: selectedDate)
         let dtime = dateFormatter2.string(from: selectedDate)
-        try db.run(diary.insert(foodName <- FoodName, g <- gram, date <- selectDate, time <- dtime,timeStamp <- realDateTime, type <- selectedType, picker <- dtime+" "+selectDate))
+        try db.run(diary.insert(id_food <- convertToInt(txt: table_id), foodName <- FoodName, g <- gram, date <- selectDate, time <- dtime,timeStamp <- realDateTime, type <- selectedType, picker <- dtime+" "+selectDate))
     }
     catch {
         print(error)

@@ -100,7 +100,6 @@ struct enterFood: View {
                         displayedComponents: [.date, .hourAndMinute]
                     )
                     .datePickerStyle(.compact)
-                    .environment(\.locale, .init(identifier: "ru"))
                     .onChange(of: date, perform: { _ in
                         do {
                             if (foodItems.count != 0 && sugar != "" && islogin.version != 2) {
@@ -138,7 +137,8 @@ struct enterFood: View {
                             scolor = .red
                         }
                     })
-                    .environment(\.locale, Locale.init(identifier: "ru")).frame(height: 42.7)
+                    .environment(\.locale, Locale.init(identifier: "ru"))
+                    .frame(height: 42.7)
                 }
                 if islogin.version != 2 {
                     Section(header: Text("Уровень сахара в крови").font(.system(size: 15.5))) {
@@ -298,7 +298,7 @@ struct enterFood: View {
                                 }
                                 for i in foodItems {
                                     let arg = "\(i.name)".components(separatedBy: "////")
-                                    SaveToDB(FoodName: arg[0], gram: arg[1], selectedDate: date, selectedType: ftpreviewIndex.rawValue)
+                                    SaveToDB(FoodName: arg[0], gram: arg[1], table_id: arg[2], selectedDate: date, selectedType: ftpreviewIndex.rawValue)
                                 }
                                 addPredictedRecord(selectedDate: date, selectedType: ftpreviewIndex.rawValue, BG0: _BG0, BG1: res)
                                 recommendMessage = getMessage(highGI: checkGI(listOfFood: foodItems), manyCarbo: checkCarbo(foodType: ftpreviewIndex.rawValue, listOfFood: foodItems), highBGBefore: checkBGBefore(BG0: _BG0), lowPV: checkPV(listOfFood: foodItems, date: date), bg_pred: res, isTrue: &isVisible)
@@ -317,7 +317,7 @@ struct enterFood: View {
                             }
                             for i in foodItems {
                                 let arg = "\(i.name)".components(separatedBy: "////")
-                                SaveToDB(FoodName: arg[0], gram: arg[1], selectedDate: date, selectedType: ftpreviewIndex.rawValue)
+                                SaveToDB(FoodName: arg[0], gram: arg[1], table_id: arg[2], selectedDate: date, selectedType: ftpreviewIndex.rawValue)
                             }
                             addPredictedRecord(selectedDate: date, selectedType: ftpreviewIndex.rawValue, BG0: 0.0, BG1: 0.0)
                             recommendMessage = getMessage(highGI: checkGI(listOfFood: foodItems), manyCarbo: checkCarbo(foodType: ftpreviewIndex.rawValue, listOfFood: foodItems), highBGBefore: checkBGBefore(BG0: 5.0), lowPV: checkPV(listOfFood: foodItems, date: date), bg_pred: res, isTrue: &isVisible)

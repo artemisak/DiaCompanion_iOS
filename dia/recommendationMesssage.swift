@@ -46,7 +46,7 @@ func checkGI(listOfFood: [foodToSave]) -> Bool {
         let name = Expression<String>("name")
         let gi = Expression<Double?>("gi")
         for i in listOfFood {
-            for i1 in try db.prepare(food.select(gi).filter(name == i.name)){
+            for i1 in try db.prepare(food.select(gi).filter(name == i.name).limit(1)){
                 listOfGI.append(i1[gi] ?? 0.0)
             }
         }
@@ -75,7 +75,7 @@ func checkCarbo(foodType: String, listOfFood: [foodToSave]) -> Bool {
         let name = Expression<String>("name")
         let carbo = Expression<Double?>("carbo")
         for i in listOfFood {
-            for i1 in try db.prepare(food.select(carbo).filter(name == i.name)){
+            for i1 in try db.prepare(food.select(carbo).filter(name == i.name).limit(1)){
                 listOfCarbo.append(i1[carbo] ?? 0.0)
             }
         }
@@ -116,7 +116,7 @@ func checkPV(listOfFood: [foodToSave], date: Date) -> Bool {
         let name = Expression<String>("name")
         let pv = Expression<Double?>("pv")
         for i in listOfFood {
-            for i1 in try db.prepare(food.select(pv).filter(name == i.name)){
+            for i1 in try db.prepare(food.select(pv).filter(name == i.name).limit(1)){
                 listOfPV.append(i1[pv] ?? 0.0)
             }
         }
@@ -128,7 +128,7 @@ func checkPV(listOfFood: [foodToSave], date: Date) -> Bool {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd.MM.yyyy"
         for i in try db.prepare(diary.select(foodName).filter(dateTime == dateFormatter.string(from: date))){
-            for i1 in try db.prepare(food.select(pv).filter(name == i[foodName])){
+            for i1 in try db.prepare(food.select(pv).filter(name == i[foodName]).limit(1)){
                 listOfPV.append(i1[pv] ?? 0.0)
             }
         }
@@ -136,7 +136,7 @@ func checkPV(listOfFood: [foodToSave], date: Date) -> Bool {
         listOfPV.removeAll()
         let yest = date.addingTimeInterval(-60*60*24)
         for i in try db.prepare(diary.select(foodName).filter(dateTime == dateFormatter.string(from: yest))){
-            for i1 in try db.prepare(food.select(pv).filter(name == i[foodName])){
+            for i1 in try db.prepare(food.select(pv).filter(name == i[foodName]).limit(1)){
                 listOfPV.append(i1[pv] ?? 0.0)
             }
         }

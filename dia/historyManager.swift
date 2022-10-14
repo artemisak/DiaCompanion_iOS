@@ -24,12 +24,15 @@ class historyList: ObservableObject {
             
             // MARK: Заполняем еду
             let diary = Table("diary")
+            let id = Expression<Int>("id")
+            let table_id_key = Expression<Int>("id_food")
             let dateTime = Expression<String>("dateTime")
             let foodType = Expression<String>("foodType")
-            let id = Expression<Int>("id")
-            let gram = Expression<String>("g")
             let fName = Expression<String>("foodName")
+            let gram = Expression<String>("g")
+            
             let foodInfo = Table("food")
+            let food_id = Expression<Int>("_id")
             let prot = Expression<Double>("prot")
             let fat = Expression<Double>("fat")
             let carbo = Expression<Double>("carbo")
@@ -61,10 +64,10 @@ class historyList: ObservableObject {
                         temp0 = i2[BG0]
                         temp1 = round(i2[BG1]*10)/10
                     }
-                    for i1 in try db.prepare(diary.select(id, gram, fName).filter(dateTime == histList[i].date && foodType == histList[i].name)){
+                    for i1 in try db.prepare(diary.select(id, table_id_key, gram, fName).filter(dateTime == histList[i].date && foodType == histList[i].name)){
                         histList[i].bdID.append(i1[id])
                         let gramm = Double(i1[gram]) ?? 100.0
-                        let temp = try db.prepare(foodInfo.select(prot,fat,carbo,kkal,gi).filter(name == i1[fName]))
+                        let temp = try db.prepare(foodInfo.select(prot,fat,carbo,kkal,gi).filter(name == i1[fName] && food_id == i1[table_id_key]))
                         _ = temp.map{histList[i].metaInfo.append([i1[fName], i1[gram], String($0[prot]), String($0[fat]), String($0[carbo]), String($0[kkal]), String($0[gi]), "\(round(($0[carbo]*(gramm/100)/100*$0[gi])*100)/100)", String(temp0), String(temp1)])}
                     }
                     histList[i].name = histList[i].name + " (\(histList[i].bdID.count) сост.)"

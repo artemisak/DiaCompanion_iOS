@@ -499,21 +499,21 @@ struct history: View {
         var calc: [Double] = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
         var res: [String] = ["","","","","","",""]
         for i in 0...info.count-1 {
-            calc[0] = round(calc[0]) + round(Double(info[i][1])!)
-            calc[1] = round(calc[1]) + round(Double(info[i][2])!)
-            calc[2] = round(calc[2]) + round(Double(info[i][3])!)
-            calc[3] = round(calc[3]) + round(Double(info[i][4])!)
-            calc[4] = round(calc[4]) + round(Double(info[i][5])!)
-            calc[5] = round((calc[5] + Double(info[i][6])!*Double(info[i][4])!)*100)/100
-            calc[6] = round((calc[6] + Double(info[i][6])!*Double(info[i][4])!/100)*100)/100
+            calc[0] = calc[0] + Double(info[i][1])!
+            calc[1] = calc[1] + Double(info[i][2])!
+            calc[2] = calc[2] + Double(info[i][3])!
+            calc[3] = calc[3] + Double(info[i][4])!
+            calc[4] = calc[4] + Double(info[i][5])!
+            calc[5] = round((calc[5] + Double(info[i][6])!*Double(info[i][4])!)*10)/10
+            calc[6] = round((calc[6] + Double(info[i][6])!*Double(info[i][4])!/100)*10)/10
         }
-        res[0] = "Масса: " + "\(calc[0])"
-        res[1] = "Белки: " + "\(calc[1])"
-        res[2] = "Жиры: " + "\(calc[2])"
-        res[3] = "Углеводы: " + "\(calc[3])"
-        res[4] = "ККал: " + "\(calc[4])"
-        res[5] = "ГИ: " + "\(round(calc[5]/calc[3]*100)/100)"
-        res[6] = "ГН: " + "\(calc[6])"
+        res[0] = "Масса: " + "\(round(calc[0]*10)/10)"
+        res[1] = "Белки: " + "\(round(calc[1]*10)/10)"
+        res[2] = "Жиры: " + "\(round(calc[2]*10)/10)"
+        res[3] = "Углеводы: " + "\(round(calc[3]*10)/10)"
+        res[4] = "ККал: " + "\(round(calc[4]*10)/10)"
+        res[5] = "ГИ: " + "\(round((calc[5]/calc[3])*10)/10)"
+        res[6] = "ГН: " + "\(round(calc[6]*10)/10)"
         if info.last![8] != "0.0" && info.last![9] != "0.0" {
             res.append("УСК до приема пищи: " + info.last![8])
             res.append("Прогнозируемый УСК после: " + info.last![9])
