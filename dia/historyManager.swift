@@ -68,7 +68,7 @@ class historyList: ObservableObject {
                         histList[i].bdID.append(i1[id])
                         let gramm = Double(i1[gram]) ?? 100.0
                         let temp = try db.prepare(foodInfo.select(prot,fat,carbo,kkal,gi).filter(name == i1[fName] && food_id == i1[table_id_key]))
-                        _ = temp.map{histList[i].metaInfo.append([i1[fName], i1[gram], String($0[prot]), String($0[fat]), String($0[carbo]), String($0[kkal]), String($0[gi]), "\(round(($0[carbo]*(gramm/100)/100*$0[gi])*100)/100)", String(temp0), String(temp1)])}
+                        _ = temp.map{histList[i].metaInfo.append([i1[fName], i1[gram], "\(round($0[prot]*(gramm/100)*100)/100)", "\(round($0[fat]*(gramm/100)*100)/100)", "\(round($0[carbo]*(gramm/100)*100)/100)", "\(round($0[kkal]*(gramm/100)*100)/100)", "\($0[gi])", "\(round(($0[carbo]*(gramm/100)/100*$0[gi])*100)/100)", "\(temp0)", "\(temp1)"])}
                     }
                     histList[i].name = histList[i].name + " (\(histList[i].bdID.count) сост.)"
                 }

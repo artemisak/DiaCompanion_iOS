@@ -20,22 +20,22 @@ struct versionChoose: View {
                 Button(action: {
                     islogin.setChoosed(v: 1)
                 }) {
-                    Text("Гестационный СД РКИ (GDM RCT)")
+                    Text("ГСД, диета (с прогнозированием)")
                 }.buttonStyle(RoundedRectangleButtonStyle()).padding(.horizontal)
                 Button(action: {
                     islogin.setChoosed(v: 2)
                 }) {
-                    Text("Гестационный СД (GDM)")
+                    Text("ГСД, диета + инсулинотерапия")
                 }.buttonStyle(RoundedRectangleButtonStyle()).padding(.horizontal)
                 Button(action: {
                     islogin.setChoosed(v: 3)
                 }) {
-                    Text("Метаболический синдром (MS)")
+                    Text("Дневник питания и самоконтроля")
                 }.buttonStyle(RoundedRectangleButtonStyle()).padding(.horizontal)
                 Button(action: {
                     islogin.setChoosed(v: 4)
                 }) {
-                    Text("Синдром ПЯ (PCOS)")
+                    Text("Дневник питания")
                 }.buttonStyle(RoundedRectangleButtonStyle()).padding(.horizontal)
                 Spacer()
             }
