@@ -6,6 +6,7 @@ struct FoodRecord {
     var day: Date
     var time: Date
     var foodType: String
+    var id_food: [Int]
     var food:  [String]
     var g: [String]
     var carbo: [String]
@@ -145,6 +146,7 @@ func getFoodRecords() -> [TableRecord] {
         let sourcePath = Bundle.main.path(forResource: "diacompanion", ofType: "db")!
         _=copyDatabaseIfNeeded(sourcePath: sourcePath)
         let db = try Connection(path)
+        let id_food = Expression<Int>("id_food")
         let foodTable = Table("diary")
         let day = Expression<String>("date")
         let time = Expression<String>("time")
@@ -160,6 +162,7 @@ func getFoodRecords() -> [TableRecord] {
         dateFormatter1.setLocalizedDateFormatFromTemplate("HH:mm")
         
         let foodInfo = Table("food")
+        let id_info = Expression<Int>("_id")
         let foodN = Expression<String>("name")
         let carbo = Expression<Double?>("carbo")
         let prot = Expression<Double?>("prot")
@@ -224,8 +227,8 @@ func getFoodRecords() -> [TableRecord] {
         let BG0 = Expression<Double>("BG0")
         let BG1 = Expression<Double>("BG1")
                 
-        for i in try db.prepare(foodTable.select(day,time,foodType,foodName,gram)){
-            record.append(FoodRecord(day: dateFormatter.date(from: i[day])!, time: dateFormatter1.date(from: i[time])!,foodType: i[foodType], food: [i[foodName]], g: [i[gram]], carbo: [""], prot: [""], fat: [""], ec: [""], gi: [""], empty: [""], water: [""], nzhk: [""], hol: [""], pv: [""], zola: [""], na: [""], k: [""], ca: [""], mg: [""], p: [""], fe: [""], a:[""], b1: [""], b2: [""], rr: [""], c: [""], re: [""], kar: [""], mds: [""], kr: [""], te: [""], ok: [""], ne: [""], zn: [""], cu: [""], mn: [""], se: [""], b5: [""], b6: [""], fol: [""], b9: [""], dfe: [""], holin: [""], b12: [""], ear: [""], a_kar:[""], b_kript: [""], likopin: [""], lut_z: [""], vit_e: [""], vit_d: [""], d_mezd: [""], vit_k: [""], mzhk: [""], pzhk: [""], w_1ed: [""], op_1ed: [""], w_2ed: [""], op_2ed: [""], proc_prot: [""], timeStamp: "", BG0: "", BG1: ""))
+        for i in try db.prepare(foodTable.select(day,time,foodType,id_food,foodName,gram)){
+            record.append(FoodRecord(day: dateFormatter.date(from: i[day])!, time: dateFormatter1.date(from: i[time])!,foodType: i[foodType], id_food: [i[id_food]], food: [i[foodName]], g: [i[gram]], carbo: [""], prot: [""], fat: [""], ec: [""], gi: [""], empty: [""], water: [""], nzhk: [""], hol: [""], pv: [""], zola: [""], na: [""], k: [""], ca: [""], mg: [""], p: [""], fe: [""], a:[""], b1: [""], b2: [""], rr: [""], c: [""], re: [""], kar: [""], mds: [""], kr: [""], te: [""], ok: [""], ne: [""], zn: [""], cu: [""], mn: [""], se: [""], b5: [""], b6: [""], fol: [""], b9: [""], dfe: [""], holin: [""], b12: [""], ear: [""], a_kar:[""], b_kript: [""], likopin: [""], lut_z: [""], vit_e: [""], vit_d: [""], d_mezd: [""], vit_k: [""], mzhk: [""], pzhk: [""], w_1ed: [""], op_1ed: [""], w_2ed: [""], op_2ed: [""], proc_prot: [""], timeStamp: "", BG0: "", BG1: ""))
         }
         
         var tempPred: [[String]] = []
@@ -241,73 +244,74 @@ func getFoodRecords() -> [TableRecord] {
                 record[indexOf!].BG1 = i[4]
             }
         }
-        
+
         for i in 0..<record.count {
-            for i1 in try db.prepare(foodInfo.select(foodN, carbo, prot, fat, ec, gi, water, nzhk, hol, pv, zola, na, k, ca, mg, p, fe, a, b1, b2, rr, c, re, kar, mds, kr, te, ok, ne, zn, cu, mn, se, b5, b6, fol, b9, dfe, holin, b12, ear, a_kar, b_kript, likopin, lut_z, vit_e, vit_d, d_mezd, vit_k, mzhk, pzhk, w_1ed, op_1ed, w_2ed, op_2ed, proc_prot).filter(foodN == record[i].food[0])){
-                record[i].carbo = ["\(i1[carbo] ?? 0.0)"]
-                record[i].prot = ["\(i1[prot] ?? 0.0)"]
-                record[i].fat = ["\(i1[fat] ?? 0.0)"]
-                record[i].ec = ["\(i1[ec] ?? 0.0)"]
+            for i1 in try db.prepare(foodInfo.select(foodN, carbo, prot, fat, ec, gi, water, nzhk, hol, pv, zola, na, k, ca, mg, p, fe, a, b1, b2, rr, c, re, kar, mds, kr, te, ok, ne, zn, cu, mn, se, b5, b6, fol, b9, dfe, holin, b12, ear, a_kar, b_kript, likopin, lut_z, vit_e, vit_d, d_mezd, vit_k, mzhk, pzhk, w_1ed, op_1ed, w_2ed, op_2ed, proc_prot).filter(id_info == record[i].id_food[0])){
+                record[i].carbo = ["\(round((i1[carbo] ?? 0.0)*(Double(record[i].g[0])!/100)*100)/100)"]
+                record[i].prot = ["\(round((i1[prot] ?? 0.0)*(Double(record[i].g[0])!/100)*100)/100)"]
+                record[i].fat = ["\(round((i1[fat] ?? 0.0)*(Double(record[i].g[0])!/100)*100)/100)"]
+                record[i].ec = ["\(round((i1[ec] ?? 0.0)*(Double(record[i].g[0])!/100)*100)/100)"]
                 record[i].gi = ["\(i1[gi] ?? 0.0)"]
-                record[i].water = ["\(i1[water] ?? 0.0)"]
-                record[i].nzhk = ["\(i1[nzhk] ?? 0.0)"]
-                record[i].hol = ["\(i1[hol] ?? 0.0)"]
-                record[i].pv = ["\(i1[pv] ?? 0.0)"]
-                record[i].zola = ["\(i1[zola] ?? 0.0)"]
-                record[i].na = ["\(i1[na] ?? 0.0)"]
-                record[i].k = ["\(i1[k] ?? 0.0)"]
-                record[i].ca = ["\(i1[ca] ?? 0.0)"]
-                record[i].mg = ["\(i1[mg] ?? 0.0)"]
-                record[i].p = ["\(i1[p] ?? 0.0)"]
-                record[i].fe = ["\(i1[fe] ?? 0.0)"]
-                record[i].a = ["\(i1[a] ?? 0.0)"]
-                record[i].b1 = ["\(i1[b1] ?? 0.0)"]
-                record[i].b2 = ["\(i1[b2] ?? 0.0)"]
-                record[i].rr = ["\(i1[rr] ?? 0.0)"]
-                record[i].c = ["\(i1[c] ?? 0.0)"]
-                record[i].re = ["\(i1[re] ?? 0.0)"]
-                record[i].kar = ["\(i1[kar] ?? 0.0)"]
-                record[i].mds = ["\(i1[mds] ?? 0.0)"]
-                record[i].kr = ["\(i1[kr] ?? 0.0)"]
-                record[i].te = ["\(i1[te] ?? 0.0)"]
-                record[i].ok = ["\(i1[ok] ?? 0.0)"]
-                record[i].ne = ["\(i1[ne] ?? 0.0)"]
-                record[i].zn = ["\(i1[zn] ?? 0.0)"]
-                record[i].cu = ["\(i1[cu] ?? 0.0)"]
-                record[i].mn = ["\(i1[mn] ?? 0.0)"]
-                record[i].se = ["\(i1[se] ?? 0.0)"]
-                record[i].b5 = ["\(i1[b5] ?? 0.0)"]
-                record[i].b6 = ["\(i1[b6] ?? 0.0)"]
-                record[i].fol = ["\(i1[fol] ?? 0.0)"]
-                record[i].b9 = ["\(i1[b9] ?? 0.0)"]
-                record[i].dfe = ["\(i1[dfe] ?? 0.0)"]
-                record[i].holin = ["\(i1[holin] ?? 0.0)"]
-                record[i].b12 = ["\(i1[b12] ?? 0.0)"]
-                record[i].ear = ["\(i1[ear] ?? 0.0)"]
-                record[i].a_kar = ["\(i1[a_kar] ?? 0.0)"]
-                record[i].b_kript = ["\(i1[b_kript] ?? 0.0)"]
-                record[i].likopin = ["\(i1[likopin] ?? 0.0)"]
-                record[i].lut_z = ["\(i1[lut_z] ?? 0.0)"]
-                record[i].vit_e = ["\(i1[vit_e] ?? 0.0)"]
-                record[i].vit_d = ["\(i1[vit_d] ?? 0.0)"]
-                record[i].d_mezd = ["\(i1[d_mezd] ?? 0.0)"]
-                record[i].vit_k = ["\(i1[vit_k] ?? 0.0)"]
-                record[i].mzhk = ["\(i1[mzhk] ?? 0.0)"]
-                record[i].pzhk = ["\(i1[pzhk] ?? 0.0)"]
-                record[i].w_1ed = ["\(i1[w_1ed] ?? 0.0)"]
-                record[i].op_1ed = ["\(i1[op_1ed] ?? 0.0)"]
-                record[i].w_2ed = ["\(i1[w_2ed] ?? 0.0)"]
-                record[i].op_2ed = ["\(i1[op_2ed] ?? 0.0)"]
-                record[i].proc_prot = ["\(i1[proc_prot] ?? 0.0)"]
+                record[i].water = ["\(round((i1[water] ?? 0.0)*(Double(record[i].g[0])!/100)*100)/100)"]
+                record[i].nzhk = ["\(round((i1[nzhk] ?? 0.0)*(Double(record[i].g[0])!/100)*100)/100)"]
+                record[i].hol = ["\(round((i1[hol] ?? 0.0)*(Double(record[i].g[0])!/100)*100)/100)"]
+                record[i].pv = ["\(round((i1[pv] ?? 0.0)*(Double(record[i].g[0])!/100)*100)/100)"]
+                record[i].zola = ["\(round((i1[zola] ?? 0.0)*(Double(record[i].g[0])!/100)*100)/100)"]
+                record[i].na = ["\(round((i1[na] ?? 0.0)*(Double(record[i].g[0])!/100)*100)/100)"]
+                record[i].k = ["\(round((i1[k] ?? 0.0)*(Double(record[i].g[0])!/100)*100)/100)"]
+                record[i].ca = ["\(round((i1[ca] ?? 0.0)*(Double(record[i].g[0])!/100)*100)/100)"]
+                record[i].mg = ["\(round((i1[mg] ?? 0.0)*(Double(record[i].g[0])!/100)*100)/100)"]
+                record[i].p = ["\(round((i1[p] ?? 0.0)*(Double(record[i].g[0])!/100)*100)/100)"]
+                record[i].fe = ["\(round((i1[fe] ?? 0.0)*(Double(record[i].g[0])!/100)*100)/100)"]
+                record[i].a = ["\(round((i1[a] ?? 0.0)*(Double(record[i].g[0])!/100)*100)/100)"]
+                record[i].b1 = ["\(round((i1[b1] ?? 0.0)*(Double(record[i].g[0])!/100)*100)/100)"]
+                record[i].b2 = ["\(round((i1[b2] ?? 0.0)*(Double(record[i].g[0])!/100)*100)/100)"]
+                record[i].rr = ["\(round((i1[rr] ?? 0.0)*(Double(record[i].g[0])!/100)*100)/100)"]
+                record[i].c = ["\(round((i1[c] ?? 0.0)*(Double(record[i].g[0])!/100)*100)/100)"]
+                record[i].re = ["\(round((i1[re] ?? 0.0)*(Double(record[i].g[0])!/100)*100)/100)"]
+                record[i].kar = ["\(round((i1[kar] ?? 0.0)*(Double(record[i].g[0])!/100)*100)/100)"]
+                record[i].mds = ["\(round((i1[mds] ?? 0.0)*(Double(record[i].g[0])!/100)*100)/100)"]
+                record[i].kr = ["\(round((i1[kr] ?? 0.0)*(Double(record[i].g[0])!/100)*100)/100)"]
+                record[i].te = ["\(round((i1[te] ?? 0.0)*(Double(record[i].g[0])!/100)*100)/100)"]
+                record[i].ok = ["\(round((i1[ok] ?? 0.0)*(Double(record[i].g[0])!/100)*100)/100)"]
+                record[i].ne = ["\(round((i1[ne] ?? 0.0)*(Double(record[i].g[0])!/100)*100)/100)"]
+                record[i].zn = ["\(round((i1[zn] ?? 0.0)*(Double(record[i].g[0])!/100)*100)/100)"]
+                record[i].cu = ["\(round((i1[cu] ?? 0.0)*(Double(record[i].g[0])!/100)*100)/100)"]
+                record[i].mn = ["\(round((i1[mn] ?? 0.0)*(Double(record[i].g[0])!/100)*100)/100)"]
+                record[i].se = ["\(round((i1[se] ?? 0.0)*(Double(record[i].g[0])!/100)*100)/100)"]
+                record[i].b5 = ["\(round((i1[b5] ?? 0.0)*(Double(record[i].g[0])!/100)*100)/100)"]
+                record[i].b6 = ["\(round((i1[b6] ?? 0.0)*(Double(record[i].g[0])!/100)*100)/100)"]
+                record[i].fol = ["\(round((i1[fol] ?? 0.0)*(Double(record[i].g[0])!/100)*100)/100)"]
+                record[i].b9 = ["\(round((i1[b9] ?? 0.0)*(Double(record[i].g[0])!/100)*100)/100)"]
+                record[i].dfe = ["\(round((i1[dfe] ?? 0.0)*(Double(record[i].g[0])!/100)*100)/100)"]
+                record[i].holin = ["\(round((i1[holin] ?? 0.0)*(Double(record[i].g[0])!/100)*100)/100)"]
+                record[i].b12 = ["\(round((i1[b12] ?? 0.0)*(Double(record[i].g[0])!/100)*100)/100)"]
+                record[i].ear = ["\(round((i1[ear] ?? 0.0)*(Double(record[i].g[0])!/100)*100)/100)"]
+                record[i].a_kar = ["\(round((i1[a_kar] ?? 0.0)*(Double(record[i].g[0])!/100)*100)/100)"]
+                record[i].b_kript = ["\(round((i1[b_kript] ?? 0.0)*(Double(record[i].g[0])!/100)*100)/100)"]
+                record[i].likopin = ["\(round((i1[likopin] ?? 0.0)*(Double(record[i].g[0])!/100)*100)/100)"]
+                record[i].lut_z = ["\(round((i1[lut_z] ?? 0.0)*(Double(record[i].g[0])!/100)*100)/100)"]
+                record[i].vit_e = ["\(round((i1[vit_e] ?? 0.0)*(Double(record[i].g[0])!/100)*100)/100)"]
+                record[i].vit_d = ["\(round((i1[vit_d] ?? 0.0)*(Double(record[i].g[0])!/100)*100)/100)"]
+                record[i].d_mezd = ["\(round((i1[d_mezd] ?? 0.0)*(Double(record[i].g[0])!/100)*100)/100)"]
+                record[i].vit_k = ["\(round((i1[vit_k] ?? 0.0)*(Double(record[i].g[0])!/100)*100)/100)"]
+                record[i].mzhk = ["\(round((i1[mzhk] ?? 0.0)*(Double(record[i].g[0])!/100)*100)/100)"]
+                record[i].pzhk = ["\(round((i1[pzhk] ?? 0.0)*(Double(record[i].g[0])!/100)*100)/100)"]
+                record[i].w_1ed = ["\(round((i1[w_1ed] ?? 0.0)*(Double(record[i].g[0])!/100)*100)/100)"]
+                record[i].op_1ed = ["\(round((i1[op_1ed] ?? 0.0)*(Double(record[i].g[0])!/100)*100)/100)"]
+                record[i].w_2ed = ["\(round((i1[w_2ed] ?? 0.0)*(Double(record[i].g[0])!/100)*100)/100)"]
+                record[i].op_2ed = ["\(round((i1[op_2ed] ?? 0.0)*(Double(record[i].g[0])!/100)*100)/100)"]
+                record[i].proc_prot = ["\(round((i1[proc_prot] ?? 0.0)*(Double(record[i].g[0])!/100)*100)/100)"]
             }
         }
-        
+                
         if record.count > 0 {
             record = record.sorted(by: {($0.day, $0.time, $0.foodType) < ($1.day, $1.time, $1.foodType)})
             
             var i = 1
             while i < record.count {
                 if record[i].day == record[i-1].day && record[i].time == record[i-1].time && record[i].foodType == record[i-1].foodType {
+                    record[i].id_food = record[i-1].id_food + record[i].id_food
                     record[i].food = record[i-1].food + record[i].food
                     record[i].g = record[i-1].g + record[i].g
                     record[i].carbo = record[i-1].carbo + record[i].carbo

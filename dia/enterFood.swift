@@ -48,7 +48,7 @@ struct enterFood: View {
     @Binding var hasChanged: Bool
     @EnvironmentObject var islogin: check
     var body: some View {
-        ZStack{
+        ZStack {
             List {
                 Section(header: Text("Общая информация").font(.system(size: 15.5))){
                     NavigationLink(destination: ftPicker(ftpreviewIndex: $ftpreviewIndex).navigationBarTitleDisplayMode(.inline), label: {
@@ -96,10 +96,8 @@ struct enterFood: View {
                     })
                     DatePicker(
                         "Дата",
-                        selection: $date,
-                        displayedComponents: [.date, .hourAndMinute]
+                        selection: $date
                     )
-                    .datePickerStyle(.compact)
                     .onChange(of: date, perform: { _ in
                         do {
                             if (foodItems.count != 0 && sugar != "" && islogin.version != 2) {
@@ -137,8 +135,6 @@ struct enterFood: View {
                             scolor = .red
                         }
                     })
-                    .environment(\.locale, Locale.init(identifier: "ru"))
-                    .frame(height: 42.7)
                 }
                 if islogin.version != 2 {
                     Section(header: Text("Уровень сахара в крови").font(.system(size: 15.5))) {
