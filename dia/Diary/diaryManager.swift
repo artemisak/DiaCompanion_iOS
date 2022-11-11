@@ -1,6 +1,10 @@
 import Foundation
 import SQLite
 
+enum foodListErorrs: Error {
+    case generalError
+}
+
 struct FoodList: Identifiable, Hashable {
     let id = UUID()
     let table_id: Int
@@ -50,21 +54,7 @@ class Food: ObservableObject {
             let g = Expression<Double?>("gi")
             let rating = Expression<Int?>("favor")
             var GI = ""
-            for i in try db.prepare(foodItems.select(table_id, food, pr, car, f, g, rating).filter(food.like("\(fullname)%")).order(food).limit(20)){
-                if i[g] != nil {
-                    GI = "\(round(i[g]!*10)/10)"
-                }
-                Food1.append(FoodList(table_id: i[table_id], name: "\(i[food])", prot: "\(round(i[pr]*10)/10)", carbo: "\(round(i[car]*10)/10)", fat: "\(round(i[f]*10)/10)", gi: GI, rating: i[rating] ?? 0))
-            }
-            for i in try db.prepare(foodItems.select(table_id, food, pr, car, f, g, rating).filter(food.like("%\(fullname)")).order(food).limit(5)){
-                if i[g] != nil {
-                    GI = "\(round(i[g]!*10)/10)"
-                }
-                if Set(Food1.map({$0.name == i[food]})) == [false] || Food1 == [] {
-                    Food1.append(FoodList(table_id: i[table_id], name: "\(i[food])", prot: "\(i[pr])", carbo: "\(i[car])", fat: "\(i[f])", gi: GI, rating: i[rating] ?? 0))
-                }
-            }
-            for i in try db.prepare(foodItems.select(table_id, food, pr, car, f, g, rating).filter(food.like("%\(fullname)%") || food.like("%\(fullname.lowercased())%")).order(food).limit(5)){
+            for i in try db.prepare(foodItems.select(table_id, food, pr, car, f, g, rating).filter(food.like("%\(fullname)%") || food.like("%\(fullname.lowercased())%")).order(food).limit(20)){
                 if i[g] != nil {
                     GI = "\(round(i[g]!*10)/10)"
                 }
@@ -99,39 +89,42 @@ class Food: ObservableObject {
         }
     }
     
-    func GetFoodCategoryItems(_category: String) -> Void {
-        do {
+    @MainActor
+    func GetFoodCategoryItems(_category: String) async -> Void {
+        let res = Task {
             self.FoodObj.removeAll()
             var FoodObj = [FoodList]()
-            FoodObj.removeAll()
-            let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
-            let path = documents + "/diacompanion.db"
-            let sourcePath = Bundle.main.path(forResource: "diacompanion", ofType: "db")!
-            _=copyDatabaseIfNeeded(sourcePath: sourcePath)
-            let db = try Connection(path)
-            let foodItems = Table("food")
-            let table_id = Expression<Int>("_id")
-            let food = Expression<String>("name")
-            let categoryRow = Expression<String>("category")
-            let pr = Expression<Double>("prot")
-            let car = Expression<Double>("carbo")
-            let f = Expression<Double>("fat")
-            let g = Expression<Double?>("gi")
-            let rating = Expression<Int?>("favor")
-            var GI = ""
-            for i in try db.prepare(foodItems.select(table_id, food, pr, car, f, g, rating).filter(categoryRow == _category)){
-                if i[g] != nil {
-                    GI = "\(i[g]!)"
-                } else {
-                    GI = ""
+            do {
+                let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
+                let path = documents + "/diacompanion.db"
+                let sourcePath = Bundle.main.path(forResource: "diacompanion", ofType: "db")!
+                _=copyDatabaseIfNeeded(sourcePath: sourcePath)
+                let db = try Connection(path)
+                let foodItems = Table("food")
+                let table_id = Expression<Int>("_id")
+                let food = Expression<String>("name")
+                let categoryRow = Expression<String>("category")
+                let pr = Expression<Double>("prot")
+                let car = Expression<Double>("carbo")
+                let f = Expression<Double>("fat")
+                let g = Expression<Double?>("gi")
+                let rating = Expression<Int?>("favor")
+                var GI = ""
+                for i in try db.prepare(foodItems.select(table_id, food, pr, car, f, g, rating).filter(categoryRow == _category)){
+                    if i[g] != nil {
+                        GI = "\(i[g]!)"
+                    } else {
+                        GI = ""
+                    }
+                    FoodObj.append(FoodList(table_id: i[table_id], name: "\(i[food])", prot: "\(i[pr])", carbo: "\(i[car])", fat: "\(i[f])", gi: GI, rating: i[rating] ?? 0))
                 }
-                FoodObj.append(FoodList(table_id: i[table_id], name: "\(i[food])", prot: "\(i[pr])", carbo: "\(i[car])", fat: "\(i[f])", gi: GI, rating: i[rating] ?? 0))
             }
-            self.FoodObj = FoodObj
+            catch {
+                print(error)
+            }
+            return FoodObj
         }
-        catch {
-            print(error)
-        }
+        return await self.FoodObj.append(contentsOf: res.value)
     }
     
     func handleRatingChange(i: Int) -> Void {
@@ -144,6 +137,51 @@ class Food: ObservableObject {
     
     func handleDeleting(i: Int) -> Void {
         FoodObj.remove(at: i)
+    }
+    
+    @MainActor
+    func appendFoodObj(_name: String, n: Int) async -> Void {
+        let newData = Task {
+            var name1 = _name.components(separatedBy: " ")
+            var fullname = ""
+            name1.removeAll(where: {$0.isEmpty})
+            if name1.count > 1 {
+                fullname = name1.joined(separator: " ")
+            } else {
+                fullname = name1.joined()
+            }
+            var Food1 = [FoodList]()
+            do {
+                let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
+                let path = documents + "/diacompanion.db"
+                let sourcePath = Bundle.main.path(forResource: "diacompanion", ofType: "db")!
+                _=copyDatabaseIfNeeded(sourcePath: sourcePath)
+                let db = try Connection(path)
+                let foodItems = Table("food")
+                let table_id = Expression<Int>("_id")
+                let food = Expression<String>("name")
+                let pr = Expression<Double>("prot")
+                let car = Expression<Double>("carbo")
+                let f = Expression<Double>("fat")
+                let g = Expression<Double?>("gi")
+                let rating = Expression<Int?>("favor")
+                var GI = ""
+                for i in try db.prepare(foodItems.select(table_id, food, pr, car, f, g, rating).filter(food.like("%\(fullname)%") || food.like("%\(fullname.lowercased())%")).order(food).limit(10, offset: n)){
+                    if i[g] != nil {
+                        GI = "\(round(i[g]!*10)/10)"
+                    }
+                    if Set(Food1.map({$0.name == i[food]})) == [false] || Food1 == [] {
+                        Food1.append(FoodList(table_id: i[table_id], name: "\(i[food])", prot: "\(i[pr])", carbo: "\(i[car])", fat: "\(i[f])", gi: GI, rating: i[rating] ?? 0))
+                    }
+                }
+            }
+            catch {
+                print(error)
+            }
+            return Food1
+        }
+        await self.FoodObj.append(contentsOf: newData.value)
+        print("Append")
     }
 }
 

@@ -50,7 +50,7 @@ struct addFoodButton: View {
                         .ignoresSafeArea(.keyboard)
                     } else {
                         ScrollView {
-                            VStack(spacing: .zero) {
+                            LazyVStack(spacing: .zero) {
                                 ForEach(items.FoodObj.sorted(by: {$0.rating > $1.rating}), id: \.id) {dish in
                                     VStack(spacing: .zero) {
                                         foodButton(dish: dish, selectedFoodTemp: $selectedFoodTemp, table_id: $table_id, addScreen: $addScreen, successedSave: $successedSave)
@@ -76,6 +76,13 @@ struct addFoodButton: View {
                                                             Image(systemName: "trash.fill")
                                                         }
                                                     })
+                                                }
+                                            }
+                                            .onAppear {
+                                                if dish == items.FoodObj.last {
+                                                    Task {
+                                                        await items.appendFoodObj(_name: selectedFood, n: items.FoodObj.count)
+                                                    }
                                                 }
                                             }
                                         Divider()

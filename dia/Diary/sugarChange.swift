@@ -37,20 +37,12 @@ struct sugarChange: View {
                 Toggle(isOn: $isAct, label: {
                     Text("Физическая нагрузка")
                 })
-            }
-            Section(header: Text("Время измерения").font(.system(size: 15.5))){
-                VStack(alignment: .center){
-                    DatePicker(
-                        selection: $date,
-                        displayedComponents: [.date, .hourAndMinute]
-                    ){}
-                        .environment(\.locale, Locale.init(identifier: "ru"))
-                        .labelsHidden()
-                        .datePickerStyle(WheelDatePickerStyle())
-                        .frame(minWidth: 0, maxWidth: .infinity)
-                        .clipped()
-                        .compositingGroup()
-                }.frame(maxWidth: .infinity)
+                DatePicker(
+                    "Дата",
+                    selection: $date,
+                    displayedComponents: [.date, .hourAndMinute]
+                )
+                .datePickerStyle(.graphical)
             }
         }
         .navigationTitle("Измерение сахара")

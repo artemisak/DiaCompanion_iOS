@@ -1,3 +1,9 @@
+//
+//  loginPage.swift
+//  dia
+//
+//  Created by Артём Исаков on 11.11.2022.
+//
 import SwiftUI
 
 enum Field: Hashable {
@@ -125,6 +131,6 @@ struct loginPage: View {
             login = ""
             pass = ""
         }
-        .ignoresSafeArea(.keyboard)
+        .ignoresSafeArea(.keyboard, edges: .bottom)
     }
 }

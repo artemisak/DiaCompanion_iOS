@@ -93,8 +93,8 @@ struct foodCategoryItemView: View {
                 }
             })
         }
-        .onAppear {
-            items.GetFoodCategoryItems(_category: category)
+        .task {
+            await items.GetFoodCategoryItems(_category: category)
         }
         .onChange(of: successedSave, perform: {save in
             if save {

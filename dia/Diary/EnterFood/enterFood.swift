@@ -94,10 +94,13 @@ struct enterFood: View {
                             scolor = .red
                         }
                     })
-                    DatePicker(
-                        "Дата",
-                        selection: $date
-                    )
+                    VStack {
+                        DatePicker(
+                            "Дата",
+                            selection: $date,
+                            displayedComponents: [.date, .hourAndMinute]
+                        )
+                    }
                     .onChange(of: date, perform: { _ in
                         do {
                             if (foodItems.count != 0 && sugar != "" && islogin.version != 2) {
