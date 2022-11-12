@@ -5,6 +5,7 @@
 //  Created by Артём Исаков on 11.11.2022.
 //
 import SwiftUI
+import AVFoundation
 
 enum Field: Hashable {
     case username
@@ -102,8 +103,7 @@ struct loginPage: View {
             .buttonStyle(ChangeColorButton())
         }
         .padding()
-        .navigationBarTitleDisplayMode(.inline)
-        .navigationBarBackButtonHidden(true)
+        .ignoresSafeArea(.keyboard, edges: .bottom)
         .toolbar {
             ToolbarItem(placement: .principal) {
                 HStack {
@@ -118,19 +118,10 @@ struct loginPage: View {
                         .zIndex(1)
                 }
             }
-            ToolbarItemGroup(placement: .keyboard, content: {
-                Spacer()
-                Button(action: {
-                    focusedField = nil
-                }, label: {
-                    Text("Готово").dynamicTypeSize(txtTheme)
-                })
-            })
         }
         .onAppear {
             login = ""
             pass = ""
         }
-        .ignoresSafeArea(.keyboard, edges: .bottom)
     }
 }

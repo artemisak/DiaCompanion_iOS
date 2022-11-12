@@ -70,6 +70,7 @@ struct mainPage: View {
                 .frame(width: g.size.width)
                 .frame(minHeight: g.size.height)
             }
+            .ignoresSafeArea(.keyboard, edges: .bottom)
         }
         .toolbar {
             ToolbarItem(placement: .automatic) {
@@ -87,6 +88,5 @@ struct mainPage: View {
                 }.buttonStyle(ButtonAndLink()).foregroundColor(Color.accentColor)
             }
         }
-        .ignoresSafeArea(.keyboard)
     }
 }

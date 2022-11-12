@@ -12,18 +12,17 @@ struct versionChoose: View {
     var body: some View {
         GeometryReader {g in
             ScrollView{
-                HStack{
-                    Text("Выберите цель").font(.title).bold().foregroundColor(.white)
-                        .padding()
-                    Spacer()
+                HStack(spacing: 20){
+                    Text("Выберите цель").font(.title2).bold().foregroundColor(Color(red: 57/255, green: 67/255, blue: 121/255))
                     Image("fitness_man")
                         .resizable()
-                        .frame(width: 75.0, height: 75.0)
-                        .padding()
-                }
-                .background(Color(red: 255/255, green: 91/255, blue: 36/255).shadow(color: Color.black.opacity(0.3), radius: 1, y: 1))
+                        .frame(width: 50.0, height: 50.0)
+                }.frame(minWidth: 0, maxWidth: .infinity)
+                .padding()
+                .background(Capsule().fill(LinearGradient(gradient: Gradient(colors: [Color(red: 249/255, green: 215/255, blue: 222/255), Color(red: 181/255, green: 190/255, blue: 240/255)]), startPoint: .leading, endPoint: .trailing)).shadow(color: Color.black.opacity(0.3), radius: 1, y: 1))
                 .padding(.top, g.size.height*0.05)
-                .padding(.bottom, g.size.height*0.085)
+                .padding(.bottom, g.size.height*0.08)
+                .padding(.horizontal)
                 VStack{
                     Button(action: {
                         islogin.setChoosed(v: 1)
@@ -47,7 +46,22 @@ struct versionChoose: View {
                     }.buttonStyle(RoundedRectangleButtonStyle()).padding(.horizontal)
                 }
             }
+            .ignoresSafeArea(.keyboard, edges: .bottom)
         }
-        .ignoresSafeArea(.keyboard, edges: .bottom)
+        .toolbar {
+            ToolbarItem(placement: .principal, content: {
+                HStack{
+                    Text("Профилирование")
+                        .foregroundColor(Color.black)
+                        .font(.title3)
+                        .fontWeight(.bold)
+                        .fixedSize()
+//                    Image("planshat")
+//                        .resizable()
+//                        .frame(width: 35, height: 35)
+//                        .zIndex(1)
+                }
+            })
+        }
     }
 }

@@ -21,8 +21,7 @@ struct startPage: View {
                         .navigationViewStyle(StackNavigationViewStyle())
                 } else {
                     versionChoose()
-                        .navigationBarTitleDisplayMode(.large)
-                        .navigationTitle("Профилирование")
+                        .navigationBarTitleDisplayMode(.inline)
                         .navigationBarBackButtonHidden()
                         .navigationViewStyle(StackNavigationViewStyle())
                 }

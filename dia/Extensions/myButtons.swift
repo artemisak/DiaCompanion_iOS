@@ -15,7 +15,7 @@ struct RoundedRectangleButtonStyle: ButtonStyle {
             .frame(minWidth: 0, maxWidth: .infinity)
             .padding()
             .foregroundColor(.white)
-            .background(Color.blue.cornerRadius(8))
+            .background(Color(red: 57/255, green: 67/255, blue: 121/255).cornerRadius(8))
             .opacity(configuration.isPressed ? 0.75 : 1)
     }
 }
