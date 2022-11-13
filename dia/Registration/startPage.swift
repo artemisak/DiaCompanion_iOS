@@ -11,30 +11,55 @@ struct startPage: View {
     @StateObject private var islogin = check()
     @Binding var txtTheme: DynamicTypeSize
     var body: some View {
-        NavigationView {
-            if islogin.istrue {
-                if islogin.isChoosed {
-                    mainPage(txtTheme: $txtTheme)
-                        .navigationBarTitleDisplayMode(.inline)
-                        .navigationTitle("ДиаКомпаньон")
-                        .navigationBarBackButtonHidden(true)
-                        .navigationViewStyle(StackNavigationViewStyle())
-                } else {
-                    versionChoose()
+        if #available(iOS 16.0, *) {
+            NavigationStack {
+                if islogin.istrue {
+                    if islogin.isChoosed {
+                        mainPage(txtTheme: $txtTheme)
+                            .navigationBarTitleDisplayMode(.inline)
+                            .navigationBarBackButtonHidden()
+                    }
+                    if !islogin.isChoosed {
+                        versionChoose()
+                            .navigationBarTitleDisplayMode(.inline)
+                            .navigationBarBackButtonHidden()
+                    }
+                }
+                if !islogin.istrue {
+                    loginPage(txtTheme: $txtTheme)
                         .navigationBarTitleDisplayMode(.inline)
                         .navigationBarBackButtonHidden()
-                        .navigationViewStyle(StackNavigationViewStyle())
                 }
-            } else {
-                loginPage(txtTheme: $txtTheme)
-                    .navigationBarTitleDisplayMode(.inline)
-                    .navigationBarBackButtonHidden()
-                    .navigationViewStyle(StackNavigationViewStyle())
             }
+            .onAppear {
+                islogin.checklog()
+            }
+            .environmentObject(islogin)
+        } else {
+            NavigationView {
+                if islogin.istrue {
+                    if islogin.isChoosed {
+                        mainPage(txtTheme: $txtTheme)
+                            .navigationBarTitleDisplayMode(.inline)
+                            .navigationBarBackButtonHidden()
+                    }
+                    if !islogin.isChoosed {
+                        versionChoose()
+                            .navigationBarTitleDisplayMode(.inline)
+                            .navigationBarBackButtonHidden()
+                    }
+                }
+                if !islogin.istrue {
+                    loginPage(txtTheme: $txtTheme)
+                        .navigationBarTitleDisplayMode(.inline)
+                        .navigationBarBackButtonHidden()
+                }
+            }
+            .navigationViewStyle(StackNavigationViewStyle())
+            .onAppear {
+                islogin.checklog()
+            }
+            .environmentObject(islogin)
         }
-        .onAppear {
-            islogin.checklog()
-        }
-        .environmentObject(islogin)
     }
 }

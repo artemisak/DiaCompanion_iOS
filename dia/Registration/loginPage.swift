@@ -82,14 +82,17 @@ struct loginPage: View {
                         withAnimation(.default){
                             isnt = islogin.setlogged(upass: pass, ulogin: login)
                         }
+                        if isnt {
+                            focusedField = nil
+                        }
                     })
                 }
             }, label: {
-                if isLoading {
-                    ProgressView().tint(.white)
-                } else {
-                    Text(focusedField == .username ? "Далее" : "Войти")
-                }
+                    if isLoading {
+                        ProgressView().tint(.white).frame(height: 25)
+                    } else {
+                        Text(focusedField == .username ? "Далее" : "Войти").frame(height: 25)
+                    }
             })
             .buttonStyle(RoundedRectangleButtonStyle())
             NavigationLink(destination: {

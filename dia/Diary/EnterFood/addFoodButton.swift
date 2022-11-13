@@ -144,7 +144,7 @@ struct addFoodButton: View {
                 successedSave = false
             })
         }
-        .navigationViewStyle(.stack)
+        .navigationViewStyle(StackNavigationViewStyle())
         .environmentObject(items)
     }
 }

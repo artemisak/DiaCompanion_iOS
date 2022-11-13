@@ -12,87 +12,170 @@ struct ModalView: View {
     @ObservedObject var islogin: check
     @Binding var txtTheme: DynamicTypeSize
     var body: some View {
-        NavigationView {
-            List {
-                Section(header: Text("О пациенте").font(.system(size: 15.5))){
-                    NavigationLink(destination: ketonur(t: "", date: Date(), idForDelete: [], hasChanged: .constant(false), txtTheme: $txtTheme)) {
-                        Button("Добавить запись о кетонурии", action: {})
-                    }.foregroundColor(.black)
-                    NavigationLink(destination: massa(t: "", date: Date(), idForDelete: [], hasChanged: .constant(false), txtTheme: $txtTheme)) {
-                        Button("Измерение массы тела", action: {})
-                    }.foregroundColor(.black)
-                    NavigationLink(destination: pacientPage()) {
-                        Button("Данные пациента", action: {})
-                    }.foregroundColor(.black)
-                    NavigationLink(destination: poldny(txtTheme: $txtTheme)) {
-                        Button("Отметить полные дни", action: {})
-                    }.foregroundColor(.black)
-                    NavigationLink(destination: PDFKitView(url: fileUrl).ignoresSafeArea(.all, edges: .bottom).navigationTitle("Обучение").navigationBarTitleDisplayMode(.inline)) {
-                        Button("Обучение", action: {})
-                    }.foregroundColor(.black)
-                    NavigationLink(destination: helper(phelper: $phelper)) {
-                        Button("Помощь", action: {})
-                    }.foregroundColor(.black)
-                }
-                Section(header: Text("Параметры восстановления").font(.system(size: 15.5))){
-                    Button {
-                        eraseDB = true
-                    } label: {
-                        HStack{
-                            if eraseDBprogress {
-                                ProgressView().frame(width: 22.5)
-                            } else {
-                                Image(systemName: "arrow.clockwise").frame(width: 22.5)
-                            }
-                            Text("Восстановить базу данных").padding(.leading)
-                            Spacer()
-                        }.foregroundColor(Color.accentColor)
+        if #available(iOS 16.0, *) {
+            NavigationStack {
+                List {
+                    Section(header: Text("О пациенте").font(.system(size: 15.5))){
+                        NavigationLink(destination: ketonur(t: "", date: Date(), idForDelete: [], hasChanged: .constant(false), txtTheme: $txtTheme)) {
+                            Button("Добавить запись о кетонурии", action: {})
+                        }.foregroundColor(.black)
+                        NavigationLink(destination: massa(t: "", date: Date(), idForDelete: [], hasChanged: .constant(false), txtTheme: $txtTheme)) {
+                            Button("Измерение массы тела", action: {})
+                        }.foregroundColor(.black)
+                        NavigationLink(destination: pacientPage()) {
+                            Button("Данные пациента", action: {})
+                        }.foregroundColor(.black)
+                        NavigationLink(destination: poldny(txtTheme: $txtTheme)) {
+                            Button("Отметить полные дни", action: {})
+                        }.foregroundColor(.black)
+                        NavigationLink(destination: PDFKitView(url: fileUrl).ignoresSafeArea(.all, edges: .bottom).navigationTitle("Обучение").navigationBarTitleDisplayMode(.inline)) {
+                            Button("Обучение", action: {})
+                        }.foregroundColor(.black)
+                        NavigationLink(destination: helper(phelper: $phelper)) {
+                            Button("Помощь", action: {})
+                        }.foregroundColor(.black)
                     }
-                    .confirmationDialog("Восстановление подразумевает отмену всех вносимых в вами в базу данных имзенений.", isPresented: $eraseDB, titleVisibility: .visible, actions: {
-                        Button("ОК", action: {
-                            eraseDBprogress = true
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {eraseDBprogress = restoreDB()})
+                    Section(header: Text("Параметры восстановления").font(.system(size: 15.5))){
+                        Button {
+                            eraseDB = true
+                        } label: {
+                            HStack{
+                                if eraseDBprogress {
+                                    ProgressView().frame(width: 22.5)
+                                } else {
+                                    Image(systemName: "arrow.clockwise").frame(width: 22.5)
+                                }
+                                Text("Восстановить базу данных").padding(.leading)
+                                Spacer()
+                            }.foregroundColor(Color.accentColor)
+                        }
+                        .confirmationDialog("Восстановление подразумевает отмену всех вносимых в вами в базу данных имзенений.", isPresented: $eraseDB, titleVisibility: .visible, actions: {
+                            Button("ОК", action: {
+                                eraseDBprogress = true
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {eraseDBprogress = restoreDB()})
+                            })
                         })
-                    })
-                }
-                Section(header: Text("Управление аккаунтом").font(.system(size: 15.5))) {
-                    Button(action: {
-                        eraseAccount = true
-                    }, label: {
-                        HStack{
-                            Image(systemName: "trash.fill")
-                            Text("Удалить аккаунт").padding(.leading)
-                            Spacer()
-                        }.foregroundColor(Color.red)
-                    }).confirmationDialog("Удаляя аккаунт вы потеряете доступ к приложению, вся информация в нем будет удалена.", isPresented: $eraseAccount, titleVisibility: .visible, actions: {
-                        Button("ОК", action: {
-                            presentationMode.wrappedValue.dismiss()
-                            withAnimation() {
-                                islogin.istrue = false
-                                islogin.isChoosed = false
-                                islogin.version = 1
-                            }
-                            Task {
-                                await deleteAccaunt()
-                            }
+                    }
+                    Section(header: Text("Управление аккаунтом").font(.system(size: 15.5))) {
+                        Button(action: {
+                            eraseAccount = true
+                        }, label: {
+                            HStack{
+                                Image(systemName: "trash.fill")
+                                Text("Удалить аккаунт").padding(.leading)
+                                Spacer()
+                            }.foregroundColor(Color.red)
+                        }).confirmationDialog("Удаляя аккаунт вы потеряете доступ к приложению, вся информация в нем будет удалена.", isPresented: $eraseAccount, titleVisibility: .visible, actions: {
+                            Button("ОК", action: {
+                                presentationMode.wrappedValue.dismiss()
+                                withAnimation() {
+                                    islogin.istrue = false
+                                    islogin.isChoosed = false
+                                    islogin.version = 1
+                                }
+                                Task {
+                                    await deleteAccaunt()
+                                }
+                            })
                         })
-                    })
-                }
-            }
-            .listStyle(.insetGrouped)
-            .ignoresSafeArea(.keyboard)
-            .navigationBarTitleDisplayMode(.inline)
-            .navigationTitle("Дополнительно")
-            .interactiveDismissDisabled()
-            .toolbar{
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button(action: {presentationMode.wrappedValue.dismiss()}) {
-                        Text("Закрыть")
                     }
                 }
+                .listStyle(.insetGrouped)
+                .ignoresSafeArea(.keyboard)
+                .navigationBarTitleDisplayMode(.inline)
+                .navigationTitle("Дополнительно")
+                .interactiveDismissDisabled()
+                .toolbar{
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button(action: {presentationMode.wrappedValue.dismiss()}) {
+                            Text("Закрыть")
+                        }
+                    }
+                }
             }
+        } else {
+            NavigationView {
+                List {
+                    Section(header: Text("О пациенте").font(.system(size: 15.5))){
+                        NavigationLink(destination: ketonur(t: "", date: Date(), idForDelete: [], hasChanged: .constant(false), txtTheme: $txtTheme)) {
+                            Button("Добавить запись о кетонурии", action: {})
+                        }.foregroundColor(.black)
+                        NavigationLink(destination: massa(t: "", date: Date(), idForDelete: [], hasChanged: .constant(false), txtTheme: $txtTheme)) {
+                            Button("Измерение массы тела", action: {})
+                        }.foregroundColor(.black)
+                        NavigationLink(destination: pacientPage()) {
+                            Button("Данные пациента", action: {})
+                        }.foregroundColor(.black)
+                        NavigationLink(destination: poldny(txtTheme: $txtTheme)) {
+                            Button("Отметить полные дни", action: {})
+                        }.foregroundColor(.black)
+                        NavigationLink(destination: PDFKitView(url: fileUrl).ignoresSafeArea(.all, edges: .bottom).navigationTitle("Обучение").navigationBarTitleDisplayMode(.inline)) {
+                            Button("Обучение", action: {})
+                        }.foregroundColor(.black)
+                        NavigationLink(destination: helper(phelper: $phelper)) {
+                            Button("Помощь", action: {})
+                        }.foregroundColor(.black)
+                    }
+                    Section(header: Text("Параметры восстановления").font(.system(size: 15.5))){
+                        Button {
+                            eraseDB = true
+                        } label: {
+                            HStack{
+                                if eraseDBprogress {
+                                    ProgressView().frame(width: 22.5)
+                                } else {
+                                    Image(systemName: "arrow.clockwise").frame(width: 22.5)
+                                }
+                                Text("Восстановить базу данных").padding(.leading)
+                                Spacer()
+                            }.foregroundColor(Color.accentColor)
+                        }
+                        .confirmationDialog("Восстановление подразумевает отмену всех вносимых в вами в базу данных имзенений.", isPresented: $eraseDB, titleVisibility: .visible, actions: {
+                            Button("ОК", action: {
+                                eraseDBprogress = true
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {eraseDBprogress = restoreDB()})
+                            })
+                        })
+                    }
+                    Section(header: Text("Управление аккаунтом").font(.system(size: 15.5))) {
+                        Button(action: {
+                            eraseAccount = true
+                        }, label: {
+                            HStack{
+                                Image(systemName: "trash.fill")
+                                Text("Удалить аккаунт").padding(.leading)
+                                Spacer()
+                            }.foregroundColor(Color.red)
+                        }).confirmationDialog("Удаляя аккаунт вы потеряете доступ к приложению, вся информация в нем будет удалена.", isPresented: $eraseAccount, titleVisibility: .visible, actions: {
+                            Button("ОК", action: {
+                                presentationMode.wrappedValue.dismiss()
+                                withAnimation() {
+                                    islogin.istrue = false
+                                    islogin.isChoosed = false
+                                    islogin.version = 1
+                                }
+                                Task {
+                                    await deleteAccaunt()
+                                }
+                            })
+                        })
+                    }
+                }
+                .listStyle(.insetGrouped)
+                .ignoresSafeArea(.keyboard)
+                .navigationBarTitleDisplayMode(.inline)
+                .navigationTitle("Дополнительно")
+                .interactiveDismissDisabled()
+                .toolbar{
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button(action: {presentationMode.wrappedValue.dismiss()}) {
+                            Text("Закрыть")
+                        }
+                    }
+                }
+            }
+            .navigationViewStyle(StackNavigationViewStyle())
         }
-        .navigationViewStyle(.stack)
     }
 }
 

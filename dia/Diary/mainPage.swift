@@ -70,8 +70,9 @@ struct mainPage: View {
                 .frame(width: g.size.width)
                 .frame(minHeight: g.size.height)
             }
-            .ignoresSafeArea(.keyboard, edges: .bottom)
+           
         }
+        .navigationTitle("ДиаКомпаньон")
         .toolbar {
             ToolbarItem(placement: .automatic) {
                 Button(action: {showModal.toggle()}){
@@ -88,5 +89,6 @@ struct mainPage: View {
                 }.buttonStyle(ButtonAndLink()).foregroundColor(Color.accentColor)
             }
         }
+        .ignoresSafeArea(.keyboard, edges: .bottom)
     }
 }

@@ -46,8 +46,8 @@ struct versionChoose: View {
                     }.buttonStyle(RoundedRectangleButtonStyle()).padding(.horizontal)
                 }
             }
-            .ignoresSafeArea(.keyboard, edges: .bottom)
         }
+        .ignoresSafeArea(.keyboard, edges: .bottom)
         .toolbar {
             ToolbarItem(placement: .principal, content: {
                 HStack{
@@ -56,10 +56,6 @@ struct versionChoose: View {
                         .font(.title3)
                         .fontWeight(.bold)
                         .fixedSize()
-//                    Image("planshat")
-//                        .resizable()
-//                        .frame(width: 35, height: 35)
-//                        .zIndex(1)
                 }
             })
         }
