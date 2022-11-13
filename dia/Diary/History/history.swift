@@ -122,8 +122,8 @@ struct history: View {
                                     }
                                     date = convertToDate(d: i.date)
                                     foodItems = []
-                                    for j in i.metaInfo {
-                                        foodItems.append(foodToSave(name: j[0]+"////"+j[1]))
+                                    for (j, k) in zip(i.metaInfo, i.metaInfo.indices) {
+                                        foodItems.append(foodToSave(name: j[0]+"////"+j[1]+"////"+"\(i.tbID[k])"))
                                     }
                                     if i.metaInfo.last![8] != "0.0" {
                                         sugar = i.metaInfo.last![8]

@@ -6,6 +6,7 @@ struct hList: Identifiable, Hashable {
     var name: String
     var date: String
     var bdID: [Int]
+    var tbID: [Int]
     var metaInfo: [[String]]
     let id = UUID()
 }
@@ -54,7 +55,7 @@ class historyList: ObservableObject {
             
             for i in uniqueValue {
                 let spl = i.components(separatedBy: "/")
-                histList.append(hList(type: 0, name: spl[0], date: spl[1], bdID: [], metaInfo: []))
+                histList.append(hList(type: 0, name: spl[0], date: spl[1], bdID: [], tbID: [], metaInfo: []))
             }
             if !histList.isEmpty {
                 for i in 0...histList.count-1 {
@@ -66,6 +67,7 @@ class historyList: ObservableObject {
                     }
                     for i1 in try db.prepare(diary.select(id, table_id_key, gram, fName).filter(dateTime == histList[i].date && foodType == histList[i].name)){
                         histList[i].bdID.append(i1[id])
+                        histList[i].tbID.append(i1[table_id_key])
                         let gramm = Double(i1[gram]) ?? 100.0
                         let temp = try db.prepare(foodInfo.select(prot,fat,carbo,kkal,gi).filter(name == i1[fName] && food_id == i1[table_id_key]))
                         _ = temp.map{histList[i].metaInfo.append([i1[fName], i1[gram], "\(round($0[prot]*(gramm/100)*100)/100)", "\(round($0[fat]*(gramm/100)*100)/100)", "\(round($0[carbo]*(gramm/100)*100)/100)", "\(round($0[kkal]*(gramm/100)*100)/100)", "\($0[gi])", "\(round(($0[carbo]*(gramm/100)/100*$0[gi])*100)/100)", "\(temp0)", "\(temp1)"])}
@@ -83,9 +85,9 @@ class historyList: ObservableObject {
             
             for i in try db.prepare(activity.select(actId, rodz, min, timeAct)) {
                 if i[rodz] != "Сон" {
-                    histList.append(hList(type: 1, name: "\(i[rodz]), \(i[min]) мин.", date:  i[timeAct], bdID: [i[actId]], metaInfo: [[i[rodz],String(i[min])]]))
+                    histList.append(hList(type: 1, name: "\(i[rodz]), \(i[min]) мин.", date:  i[timeAct], bdID: [i[actId]], tbID: [], metaInfo: [[i[rodz],String(i[min])]]))
                 } else {
-                    histList.append(hList(type: 1, name: "\(i[rodz]), \(i[min]) ч.", date:  i[timeAct], bdID: [i[actId]], metaInfo: [[i[rodz],String(i[min])]]))
+                    histList.append(hList(type: 1, name: "\(i[rodz]), \(i[min]) ч.", date:  i[timeAct], bdID: [i[actId]], tbID: [], metaInfo: [[i[rodz],String(i[min])]]))
                 }
             }
             
@@ -98,7 +100,7 @@ class historyList: ObservableObject {
             let timeInject = Expression<String>("time")
             
             for i in try db.prepare(insulinInject.select(injectId, ed, type, priem, timeInject)){
-                histList.append(hList(type: 2, name: "\(i[ed]) Ед. (\(i[priem]))", date: i[timeInject], bdID: [i[id]], metaInfo: [[String(i[ed]), i[priem], i[type]]]))
+                histList.append(hList(type: 2, name: "\(i[ed]) Ед. (\(i[priem]))", date: i[timeInject], bdID: [i[id]], tbID: [], metaInfo: [[String(i[ed]), i[priem], i[type]]]))
             }
             
             // MARK: Заполняем измерение сахара
@@ -110,7 +112,7 @@ class historyList: ObservableObject {
             let sugarTime = Expression<String>("time")
             
             for i in try db.prepare(sugar.select(sugarId, sugarLvL, sugarPeriod, sugarPhysical, sugarTime)) {
-                histList.append(hList(type: 3, name: "\(i[sugarLvL]) м/л (\(i[sugarPeriod]))", date: i[sugarTime], bdID: [i[sugarId]], metaInfo: [[String(i[sugarLvL]), i[sugarPeriod], String(i[sugarPhysical])]]))
+                histList.append(hList(type: 3, name: "\(i[sugarLvL]) м/л (\(i[sugarPeriod]))", date: i[sugarTime], bdID: [i[sugarId]], tbID: [], metaInfo: [[String(i[sugarLvL]), i[sugarPeriod], String(i[sugarPhysical])]]))
             }
             
             // MARK: Заполняем кетоны
@@ -120,7 +122,7 @@ class historyList: ObservableObject {
             let ketonTime = Expression<String>("time")
             
             for i in try db.prepare(keton.select(id,ketonMmol,ketonTime)) {
-                histList.append(hList(type: 4, name: "Кетоны: \(i[ketonMmol]) ммоль/л", date: i[ketonTime], bdID: [i[ketonId]], metaInfo: [[String(i[ketonMmol])]]))
+                histList.append(hList(type: 4, name: "Кетоны: \(i[ketonMmol]) ммоль/л", date: i[ketonTime], bdID: [i[ketonId]], tbID: [], metaInfo: [[String(i[ketonMmol])]]))
             }
             
             // MARK: Заполняем измерение массы
@@ -130,7 +132,7 @@ class historyList: ObservableObject {
             let massaTime = Expression<String>("time")
             
             for i in try db.prepare(massa.select(massaId, m, massaTime)){
-                histList.append(hList(type: 5, name: "Вес: \(i[m]) кг", date: i[massaTime], bdID: [i[massaId]], metaInfo: [[String(i[m])]]))
+                histList.append(hList(type: 5, name: "Вес: \(i[m]) кг", date: i[massaTime], bdID: [i[massaId]], tbID: [], metaInfo: [[String(i[m])]]))
             }
             
             // MARK: Сортируем от большего к меньшему по дате

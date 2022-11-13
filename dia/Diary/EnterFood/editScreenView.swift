@@ -44,7 +44,7 @@ struct editScreenView: View {
                     Divider()
                     Button(action: {
                         let arg = "\(foodItems[id].name)".components(separatedBy: "////")
-                        foodItems[id].name = arg[0] + "////" + "\(gram)"
+                        foodItems[id].name = arg[0] + "////" + "\(gram)" + "////" + "\(arg[2])"
                         showEditView = false
                     }, label: {
                         Text("Изменить")

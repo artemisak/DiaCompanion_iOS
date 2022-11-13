@@ -181,7 +181,6 @@ class Food: ObservableObject {
             return Food1
         }
         await self.FoodObj.append(contentsOf: newData.value)
-        print("Append")
     }
 }
 
