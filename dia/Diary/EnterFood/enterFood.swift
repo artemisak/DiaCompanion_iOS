@@ -46,7 +46,7 @@ struct enterFood: View {
     @FocusState private var focuseField: Bool
     @Binding var txtTheme: DynamicTypeSize
     @Binding var hasChanged: Bool
-    @EnvironmentObject var islogin: check
+    @EnvironmentObject var islogin: Router
     var body: some View {
         ZStack {
             List {

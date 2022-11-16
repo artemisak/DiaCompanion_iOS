@@ -10,7 +10,7 @@ struct export: View {
     @State private var email: [String] = [""]
     @State private var erMessage: String = ""
     @State private var emailErrorMessage: Bool = false
-    @EnvironmentObject var islogin: check
+    @EnvironmentObject var islogin: Router
     var body: some View {
         ZStack {
             ScrollView {

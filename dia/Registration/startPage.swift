@@ -8,58 +8,54 @@
 import SwiftUI
 
 struct startPage: View {
-    @StateObject private var islogin = check()
+    @StateObject private var loginManager = Router()
     @Binding var txtTheme: DynamicTypeSize
     var body: some View {
         if #available(iOS 16.0, *) {
-            NavigationStack {
-                if islogin.istrue {
-                    if islogin.isChoosed {
+            Group {
+                if (loginManager.isLoggedIn && loginManager.isChoosed) {
+                    NavigationStack {
                         mainPage(txtTheme: $txtTheme)
-                            .navigationBarTitleDisplayMode(.inline)
-                            .navigationBarBackButtonHidden()
-                    }
-                    if !islogin.isChoosed {
-                        versionChoose()
-                            .navigationBarTitleDisplayMode(.inline)
-                            .navigationBarBackButtonHidden()
                     }
                 }
-                if !islogin.istrue {
-                    loginPage(txtTheme: $txtTheme)
-                        .navigationBarTitleDisplayMode(.inline)
-                        .navigationBarBackButtonHidden()
+                if (!loginManager.isLoggedIn || !loginManager.isChoosed) {
+                    NavigationStack(path: $loginManager.path) {
+                        loginPage(txtTheme: $txtTheme)
+                            .navigationDestination(for: Route.self) { route in
+                                switch route {
+                                case .login:
+                                    loginPage(txtTheme: $txtTheme)
+                                case .password:
+                                    passwordPage(txtTheme: $txtTheme)
+                                case .version:
+                                    versionChoose()
+                                case .helper:
+                                    regHelper()
+                                }
+                            }
+                    }
                 }
             }
+            .transition(.slide)
+            .animation(Animation.default, value: loginManager.animateTransition)
             .onAppear {
-                islogin.checklog()
+                loginManager.checkIfLogged()
             }
-            .environmentObject(islogin)
+            .environmentObject(loginManager)
         } else {
             NavigationView {
-                if islogin.istrue {
-                    if islogin.isChoosed {
-                        mainPage(txtTheme: $txtTheme)
-                            .navigationBarTitleDisplayMode(.inline)
-                            .navigationBarBackButtonHidden()
-                    }
-                    if !islogin.isChoosed {
-                        versionChoose()
-                            .navigationBarTitleDisplayMode(.inline)
-                            .navigationBarBackButtonHidden()
-                    }
+                if (loginManager.isLoggedIn && loginManager.isChoosed) {
+                    mainPage(txtTheme: $txtTheme)
                 }
-                if !islogin.istrue {
+                if (!loginManager.isLoggedIn || !loginManager.isChoosed) {
                     loginPage(txtTheme: $txtTheme)
-                        .navigationBarTitleDisplayMode(.inline)
-                        .navigationBarBackButtonHidden()
                 }
             }
             .navigationViewStyle(StackNavigationViewStyle())
             .onAppear {
-                islogin.checklog()
+                loginManager.checkIfLogged()
             }
-            .environmentObject(islogin)
+            .environmentObject(loginManager)
         }
     }
 }

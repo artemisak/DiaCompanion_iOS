@@ -9,7 +9,7 @@ struct ModalView: View {
     @State private var eraseDB = false
     @State private var eraseDBprogress = false
     @State private var arrowAngle = 0.0
-    @ObservedObject var islogin: check
+    @ObservedObject var islogin: Router
     @Binding var txtTheme: DynamicTypeSize
     var body: some View {
         if #available(iOS 16.0, *) {
@@ -68,12 +68,11 @@ struct ModalView: View {
                         }).confirmationDialog("Удаляя аккаунт вы потеряете доступ к приложению, вся информация в нем будет удалена.", isPresented: $eraseAccount, titleVisibility: .visible, actions: {
                             Button("ОК", action: {
                                 presentationMode.wrappedValue.dismiss()
-                                withAnimation() {
-                                    islogin.istrue = false
+                                    islogin.path.removeAll()
+                                    islogin.isLoggedIn = false
                                     islogin.isChoosed = false
                                     islogin.version = 1
-                                }
-                                Task {
+                                Task(priority: .background) {
                                     await deleteAccaunt()
                                 }
                             })
@@ -150,7 +149,7 @@ struct ModalView: View {
                             Button("ОК", action: {
                                 presentationMode.wrappedValue.dismiss()
                                 withAnimation() {
-                                    islogin.istrue = false
+                                    islogin.isLoggedIn = false
                                     islogin.isChoosed = false
                                     islogin.version = 1
                                 }
@@ -190,7 +189,7 @@ struct pacientPage: View {
     @State private var bHeight: Bool = false
     @State private var txt: String = ""
     @State private var vDate = Date()
-    @EnvironmentObject var islogin: check
+    @EnvironmentObject var islogin: Router
     var body: some View {
         ZStack {
             List {

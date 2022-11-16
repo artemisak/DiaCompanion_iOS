@@ -3,7 +3,7 @@ import SwiftUI
 struct mainPage: View {
     @State private var showModal: Bool = false
     @State private var columns: [GridItem] = Array(repeating: .init(.flexible()), count: 2)
-    @EnvironmentObject var islogin: check
+    @EnvironmentObject var islogin: Router
     @Binding var txtTheme: DynamicTypeSize
     var body: some View {
         GeometryReader { g in
@@ -89,6 +89,8 @@ struct mainPage: View {
                 }.buttonStyle(ButtonAndLink()).foregroundColor(Color.accentColor)
             }
         }
+        .navigationBarTitleDisplayMode(.inline)
+        .navigationBarBackButtonHidden()
         .ignoresSafeArea(.keyboard, edges: .bottom)
     }
 }

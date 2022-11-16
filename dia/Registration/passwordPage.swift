@@ -1,15 +1,15 @@
 //
-//  loginPage.swift
+//  passwordPage.swift
 //  dia
 //
-//  Created by Артём Исаков on 11.11.2022.
+//  Created by Артём Исаков on 14.11.2022.
 //
-import SwiftUI
-import AVFoundation
 
-struct loginPage: View {
-    @State private var login: String = ""
-    @State private var isValidLogin: Bool = true
+import SwiftUI
+
+struct passwordPage: View {
+    @State private var pass: String = ""
+    @State private var isValidPassword: Bool = true
     @State private var nextField: Bool = false
     @State private var isLoading: Bool = false
     @Binding var txtTheme: DynamicTypeSize
@@ -17,100 +17,97 @@ struct loginPage: View {
     @EnvironmentObject var loginManager: Router
     var body: some View {
         VStack(spacing: 20) {
+            Spacer()
             VStack(spacing: 20) {
                 VStack(alignment: .leading, spacing: .zero) {
-                    TextField("Логин", text: $login)
-                        .onChange(of: login, perform: {i in
-                            if !isValidLogin {
+                    SecureField("Пароль", text: $pass)
+                        .onChange(of: pass, perform: {i in
+                            if !isValidPassword {
                                 withAnimation(.default){
-                                    isValidLogin.toggle()
+                                    isValidPassword.toggle()
                                 }
                             }
                         })
-                        .foregroundColor(.black)
                         .textInputAutocapitalization(.never)
                         .disableAutocorrection(true)
                         .focused($focusedField)
                 }
                 .padding()
                 .background(RoundedRectangle(cornerRadius: 10)
-                    .stroke(isValidLogin ? Color.gray.opacity(0.5) : Color.red, lineWidth: 1))
+                    .stroke(isValidPassword ? Color.gray.opacity(0.5) : Color.red, lineWidth: 1))
                 .onTapGesture {
                     focusedField = true
                 }
             }
-            if !isValidLogin {
-                Text("Такого аккаунта не существует")
+            if !isValidPassword {
+                Text("Неверный пароль")
                     .font(.system(size: 20))
                     .foregroundColor(.red)
                     .frame(maxWidth: .infinity, alignment: .leading)
             }
+            Spacer()
             if #available(iOS 16, *){
                 Button(action: {
-                    if login.isEmpty {
+                    if pass.isEmpty {
                         withAnimation(.default){
                             focusedField = true
                         }
-                    } else {
+                    }
+                    else {
                         withAnimation(.default){
-                            isValidLogin = loginManager.checkEnteredLogin(login)
-                            if isValidLogin {
-                                focusedField = false
+                            isValidPassword = loginManager.checkEnteredPassord(pass)
+                        }
+                        if isValidPassword {
+                            isLoading = true
+                            Task {
+                                await loginManager.setLogged()
+                                isLoading = false
                             }
                         }
+                        
                     }
                 }, label: {
-                    Text("Далее").frame(height: 25)
+                    if isLoading {
+                        ProgressView().tint(.white).frame(height: 25)
+                    } else {
+                        Text("Войти").frame(height: 25)
+                    }
                 })
                 .buttonStyle(RoundedRectangleButtonStyle())
             } else {
-                Button {
-                    if login.isEmpty {
+                Button(action: {
+                    if pass.isEmpty {
                         withAnimation(.default){
                             focusedField = true
                         }
-                    } else {
+                    }
+                    else {
                         withAnimation(.default){
-                            isValidLogin = loginManager.checkEnteredLogin(login)
-                            if isValidLogin {
-                                focusedField = false
+                            isValidPassword = loginManager.checkEnteredPassord(pass)
+                        }
+                        if isValidPassword {
+                            isLoading = true
+                            Task {
+                                await loginManager.setLogged()
+                                isLoading = false
                                 nextField = true
                             }
                         }
                     }
-                } label: {
-                    Text("Далее").frame(height: 25)
-                }
-                .buttonStyle(RoundedRectangleButtonStyle())
-                NavigationLink(isActive: $nextField, destination: {passwordPage(txtTheme: $txtTheme)}, label: {EmptyView()})
-                    .buttonStyle(TransparentButton()).isHidden(true)
-            }
-            if #available(iOS 16, *){
-                Button {
-                    focusedField = false
-                    loginManager.navigateToHelper()
-                } label: {
-                    HStack{
-                        Text("Регистрация")
-                        Image(systemName: "questionmark.circle")
-                    }
-                }
-                .buttonStyle(ChangeColorButton())
-            } else {
-                NavigationLink(destination: {
-                    regHelper()
                 }, label: {
-                    HStack{
-                        Text("Регистрация")
-                        Image(systemName: "questionmark.circle")
+                    if isLoading {
+                        ProgressView().tint(.white).frame(height: 25)
+                    } else {
+                        Text("Войти").frame(height: 25)
                     }
                 })
-                .buttonStyle(ChangeColorButton())
+                .buttonStyle(RoundedRectangleButtonStyle())
+                NavigationLink(isActive: $nextField, destination: {versionChoose()}, label: {EmptyView()})
+                    .buttonStyle(TransparentButton()).isHidden(true)
             }
         }
         .padding()
         .navigationBarTitleDisplayMode(.inline)
-        .navigationBarBackButtonHidden()
         .toolbar {
             ToolbarItem(placement: .principal) {
                 HStack {
