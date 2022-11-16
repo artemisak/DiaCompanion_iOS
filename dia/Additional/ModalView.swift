@@ -129,7 +129,7 @@ struct ModalView: View {
                                 Spacer()
                             }.foregroundColor(Color.accentColor)
                         }
-                        .confirmationDialog("Восстановление подразумевает отмену всех вносимых в вами в базу данных имзенений.", isPresented: $eraseDB, titleVisibility: .visible, actions: {
+                        .confirmationDialog("Восстановление подразумевает отмену всех вносимых вами в базу данных изменений.", isPresented: $eraseDB, titleVisibility: .visible, actions: {
                             Button("ОК", action: {
                                 eraseDBprogress = true
                                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {eraseDBprogress = restoreDB()})
