@@ -35,7 +35,6 @@ func getMessage(highGI: Bool, manyCarbo: Bool, highBGBefore: Bool, lowPV: Bool, 
 func checkGI(listOfFood: [foodToSave]) -> Bool {
     var highGI = false
     do {
-        var sum = 0.0
         var listOfGI: [Double] = []
         let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
         let path = documents + "/diacompanion.db"
@@ -43,17 +42,15 @@ func checkGI(listOfFood: [foodToSave]) -> Bool {
         _=copyDatabaseIfNeeded(sourcePath: sourcePath)
         let db = try Connection(path)
         let food = Table("food")
-        let name = Expression<String>("name")
+        let id = Expression<String>("_id")
         let gi = Expression<Double?>("gi")
         for i in listOfFood {
-            for i1 in try db.prepare(food.select(gi).filter(name == i.name).limit(1)){
+            let arg = i.name.components(separatedBy: "////")
+            for i1 in try db.prepare(food.select(gi).filter(id == arg[2])){
                 listOfGI.append(i1[gi] ?? 0.0)
             }
         }
-        sum = listOfGI.reduce(0, +)
-        if sum > 55 {
-            highGI = true
-        }
+        highGI = listOfGI.contains(where: {$0 > 55})
     }
     catch {
         print(error)
@@ -72,11 +69,12 @@ func checkCarbo(foodType: String, listOfFood: [foodToSave]) -> Bool {
         _=copyDatabaseIfNeeded(sourcePath: sourcePath)
         let db = try Connection(path)
         let food = Table("food")
-        let name = Expression<String>("name")
+        let id = Expression<String>("_id")
         let carbo = Expression<Double?>("carbo")
         for i in listOfFood {
-            for i1 in try db.prepare(food.select(carbo).filter(name == i.name).limit(1)){
-                listOfCarbo.append(i1[carbo] ?? 0.0)
+            let arg = i.name.components(separatedBy: "////")
+            for i1 in try db.prepare(food.select(carbo).filter(id == arg[2])){
+                listOfCarbo.append((i1[carbo] ?? 0.0)*(Double(arg[1]) ?? 0.0)/100)
             }
         }
         sum = listOfCarbo.reduce(0, +)
@@ -103,45 +101,53 @@ func checkBGBefore(BG0: Double) -> Bool {
 func checkPV(listOfFood: [foodToSave], date: Date) -> Bool {
     var lowPV = false
     do {
+        print(date.date)
         var sum = 0.0
         var sumToday = 0.0
         var sumYest = 0.0
         var listOfPV: [Double] = []
+        
         let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
         let path = documents + "/diacompanion.db"
         let sourcePath = Bundle.main.path(forResource: "diacompanion", ofType: "db")!
         _=copyDatabaseIfNeeded(sourcePath: sourcePath)
         let db = try Connection(path)
+        
         let food = Table("food")
-        let name = Expression<String>("name")
+        let id = Expression<String>("_id")
         let pv = Expression<Double?>("pv")
         for i in listOfFood {
-            for i1 in try db.prepare(food.select(pv).filter(name == i.name).limit(1)){
-                listOfPV.append(i1[pv] ?? 0.0)
+            let arg = i.name.components(separatedBy: "////")
+            for i1 in try db.prepare(food.select(pv).filter(id == arg[2])){
+                listOfPV.append((i1[pv] ?? 0.0)*(Double(arg[1]) ?? 0.0)/100)
             }
         }
         sum = listOfPV.reduce(0,+)
         listOfPV.removeAll()
+        
         let diary = Table("diary")
-        let foodName = Expression<String>("foodName")
-        let dateTime = Expression<String>("dateTime")
+        let id_food = Expression<Int>("id_food")
+        let _date = Expression<String>("date")
+        let g = Expression<String>("g")
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd.MM.yyyy"
-        for i in try db.prepare(diary.select(foodName).filter(dateTime == dateFormatter.string(from: date))){
-            for i1 in try db.prepare(food.select(pv).filter(name == i[foodName]).limit(1)){
-                listOfPV.append(i1[pv] ?? 0.0)
+        for i in try db.prepare(diary.select(id_food, g).filter(_date == dateFormatter.string(from: date))){
+            for i1 in try db.prepare(food.select(pv).filter(id == "\(i[id_food])")){
+                listOfPV.append((i1[pv] ?? 0.0)*(Double(i[g]) ?? 0.0)/100)
             }
         }
         sumToday = listOfPV.reduce(0,+)
         listOfPV.removeAll()
+        
         let yest = date.addingTimeInterval(-60*60*24)
-        for i in try db.prepare(diary.select(foodName).filter(dateTime == dateFormatter.string(from: yest))){
-            for i1 in try db.prepare(food.select(pv).filter(name == i[foodName]).limit(1)){
-                listOfPV.append(i1[pv] ?? 0.0)
+        for i in try db.prepare(diary.select(id_food, g).filter(_date == dateFormatter.string(from: yest))){
+            for i1 in try db.prepare(food.select(pv).filter(id == "\(i[id_food])")){
+                listOfPV.append((i1[pv] ?? 0.0)*(Double(i[g]) ?? 0.0)/100)
             }
         }
         sumYest = listOfPV.reduce(0,+)
         listOfPV.removeAll()
+        
         if sum < 8 {
             lowPV = true
         } else if sum + sumToday < 20 {
