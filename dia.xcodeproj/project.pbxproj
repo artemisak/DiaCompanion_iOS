@@ -286,10 +286,10 @@
 		A78EA62A291D1D3A00B2CDD2 /* Diary */ = {
 			isa = PBXGroup;
 			children = (
+				AC2603212690691E00C4A520 /* mainPage.swift */,
 				ACF2F0A726DE9A1D0066753D /* inject.swift */,
 				AC7A53F626DBF77B00FE65E7 /* enterAct.swift */,
 				ACD86E8026DE820B0027B8ED /* sugarChange.swift */,
-				AC2603212690691E00C4A520 /* mainPage.swift */,
 				AC2D32E327359EC50022AFD9 /* diaryManager.swift */,
 				A78EA628291D1D0000B2CDD2 /* History */,
 				A78EA624291D1BFD00B2CDD2 /* EnterFood */,
@@ -734,7 +734,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0.9;
+				MARKETING_VERSION = 2.1.0.;
 				PRODUCT_BUNDLE_IDENTIFIER = app.dia;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -764,7 +764,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0.9;
+				MARKETING_VERSION = 2.1.0.;
 				PRODUCT_BUNDLE_IDENTIFIER = app.dia;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;

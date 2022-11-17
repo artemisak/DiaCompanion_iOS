@@ -78,8 +78,6 @@ struct inject: View {
                     Alert(title: Text("Статус операции"), message: Text("Введите релевантное \nзначение"), dismissButton: .default(Text("ОК")))
                 }
             }
-        }
-        .toolbar(content: {
             ToolbarItemGroup(placement: .keyboard, content: {
                 Spacer()
                 Button(action: {
@@ -88,8 +86,8 @@ struct inject: View {
                     Text("Готово").dynamicTypeSize(txtTheme)
                 })
             })
-        })
-        .ignoresSafeArea(.keyboard)
+        }
+        .ignoresSafeArea(.keyboard, edges: .bottom)
         .onAppear(perform: {
             UIScrollView.appearance().keyboardDismissMode = .onDrag
             UITableView.appearance().showsVerticalScrollIndicator = false
@@ -122,5 +120,11 @@ struct injectPicker: View {
                 Text("Дополнительно").tag(injects.dop)
             }.pickerStyle(.inline)
         }
+    }
+}
+
+struct inject_Previews: PreviewProvider {
+    static var previews: some View {
+        inject(t: "", date: Date.now, previewIndex: .prolong, previewIndex1: .dop, idForDelete: [], txtTheme: .constant(.large), hasChanged: .constant(false))
     }
 }

@@ -71,11 +71,7 @@ struct export: View {
                     .scaleEffect(2.5)
             }
         }
-        .toolbar {
-            ToolbarItem(placement: .principal, content: {
-                Text("Экспорт данных").font(.headline).fixedSize()
-            })
-        }
+        .navigationTitle("Экспорт данных")
     }
 }
 

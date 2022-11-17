@@ -70,7 +70,6 @@ struct mainPage: View {
                 .frame(width: g.size.width)
                 .frame(minHeight: g.size.height)
             }
-           
         }
         .navigationTitle("ДиаКомпаньон")
         .toolbar {
@@ -89,7 +88,7 @@ struct mainPage: View {
                 }.buttonStyle(ButtonAndLink()).foregroundColor(Color.accentColor)
             }
         }
-        .navigationBarTitleDisplayMode(.inline)
+        .navigationBarTitleDisplayMode(.large)
         .navigationBarBackButtonHidden()
         .ignoresSafeArea(.keyboard, edges: .bottom)
     }
