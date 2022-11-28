@@ -30,14 +30,8 @@ class Food: ObservableObject {
     @Published var CatID = UUID()
     
     func GetFoodItemsByName(_name: String) -> Void {
-        var name1 = _name.components(separatedBy: " ")
-        var fullname = ""
-        name1.removeAll(where: {$0.isEmpty})
-        if name1.count > 1 {
-            fullname = name1.joined(separator: " ")
-        } else {
-            fullname = name1.joined()
-        }
+        var name = _name.components(separatedBy: " ")
+        name.removeAll(where: {$0.isEmpty})
         do {
             var Food1 = [FoodList]()
             let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
@@ -54,11 +48,24 @@ class Food: ObservableObject {
             let g = Expression<Double?>("gi")
             let rating = Expression<Int?>("favor")
             var GI = ""
-            for i in try db.prepare(foodItems.select(table_id, food, pr, car, f, g, rating).filter(food.like("%\(fullname)%") || food.like("%\(fullname.lowercased())%")).order(food).limit(20)){
+            var firstWord = name.first!
+            for i in try db.prepare(foodItems.select(table_id, food, pr, car, f, g, rating).filter(food.like("\(firstWord)%") || food.like("\(firstWord.lowercased())%"))){
                 if i[g] != nil {
                     GI = "\(round(i[g]!*10)/10)"
                 }
-                if Set(Food1.map({$0.name == i[food]})) == [false] || Food1 == [] {
+                Food1.append(FoodList(table_id: i[table_id], name: "\(i[food])", prot: "\(i[pr])", carbo: "\(i[car])", fat: "\(i[f])", gi: GI, rating: i[rating] ?? 0))
+            }
+            for i in try db.prepare(foodItems.select(table_id, food, pr, car, f, g, rating).filter(food.like("_%\(firstWord)%") || food.like("_%\(firstWord.lowercased())%"))){
+                if i[g] != nil {
+                    GI = "\(round(i[g]!*10)/10)"
+                }
+                Food1.append(FoodList(table_id: i[table_id], name: "\(i[food])", prot: "\(i[pr])", carbo: "\(i[car])", fat: "\(i[f])", gi: GI, rating: i[rating] ?? 0))
+            }
+            for i in name.dropFirst(){
+                for i in try db.prepare(foodItems.select(table_id, food, pr, car, f, g, rating).filter(food.like("%\(i)%") || food.like("%\(i.lowercased())%"))){
+                    if i[g] != nil {
+                        GI = "\(round(i[g]!*10)/10)"
+                    }
                     Food1.append(FoodList(table_id: i[table_id], name: "\(i[food])", prot: "\(i[pr])", carbo: "\(i[car])", fat: "\(i[f])", gi: GI, rating: i[rating] ?? 0))
                 }
             }
