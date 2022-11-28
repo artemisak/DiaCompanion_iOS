@@ -47,27 +47,24 @@ class Food: ObservableObject {
             let f = Expression<Double>("fat")
             let g = Expression<Double?>("gi")
             let rating = Expression<Int?>("favor")
-            var GI = ""
-            var firstWord = name.first!
-            for i in try db.prepare(foodItems.select(table_id, food, pr, car, f, g, rating).filter(food.like("\(firstWord)%") || food.like("\(firstWord.lowercased())%"))){
-                if i[g] != nil {
-                    GI = "\(round(i[g]!*10)/10)"
+
+            var sql = ""
+            for i in 0..<name.count {
+                if i == 0 {
+                    sql += "SELECT * FROM (SELECT * FROM (SELECT _id, name, prot, carbo, fat, gi, favor, 1 AS filter FROM food WHERE name LIKE '\(name[i])%' ORDER BY name ASC) UNION SELECT * FROM (SELECT _id, name, prot, carbo, fat, gi, favor, 2 AS filter FROM food WHERE name LIKE '_%\(name[i].lowercased())%' ORDER BY name ASC))"
                 }
-                Food1.append(FoodList(table_id: i[table_id], name: "\(i[food])", prot: "\(i[pr])", carbo: "\(i[car])", fat: "\(i[f])", gi: GI, rating: i[rating] ?? 0))
+                else if i == 1{
+                    sql += " WHERE name LIKE '%\(name[i])%'"
+                }
+                else {
+                    sql += " AND name LIKE '%\(name[i])%'"
+                }
             }
-            for i in try db.prepare(foodItems.select(table_id, food, pr, car, f, g, rating).filter(food.like("_%\(firstWord)%") || food.like("_%\(firstWord.lowercased())%"))){
-                if i[g] != nil {
-                    GI = "\(round(i[g]!*10)/10)"
-                }
-                Food1.append(FoodList(table_id: i[table_id], name: "\(i[food])", prot: "\(i[pr])", carbo: "\(i[car])", fat: "\(i[f])", gi: GI, rating: i[rating] ?? 0))
-            }
-            for i in name.dropFirst(){
-                for i in try db.prepare(foodItems.select(table_id, food, pr, car, f, g, rating).filter(food.like("%\(i)%") || food.like("%\(i.lowercased())%"))){
-                    if i[g] != nil {
-                        GI = "\(round(i[g]!*10)/10)"
-                    }
-                    Food1.append(FoodList(table_id: i[table_id], name: "\(i[food])", prot: "\(i[pr])", carbo: "\(i[car])", fat: "\(i[f])", gi: GI, rating: i[rating] ?? 0))
-                }
+            sql += " ORDER BY filter ASC"
+            
+            let stmt = try db.prepare(sql)
+            for row in stmt {
+                Food1.append(FoodList(table_id: Int("\(row[0]!)")!, name: "\(row[1]!)", prot: "\(row[2]!)", carbo: "\(row[3]!)", fat: "\(row[4]!)", gi: "\(row[5] ?? 0)", rating: Int("\(row[6] ?? 0)")!))
             }
             self.FoodObj = Food1
         }
