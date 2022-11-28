@@ -95,10 +95,10 @@ struct addCustomMeal: View {
                 ForEach(foodItems, id: \.id){ i in
                     let arg = "\(i.name)".components(separatedBy: "////")
                     Text("\(arg[0]), \(arg[1]) г.")
-                }
+                }.onDelete(perform: removeRow)
             }
         }
-        .ignoresSafeArea(.keyboard)
+        .ignoresSafeArea(.keyboard, edges: .bottom)
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
@@ -125,6 +125,10 @@ struct addCustomMeal: View {
         .alert(isPresented: $permission) {
             Alert(title: Text("Статус операции"), message: Text(errorMessage), dismissButton: .default(Text("ОК")))
         }
+        .navigationTitle("Рецепты")
+    }
+    func removeRow(at offsets: IndexSet){
+        foodItems.remove(atOffsets: offsets)
     }
 }
 

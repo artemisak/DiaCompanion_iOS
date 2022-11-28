@@ -45,7 +45,7 @@ struct sugarChange: View {
                 .datePickerStyle(.graphical)
             }
         }
-        .navigationTitle("Измерение сахара")
+        .ignoresSafeArea(.keyboard, edges: .bottom)
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing, content: {
                 Button(action: {
@@ -83,7 +83,7 @@ struct sugarChange: View {
                 })
             })
         }
-        .ignoresSafeArea(.keyboard)
+        .navigationTitle("Измерение сахара")
         .onAppear(perform: {
             UIScrollView.appearance().keyboardDismissMode = .onDrag
             UITableView.appearance().showsVerticalScrollIndicator = false

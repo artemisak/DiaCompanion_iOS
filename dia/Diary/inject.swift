@@ -55,7 +55,7 @@ struct inject: View {
                 .datePickerStyle(.graphical)
             }
         }
-        .navigationTitle("Введение инсулина")
+        .ignoresSafeArea(.keyboard, edges: .bottom)
         .toolbar {
             ToolbarItemGroup(){
                 Button(action: {
@@ -87,13 +87,14 @@ struct inject: View {
                 })
             })
         }
-        .ignoresSafeArea(.keyboard, edges: .bottom)
+        .navigationTitle("Введение инсулина")
         .onAppear(perform: {
             UIScrollView.appearance().keyboardDismissMode = .onDrag
             UITableView.appearance().showsVerticalScrollIndicator = false
         })
     }
 }
+
 
 struct injectTypePicker: View {
     @Binding var previewIndex: injectType
