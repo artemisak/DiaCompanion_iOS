@@ -1,5 +1,10 @@
 import SwiftUI
 
+enum Field: Hashable {
+    case catSearch
+    case inCatSearch
+}
+
 struct addFoodButton: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @Binding var foodItems: [foodToSave]
@@ -14,6 +19,7 @@ struct addFoodButton: View {
     @State private var searchByWordView: Bool = true
     @State private var searchByWordCategoryView: Bool = true
     @State public var successedSave: Bool = false
+    @FocusState private var focusedField: Field?
     @StateObject private var items = Food()
     @Binding var txtTheme: DynamicTypeSize
     var body: some View {
@@ -24,7 +30,7 @@ struct addFoodButton: View {
                         VStack(spacing: .zero) {
                             Divider()
                             HStack {
-                                TextField(text: $selectedFood, label: {Text("Поиск по слову").dynamicTypeSize(txtTheme)}).disableAutocorrection(true)
+                                TextField(text: $selectedFood, label: {Text("Поиск по слову").dynamicTypeSize(txtTheme)}).disableAutocorrection(true).focused($focusedField, equals: .catSearch)
                                 Image(systemName: "xmark").foregroundColor(Color(red: 87/255, green: 165/255, blue: 248/255))
                                     .onTapGesture {
                                         selectedFood = ""
@@ -39,9 +45,9 @@ struct addFoodButton: View {
                                 VStack(spacing: .zero) {
                                     ForEach(items.CatObj, id: \.id){dish in
                                         VStack(spacing: .zero) {
-                                            NavigationLink{foodCategoryItemView(category: "\(dish.name)", foodItems: $foodItems, txtTheme: $txtTheme)} label: {
+                                            NavigationLink(value: dish, label: {
                                                 Text("\(dish.name)").frame(minWidth: 0, maxWidth: .infinity, alignment: .leading).font(.system(size: 20)).multilineTextAlignment(.leading).foregroundColor(.black).padding(.horizontal).padding(.vertical, 12.5)
-                                            }
+                                            })
                                             .buttonStyle(ButtonAndLink())
                                             Divider()
                                         }
@@ -49,6 +55,9 @@ struct addFoodButton: View {
                                 }
                             }
                             .ignoresSafeArea(.keyboard)
+                            .navigationDestination(for: CategoryList.self, destination: {dish in
+                                foodCategoryItemView(category: "\(dish.name)", foodItems: $foodItems, txtTheme: $txtTheme)
+                            })
                         } else {
                             ScrollView {
                                 LazyVStack(spacing: .zero) {
@@ -116,7 +125,7 @@ struct addFoodButton: View {
                     ToolbarItemGroup(placement: .keyboard, content: {
                         Spacer()
                         Button(action: {
-                            UIApplication.shared.dismissedKeyboard()
+                            focusedField = nil
                         }, label: {
                             Text("Готово").dynamicTypeSize(txtTheme)
                         })
@@ -143,10 +152,12 @@ struct addFoodButton: View {
                 })
                 .onAppear(perform: {
                     successedSave = false
+                    UIApplication.shared.dismissedKeyboard()
                 })
             }
             .environmentObject(items)
-        } else {
+        }
+        else {
             NavigationView {
                 ZStack {
                     VStack(spacing: .zero) {

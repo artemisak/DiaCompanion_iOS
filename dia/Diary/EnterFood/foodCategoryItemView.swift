@@ -18,6 +18,7 @@ struct foodCategoryItemView: View {
     @State var category: String
     @Binding var foodItems: [foodToSave]
     @Binding var txtTheme: DynamicTypeSize
+    @FocusState var focusedField: Field?
     @EnvironmentObject var items: Food
     var body: some View {
         ZStack {
@@ -25,7 +26,7 @@ struct foodCategoryItemView: View {
                 VStack(spacing: .zero) {
                     Divider()
                     HStack{
-                        TextField(text: $selectedFoodCategoryItem, label: {Text("Поиск по слову").dynamicTypeSize(txtTheme)}).disableAutocorrection(true)
+                        TextField(text: $selectedFoodCategoryItem, label: {Text("Поиск по слову").dynamicTypeSize(txtTheme)}).disableAutocorrection(true).focused($focusedField, equals: .inCatSearch)
                         Image(systemName: "xmark").foregroundColor(Color(red: 87/255, green: 165/255, blue: 248/255))
                             .onTapGesture {
                                 selectedFoodCategoryItem = ""
@@ -85,7 +86,7 @@ struct foodCategoryItemView: View {
             ToolbarItemGroup(placement: .keyboard, content: {
                 Spacer()
                 Button(action: {
-                    UIApplication.shared.dismissedKeyboard()
+                    focusedField = nil
                 }, label: {
                     Text("Готово").dynamicTypeSize(txtTheme)
                 })

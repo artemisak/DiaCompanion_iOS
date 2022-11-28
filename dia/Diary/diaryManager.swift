@@ -39,14 +39,6 @@ class Food: ObservableObject {
             let sourcePath = Bundle.main.path(forResource: "diacompanion", ofType: "db")!
             _=copyDatabaseIfNeeded(sourcePath: sourcePath)
             let db = try Connection(path)
-            let foodItems = Table("food")
-            let table_id = Expression<Int>("_id")
-            let food = Expression<String>("name")
-            let pr = Expression<Double>("prot")
-            let car = Expression<Double>("carbo")
-            let f = Expression<Double>("fat")
-            let g = Expression<Double?>("gi")
-            let rating = Expression<Int?>("favor")
 
             var sql = ""
             for i in 0..<name.count {
