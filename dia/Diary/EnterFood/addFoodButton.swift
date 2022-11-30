@@ -67,8 +67,8 @@ struct addFoodButton: View {
                                                 .contextMenu {
                                                     VStack{
                                                         Button(action: {
-                                                            items.handleRatingChange(i: items.FoodObj.firstIndex(where: {$0.id == dish.id})!)
-                                                            changeRating(_name: dish.name, _rating: dish.rating)
+                                                            items.handleRatingChange(i: items.FoodObj.firstIndex(where: {$0.id == dish.id})!, array_index: 1)
+                                                            changeRating(_id: dish.table_id, _rating: dish.rating)
                                                             items.FoodID = UUID()
                                                         }, label: {
                                                             HStack {
@@ -78,7 +78,7 @@ struct addFoodButton: View {
                                                         }).foregroundColor(Color.blue)
                                                         Button(role: .destructive, action: {
                                                             items.handleDeleting(i: items.FoodObj.firstIndex(where: {$0.id == dish.id})!)
-                                                            deleteFood(name: dish.name)
+                                                            deleteFood(_id: dish.table_id)
                                                             items.FoodID = UUID()
                                                         }, label: {
                                                             HStack{
@@ -86,13 +86,6 @@ struct addFoodButton: View {
                                                                 Image(systemName: "trash.fill")
                                                             }
                                                         })
-                                                    }
-                                                }
-                                                .onAppear {
-                                                    if dish == items.FoodObj.last {
-                                                        Task {
-                                                            await items.appendFoodObj(_name: selectedFood, n: items.FoodObj.count)
-                                                        }
                                                     }
                                                 }
                                             Divider()
@@ -137,7 +130,9 @@ struct addFoodButton: View {
                 .onChange(of: selectedFood, perform: {selectedFood in
                     if !selectedFood.isEmpty {
                         searchByWordView = false
-                        items.GetFoodItemsByName(_name: selectedFood)
+                        Task {
+                            await items.GetFoodItemsByName(_name: selectedFood)
+                        }
                     } else {
                         searchByWordView = true
                         items.FillFoodCategoryList()
@@ -198,8 +193,8 @@ struct addFoodButton: View {
                                                 .contextMenu {
                                                     VStack{
                                                         Button(action: {
-                                                            items.handleRatingChange(i: items.FoodObj.firstIndex(where: {$0.id == dish.id})!)
-                                                            changeRating(_name: dish.name, _rating: dish.rating)
+                                                            items.handleRatingChange(i: items.FoodObj.firstIndex(where: {$0.id == dish.id})!, array_index: 1)
+                                                            changeRating(_id: dish.table_id, _rating: dish.rating)
                                                             items.FoodID = UUID()
                                                         }, label: {
                                                             HStack {
@@ -209,7 +204,7 @@ struct addFoodButton: View {
                                                         }).foregroundColor(Color.blue)
                                                         Button(role: .destructive, action: {
                                                             items.handleDeleting(i: items.FoodObj.firstIndex(where: {$0.id == dish.id})!)
-                                                            deleteFood(name: dish.name)
+                                                            deleteFood(_id: dish.table_id)
                                                             items.FoodID = UUID()
                                                         }, label: {
                                                             HStack{
@@ -217,13 +212,6 @@ struct addFoodButton: View {
                                                                 Image(systemName: "trash.fill")
                                                             }
                                                         })
-                                                    }
-                                                }
-                                                .onAppear {
-                                                    if dish == items.FoodObj.last {
-                                                        Task {
-                                                            await items.appendFoodObj(_name: selectedFood, n: items.FoodObj.count)
-                                                        }
                                                     }
                                                 }
                                             Divider()
@@ -268,7 +256,9 @@ struct addFoodButton: View {
                 .onChange(of: selectedFood, perform: {selectedFood in
                     if !selectedFood.isEmpty {
                         searchByWordView = false
-                        items.GetFoodItemsByName(_name: selectedFood)
+                        Task {
+                            await items.GetFoodItemsByName(_name: selectedFood)
+                        }
                     } else {
                         searchByWordView = true
                         items.FillFoodCategoryList()

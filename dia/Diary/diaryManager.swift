@@ -25,44 +25,48 @@ struct CategoryList: Identifiable, Hashable {
 
 class Food: ObservableObject {
     @Published var FoodObj = [FoodList]()
+    @Published var inCatFoodObj = [FoodList]()
     @Published var CatObj = [CategoryList]()
     @Published var FoodID = UUID()
     @Published var CatID = UUID()
     
-    func GetFoodItemsByName(_name: String) -> Void {
-        var name = _name.components(separatedBy: " ")
-        name.removeAll(where: {$0.isEmpty})
-        do {
+    @MainActor
+    func GetFoodItemsByName(_name: String) async -> Void {
+        let res = Task {
             var Food1 = [FoodList]()
-            let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
-            let path = documents + "/diacompanion.db"
-            let sourcePath = Bundle.main.path(forResource: "diacompanion", ofType: "db")!
-            _=copyDatabaseIfNeeded(sourcePath: sourcePath)
-            let db = try Connection(path)
-
-            var sql = ""
-            for i in 0..<name.count {
-                if i == 0 {
-                    sql += "SELECT * FROM (SELECT * FROM (SELECT _id, name, prot, carbo, fat, gi, favor, 1 AS filter FROM food WHERE name LIKE '\(name[i])%' ORDER BY name ASC) UNION SELECT * FROM (SELECT _id, name, prot, carbo, fat, gi, favor, 2 AS filter FROM food WHERE name LIKE '_%\(name[i].lowercased())%' ORDER BY name ASC))"
+            var name = _name.components(separatedBy: " ")
+            name.removeAll(where: {$0.isEmpty})
+            do {
+                
+                let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
+                let path = documents + "/diacompanion.db"
+                let sourcePath = Bundle.main.path(forResource: "diacompanion", ofType: "db")!
+                _=copyDatabaseIfNeeded(sourcePath: sourcePath)
+                let db = try Connection(path)
+                var sql = ""
+                for i in 0..<name.count {
+                    if i == 0 {
+                        sql += "SELECT * FROM (SELECT * FROM (SELECT _id, name, prot, carbo, fat, gi, favor, 1 AS filter FROM food WHERE name LIKE '\(name[i])%' ORDER BY name ASC) UNION SELECT * FROM (SELECT _id, name, prot, carbo, fat, gi, favor, 2 AS filter FROM food WHERE name LIKE '_%\(name[i].lowercased())%' ORDER BY name ASC))"
+                    }
+                    else if i == 1{
+                        sql += " WHERE name LIKE '%\(name[i])%'"
+                    }
+                    else {
+                        sql += " AND name LIKE '%\(name[i])%'"
+                    }
                 }
-                else if i == 1{
-                    sql += " WHERE name LIKE '%\(name[i])%'"
-                }
-                else {
-                    sql += " AND name LIKE '%\(name[i])%'"
+                sql += " ORDER BY filter ASC"
+                let stmt = try db.prepare(sql)
+                for row in stmt {
+                    Food1.append(FoodList(table_id: Int("\(row[0]!)")!, name: "\(row[1]!)", prot: "\(row[2]!)", carbo: "\(row[3]!)", fat: "\(row[4]!)", gi: "\(row[5] ?? 0)", rating: Int("\(row[6] ?? 0)")!))
                 }
             }
-            sql += " ORDER BY filter ASC"
-            
-            let stmt = try db.prepare(sql)
-            for row in stmt {
-                Food1.append(FoodList(table_id: Int("\(row[0]!)")!, name: "\(row[1]!)", prot: "\(row[2]!)", carbo: "\(row[3]!)", fat: "\(row[4]!)", gi: "\(row[5] ?? 0)", rating: Int("\(row[6] ?? 0)")!))
+            catch {
+                print(error)
             }
-            self.FoodObj = Food1
+            return Food1
         }
-        catch {
-            print(error)
-        }
+        await self.FoodObj = res.value
     }
     
     func FillFoodCategoryList() -> Void {
@@ -88,7 +92,6 @@ class Food: ObservableObject {
     @MainActor
     func GetFoodCategoryItems(_category: String) async -> Void {
         let res = Task {
-            self.FoodObj.removeAll()
             var FoodObj = [FoodList]()
             do {
                 let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
@@ -120,64 +123,29 @@ class Food: ObservableObject {
             }
             return FoodObj
         }
-        return await self.FoodObj.append(contentsOf: res.value)
+        return await self.inCatFoodObj = res.value
     }
     
-    func handleRatingChange(i: Int) -> Void {
-        if self.FoodObj[i].rating == 0 {
-            self.FoodObj[i].rating = 1
+    func handleRatingChange(i: Int, array_index: Int) -> Void {
+        if array_index == 0 {
+            if self.inCatFoodObj[i].rating == 0 {
+                self.inCatFoodObj[i].rating = 1
+            } else {
+                self.inCatFoodObj[i].rating = 0
+            }
         } else {
-            self.FoodObj[i].rating = 0
+            if self.FoodObj[i].rating == 0 {
+                self.FoodObj[i].rating = 1
+            } else {
+                self.FoodObj[i].rating = 0
+            }
         }
     }
     
     func handleDeleting(i: Int) -> Void {
         FoodObj.remove(at: i)
     }
-    
-    @MainActor
-    func appendFoodObj(_name: String, n: Int) async -> Void {
-        let newData = Task {
-            var name1 = _name.components(separatedBy: " ")
-            var fullname = ""
-            name1.removeAll(where: {$0.isEmpty})
-            if name1.count > 1 {
-                fullname = name1.joined(separator: " ")
-            } else {
-                fullname = name1.joined()
-            }
-            var Food1 = [FoodList]()
-            do {
-                let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
-                let path = documents + "/diacompanion.db"
-                let sourcePath = Bundle.main.path(forResource: "diacompanion", ofType: "db")!
-                _=copyDatabaseIfNeeded(sourcePath: sourcePath)
-                let db = try Connection(path)
-                let foodItems = Table("food")
-                let table_id = Expression<Int>("_id")
-                let food = Expression<String>("name")
-                let pr = Expression<Double>("prot")
-                let car = Expression<Double>("carbo")
-                let f = Expression<Double>("fat")
-                let g = Expression<Double?>("gi")
-                let rating = Expression<Int?>("favor")
-                var GI = ""
-                for i in try db.prepare(foodItems.select(table_id, food, pr, car, f, g, rating).filter(food.like("%\(fullname)%") || food.like("%\(fullname.lowercased())%")).order(food).limit(10, offset: n)){
-                    if i[g] != nil {
-                        GI = "\(round(i[g]!*10)/10)"
-                    }
-                    if Set(Food1.map({$0.name == i[food]})) == [false] || Food1 == [] {
-                        Food1.append(FoodList(table_id: i[table_id], name: "\(i[food])", prot: "\(i[pr])", carbo: "\(i[car])", fat: "\(i[f])", gi: GI, rating: i[rating] ?? 0))
-                    }
-                }
-            }
-            catch {
-                print(error)
-            }
-            return Food1
-        }
-        await self.FoodObj.append(contentsOf: newData.value)
-    }
+
 }
 
 func SaveToDB(FoodName: String, gram: String, table_id: String, selectedDate: Date, selectedType: String) {
@@ -282,7 +250,7 @@ func addPredictedRecord(selectedDate: Date, selectedType: String, BG0: Double, B
     }
 }
 
-func changeRating(_name: String, _rating: Int) -> Void {
+func changeRating(_id: Int, _rating: Int) -> Void {
     do {
         let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
         let path = documents + "/diacompanion.db"
@@ -291,11 +259,11 @@ func changeRating(_name: String, _rating: Int) -> Void {
         let db = try Connection(path)
         let food = Table("food")
         let rating = Expression<Int?>("favor")
-        let name = Expression<String>("name")
+        let id = Expression<Int>("_id")
         if _rating == 0 {
-            try db.run(food.filter(name == _name).update(rating <- 1))
+            try db.run(food.filter(id == _id).update(rating <- 1))
         } else {
-            try db.run(food.filter(name == _name).update(rating <- 0))
+            try db.run(food.filter(id == _id).update(rating <- 0))
         }
     }
     catch {
@@ -457,7 +425,7 @@ func addNewFoodN(items: [foodToSave], newReceitName: String, category: String) {
     }
 }
 
-func deleteFood(name: String) -> Void {
+func deleteFood(_id: Int) -> Void {
     do {
         let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
         let path = documents + "/diacompanion.db"
@@ -465,8 +433,8 @@ func deleteFood(name: String) -> Void {
         _=copyDatabaseIfNeeded(sourcePath: sourcePath)
         let db = try Connection(path)
         let food = Table("food")
-        let foodName = Expression<String>("name")
-        try db.run(food.filter(foodName == name).delete())
+        let id = Expression<Int>("_id")
+        try db.run(food.filter(id == _id).delete())
     }
     catch {
         print(error)

@@ -37,15 +37,15 @@ struct foodCategoryItemView: View {
                     Divider()
                 }
                 ScrollView {
-                    VStack(spacing: .zero) {
-                        ForEach(items.FoodObj.filter{$0.name.contains(selectedFoodCategoryItem) || selectedFoodCategoryItem.isEmpty}.sorted(by: {$0.rating > $1.rating}), id: \.id){dish in
+                    LazyVStack(spacing: .zero) {
+                        ForEach(items.inCatFoodObj.filter{$0.name.contains(selectedFoodCategoryItem) || selectedFoodCategoryItem.isEmpty}.sorted(by: {$0.rating > $1.rating}), id: \.id){dish in
                             VStack(spacing: .zero) {
                                 foodButton(dish: dish, selectedFoodTemp: $selectedFoodTemp, table_id: $table_id, addScreen: $addScreen, successedSave: $successedSave)
                                     .contextMenu {
                                         VStack{
                                             Button(action: {
-                                                items.handleRatingChange(i: items.FoodObj.firstIndex(where: {$0.id == dish.id})!)
-                                                changeRating(_name: dish.name, _rating: dish.rating)
+                                                items.handleRatingChange(i: items.inCatFoodObj.firstIndex(where: {$0.id == dish.id})!, array_index: 0)
+                                                changeRating(_id: dish.table_id, _rating: dish.rating)
                                                 items.CatID = UUID()
                                             }, label: {
                                                 HStack {
@@ -54,8 +54,8 @@ struct foodCategoryItemView: View {
                                                 }
                                             }).foregroundColor(Color.blue)
                                             Button(role: .destructive, action: {
-                                                items.handleDeleting(i: items.FoodObj.firstIndex(where: {$0.id == dish.id})!)
-                                                deleteFood(name: dish.name)
+                                                items.handleDeleting(i: items.inCatFoodObj.firstIndex(where: {$0.id == dish.id})!)
+                                                deleteFood(_id: dish.table_id)
                                                 items.CatID = UUID()
                                             }, label: {
                                                 HStack{
@@ -92,8 +92,10 @@ struct foodCategoryItemView: View {
                 })
             })
         }
-        .task {
-            await items.GetFoodCategoryItems(_category: category)
+        .onAppear {
+            Task {
+                await items.GetFoodCategoryItems(_category: category)
+            }
         }
         .onChange(of: successedSave, perform: {save in
             if save {
