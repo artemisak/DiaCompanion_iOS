@@ -43,7 +43,6 @@ struct enterFood: View {
     @State private var errorMessage: String = ""
     @State private var recommendMessage: String = ""
     @State private var isVisible: Bool = false
-    @FocusState private var focuseField: Bool
     @Binding var txtTheme: DynamicTypeSize
     @Binding var hasChanged: Bool
     @EnvironmentObject var islogin: Router
@@ -163,7 +162,6 @@ struct enterFood: View {
                             .listRowBackground(recColor)
                         TextField("5,0 ммоль/л", text: $sugar)
                             .frame(maxWidth: .infinity, maxHeight: .infinity)
-                            .focused($focuseField)
                             .keyboardType(.decimalPad)
                             .disabled(enabled == false)
                             .foregroundColor(scolor)
@@ -332,9 +330,9 @@ struct enterFood: View {
                 ToolbarItemGroup(placement: .keyboard, content: {
                     Spacer()
                     Button(action: {
-                        focuseField = false
+                        UIApplication.shared.dismissedKeyboard()
                     }, label: {
-                        Text("Готово").dynamicTypeSize(txtTheme)
+                        Text("Готово").dynamicTypeSize(txtTheme).foregroundColor(Color(red: 0/255, green: 150/255, blue: 255/255))
                     })
                 })
             }

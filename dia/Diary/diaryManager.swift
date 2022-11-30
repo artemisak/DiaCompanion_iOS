@@ -142,8 +142,12 @@ class Food: ObservableObject {
         }
     }
     
-    func handleDeleting(i: Int) -> Void {
-        FoodObj.remove(at: i)
+    func handleDeleting(i: Int, array_index: Int) -> Void {
+        if array_index == 0 {
+            inCatFoodObj.remove(at: i)
+        } else {
+            FoodObj.remove(at: i)
+        }
     }
 
 }

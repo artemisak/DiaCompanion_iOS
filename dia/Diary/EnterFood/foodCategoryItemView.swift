@@ -18,7 +18,6 @@ struct foodCategoryItemView: View {
     @State var category: String
     @Binding var foodItems: [foodToSave]
     @Binding var txtTheme: DynamicTypeSize
-    @FocusState var focusedField: Field?
     @EnvironmentObject var items: Food
     var body: some View {
         ZStack {
@@ -26,8 +25,8 @@ struct foodCategoryItemView: View {
                 VStack(spacing: .zero) {
                     Divider()
                     HStack{
-                        TextField(text: $selectedFoodCategoryItem, label: {Text("Поиск по слову").dynamicTypeSize(txtTheme)}).disableAutocorrection(true).focused($focusedField, equals: .inCatSearch)
-                        Image(systemName: "xmark").foregroundColor(Color(red: 87/255, green: 165/255, blue: 248/255))
+                        TextField(text: $selectedFoodCategoryItem, label: {Text("Поиск по слову").dynamicTypeSize(txtTheme)}).disableAutocorrection(true)
+                        Image(systemName: "xmark").foregroundColor(Color(red: 0/255, green: 150/255, blue: 255/255))
                             .onTapGesture {
                                 selectedFoodCategoryItem = ""
                             }
@@ -54,7 +53,7 @@ struct foodCategoryItemView: View {
                                                 }
                                             }).foregroundColor(Color.blue)
                                             Button(role: .destructive, action: {
-                                                items.handleDeleting(i: items.inCatFoodObj.firstIndex(where: {$0.id == dish.id})!)
+                                                items.handleDeleting(i: items.inCatFoodObj.firstIndex(where: {$0.id == dish.id})!, array_index: 0)
                                                 deleteFood(_id: dish.table_id)
                                                 items.CatID = UUID()
                                             }, label: {
@@ -86,9 +85,9 @@ struct foodCategoryItemView: View {
             ToolbarItemGroup(placement: .keyboard, content: {
                 Spacer()
                 Button(action: {
-                    focusedField = nil
+                    UIApplication.shared.dismissedKeyboard()
                 }, label: {
-                    Text("Готово").dynamicTypeSize(txtTheme)
+                    Text("Готово").dynamicTypeSize(txtTheme).foregroundColor(Color(red: 0/255, green: 150/255, blue: 255/255))
                 })
             })
         }
