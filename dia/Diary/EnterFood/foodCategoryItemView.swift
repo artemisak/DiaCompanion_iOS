@@ -104,5 +104,10 @@ struct foodCategoryItemView: View {
                 })
             }
         })
+        .onDisappear {
+            Task {
+                items.inCatFoodObj = []
+            }
+        }
     }
 }

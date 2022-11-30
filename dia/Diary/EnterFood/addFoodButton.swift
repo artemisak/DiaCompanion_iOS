@@ -136,6 +136,9 @@ struct addFoodButton: View {
                     } else {
                         searchByWordView = true
                         items.FillFoodCategoryList()
+                        Task {
+                            items.FoodObj = []
+                        }
                     }
                 })
                 .onChange(of: successedSave, perform: {save in
@@ -262,6 +265,9 @@ struct addFoodButton: View {
                     } else {
                         searchByWordView = true
                         items.FillFoodCategoryList()
+                        Task {
+                            items.FoodObj = []
+                        }
                     }
                 })
                 .onChange(of: successedSave, perform: {save in

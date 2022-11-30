@@ -37,7 +37,7 @@ class Food: ObservableObject {
             var name = _name.components(separatedBy: " ")
             name.removeAll(where: {$0.isEmpty})
             do {
-                
+
                 let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
                 let path = documents + "/diacompanion.db"
                 let sourcePath = Bundle.main.path(forResource: "diacompanion", ofType: "db")!
