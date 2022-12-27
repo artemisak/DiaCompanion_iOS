@@ -46,13 +46,14 @@ class Food: ObservableObject {
                 var sql = ""
                 for i in 0..<name.count {
                     if i == 0 {
-                        sql += "SELECT * FROM (SELECT * FROM (SELECT _id, name, prot, carbo, fat, gi, favor, 1 AS filter FROM food WHERE name LIKE '\(name[i])%' ORDER BY name ASC) UNION SELECT * FROM (SELECT _id, name, prot, carbo, fat, gi, favor, 2 AS filter FROM food WHERE name LIKE '_%\(name[i].lowercased())%' ORDER BY name ASC))"
+                        sql += "SELECT * FROM (SELECT _id, name, prot, carbo, fat, gi, favor, 1 AS filter FROM food WHERE name LIKE '\(name[i].firstCapitalized)%' ORDER BY name ASC) UNION SELECT * FROM ( SELECT _id, name, prot, carbo, fat, gi, favor, 2 AS filter FROM food WHERE name LIKE '_%\(name[i].lowercased())%' ORDER BY name ASC)"
+                        sql = "SELECT * FROM (\(sql))"
                     }
-                    else if i == 1{
-                        sql += " WHERE name LIKE '%\(name[i])%'"
+                    else if i == 1 {
+                        sql += " WHERE name LIKE '%\(name[i])%' OR name LIKE '%\(name[i].firstCapitalized)%'"
                     }
                     else {
-                        sql += " AND name LIKE '%\(name[i])%'"
+                        sql += " AND name LIKE '%\(name[i])%' OR name LIKE '%\(name[i].firstCapitalized)%'"
                     }
                 }
                 sql += " ORDER BY filter ASC"

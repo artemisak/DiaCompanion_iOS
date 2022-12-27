@@ -293,12 +293,12 @@ struct enterFood: View {
                                     deleteFromBD(idToDelete: idForDelete, table: 0)
                                     hasChanged = true
                                 }
+                                recommendMessage = getMessage(highGI: checkGI(listOfFood: foodItems), manyCarbo: checkCarbo(foodType: ftpreviewIndex.rawValue, listOfFood: foodItems), highBGBefore: checkBGBefore(BG0: _BG0), lowPV: checkPV(listOfFood: foodItems, date: date), bg_pred: res, isTrue: &isVisible)
                                 for i in foodItems {
                                     let arg = "\(i.name)".components(separatedBy: "////")
                                     SaveToDB(FoodName: arg[0], gram: arg[1], table_id: arg[2], selectedDate: date, selectedType: ftpreviewIndex.rawValue)
                                 }
                                 addPredictedRecord(selectedDate: date, selectedType: ftpreviewIndex.rawValue, BG0: _BG0, BG1: res)
-                                recommendMessage = getMessage(highGI: checkGI(listOfFood: foodItems), manyCarbo: checkCarbo(foodType: ftpreviewIndex.rawValue, listOfFood: foodItems), highBGBefore: checkBGBefore(BG0: _BG0), lowPV: checkPV(listOfFood: foodItems, date: date), bg_pred: res, isTrue: &isVisible)
                                 self.presentationMode.wrappedValue.dismiss()
                             }
                             catch {
@@ -312,12 +312,12 @@ struct enterFood: View {
                                 deleteFromBD(idToDelete: idForDelete, table: 0)
                                 hasChanged = true
                             }
+                            recommendMessage = getMessage(highGI: checkGI(listOfFood: foodItems), manyCarbo: checkCarbo(foodType: ftpreviewIndex.rawValue, listOfFood: foodItems), highBGBefore: checkBGBefore(BG0: 5.0), lowPV: checkPV(listOfFood: foodItems, date: date), bg_pred: res, isTrue: &isVisible)
                             for i in foodItems {
                                 let arg = "\(i.name)".components(separatedBy: "////")
                                 SaveToDB(FoodName: arg[0], gram: arg[1], table_id: arg[2], selectedDate: date, selectedType: ftpreviewIndex.rawValue)
                             }
                             addPredictedRecord(selectedDate: date, selectedType: ftpreviewIndex.rawValue, BG0: 0.0, BG1: 0.0)
-                            recommendMessage = getMessage(highGI: checkGI(listOfFood: foodItems), manyCarbo: checkCarbo(foodType: ftpreviewIndex.rawValue, listOfFood: foodItems), highBGBefore: checkBGBefore(BG0: 5.0), lowPV: checkPV(listOfFood: foodItems, date: date), bg_pred: res, isTrue: &isVisible)
                             self.presentationMode.wrappedValue.dismiss()
                         }
                     }) {
@@ -394,7 +394,7 @@ struct enterFood: View {
 struct ftPicker: View {
     @Binding var ftpreviewIndex: ftype
     var body: some View {
-        Form {
+        List {
             Picker(selection: $ftpreviewIndex, label: Text("Прием пищи").font(.system(size: 15.5))) {
                 Text("Завтрак").tag(ftype.zavtrak)
                 Text("Обед").tag(ftype.obed)

@@ -14,7 +14,7 @@ struct startPage: View {
         if #available(iOS 16.0, *) {
             Group {
                 if (loginManager.isLoggedIn && loginManager.isChoosed) {
-                    NavigationStack {
+                    NavigationView {
                         mainPage(txtTheme: $txtTheme)
                     }
                 }
@@ -43,15 +43,21 @@ struct startPage: View {
             }
             .environmentObject(loginManager)
         } else {
-            NavigationView {
+            Group {
                 if (loginManager.isLoggedIn && loginManager.isChoosed) {
-                    mainPage(txtTheme: $txtTheme)
+                    NavigationView {
+                        mainPage(txtTheme: $txtTheme)
+                    }
                 }
                 if (!loginManager.isLoggedIn || !loginManager.isChoosed) {
-                    loginPage(txtTheme: $txtTheme)
+                    NavigationView {
+                        loginPage(txtTheme: $txtTheme)
+                    }
                 }
             }
             .navigationViewStyle(StackNavigationViewStyle())
+            .transition(.slide)
+            .animation(Animation.default, value: loginManager.animateTransition)
             .onAppear {
                 loginManager.checkIfLogged()
             }

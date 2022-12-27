@@ -24,12 +24,12 @@ class Router: ObservableObject {
             let db = try Connection(path)
             let tb = Table("usermac")
             let log = Expression<Int>("loggedin")
-            let version = Expression<Int>("version")
+            let v = Expression<Int>("version")
             let choosed = Expression<Int>("versionChoosed")
-            for i in try db.prepare(tb.select(log, version, choosed)){
-                self.isLoggedIn = (i[log] != 0)
-                self.isChoosed = (i[choosed] != 0)
-                self.version = i[version]
+            for i in try db.prepare(tb.select(log, v, choosed)){
+                isLoggedIn = (i[log] != 0)
+                isChoosed = (i[choosed] != 0)
+                version = i[v]
             }
         }
         catch {

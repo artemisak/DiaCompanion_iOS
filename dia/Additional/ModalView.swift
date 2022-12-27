@@ -9,7 +9,7 @@ struct ModalView: View {
     @State private var eraseDB = false
     @State private var eraseDBprogress = false
     @State private var arrowAngle = 0.0
-    @ObservedObject var islogin: Router
+    @EnvironmentObject var loginManager: Router
     @Binding var txtTheme: DynamicTypeSize
     var body: some View {
         if #available(iOS 16.0, *) {
@@ -33,6 +33,9 @@ struct ModalView: View {
                         }.foregroundColor(.black)
                         NavigationLink(destination: helper(phelper: $phelper)) {
                             Button("Помощь", action: {})
+                        }.foregroundColor(.black)
+                        NavigationLink(destination: aboutApp()){
+                            Button("О приложении", action: {})
                         }.foregroundColor(.black)
                     }
                     Section(header: Text("Параметры восстановления").font(.system(size: 15.5))){
@@ -68,11 +71,11 @@ struct ModalView: View {
                         }).confirmationDialog("Удаляя аккаунт вы потеряете доступ к приложению, вся информация в нем будет удалена.", isPresented: $eraseAccount, titleVisibility: .visible, actions: {
                             Button("ОК", action: {
                                 presentationMode.wrappedValue.dismiss()
-                                    islogin.path.removeAll()
-                                    islogin.isLoggedIn = false
-                                    islogin.isChoosed = false
-                                    islogin.version = 1
-                                Task(priority: .background) {
+                                loginManager.path.removeAll()
+                                loginManager.isLoggedIn = false
+                                loginManager.isChoosed = false
+                                loginManager.version = 1
+                                Task {
                                     await deleteAccaunt()
                                 }
                             })
@@ -149,9 +152,9 @@ struct ModalView: View {
                             Button("ОК", action: {
                                 presentationMode.wrappedValue.dismiss()
                                 withAnimation() {
-                                    islogin.isLoggedIn = false
-                                    islogin.isChoosed = false
-                                    islogin.version = 1
+                                    loginManager.isLoggedIn = false
+                                    loginManager.isChoosed = false
+                                    loginManager.version = 1
                                 }
                                 Task {
                                     await deleteAccaunt()
@@ -189,7 +192,7 @@ struct pacientPage: View {
     @State private var bHeight: Bool = false
     @State private var txt: String = ""
     @State private var vDate = Date()
-    @EnvironmentObject var islogin: Router
+    @EnvironmentObject var loginManager: Router
     var body: some View {
         ZStack {
             List {
@@ -206,7 +209,7 @@ struct pacientPage: View {
                     Button(action: {withAnimation(.default){bStart.toggle()}}) {
                         Text("Дата начала ведения дневника")
                     }.foregroundColor(.black)
-                    if islogin.version != 3 && islogin.version != 4 {
+                    if loginManager.version != 3 && loginManager.version != 4 {
                         Button(action: {withAnimation(.default){bWeek.toggle()}}) {
                             Text("Неделя берем. на начало исследования")
                         }.foregroundColor(.black)
@@ -215,14 +218,14 @@ struct pacientPage: View {
                         Text("Индивидуальный номер пациента")
                     }.foregroundColor(.black)
                     Button(action: {withAnimation(.default){bWeight.toggle()}}) {
-                        if islogin.version != 3 && islogin.version != 4 {
+                        if loginManager.version != 3 && loginManager.version != 4 {
                             Text("Вес до беременности, кг")
                         } else {
                             Text("Вес, кг")
                         }
                     }.foregroundColor(.black)
                     Button(action: {withAnimation(.default){bHeight.toggle()}}) {
-                        if islogin.version != 3 && islogin.version != 4 {
+                        if loginManager.version != 3 && loginManager.version != 4 {
                             Text("Рост до беременности, см")
                         } else {
                             Text("Рост, см")

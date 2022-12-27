@@ -126,5 +126,6 @@ struct loginPage: View {
                 }
             }
         }
+        .animation(.default, value: focusedField)
     }
 }

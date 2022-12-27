@@ -367,8 +367,11 @@ struct history: View {
                 Text("Время приема").font(.system(size: 15.5))
             }
             Section {
-                ForEach(info, id: \.self){
-                    Text("\($0[0])")
+                ForEach(info, id: \.self){foodItem in
+                    HStack{
+                        giIndicator(gi:  round(Double(foodItem[6])!*100)/100).frame(width: 40)
+                        Text("\(foodItem[0])").padding(.leading, 5)
+                    }
                 }
             } header: {
                 Text("Список блюд").font(.system(size: 15.5))

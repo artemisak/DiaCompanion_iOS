@@ -87,7 +87,7 @@ struct inject: View {
                 })
             })
         }
-        .navigationTitle("Введение инсулина")
+        .navigationTitle("Инсулин")
         .onAppear(perform: {
             UIScrollView.appearance().keyboardDismissMode = .onDrag
             UITableView.appearance().showsVerticalScrollIndicator = false

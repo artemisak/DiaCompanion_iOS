@@ -5,7 +5,7 @@ struct ChangeColorButton: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .background(Color.clear)
-            .foregroundColor(.blue)
+            .foregroundColor(.accentColor)
     }
 }
 

@@ -72,14 +72,14 @@ struct mainPage: View {
             }
         }
         .navigationTitle("ДиаКомпаньон")
-        .toolbar {
+        .toolbar(content: {
             ToolbarItem(placement: .automatic) {
                 Button(action: {showModal.toggle()}){
                     Image(systemName: "line.3.horizontal")
                 }
                 .buttonStyle(ButtonAndLink()).foregroundColor(Color.accentColor)
                 .sheet(isPresented: $showModal) {
-                    ModalView(islogin: islogin, txtTheme: $txtTheme).dynamicTypeSize(txtTheme)
+                    ModalView(txtTheme: $txtTheme).dynamicTypeSize(txtTheme)
                 }
             }
             ToolbarItem(placement: .navigationBarLeading) {
@@ -87,7 +87,7 @@ struct mainPage: View {
                     Image(systemName: "plus")
                 }.buttonStyle(ButtonAndLink()).foregroundColor(Color.accentColor)
             }
-        }
+        })
         .navigationBarTitleDisplayMode(.large)
         .navigationBarBackButtonHidden()
         .ignoresSafeArea(.keyboard, edges: .bottom)

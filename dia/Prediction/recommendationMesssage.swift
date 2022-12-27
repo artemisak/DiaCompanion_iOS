@@ -10,21 +10,21 @@ import SQLite
 
 func getMessage(highGI: Bool, manyCarbo: Bool, highBGBefore: Bool, lowPV: Bool, bg_pred: Double, isTrue: inout Bool) -> String {
     var txt = ""
-    if (highGI && bg_pred > 7.0) {
+    if (bg_pred >= 6.8) {
+        txt = "Вероятно, уровень глюкозы после еды будет высоким, " +
+        "рекомендована прогулка после приема пищи."
+    } else if (highGI && bg_pred >= 6.8) {
         txt = "Рекомендуется исключить из рациона или уменьшить количество " +
         "продуктов с высоким гликемическим индексом (более 55)"
-    } else if (manyCarbo && bg_pred > 7.0) {
+    } else if (manyCarbo && bg_pred >= 6.8) {
         txt = "Рекомендовано уменьшить количество углеводов в приеме пищи"
-    } else if (highBGBefore && bg_pred > 7.0) {
+    } else if (highBGBefore && bg_pred >= 6.8) {
         txt = "Высокий уровень глюкозы до еды. " +
         "Рекомендовано уменьшить количество углеводов во время перекусов."
-    } else if (lowPV && bg_pred > 7.0) {
+    } else if (lowPV && bg_pred >= 6.8) {
         txt = "В последнее время в Вашем рационе было недостаточно пищевых волокон. " +
         "Добавьте в рацион разрешённые овощи, фрукты, злаковые, отруби " +
         "(см. обучающие материалы)."
-    } else if (bg_pred > 7.0) {
-        txt = "Вероятно, уровень глюкозы после еды будет высоким, " +
-        "рекомендована прогулка после приема пищи."
     }
     if txt != "" {
         isTrue = true

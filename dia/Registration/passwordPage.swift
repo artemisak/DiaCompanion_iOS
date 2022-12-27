@@ -58,13 +58,13 @@ struct passwordPage: View {
                             isValidPassword = loginManager.checkEnteredPassord(pass)
                         }
                         if isValidPassword {
+                            focusedField = false
                             isLoading = true
                             Task {
                                 await loginManager.setLogged()
                                 isLoading = false
                             }
                         }
-                        
                     }
                 }, label: {
                     if isLoading {
@@ -77,15 +77,14 @@ struct passwordPage: View {
             } else {
                 Button(action: {
                     if pass.isEmpty {
-                        withAnimation(.default){
-                            focusedField = true
-                        }
+                        focusedField = true
                     }
                     else {
                         withAnimation(.default){
                             isValidPassword = loginManager.checkEnteredPassord(pass)
                         }
                         if isValidPassword {
+                            focusedField = false
                             isLoading = true
                             Task {
                                 await loginManager.setLogged()
@@ -108,6 +107,7 @@ struct passwordPage: View {
         }
         .padding()
         .navigationBarTitleDisplayMode(.inline)
+        .navigationBarBackButtonHidden()
         .toolbar {
             ToolbarItem(placement: .principal) {
                 HStack {
@@ -123,5 +123,6 @@ struct passwordPage: View {
                 }
             }
         }
+        .animation(.default, value: focusedField)
     }
 }
