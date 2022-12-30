@@ -144,7 +144,9 @@ struct history: View {
                                     default:
                                         ftpreviewIndex = .zavtrak
                                     }
-                                    redirectToEnterFood = true
+                                    Task {
+                                        redirectToEnterFood = true
+                                    }
                                 }
                                 else if i.type == 1 {
                                     idFordelete = []
@@ -169,7 +171,9 @@ struct history: View {
                                     default:
                                         actPreviewIndex = act.zar
                                     }
-                                    redirectToEnterAct = true
+                                    Task {
+                                        redirectToEnterAct = true
+                                    }
                                 }
                                 else if i.type == 2 {
                                     idFordelete = []
@@ -202,7 +206,9 @@ struct history: View {
                                     default:
                                         previewIndexInject = injectType.ultra
                                     }
-                                    redirectToEnterInject = true
+                                    Task {
+                                        redirectToEnterInject = true
+                                    }
                                 }
                                 else if i.type == 3 {
                                     idFordelete = []
@@ -228,7 +234,9 @@ struct history: View {
                                         spreviewIndexSugar = .natoshak
                                     }
                                     bool1Sugar = try! convertToInt(txt: i.metaInfo[0][2])
-                                    redirectToEnterSugar = true
+                                    Task {
+                                        redirectToEnterSugar = true
+                                    }
                                 }
                                 else if i.type == 4 {
                                     idFordelete = []
@@ -237,7 +245,9 @@ struct history: View {
                                     }
                                     tKetonur = i.metaInfo[0][0]
                                     dateKetonur = convertToDate(d: i.date)
-                                    redirectToEnterKetonur = true
+                                    Task {
+                                        redirectToEnterKetonur = true
+                                    }
                                 }
                                 else if i.type == 5 {
                                     idFordelete = []
@@ -246,7 +256,9 @@ struct history: View {
                                     }
                                     tMassa = i.metaInfo[0][0]
                                     dateMassa = convertToDate(d: i.date)
-                                    redirectToEnterMassa = true
+                                    Task {
+                                        redirectToEnterMassa = true
+                                    }
                                 }
                             } label: {
                                 Image(systemName: "pencil")
