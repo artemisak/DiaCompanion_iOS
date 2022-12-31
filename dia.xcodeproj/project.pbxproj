@@ -448,7 +448,6 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				ru,
-				Base,
 			);
 			mainGroup = AC2603132690691E00C4A520;
 			productRefGroup = AC26031D2690691E00C4A520 /* Products */;
