@@ -17,7 +17,6 @@ struct foodCategoryItemView: View {
     @State var selectedFoodTempRating: Int = 0
     @State var category: String
     @Binding var foodItems: [foodToSave]
-    @Binding var txtTheme: DynamicTypeSize
     @EnvironmentObject var items: Food
     var body: some View {
         ZStack {
@@ -25,7 +24,7 @@ struct foodCategoryItemView: View {
                 VStack(spacing: .zero) {
                     Divider()
                     HStack{
-                        TextField(text: $selectedFoodCategoryItem, label: {Text("Поиск по слову").dynamicTypeSize(txtTheme)}).disableAutocorrection(true)
+                        TextField(text: $selectedFoodCategoryItem, label: {Text("Поиск по слову")}).disableAutocorrection(true)
                         Image(systemName: "xmark").foregroundColor(Color(red: 0/255, green: 150/255, blue: 255/255))
                             .onTapGesture {
                                 selectedFoodCategoryItem = ""
@@ -87,7 +86,7 @@ struct foodCategoryItemView: View {
                 Button(action: {
                     UIApplication.shared.dismissedKeyboard()
                 }, label: {
-                    Text("Готово").dynamicTypeSize(txtTheme).foregroundColor(Color(red: 0/255, green: 150/255, blue: 255/255))
+                    Text("Готово").foregroundColor(Color(red: 0/255, green: 150/255, blue: 255/255))
                 })
             })
         }

@@ -12,7 +12,6 @@ struct loginPage: View {
     @State private var isValidLogin: Bool = true
     @State private var nextField: Bool = false
     @State private var isLoading: Bool = false
-    @Binding var txtTheme: DynamicTypeSize
     @FocusState private var focusedField: Bool
     @EnvironmentObject var loginManager: Router
     var body: some View {
@@ -45,68 +44,35 @@ struct loginPage: View {
                     .foregroundColor(.red)
                     .frame(maxWidth: .infinity, alignment: .leading)
             }
-            if #available(iOS 16, *){
-                Button(action: {
-                    if login.isEmpty {
-                        withAnimation(.default){
-                            focusedField = true
-                        }
-                    } else {
-                        withAnimation(.default){
-                            isValidLogin = loginManager.checkEnteredLogin(login)
-                            if isValidLogin {
-                                focusedField = false
-                            }
-                        }
+            Button {
+                if login.isEmpty {
+                    withAnimation(.default){
+                        focusedField = true
                     }
-                }, label: {
-                    Text("Далее").frame(height: 25)
-                })
-                .buttonStyle(RoundedRectangleButtonStyle())
-            } else {
-                Button {
-                    if login.isEmpty {
-                        withAnimation(.default){
-                            focusedField = true
+                } else {
+                    withAnimation(.default){
+                        isValidLogin = loginManager.checkEnteredLogin(login)
+                        if isValidLogin {
+                            focusedField = false
+                            nextField = true
                         }
-                    } else {
-                        withAnimation(.default){
-                            isValidLogin = loginManager.checkEnteredLogin(login)
-                            if isValidLogin {
-                                focusedField = false
-                                nextField = true
-                            }
-                        }
-                    }
-                } label: {
-                    Text("Далее").frame(height: 25)
-                }
-                .buttonStyle(RoundedRectangleButtonStyle())
-                NavigationLink(isActive: $nextField, destination: {passwordPage(txtTheme: $txtTheme)}, label: {EmptyView()})
-                    .buttonStyle(TransparentButton()).isHidden(true)
-            }
-            if #available(iOS 16, *){
-                Button {
-                    focusedField = false
-                    loginManager.navigateToHelper()
-                } label: {
-                    HStack{
-                        Text("Регистрация")
-                        Image(systemName: "questionmark.circle")
                     }
                 }
-                .buttonStyle(ChangeColorButton())
-            } else {
-                NavigationLink(destination: {
-                    regHelper()
-                }, label: {
-                    HStack{
-                        Text("Регистрация")
-                        Image(systemName: "questionmark.circle")
-                    }
-                })
-                .buttonStyle(ChangeColorButton())
+            } label: {
+                Text("Далее").frame(height: 25)
             }
+            .buttonStyle(RoundedRectangleButtonStyle())
+            NavigationLink(isActive: $nextField, destination: {passwordPage()}, label: {EmptyView()})
+                .buttonStyle(TransparentButton()).isHidden(true)
+            NavigationLink(destination: {
+                regHelper()
+            }, label: {
+                HStack{
+                    Text("Регистрация")
+                    Image(systemName: "questionmark.circle")
+                }
+            })
+            .buttonStyle(ChangeColorButton())
         }
         .padding()
         .navigationBarTitleDisplayMode(.inline)

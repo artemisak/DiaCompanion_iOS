@@ -20,7 +20,6 @@ struct addFoodButton: View {
     @State private var searchByWordCategoryView: Bool = true
     @State public var successedSave: Bool = false
     @StateObject private var items = Food()
-    @Binding var txtTheme: DynamicTypeSize
     var body: some View {
         if #available(iOS 16, *){
             NavigationStack {
@@ -29,7 +28,7 @@ struct addFoodButton: View {
                         VStack(spacing: .zero) {
                             Divider()
                             HStack {
-                                TextField(text: $selectedFood, label: {Text("Поиск по слову").dynamicTypeSize(txtTheme)}).disableAutocorrection(true)
+                                TextField(text: $selectedFood, label: {Text("Поиск по слову")}).disableAutocorrection(true)
                                 Image(systemName: "xmark").foregroundColor(Color(red: 0/255, green: 150/255, blue: 255/255))
                                     .onTapGesture {
                                         selectedFood = ""
@@ -55,7 +54,7 @@ struct addFoodButton: View {
                             }
                             .ignoresSafeArea(.keyboard)
                             .navigationDestination(for: CategoryList.self, destination: {dish in
-                                foodCategoryItemView(category: "\(dish.name)", foodItems: $foodItems, txtTheme: $txtTheme)
+                                foodCategoryItemView(category: "\(dish.name)", foodItems: $foodItems)
                             })
                         } else {
                             ScrollView {
@@ -111,7 +110,7 @@ struct addFoodButton: View {
                         Button(action: {
                             self.presentationMode.wrappedValue.dismiss()
                         }) {
-                            Text("Закрыть").dynamicTypeSize(txtTheme)
+                            Text("Закрыть")
                         }
                     })
                     ToolbarItemGroup(placement: .keyboard, content: {
@@ -119,7 +118,7 @@ struct addFoodButton: View {
                         Button(action: {
                             UIApplication.shared.dismissedKeyboard()
                         }, label: {
-                            Text("Готово").dynamicTypeSize(txtTheme).foregroundColor(Color(red: 0/255, green: 150/255, blue: 255/255))
+                            Text("Готово").foregroundColor(Color(red: 0/255, green: 150/255, blue: 255/255))
                         })
                     })
                 }
@@ -161,7 +160,7 @@ struct addFoodButton: View {
                         VStack(spacing: .zero) {
                             Divider()
                             HStack {
-                                TextField(text: $selectedFood, label: {Text("Поиск по слову").dynamicTypeSize(txtTheme)}).disableAutocorrection(true)
+                                TextField(text: $selectedFood, label: {Text("Поиск по слову")}).disableAutocorrection(true)
                                 Image(systemName: "xmark").foregroundColor(Color(red: 0/255, green: 150/255, blue: 255/255))
                                     .onTapGesture {
                                         selectedFood = ""
@@ -176,7 +175,7 @@ struct addFoodButton: View {
                                 VStack(spacing: .zero) {
                                     ForEach(items.CatObj, id: \.id){dish in
                                         VStack(spacing: .zero) {
-                                            NavigationLink{foodCategoryItemView(category: "\(dish.name)", foodItems: $foodItems, txtTheme: $txtTheme)} label: {
+                                            NavigationLink{foodCategoryItemView(category: "\(dish.name)", foodItems: $foodItems)} label: {
                                                 Text("\(dish.name)").frame(minWidth: 0, maxWidth: .infinity, alignment: .leading).font(.system(size: 20)).multilineTextAlignment(.leading).foregroundColor(.black).padding(.horizontal).padding(.vertical, 12.5)
                                             }
                                             .buttonStyle(ButtonAndLink())
@@ -240,7 +239,7 @@ struct addFoodButton: View {
                         Button(action: {
                             self.presentationMode.wrappedValue.dismiss()
                         }) {
-                            Text("Закрыть").dynamicTypeSize(txtTheme)
+                            Text("Закрыть")
                         }
                     })
                     ToolbarItemGroup(placement: .keyboard, content: {
@@ -248,7 +247,7 @@ struct addFoodButton: View {
                         Button(action: {
                             UIApplication.shared.dismissedKeyboard()
                         }, label: {
-                            Text("Готово").dynamicTypeSize(txtTheme).foregroundColor(Color(red: 0/255, green: 150/255, blue: 255/255))
+                            Text("Готово").foregroundColor(Color(red: 0/255, green: 150/255, blue: 255/255))
                         })
                     })
                 }

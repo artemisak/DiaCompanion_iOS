@@ -67,7 +67,6 @@ struct addCustomMeal: View {
     @State private var errorMessage: String = "Заполните поля в соотвествии с требованиями"
     @State private var permission: Bool = false
     @FocusState private var focus: Bool
-    @Binding var txtTheme: DynamicTypeSize
     var body: some View {
         List {
             Section(header: Text("Общая информация").font(.system(size: 15.5))){
@@ -88,7 +87,7 @@ struct addCustomMeal: View {
                     }
                 }
                 .sheet(isPresented: $showSheet) {
-                    addFoodButton(foodItems: $foodItems, txtTheme: $txtTheme).dynamicTypeSize(txtTheme)
+                    addFoodButton(foodItems: $foodItems)
                 }
             }
             Section {
@@ -150,4 +149,9 @@ func checkIsEmpty(items: [foodToSave]) throws -> [foodToSave] {
         throw inputErorrs.EmptyError
     }
     return items
+}
+
+struct foodToSave: Identifiable, Hashable {
+    var id = UUID()
+    var name: String
 }

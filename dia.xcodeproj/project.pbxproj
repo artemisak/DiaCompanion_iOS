@@ -20,6 +20,17 @@
 		A767CC7F2944C0BE0093A979 /* giIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A767CC7E2944C0BE0093A979 /* giIndicator.swift */; };
 		A770675828A459F800457195 /* savedNotice.swift in Sources */ = {isa = PBXBuildFile; fileRef = A770675728A459F800457195 /* savedNotice.swift */; };
 		A777150028D71931005C5793 /* versionChoose.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77714FF28D71931005C5793 /* versionChoose.swift */; };
+		A77B7ED62973EFEA00CFEBD5 /* addGramButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77B7ED22973EFEA00CFEBD5 /* addGramButton.swift */; };
+		A77B7ED72973EFEA00CFEBD5 /* listRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77B7ED32973EFEA00CFEBD5 /* listRow.swift */; };
+		A77B7ED82973EFEA00CFEBD5 /* succesNotify.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77B7ED42973EFEA00CFEBD5 /* succesNotify.swift */; };
+		A77B7ED92973EFEA00CFEBD5 /* listHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77B7ED52973EFEA00CFEBD5 /* listHeader.swift */; };
+		A77B7EDD2973EFF600CFEBD5 /* listModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77B7EDB2973EFF600CFEBD5 /* listModel.swift */; };
+		A77B7EE22973EFFC00CFEBD5 /* inGroupList.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77B7EE02973EFFC00CFEBD5 /* inGroupList.swift */; };
+		A77B7EE32973EFFC00CFEBD5 /* listOfGroups.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77B7EE12973EFFC00CFEBD5 /* listOfGroups.swift */; };
+		A77B7EE62973F00400CFEBD5 /* searchByWordList.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77B7EE52973F00400CFEBD5 /* searchByWordList.swift */; };
+		A77B7EE82973F01100CFEBD5 /* searchViewsGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77B7EE72973F01100CFEBD5 /* searchViewsGroup.swift */; };
+		A77B7EEA2973F01700CFEBD5 /* enterPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77B7EE92973F01700CFEBD5 /* enterPoint.swift */; };
+		A77B7EF02973F94E00CFEBD5 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = A77B7EF22973F94E00CFEBD5 /* Localizable.strings */; };
 		A783B43728D1384000059BBD /* reserved.db in Resources */ = {isa = PBXBuildFile; fileRef = A783B43628D1384000059BBD /* reserved.db */; };
 		A78E381E2813F0680096E2E2 /* myExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A78E381D2813F0680096E2E2 /* myExtensions.swift */; };
 		A7A4A45728EC5CCC0032652C /* predictModel.mlpackage in Sources */ = {isa = PBXBuildFile; fileRef = A7A4A45628EC5CCC0032652C /* predictModel.mlpackage */; };
@@ -102,6 +113,18 @@
 		A767CC7E2944C0BE0093A979 /* giIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = giIndicator.swift; sourceTree = "<group>"; };
 		A770675728A459F800457195 /* savedNotice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = savedNotice.swift; sourceTree = "<group>"; };
 		A77714FF28D71931005C5793 /* versionChoose.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = versionChoose.swift; sourceTree = "<group>"; };
+		A77B7ED22973EFEA00CFEBD5 /* addGramButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = addGramButton.swift; sourceTree = "<group>"; };
+		A77B7ED32973EFEA00CFEBD5 /* listRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = listRow.swift; sourceTree = "<group>"; };
+		A77B7ED42973EFEA00CFEBD5 /* succesNotify.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = succesNotify.swift; sourceTree = "<group>"; };
+		A77B7ED52973EFEA00CFEBD5 /* listHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = listHeader.swift; sourceTree = "<group>"; };
+		A77B7EDB2973EFF600CFEBD5 /* listModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = listModel.swift; sourceTree = "<group>"; };
+		A77B7EE02973EFFC00CFEBD5 /* inGroupList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = inGroupList.swift; sourceTree = "<group>"; };
+		A77B7EE12973EFFC00CFEBD5 /* listOfGroups.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = listOfGroups.swift; sourceTree = "<group>"; };
+		A77B7EE52973F00400CFEBD5 /* searchByWordList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = searchByWordList.swift; sourceTree = "<group>"; };
+		A77B7EE72973F01100CFEBD5 /* searchViewsGroup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = searchViewsGroup.swift; sourceTree = "<group>"; };
+		A77B7EE92973F01700CFEBD5 /* enterPoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = enterPoint.swift; sourceTree = "<group>"; };
+		A77B7EF12973F94E00CFEBD5 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
+		A77B7EF52973F96A00CFEBD5 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		A783B43628D1384000059BBD /* reserved.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = reserved.db; sourceTree = "<group>"; };
 		A78E381D2813F0680096E2E2 /* myExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = myExtensions.swift; sourceTree = "<group>"; };
 		A79A9354284D58F300C0A1AE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = /Users/artemisakov/Documents/swiftDia/dia/Info.plist; sourceTree = "<absolute>"; };
@@ -188,6 +211,55 @@
 				6C02743FFD40C5E72C5C050B /* Pods_dia.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A77B7ECB2973EF6600CFEBD5 /* searchingViews */ = {
+			isa = PBXGroup;
+			children = (
+				A77B7EE92973F01700CFEBD5 /* enterPoint.swift */,
+				A77B7EE72973F01100CFEBD5 /* searchViewsGroup.swift */,
+				A77B7EE42973F00400CFEBD5 /* searchByWord */,
+				A77B7EDF2973EFFC00CFEBD5 /* searchByCategory */,
+				A77B7EDA2973EFF600CFEBD5 /* Model */,
+				A77B7ED12973EFEA00CFEBD5 /* Components */,
+			);
+			path = searchingViews;
+			sourceTree = "<group>";
+		};
+		A77B7ED12973EFEA00CFEBD5 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				A77B7ED22973EFEA00CFEBD5 /* addGramButton.swift */,
+				A77B7ED32973EFEA00CFEBD5 /* listRow.swift */,
+				A77B7ED42973EFEA00CFEBD5 /* succesNotify.swift */,
+				A77B7ED52973EFEA00CFEBD5 /* listHeader.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		A77B7EDA2973EFF600CFEBD5 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				A77B7EDB2973EFF600CFEBD5 /* listModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		A77B7EDF2973EFFC00CFEBD5 /* searchByCategory */ = {
+			isa = PBXGroup;
+			children = (
+				A77B7EE02973EFFC00CFEBD5 /* inGroupList.swift */,
+				A77B7EE12973EFFC00CFEBD5 /* listOfGroups.swift */,
+			);
+			path = searchByCategory;
+			sourceTree = "<group>";
+		};
+		A77B7EE42973F00400CFEBD5 /* searchByWord */ = {
+			isa = PBXGroup;
+			children = (
+				A77B7EE52973F00400CFEBD5 /* searchByWordList.swift */,
+			);
+			path = searchByWord;
 			sourceTree = "<group>";
 		};
 		A78EA622291D1B6500B2CDD2 /* PacientDetails */ = {
@@ -352,6 +424,7 @@
 		AC2603132690691E00C4A520 = {
 			isa = PBXGroup;
 			children = (
+				A77B7EF22973F94E00CFEBD5 /* Localizable.strings */,
 				AC26031E2690691E00C4A520 /* dia */,
 				AC26031D2690691E00C4A520 /* Products */,
 				C0D553CA378A488FD7608214 /* Pods */,
@@ -371,6 +444,7 @@
 			isa = PBXGroup;
 			children = (
 				AC26031F2690691E00C4A520 /* diaApp.swift */,
+				A77B7ECB2973EF6600CFEBD5 /* searchingViews */,
 				A78EA62B291D1DC100B2CDD2 /* Extensions */,
 				A78EA625291D1C8500B2CDD2 /* Prediction */,
 				A78EA627291D1CCC00B2CDD2 /* Registration */,
@@ -448,6 +522,8 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				ru,
+				Base,
+				en,
 			);
 			mainGroup = AC2603132690691E00C4A520;
 			productRefGroup = AC26031D2690691E00C4A520 /* Products */;
@@ -467,6 +543,7 @@
 				A783B43728D1384000059BBD /* reserved.db in Resources */,
 				A7F8A597288ED30100C13F36 /* Education.pdf in Resources */,
 				AC2603242690691F00C4A520 /* Assets.xcassets in Resources */,
+				A77B7EF02973F94E00CFEBD5 /* Localizable.strings in Resources */,
 				AC2603272690691F00C4A520 /* Preview Assets.xcassets in Resources */,
 				AC71760827209863000376FD /* diacompanion.db in Resources */,
 				A7DCBBB327BD8AD4009A3A16 /* Launch Screen.storyboard in Resources */,
@@ -535,28 +612,37 @@
 				ACF4E40E272DB126002D2797 /* RKManager.swift in Sources */,
 				ACF4E412272DB126002D2797 /* RKColorSettings.swift in Sources */,
 				ACEDB4832721BD0600DBB67C /* weekS.swift in Sources */,
+				A77B7EDD2973EFF600CFEBD5 /* listModel.swift in Sources */,
 				AC7A53F726DBF77B00FE65E7 /* enterAct.swift in Sources */,
 				AC2D32E427359EC50022AFD9 /* diaryManager.swift in Sources */,
 				A7DF49D2291A851B007A9371 /* ChartStyle.swift in Sources */,
+				A77B7EEA2973F01700CFEBD5 /* enterPoint.swift in Sources */,
+				A77B7EE82973F01100CFEBD5 /* searchViewsGroup.swift in Sources */,
 				A7DF49D6291A851B007A9371 /* Previews.swift in Sources */,
 				A7DF49D4291A851B007A9371 /* LineChartView.swift in Sources */,
 				A70BCC3A27B9471E00C22703 /* loginManager.swift in Sources */,
 				A7DF49D8291A851B007A9371 /* LegendView.swift in Sources */,
 				AC2603222690691E00C4A520 /* mainPage.swift in Sources */,
 				ACD86E8126DE820B0027B8ED /* sugarChange.swift in Sources */,
+				A77B7EE32973EFFC00CFEBD5 /* listOfGroups.swift in Sources */,
 				ACF2F0AA26DEA8300066753D /* history.swift in Sources */,
 				ACCC5C2E2702190B0057CA7C /* pacientManager.swift in Sources */,
 				AC32A68427260602001DDB9F /* pWeight.swift in Sources */,
 				A7DF49DA291A851B007A9371 /* ChartGrid.swift in Sources */,
 				A7DF49D0291A851B007A9371 /* BarsView.swift in Sources */,
 				A7D0976A2809FE16000A12E1 /* myButtons.swift in Sources */,
+				A77B7ED72973EFEA00CFEBD5 /* listRow.swift in Sources */,
 				A7DF49D3291A851B007A9371 /* RandomAccessCollection.swift in Sources */,
 				ACF7E7C32736F12C0027DD11 /* addSreenView.swift in Sources */,
 				ACF2F0A826DE9A1D0066753D /* inject.swift in Sources */,
 				ACC3798626ECFA7E00E0729E /* massa.swift in Sources */,
+				A77B7EE62973F00400CFEBD5 /* searchByWordList.swift in Sources */,
 				A7230C7F27705AED00B68244 /* excelManager.swift in Sources */,
+				A77B7ED82973EFEA00CFEBD5 /* succesNotify.swift in Sources */,
+				A77B7ED62973EFEA00CFEBD5 /* addGramButton.swift in Sources */,
 				AC2D32E2273594630022AFD9 /* addFoodButton.swift in Sources */,
 				A7DF49E0291A85D9007A9371 /* details.swift in Sources */,
+				A77B7ED92973EFEA00CFEBD5 /* listHeader.swift in Sources */,
 				ACF4E40F272DB126002D2797 /* RKWeekdayHeader.swift in Sources */,
 				A7DCCA4728C63FBA00D104F5 /* foodCategoryItemView.swift in Sources */,
 				ACEDB47D2721A19400DBB67C /* dStart.swift in Sources */,
@@ -570,6 +656,7 @@
 				A706DA802843864A00473941 /* emailSender.swift in Sources */,
 				A7F4486B291EB5AD00A4B379 /* loginPage.swift in Sources */,
 				AC6327022751012C00C25E23 /* historyManager.swift in Sources */,
+				A77B7EE22973EFFC00CFEBD5 /* inGroupList.swift in Sources */,
 				AC32A68227260081001DDB9F /* pid.swift in Sources */,
 				A7D27E022815ADDC00DC00E9 /* PDFManager.swift in Sources */,
 				A7DF49D5291A851B007A9371 /* LineChartShape.swift in Sources */,
@@ -596,6 +683,18 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		A77B7EF22973F94E00CFEBD5 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A77B7EF12973F94E00CFEBD5 /* ru */,
+				A77B7EF52973F96A00CFEBD5 /* en */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		AC2603292690691F00C4A520 /* Debug */ = {

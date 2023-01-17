@@ -10,10 +10,11 @@ import SwiftUI
 struct giIndicator: View {
     @State var gi: Double
     var body: some View {
-        Text(String(format: "%.1f", gi)).font(.system(size: 10))
+        Text(String(format: "%.1f", gi))
             .padding(7)
-            .background(Circle().stroke(getColor(_gi: gi)))
+            .background(RoundedRectangle(cornerSize: CGSize(width: 7, height: 7)).stroke(getColor(_gi: gi)))
             .foregroundColor(getColor(_gi: gi))
+            .fixedSize(horizontal: true, vertical: false)
     }
 
     func getColor(_gi: Double) -> Color {

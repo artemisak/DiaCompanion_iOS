@@ -8,7 +8,6 @@ struct massa: View {
     @State private var isCorrect = false
     @FocusState private var focusedField: Bool
     @Binding var hasChanged: Bool
-    @Binding var txtTheme: DynamicTypeSize
     var body: some View {
         List {
             Section(header: Text("Общая информация").font(.system(size: 15.5))){
@@ -41,7 +40,7 @@ struct massa: View {
                         isCorrect.toggle()
                     }
                 }) {
-                    Text("Сохранить").dynamicTypeSize(txtTheme)
+                    Text("Сохранить")
                 }.alert(isPresented: $isCorrect) {
                     Alert(title: Text("Статус операции"), message: Text("Введите релевантное \nзначение"), dismissButton: .default(Text("ОК")))
                 }
@@ -53,7 +52,7 @@ struct massa: View {
                 Button(action: {
                     focusedField = false
                 }, label: {
-                    Text("Готово").dynamicTypeSize(txtTheme)
+                    Text("Готово")
                 })
             })
         }

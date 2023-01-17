@@ -33,8 +33,8 @@ struct history: View {
         case all = "Все записи"
         var id : Self { self }
     }
-    @Binding var txtTheme: DynamicTypeSize
     @StateObject private var hList = historyList()
+    @EnvironmentObject var collection: foodCollections
     @State private var fillterDefault = fillterBy.all
     @State public var deselected = [deselectRow(name: "Измерение сахара"), deselectRow(name: "Иньекции инсулина"), deselectRow(name: "Прием пищи"), deselectRow(name: "Физическая нагрузка"), deselectRow(name: "Уровень кетонов в моче"), deselectRow(name: "Измерение массы тела")]
     @State private var redirectToEnterFood: Bool = false
@@ -46,7 +46,6 @@ struct history: View {
     @State private var sugar: String = ""
     @State private var enabled: Bool = false
     @State private var date : Date = Date()
-    @State private var foodItems: [foodToSave] = []
     @State private var idFordelete: [Int] = []
     @State private var ftpreviewIndex: ftype = ftype.zavtrak
     @State private var actTime: String = ""
@@ -72,12 +71,12 @@ struct history: View {
     var body: some View {
         VStack(spacing: .zero) {
             VStack(spacing: .zero){
-                NavigationLink(isActive: $redirectToEnterFood, destination: {enterFood(enabled: enabled, sugar: sugar, date: date, foodItems: foodItems, ftpreviewIndex: ftpreviewIndex, idForDelete: idFordelete, txtTheme: $txtTheme, hasChanged: $hasChanged)}, label: {EmptyView()}).buttonStyle(TransparentButton()).isHidden(true)
-                NavigationLink(isActive: $redirectToEnterAct, destination: {enterAct(t: actTime, date: actDate, actpreviewIndex: actPreviewIndex, idForDelete: idFordelete, txtTheme: $txtTheme, hasChanged: $hasChanged)}, label: {EmptyView()}).buttonStyle(TransparentButton()).isHidden(true)
-                NavigationLink(isActive: $redirectToEnterInject, destination: {inject(t: tInject, date: dateInject, previewIndex: previewIndexInject, previewIndex1: previewIndexInject1, idForDelete: idFordelete, txtTheme: $txtTheme, hasChanged: $hasChanged)}, label: {EmptyView()}).buttonStyle(TransparentButton()).isHidden(true)
-                NavigationLink(isActive: $redirectToEnterSugar, destination: {sugarChange(t: tSugar, date: dateSugar, isAct: isActSugar, bool1: bool1Sugar, spreviewIndex: spreviewIndexSugar, idForDelete: idFordelete, txtTheme: $txtTheme, hasChanged: $hasChanged)}, label: {EmptyView()}).buttonStyle(TransparentButton()).isHidden(true)
-                NavigationLink(isActive: $redirectToEnterKetonur, destination: {ketonur(t: tKetonur, date: dateKetonur, idForDelete: idFordelete, hasChanged: $hasChanged, txtTheme: $txtTheme)}, label: {EmptyView()}).buttonStyle(TransparentButton()).isHidden(true)
-                NavigationLink(isActive: $redirectToEnterMassa, destination: {massa(t: tMassa, date: dateMassa, idForDelete: idFordelete, hasChanged: $hasChanged, txtTheme: $txtTheme)}, label: {EmptyView()}).buttonStyle(TransparentButton()).isHidden(true)
+                NavigationLink(isActive: $redirectToEnterFood, destination: {enterFood(enabled: enabled, sugar: sugar, date: date, ftpreviewIndex: ftpreviewIndex, idForDelete: idFordelete, hasChanged: $hasChanged)}, label: {EmptyView()}).buttonStyle(TransparentButton()).isHidden(true)
+                NavigationLink(isActive: $redirectToEnterAct, destination: {enterAct(t: actTime, date: actDate, actpreviewIndex: actPreviewIndex, idForDelete: idFordelete, hasChanged: $hasChanged)}, label: {EmptyView()}).buttonStyle(TransparentButton()).isHidden(true)
+                NavigationLink(isActive: $redirectToEnterInject, destination: {inject(t: tInject, date: dateInject, previewIndex: previewIndexInject, previewIndex1: previewIndexInject1, idForDelete: idFordelete, hasChanged: $hasChanged)}, label: {EmptyView()}).buttonStyle(TransparentButton()).isHidden(true)
+                NavigationLink(isActive: $redirectToEnterSugar, destination: {sugarChange(t: tSugar, date: dateSugar, isAct: isActSugar, bool1: bool1Sugar, spreviewIndex: spreviewIndexSugar, idForDelete: idFordelete, hasChanged: $hasChanged)}, label: {EmptyView()}).buttonStyle(TransparentButton()).isHidden(true)
+                NavigationLink(isActive: $redirectToEnterKetonur, destination: {ketonur(t: tKetonur, date: dateKetonur, idForDelete: idFordelete, hasChanged: $hasChanged)}, label: {EmptyView()}).buttonStyle(TransparentButton()).isHidden(true)
+                NavigationLink(isActive: $redirectToEnterMassa, destination: {massa(t: tMassa, date: dateMassa, idForDelete: idFordelete, hasChanged: $hasChanged)}, label: {EmptyView()}).buttonStyle(TransparentButton()).isHidden(true)
             }
             Picker("Фильтр", selection: $fillterDefault, content: {
                 Text("День").tag(fillterBy.day)
@@ -121,9 +120,10 @@ struct history: View {
                                         idFordelete.append(j)
                                     }
                                     date = convertToDate(d: i.date)
-                                    foodItems = []
+                                    collection.addedFoodItems = []
                                     for (j, k) in zip(i.metaInfo, i.metaInfo.indices) {
-                                        foodItems.append(foodToSave(name: j[0]+"////"+j[1]+"////"+"\(i.tbID[k])"))
+                                        collection.addedFoodItems.append(food(table_id: i.tbID[k], name: j[0], prot: Double(j[2])!, fat: Double(j[3])!, carbo: Double(j[4])!, kkal: Double(j[5])!, gi: Double(j[6])!, index: 0, position: Int(k), gram: Double(j[1])!)
+                                            )
                                     }
                                     if i.metaInfo.last![8] != "0.0" {
                                         sugar = i.metaInfo.last![8]

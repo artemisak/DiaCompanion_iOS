@@ -1,18 +1,10 @@
 import Foundation
 import SQLite
 
-enum Route: Hashable {
-    case login
-    case password
-    case version
-    case helper
-}
-
 class Router: ObservableObject {
     @Published var isLoggedIn = false
     @Published var isChoosed = false
     @Published var version = 1
-    @Published var path = [Route]()
     @Published var animateTransition = false
     
     func checkIfLogged() {
@@ -36,16 +28,9 @@ class Router: ObservableObject {
             print(error)
         }
     }
-    
-    func navigateToHelper(){
-        self.path.append(.helper)
-    }
-    
+        
     func checkEnteredLogin(_ login: String) -> Bool {
         if login == "almazov" {
-            if #available(iOS 16, *){
-                self.path.append(.password)
-            }
             return true
         } else {
             return false
@@ -54,9 +39,6 @@ class Router: ObservableObject {
     
     func checkEnteredPassord(_ password: String) -> Bool {
         if password == "pass123" {
-            if #available(iOS 16, *){
-                self.path.append(.version)
-            }
             return true
         } else {
             return false

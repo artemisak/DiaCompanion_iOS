@@ -18,7 +18,6 @@ struct enterAct: View {
     @State var idForDelete: [Int]
     @State private var isCorrect: Bool = false
     @FocusState private var focusedField: Bool
-    @Binding var txtTheme: DynamicTypeSize
     @Binding var hasChanged: Bool
     var body: some View {
         List {
@@ -59,7 +58,7 @@ struct enterAct: View {
                         isCorrect = true
                     }
                 }) {
-                    Text("Сохранить").dynamicTypeSize(txtTheme)
+                    Text("Сохранить")
                 }
                 .alert(isPresented: $isCorrect) {
                     Alert(title: Text("Статус операции"), message: Text("Введите релевантное \nзначение"), dismissButton: .default(Text("ОК")))
@@ -72,7 +71,7 @@ struct enterAct: View {
                 Button(action: {
                     focusedField = false
                 }, label: {
-                    Text("Готово").dynamicTypeSize(txtTheme)
+                    Text("Готово")
                 })
             })
         })

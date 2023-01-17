@@ -12,7 +12,6 @@ struct passwordPage: View {
     @State private var isValidPassword: Bool = true
     @State private var nextField: Bool = false
     @State private var isLoading: Bool = false
-    @Binding var txtTheme: DynamicTypeSize
     @FocusState private var focusedField: Bool
     @EnvironmentObject var loginManager: Router
     var body: some View {
@@ -46,64 +45,35 @@ struct passwordPage: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
             }
             Spacer()
-            if #available(iOS 16, *){
-                Button(action: {
-                    if pass.isEmpty {
-                        withAnimation(.default){
-                            focusedField = true
+            Button(action: {
+                if pass.isEmpty {
+                    focusedField = true
+                }
+                else {
+                    withAnimation(.default){
+                        isValidPassword = loginManager.checkEnteredPassord(pass)
+                    }
+                    if isValidPassword {
+                        focusedField = false
+                        isLoading = true
+                        Task {
+                            await loginManager.setLogged()
+                            isLoading = false
+                            nextField = true
                         }
                     }
-                    else {
-                        withAnimation(.default){
-                            isValidPassword = loginManager.checkEnteredPassord(pass)
-                        }
-                        if isValidPassword {
-                            focusedField = false
-                            isLoading = true
-                            Task {
-                                await loginManager.setLogged()
-                                isLoading = false
-                            }
-                        }
-                    }
-                }, label: {
-                    if isLoading {
-                        ProgressView().tint(.white).frame(height: 25)
-                    } else {
-                        Text("Войти").frame(height: 25)
-                    }
-                })
-                .buttonStyle(RoundedRectangleButtonStyle())
-            } else {
-                Button(action: {
-                    if pass.isEmpty {
-                        focusedField = true
-                    }
-                    else {
-                        withAnimation(.default){
-                            isValidPassword = loginManager.checkEnteredPassord(pass)
-                        }
-                        if isValidPassword {
-                            focusedField = false
-                            isLoading = true
-                            Task {
-                                await loginManager.setLogged()
-                                isLoading = false
-                                nextField = true
-                            }
-                        }
-                    }
-                }, label: {
-                    if isLoading {
-                        ProgressView().tint(.white).frame(height: 25)
-                    } else {
-                        Text("Войти").frame(height: 25)
-                    }
-                })
-                .buttonStyle(RoundedRectangleButtonStyle())
-                NavigationLink(isActive: $nextField, destination: {versionChoose()}, label: {EmptyView()})
-                    .buttonStyle(TransparentButton()).isHidden(true)
-            }
+                }
+            }, label: {
+                if isLoading {
+                    ProgressView().tint(.white).frame(height: 25)
+                } else {
+                    Text("Войти").frame(height: 25)
+                }
+            })
+            .buttonStyle(RoundedRectangleButtonStyle())
+            NavigationLink(isActive: $nextField, destination: {versionChoose()}, label: {EmptyView()})
+                .buttonStyle(TransparentButton()).isHidden(true)
+            
         }
         .padding()
         .navigationBarTitleDisplayMode(.inline)

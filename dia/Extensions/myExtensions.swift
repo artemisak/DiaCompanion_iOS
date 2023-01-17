@@ -81,7 +81,8 @@ public extension View {
 }
 
 public extension View {
-    @ViewBuilder func isHidden(_ hidden: Bool, remove: Bool = false) -> some View {
+    @ViewBuilder
+    func isHidden(_ hidden: Bool, remove: Bool = false) -> some View {
         if hidden {
             if !remove {
                 self.hidden()
@@ -94,4 +95,8 @@ public extension View {
 
 extension StringProtocol {
     var firstCapitalized: String { prefix(1).capitalized + dropFirst() }
+}
+
+extension Int {
+    var intToBool: Bool { return self != 0 }
 }

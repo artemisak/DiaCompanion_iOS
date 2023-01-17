@@ -4,7 +4,6 @@ struct poldny: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @State private var multipleIsPresented = false
     @State private var rkManager3 = RKManager(calendar: Calendar.current, minimumDate: Calendar.current.date(byAdding: .month, value: -1, to: Date())!, maximumDate: Calendar.current.date(byAdding: .month, value: 1, to: Date())!, mode: 3)
-    @Binding var txtTheme: DynamicTypeSize
     var body: some View {
         RKViewController(isPresented: self.$multipleIsPresented, rkManager: self.rkManager3)
             .onAppear(perform: startUp)
@@ -16,7 +15,7 @@ struct poldny: View {
                         addDatesToDB(dates: rkManager3.selectedDates)
                         presentationMode.wrappedValue.dismiss()
                     }){
-                        Text("Сохранить").dynamicTypeSize(txtTheme)
+                        Text("Сохранить")
                     }
                 }
             }

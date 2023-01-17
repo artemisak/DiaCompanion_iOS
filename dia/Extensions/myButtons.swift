@@ -36,3 +36,12 @@ struct ButtonAndLink: ButtonStyle {
             .background(Color.white.opacity(0.0001))
     }
 }
+
+struct centerLabel: LabelStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        HStack(alignment: .center) {
+            configuration.icon
+            configuration.title
+        }
+    }
+}

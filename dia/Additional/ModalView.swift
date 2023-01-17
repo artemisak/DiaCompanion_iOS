@@ -10,22 +10,21 @@ struct ModalView: View {
     @State private var eraseDBprogress = false
     @State private var arrowAngle = 0.0
     @EnvironmentObject var loginManager: Router
-    @Binding var txtTheme: DynamicTypeSize
     var body: some View {
         if #available(iOS 16.0, *) {
             NavigationStack {
                 List {
                     Section(header: Text("О пациенте").font(.system(size: 15.5))){
-                        NavigationLink(destination: ketonur(t: "", date: Date(), idForDelete: [], hasChanged: .constant(false), txtTheme: $txtTheme)) {
+                        NavigationLink(destination: ketonur(t: "", date: Date(), idForDelete: [], hasChanged: .constant(false))) {
                             Button("Добавить запись о кетонурии", action: {})
                         }.foregroundColor(.black)
-                        NavigationLink(destination: massa(t: "", date: Date(), idForDelete: [], hasChanged: .constant(false), txtTheme: $txtTheme)) {
+                        NavigationLink(destination: massa(t: "", date: Date(), idForDelete: [], hasChanged: .constant(false))) {
                             Button("Измерение массы тела", action: {})
                         }.foregroundColor(.black)
                         NavigationLink(destination: pacientPage()) {
                             Button("Данные пациента", action: {})
                         }.foregroundColor(.black)
-                        NavigationLink(destination: poldny(txtTheme: $txtTheme)) {
+                        NavigationLink(destination: poldny()) {
                             Button("Отметить полные дни", action: {})
                         }.foregroundColor(.black)
                         NavigationLink(destination: PDFKitView(url: fileUrl).ignoresSafeArea(.all, edges: .bottom).navigationTitle("Обучение").navigationBarTitleDisplayMode(.inline)) {
@@ -71,7 +70,6 @@ struct ModalView: View {
                         }).confirmationDialog("Удаляя аккаунт вы потеряете доступ к приложению, вся информация в нем будет удалена.", isPresented: $eraseAccount, titleVisibility: .visible, actions: {
                             Button("ОК", action: {
                                 presentationMode.wrappedValue.dismiss()
-                                loginManager.path.removeAll()
                                 loginManager.isLoggedIn = false
                                 loginManager.isChoosed = false
                                 loginManager.version = 1
@@ -99,16 +97,16 @@ struct ModalView: View {
             NavigationView {
                 List {
                     Section(header: Text("О пациенте").font(.system(size: 15.5))){
-                        NavigationLink(destination: ketonur(t: "", date: Date(), idForDelete: [], hasChanged: .constant(false), txtTheme: $txtTheme)) {
+                        NavigationLink(destination: ketonur(t: "", date: Date(), idForDelete: [], hasChanged: .constant(false))) {
                             Button("Добавить запись о кетонурии", action: {})
                         }.foregroundColor(.black)
-                        NavigationLink(destination: massa(t: "", date: Date(), idForDelete: [], hasChanged: .constant(false), txtTheme: $txtTheme)) {
+                        NavigationLink(destination: massa(t: "", date: Date(), idForDelete: [], hasChanged: .constant(false))) {
                             Button("Измерение массы тела", action: {})
                         }.foregroundColor(.black)
                         NavigationLink(destination: pacientPage()) {
                             Button("Данные пациента", action: {})
                         }.foregroundColor(.black)
-                        NavigationLink(destination: poldny(txtTheme: $txtTheme)) {
+                        NavigationLink(destination: poldny()) {
                             Button("Отметить полные дни", action: {})
                         }.foregroundColor(.black)
                         NavigationLink(destination: PDFKitView(url: fileUrl).ignoresSafeArea(.all, edges: .bottom).navigationTitle("Обучение").navigationBarTitleDisplayMode(.inline)) {

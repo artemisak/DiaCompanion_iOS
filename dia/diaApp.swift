@@ -5,7 +5,7 @@ struct diaApp: App {
     @State public var main_font = DynamicTypeSize.xLarge
     var body: some Scene {
         WindowGroup {
-            startPage(txtTheme: $main_font)
+            startPage()
                 .environment(\.locale, Locale.init(identifier: "ru"))
                 .dynamicTypeSize(main_font)
                 .environment(\.defaultMinListRowHeight, 52.5)

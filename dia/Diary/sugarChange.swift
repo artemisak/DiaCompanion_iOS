@@ -19,7 +19,6 @@ struct sugarChange: View {
     @State var spreviewIndex : selectedvar
     @State var idForDelete : [Int]
     @State private var isCorrect : Bool = false
-    @Binding var txtTheme : DynamicTypeSize
     @Binding var hasChanged : Bool
     var body: some View {
         List {
@@ -68,7 +67,6 @@ struct sugarChange: View {
                     }
                 }) {
                     Text("Сохранить")
-                        .dynamicTypeSize(txtTheme)
                 }
                 .alert(isPresented: $isCorrect) {
                     Alert(title: Text("Статус операции"), message: Text("Введите релевантное \nзначение"), dismissButton: .default(Text("ОК")))
@@ -79,7 +77,7 @@ struct sugarChange: View {
                 Button(action: {
                     UIApplication.shared.dismissedKeyboard()
                 }, label: {
-                    Text("Готово").dynamicTypeSize(txtTheme)
+                    Text("Готово")
                 })
             })
         }

@@ -7,31 +7,46 @@
 
 import SwiftUI
 
+enum Route: Hashable {
+    case login
+    case password
+    case version
+    case helper
+}
+
+struct RouteStruct: Hashable {
+    var pages: Route
+    @ViewBuilder
+    func makeView() -> some View {
+        switch pages {
+        case .login:
+            loginPage()
+        case .password:
+            passwordPage()
+        case .version:
+            versionChoose()
+        case .helper:
+            regHelper()
+        }
+    }
+}
+
 struct startPage: View {
     @StateObject private var loginManager = Router()
-    @Binding var txtTheme: DynamicTypeSize
+    @StateObject var collection = foodCollections()
     var body: some View {
         if #available(iOS 16.0, *) {
             Group {
                 if (loginManager.isLoggedIn && loginManager.isChoosed) {
-                    NavigationView {
-                        mainPage(txtTheme: $txtTheme)
+                    NavigationStack {
+                        mainPage()
                     }
                 }
                 if (!loginManager.isLoggedIn || !loginManager.isChoosed) {
-                    NavigationStack(path: $loginManager.path) {
-                        loginPage(txtTheme: $txtTheme)
-                            .navigationDestination(for: Route.self) { route in
-                                switch route {
-                                case .login:
-                                    loginPage(txtTheme: $txtTheme)
-                                case .password:
-                                    passwordPage(txtTheme: $txtTheme)
-                                case .version:
-                                    versionChoose()
-                                case .helper:
-                                    regHelper()
-                                }
+                    NavigationStack {
+                        loginPage()
+                            .navigationDestination(for: RouteStruct.self) { route in
+                                route.makeView()
                             }
                     }
                 }
@@ -41,17 +56,19 @@ struct startPage: View {
             .onAppear {
                 loginManager.checkIfLogged()
             }
+            .environmentObject(collection)
             .environmentObject(loginManager)
+            
         } else {
             Group {
                 if (loginManager.isLoggedIn && loginManager.isChoosed) {
                     NavigationView {
-                        mainPage(txtTheme: $txtTheme)
+                        mainPage()
                     }
                 }
                 if (!loginManager.isLoggedIn || !loginManager.isChoosed) {
                     NavigationView {
-                        loginPage(txtTheme: $txtTheme)
+                        loginPage()
                     }
                 }
             }
@@ -62,6 +79,7 @@ struct startPage: View {
                 loginManager.checkIfLogged()
             }
             .environmentObject(loginManager)
+            .environmentObject(collection)
         }
     }
 }
