@@ -55,8 +55,8 @@ class diaryStatblock: ObservableObject {
             if i.meals == "Перекус" {snacks += 1.0}
             if abs(i.timeStamp.timeIntervalSince(i.dateTime)) < TimeInterval(60*60) {on_time += 1.0}
         }
-        meals_main = round((all_meals - snacks) / all_meals * 100)
-        meals_on_time = round(on_time / all_meals * 100)
+        meals_main = (all_meals == 0) ? 0 : round((all_meals - snacks) / all_meals * 100)
+        meals_on_time = (all_meals == 0) ? 0 : round(on_time / all_meals * 100)
     }
     
     func checkPPGR(dateTime: Date) -> Bool {
@@ -72,37 +72,38 @@ class diaryStatblock: ObservableObject {
         }
         return (food_intakes > 0 && carbos < 30)
     }
-
+    
     func formMailBoodyMessage(version: Int) -> String {
         if version != 4 {
-            return "За последние 7 дней превышений УСК выше целевого: \n" +
-            "Натощак: \(bg_high_fasting) \n" +
-            "После еды: \(bg_high_food)" +
-            "Основные приемы пищи: \(meals_main) % \(all_meals - snacks) / \(all_meals) \n" +
-            "Записаны при приеме пищи: \(meals_on_time) % \(on_time) / \(all_meals) \n"
+            return "За последние 7 дней превышений УСК выше целевого: </br>" +
+            "Натощак: \(bg_high_fasting) </br>" +
+            "После еды: \(bg_high_food) </br>" +
+            "Основные приемы пищи: \(meals_main) % \(all_meals - snacks) / \(all_meals) </br>" +
+            "Записаны при приеме пищи: \(meals_on_time) % \(on_time) / \(all_meals) </br>"
         } else {
-            return "Основные приемы пищи: \(meals_main) % \(all_meals - snacks) / \(all_meals) \n" +
-            "Записаны при приеме пищи: \(meals_on_time) % \(on_time) / \(all_meals) \n"
+            return "Основные приемы пищи: \(meals_main) % \(all_meals - snacks) / \(all_meals) </br>" +
+            "Записаны при приеме пищи: \(meals_on_time) % \(on_time) / \(all_meals) </br>"
         }
     }
-
+    
     func formMailSubject(version: Int) -> String {
         let id = pacientManager.provider.getPreloadID()
         let fio = pacientManager.provider.getPreloadFIO()
+        let versionName = pacientManager.provider.getVersionName(number: version)
         if (bg_bad_ppgr > 1) {
-            return "!!\(version) \(id) \(fio) - Дневник наблюдения"
-        } else if ((bg_high_fasting + bg_high_food) / bg_total > 1/3) {
-            return "!\(version) \(id) \(fio) - Дневник наблюдения"
+            return "!!\(versionName) \(id) \(fio) - Дневник наблюдения"
+        } else if bg_total > 0 && ((bg_high_fasting + bg_high_food) / bg_total > 1/3) {
+            return "!\(versionName) \(id) \(fio) - Дневник наблюдения"
         }
-        return "\(version) \(id) \(fio) - Дневник наблюдения"
+        return "\(versionName) \(id) \(fio) - Дневник наблюдения"
     }
-    
+        
     func getFoodRecords() -> [foodRow] {
         let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
         let path = documents + "/diacompanion.db"
         let sourcePath = Bundle.main.path(forResource: "diacompanion", ofType: "db")!
         _=copyDatabaseIfNeeded(sourcePath: sourcePath)
-
+        
         var db: OpaquePointer?
         guard sqlite3_open(path, &db) == SQLITE_OK else {
             print("Error opening database")
@@ -110,12 +111,12 @@ class diaryStatblock: ObservableObject {
             db = nil
             return []
         }
-
+        
         var statement: OpaquePointer?
         let df = DateFormatter()
         df.dateFormat = "HH:mm dd.MM.yyyy"
         let sql = "SELECT timeStamp, dateTime, foodType AS meals, sum(g*carbo/100) AS carbo FROM diary LEFT JOIN food ON diary.id_food = food._id GROUP BY timeStamp, date, time, foodType"
-
+        
         if sqlite3_prepare_v2(db, sql, -1, &statement, nil) != SQLITE_OK {
             let errmsg = String(cString: sqlite3_errmsg(db)!)
             print("Error preparing select: \(errmsg)")
@@ -131,7 +132,7 @@ class diaryStatblock: ObservableObject {
             print("Error finalizing prepared statement: \(errmsg)")
         }
         statement = nil
-
+        
         if sqlite3_close(db) != SQLITE_OK {
             print("Error closing database")
         }
@@ -145,7 +146,7 @@ class diaryStatblock: ObservableObject {
         let path = documents + "/diacompanion.db"
         let sourcePath = Bundle.main.path(forResource: "diacompanion", ofType: "db")!
         _=copyDatabaseIfNeeded(sourcePath: sourcePath)
-
+        
         var db: OpaquePointer?
         guard sqlite3_open(path, &db) == SQLITE_OK else {
             print("Error opening database")
@@ -153,12 +154,12 @@ class diaryStatblock: ObservableObject {
             db = nil
             return []
         }
-
+        
         var statement: OpaquePointer?
         let df = DateFormatter()
         df.dateFormat = "HH:mm dd.MM.yyyy"
         let sql = "SELECT lvl, period, time FROM sugarChange"
-
+        
         if sqlite3_prepare_v2(db, sql, -1, &statement, nil) != SQLITE_OK {
             let errmsg = String(cString: sqlite3_errmsg(db)!)
             print("Error preparing select: \(errmsg)")
@@ -174,7 +175,7 @@ class diaryStatblock: ObservableObject {
             print("Error finalizing prepared statement: \(errmsg)")
         }
         statement = nil
-
+        
         if sqlite3_close(db) != SQLITE_OK {
             print("Error closing database")
         }

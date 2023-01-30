@@ -595,4 +595,15 @@ class pacientManager {
             return [20, 3]
         }
     }
+    
+    func getVersionName(number: Int) -> String {
+        switch number {
+        case 1: return "GDM RCT"
+        case 2: return "GDM"
+        case 3: return "MS"
+        case 4: return "PCOS"
+        default:
+            return "None"
+        }
+    }
 }
