@@ -50,7 +50,7 @@ struct fio: View {
             .padding([.leading, .trailing])
         }
         .onAppear(perform: {
-            txt = pacientManager.provider.getPreloadDFIO()
+            txt = pacientManager.provider.getPreloadFIO()
             focuseField = true
         })
     }

@@ -51,7 +51,7 @@ struct pHeight: View {
             .padding([.leading, .trailing], 15)
         }
         .onAppear(perform: {
-            txt = pacientManager.provider.getPreloadDHeight()
+            txt = pacientManager.provider.getPreloadHeight()
             focusedField = true
         })
     }

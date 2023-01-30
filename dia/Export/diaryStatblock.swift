@@ -73,21 +73,28 @@ class diaryStatblock: ObservableObject {
         return (food_intakes > 0 && carbos < 30)
     }
 
-    func formMailBoodyMessage() -> String {
-        return "За последние 7 дней превышений УСК выше целевого: \n" +
-        "Натощак: \(bg_high_fasting) \n" +
-        "После еды: \(bg_high_food)" +
-        "Основные приемы пищи: \(meals_main) % \(all_meals - snacks) / \(all_meals) \n" +
-        "Записаны при приеме пищи: \(meals_on_time) % \(on_time) / \(all_meals) \n"
+    func formMailBoodyMessage(version: Int) -> String {
+        if version != 4 {
+            return "За последние 7 дней превышений УСК выше целевого: \n" +
+            "Натощак: \(bg_high_fasting) \n" +
+            "После еды: \(bg_high_food)" +
+            "Основные приемы пищи: \(meals_main) % \(all_meals - snacks) / \(all_meals) \n" +
+            "Записаны при приеме пищи: \(meals_on_time) % \(on_time) / \(all_meals) \n"
+        } else {
+            return "Основные приемы пищи: \(meals_main) % \(all_meals - snacks) / \(all_meals) \n" +
+            "Записаны при приеме пищи: \(meals_on_time) % \(on_time) / \(all_meals) \n"
+        }
     }
 
-    func formMailSubject() -> String {
+    func formMailSubject(version: Int) -> String {
+        let id = pacientManager.provider.getPreloadID()
+        let fio = pacientManager.provider.getPreloadFIO()
         if (bg_bad_ppgr > 1) {
-            return "2"
+            return "!!\(version) \(id) \(fio) - Дневник наблюдения"
         } else if ((bg_high_fasting + bg_high_food) / bg_total > 1/3) {
-            return "1"
+            return "!\(version) \(id) \(fio) - Дневник наблюдения"
         }
-        return "0"
+        return "\(version) \(id) \(fio) - Дневник наблюдения"
     }
     
     func getFoodRecords() -> [foodRow] {

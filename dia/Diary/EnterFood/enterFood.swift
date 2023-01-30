@@ -314,7 +314,7 @@ struct enterFood: View {
         }
     }
     func saveInDB(workList: [foodItem]){
-        permission = checkIfAlreadyEx(selectedDate: date, idForDelete: idForDelete)
+        permission = diaryManager.provider.checkIfAlreadyEx(selectedDate: date, idForDelete: idForDelete)
         if permission {
             errorMessage = "Удалите или отредактиируйте уже существующий прием пищи"
         }
@@ -326,9 +326,9 @@ struct enterFood: View {
                     hasChanged = true
                 }
                 for i in workList {
-                    SaveToDB(FoodName: i.name, gram: "\(i.gram!)", table_id: "\(i.table_id)", selectedDate: date, selectedType: ftpreviewIndex.rawValue)
+                    diaryManager.provider.SaveToDB(FoodName: i.name, gram: "\(i.gram!)", table_id: "\(i.table_id)", selectedDate: date, selectedType: ftpreviewIndex.rawValue)
                 }
-                addPredictedRecord(selectedDate: date, selectedType: ftpreviewIndex.rawValue, BG0: _BG0, BG1: res)
+                diaryManager.provider.addPredictedRecord(selectedDate: date, selectedType: ftpreviewIndex.rawValue, BG0: _BG0, BG1: res)
                 collection.selectedItem = nil
                 self.presentationMode.wrappedValue.dismiss()
             }
@@ -344,9 +344,9 @@ struct enterFood: View {
                 hasChanged = true
             }
             for i in workList {
-                SaveToDB(FoodName: i.name, gram: "\(i.gram!)", table_id: "\(i.table_id)", selectedDate: date, selectedType: ftpreviewIndex.rawValue)
+                diaryManager.provider.SaveToDB(FoodName: i.name, gram: "\(i.gram!)", table_id: "\(i.table_id)", selectedDate: date, selectedType: ftpreviewIndex.rawValue)
             }
-            addPredictedRecord(selectedDate: date, selectedType: ftpreviewIndex.rawValue, BG0: 0.0, BG1: 0.0)
+            diaryManager.provider.addPredictedRecord(selectedDate: date, selectedType: ftpreviewIndex.rawValue, BG0: 0.0, BG1: 0.0)
             collection.selectedItem = nil
             self.presentationMode.wrappedValue.dismiss()
         }

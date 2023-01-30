@@ -70,7 +70,7 @@ struct addCustomMeal: View {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
                     do {
-                        addNewFoodN(items: try checkIsEmpty(items: collection.recipeFoodItems), newReceitName: try pacientManager.provider.checkName(txt: foodNotation), category: selectedCat.rawValue, isEditing: editExistRow, idToDelete: idToDelete)
+                        diaryManager.provider.addNewFood(items: try checkIsEmpty(items: collection.recipeFoodItems), newReceitName: try pacientManager.provider.checkName(txt: foodNotation), category: selectedCat.rawValue, isEditing: editExistRow, idToDelete: idToDelete)
                         presentationMode.wrappedValue.dismiss()
                     }
                     catch {

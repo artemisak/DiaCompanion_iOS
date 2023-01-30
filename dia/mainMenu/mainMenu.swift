@@ -147,7 +147,7 @@ struct mainMenu: View {
             do {
                 diaryStatblock.statBlock.checkDiary()
                 let content = try Data(contentsOf: exportTable.sheets.generate(version: routeManager.version) as URL)
-                try emailSender.shared.sendEmail(subject: diaryStatblock.statBlock.formMailSubject(), body: diaryStatblock.statBlock.formMailBoodyMessage(), to: email, xlsxFile: content)
+                try emailSender.shared.sendEmail(subject: diaryStatblock.statBlock.formMailSubject(version: routeManager.version), body: diaryStatblock.statBlock.formMailBoodyMessage(version: routeManager.version), to: email, xlsxFile: content)
             } catch {
                 emailErrorMessage = true
                 erMessage = "На устройстве не установлен почтовый клиент"

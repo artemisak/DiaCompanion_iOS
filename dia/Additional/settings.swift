@@ -46,7 +46,7 @@ struct settings: View {
                 .confirmationDialog("Восстановление подразумевает отмену всех вносимых в вами в базу данных имзенений.", isPresented: $eraseDB, titleVisibility: .visible, actions: {
                     Button("ОК", action: {
                         eraseDBprogress = true
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {eraseDBprogress = restoreDB()})
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {eraseDBprogress = diaryManager.provider.restoreDB()})
                     })
                 })
             }

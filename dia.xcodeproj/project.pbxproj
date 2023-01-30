@@ -293,7 +293,6 @@
 		A78EA622291D1B6500B2CDD2 /* PacientDetails */ = {
 			isa = PBXGroup;
 			children = (
-				ACCC5C2D2702190B0057CA7C /* pacientManager.swift */,
 				AC32A68127260081001DDB9F /* pid.swift */,
 				AC32A6852726060D001DDB9F /* pHeight.swift */,
 				AC32A68327260602001DDB9F /* pWeight.swift */,
@@ -302,6 +301,7 @@
 				AC71760527204582000376FD /* currentV.swift */,
 				ACEDB47C2721A19400DBB67C /* dStart.swift */,
 				ACEDB4802721AA7F00DBB67C /* fio.swift */,
+				ACCC5C2D2702190B0057CA7C /* pacientManager.swift */,
 			);
 			path = PacientDetails;
 			sourceTree = "<group>";
@@ -350,7 +350,6 @@
 		A78EA627291D1CCC00B2CDD2 /* Registration */ = {
 			isa = PBXGroup;
 			children = (
-				A74A1CC128B1016C0038C79F /* startPage.swift */,
 				A7F4486A291EB5AD00A4B379 /* loginPage.swift */,
 				A7CE328829225AF4002D8FB0 /* passwordPage.swift */,
 				A77714FF28D71931005C5793 /* versionChoose.swift */,
@@ -467,10 +466,11 @@
 			isa = PBXGroup;
 			children = (
 				AC26031F2690691E00C4A520 /* diaApp.swift */,
+				A74A1CC128B1016C0038C79F /* startPage.swift */,
 				A760B57A2987DD1600402094 /* mainMenu */,
+				A78EA627291D1CCC00B2CDD2 /* Registration */,
 				A78EA62B291D1DC100B2CDD2 /* Extensions */,
 				A78EA625291D1C8500B2CDD2 /* Prediction */,
-				A78EA627291D1CCC00B2CDD2 /* Registration */,
 				A78EA626291D1CAC00B2CDD2 /* Excel */,
 				A78EA62A291D1D3A00B2CDD2 /* Diary */,
 				A78EA629291D1D1600B2CDD2 /* Export */,

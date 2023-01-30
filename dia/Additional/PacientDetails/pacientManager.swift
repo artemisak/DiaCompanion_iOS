@@ -402,7 +402,7 @@ class pacientManager {
         }
     }
     
-    func getPreloadDFIO() -> String {
+    func getPreloadFIO() -> String {
         do {
             var txt = ""
             let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
@@ -413,17 +413,17 @@ class pacientManager {
             let macUser = Table("usermac")
             let fio = Expression<String?>("fio")
             for i in try db.prepare(macUser.select(fio)){
-                txt = i[fio] ?? ""
+                txt = i[fio] ?? "Новый пользователь"
             }
             return txt
         }
         catch {
             print(error)
-            return ""
+            return "Новый пользователь"
         }
     }
     
-    func getPreloadDID() -> String {
+    func getPreloadID() -> String {
         do {
             var txt = "1"
             let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
@@ -444,7 +444,7 @@ class pacientManager {
         }
     }
     
-    func getPreloadDWeight() -> String {
+    func getPreloadWeight() -> String {
         do {
             var txt = ""
             let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
@@ -467,7 +467,7 @@ class pacientManager {
         }
     }
     
-    func getPreloadDHeight() -> String {
+    func getPreloadHeight() -> String {
         do {
             var txt = ""
             let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
