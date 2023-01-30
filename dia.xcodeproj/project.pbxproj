@@ -363,7 +363,6 @@
 			isa = PBXGroup;
 			children = (
 				ACF2F0A926DEA8300066753D /* history.swift */,
-				A767CC7E2944C0BE0093A979 /* giIndicator.swift */,
 				AC6327012751012C00C25E23 /* historyManager.swift */,
 				A7DF49DF291A85D9007A9371 /* details.swift */,
 			);
@@ -389,6 +388,7 @@
 				AC7A53F626DBF77B00FE65E7 /* enterAct.swift */,
 				ACD86E8026DE820B0027B8ED /* sugarChange.swift */,
 				AC2D32E327359EC50022AFD9 /* diaryManager.swift */,
+				A767CC7E2944C0BE0093A979 /* giIndicator.swift */,
 				A78EA628291D1D0000B2CDD2 /* History */,
 				A78EA624291D1BFD00B2CDD2 /* EnterFood */,
 				A760B5792987DB8200402094 /* recipies */,

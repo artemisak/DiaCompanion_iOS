@@ -22,11 +22,10 @@ struct giIndicator: View {
                 Text(String(format: "%.1f", gl))
             }
         }
-        .padding(7)
+        .padding(5)
         .background(RoundedRectangle(cornerRadius: 7).stroke(getColor(_gi: gi)))
         .foregroundColor(getColor(_gi: gi))
-        .frame(maxHeight: 50)
-        .fixedSize(horizontal: true, vertical: false)
+        .frame(height: 44)
     }
 
     func getColor(_gi: Double) -> Color {
@@ -44,6 +43,6 @@ struct giIndicator: View {
 
 struct giIndicator_Previews: PreviewProvider {
     static var previews: some View {
-        giIndicator(gi: round(Double(80.4)*100)/100, gl: round(Double(71.5)*100)/100)
+        giIndicator(gi: round(Double(800.4)*100)/100, gl: round(Double(710.5)*100)/100)
     }
 }

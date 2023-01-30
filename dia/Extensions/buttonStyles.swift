@@ -42,6 +42,6 @@ struct centerLabel: LabelStyle {
         HStack(alignment: .center) {
             configuration.icon
             configuration.title
-        }.padding(.vertical, 7)
+        }.padding(.vertical, 5)
     }
 }
