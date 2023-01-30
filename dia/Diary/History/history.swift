@@ -380,10 +380,12 @@ struct history: View {
             }
             Section {
                 ForEach(info, id: \.self){foodItem in
-                    HStack{
-                        giIndicator(gi:  round(Double(foodItem[6])!*100)/100).frame(width: 40)
-                        Text("\(foodItem[0])").padding(.leading, 5)
+                    Label {
+                        Text("\(foodItem[0])")
+                    } icon: {
+                        giIndicator(gi: round(Double(foodItem[6])!*100)/100, gl: round(Double(foodItem[7])!*100)/100)
                     }
+                    .labelStyle(centerLabel())
                 }
             } header: {
                 Text("Список блюд").font(.caption)

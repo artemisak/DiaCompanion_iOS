@@ -119,7 +119,7 @@ struct enterFood: View {
                     Label {
                         Text("\(i.name) (\(i.gram!, specifier: "%.1f") г.)")
                     } icon: {
-                        giIndicator(gi: i.gi)
+                        giIndicator(gi: i.gi, gl: i.gl)
                     }
                     .labelStyle(centerLabel())
                     .swipeActions {
