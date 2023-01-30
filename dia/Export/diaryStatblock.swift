@@ -113,8 +113,12 @@ class diaryStatblock: ObservableObject {
         }
         
         var statement: OpaquePointer?
+        
         let df = DateFormatter()
         df.dateFormat = "HH:mm dd.MM.yyyy"
+        let df_alt = DateFormatter()
+        df_alt.dateFormat = "dd.MM.yyyy,HH:mm"
+        
         let sql = "SELECT timeStamp, dateTime, foodType AS meals, sum(g*carbo/100) AS carbo FROM diary LEFT JOIN food ON diary.id_food = food._id GROUP BY timeStamp, date, time, foodType"
         
         if sqlite3_prepare_v2(db, sql, -1, &statement, nil) != SQLITE_OK {
@@ -124,7 +128,9 @@ class diaryStatblock: ObservableObject {
         
         var allFoodRecords = [foodRow]()
         while sqlite3_step(statement) == SQLITE_ROW {
-            allFoodRecords.append(foodRow(timeStamp: df.date(from: String(cString: sqlite3_column_text(statement, 0)))!, dateTime: df.date(from: String(cString: sqlite3_column_text(statement, 1)))!, meals: String(cString: sqlite3_column_text(statement, 2)), carbo: sqlite3_column_double(statement, 3)))
+            print(df_alt.date(from: String(cString: sqlite3_column_text(statement, 0)))!)
+            print(df.date(from: String(cString: sqlite3_column_text(statement, 1)))!)
+            allFoodRecords.append(foodRow(timeStamp: df_alt.date(from: String(cString: sqlite3_column_text(statement, 0)))!, dateTime: df.date(from: String(cString: sqlite3_column_text(statement, 1)))!, meals: String(cString: sqlite3_column_text(statement, 2)), carbo: sqlite3_column_double(statement, 3)))
         }
         
         if sqlite3_finalize(statement) != SQLITE_OK {
