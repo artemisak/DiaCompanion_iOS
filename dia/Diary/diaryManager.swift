@@ -276,7 +276,7 @@ func changeRating(_id: Int, _rating: Int) -> Void {
     }
 }
 
-func addNewFoodN(items: [foodToSave], newReceitName: String, category: String) {
+func addNewFoodN(items: [foodItem], newReceitName: String, category: String, isEditing: Bool, idToDelete: Int?) {
     do {
         let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
         let path = documents + "/diacompanion.db"
@@ -344,65 +344,74 @@ func addNewFoodN(items: [foodToSave], newReceitName: String, category: String) {
         let proc_pot = Expression<Double?>("proc_pot")
         let additional = Expression<Double?>("additional")
         let favor = Expression<Int?>("favor")
+        let inMyRecipes = Expression<Int?>("inMyRecipes")
+        
+        let usersRecipes = Table("usersRecipes")
+        let recipe_id = Expression<Int>("food_id")
+        
+        if isEditing {
+            try db.run(food.filter(table_id == idToDelete!).delete())
+            try db.run(usersRecipes.filter(recipe_id == idToDelete!).delete())
+        }
+        
         var parameters: [[Double]] = []
         for i in items {
-            let arg = "\(i.name)".components(separatedBy: "////")
-            for j in try db.prepare(food.filter(table_id == convertToInt(txt: arg[2]) && foodName == arg[0]).limit(1)){
-                parameters.append([(j[carbo] ?? 0.0) * Double(arg[1])!/100,
-                                   (j[prot] ?? 0.0) * Double(arg[1])!/100,
-                                   (j[fat] ?? 0.0) * Double(arg[1])!/100,
-                                   (j[ec] ?? 0.0) * Double(arg[1])!/100,
-                                   (j[gi] ?? 0.0) * (j[carbo] ?? 0.0) * Double(arg[1])!/100,
-                                   (j[water] ?? 0.0) * Double(arg[1])!/100,
-                                   (j[nzhk] ?? 0.0) * Double(arg[1])!/100,
-                                   (j[hol] ?? 0.0) * Double(arg[1])!/100,
-                                   (j[pv] ?? 0.0) * Double(arg[1])!/100,
-                                   (j[zola] ?? 0.0) * Double(arg[1])!/100,
-                                   (j[na] ?? 0.0) * Double(arg[1])!/100,
-                                   (j[k] ?? 0.0) * Double(arg[1])!/100,
-                                   (j[ca] ?? 0.0) * Double(arg[1])!/100,
-                                   (j[mg] ?? 0.0) * Double(arg[1])!/100,
-                                   (j[p] ?? 0.0) * Double(arg[1])!/100,
-                                   (j[fe] ?? 0.0) * Double(arg[1])!/100,
-                                   (j[a] ?? 0.0) * Double(arg[1])!/100,
-                                   (j[b1] ?? 0.0) * Double(arg[1])!/100,
-                                   (j[b2] ?? 0.0) * Double(arg[1])!/100,
-                                   (j[rr] ?? 0.0) * Double(arg[1])!/100,
-                                   (j[c] ?? 0.0) * Double(arg[1])!/100,
-                                   (j[re] ?? 0.0) * Double(arg[1])!/100,
-                                   (j[kar] ?? 0.0) * Double(arg[1])!/100,
-                                   (j[mds] ?? 0.0) * Double(arg[1])!/100,
-                                   (j[kr] ?? 0.0) * Double(arg[1])!/100,
-                                   (j[te] ?? 0.0) * Double(arg[1])!/100,
-                                   (j[ok] ?? 0.0) * Double(arg[1])!/100,
-                                   (j[ne] ?? 0.0) * Double(arg[1])!/100,
-                                   (j[zn] ?? 0.0) * Double(arg[1])!/100,
-                                   (j[cu] ?? 0.0) * Double(arg[1])!/100,
-                                   (j[mn] ?? 0.0) * Double(arg[1])!/100,
-                                   (j[se] ?? 0.0) * Double(arg[1])!/100,
-                                   (j[b5] ?? 0.0) * Double(arg[1])!/100,
-                                   (j[b6] ?? 0.0) * Double(arg[1])!/100,
-                                   (j[fol] ?? 0.0) * Double(arg[1])!/100,
-                                   (j[b9] ?? 0.0) * Double(arg[1])!/100,
-                                   (j[dfe] ?? 0.0) * Double(arg[1])!/100,
-                                   (j[holin] ?? 0.0) * Double(arg[1])!/100,
-                                   (j[b12] ?? 0.0) * Double(arg[1])!/100,
-                                   (j[ear] ?? 0.0) * Double(arg[1])!/100,
-                                   (j[a_kar] ?? 0.0) * Double(arg[1])!/100,
-                                   (j[b_kript] ?? 0.0) * Double(arg[1])!/100,
-                                   (j[likopin] ?? 0.0) * Double(arg[1])!/100,
-                                   (j[lut_z] ?? 0.0) * Double(arg[1])!/100,
-                                   (j[vit_e] ?? 0.0) * Double(arg[1])!/100,
-                                   (j[vit_d] ?? 0.0) * Double(arg[1])!/100,
-                                   (j[d_mezd] ?? 0.0) * Double(arg[1])!/100,
-                                   (j[vit_k] ?? 0.0) * Double(arg[1])!/100,
-                                   (j[mzhk] ?? 0.0) * Double(arg[1])!/100,
-                                   (j[pzhk] ?? 0.0) * Double(arg[1])!/100,
-                                   (j[w_1ed] ?? 0.0) * Double(arg[1])!/100,
-                                   (j[op_1ed] ?? 0.0) * Double(arg[1])!/100,
-                                   (j[w_2ed] ?? 0.0) * Double(arg[1])!/100,
-                                   (j[op_2ed] ?? 0.0) * Double(arg[1])!/100,
-                                   (j[proc_pot] ?? 0.0) * Double(arg[1])!/100])
+            for j in try db.prepare(food.filter(table_id == i.table_id)){
+                parameters.append([(j[carbo] ?? 0.0) * i.gram!/100,
+                                   (j[prot] ?? 0.0) * i.gram!/100,
+                                   (j[fat] ?? 0.0) * i.gram!/100,
+                                   (j[ec] ?? 0.0) * i.gram!/100,
+                                   (j[gi] ?? 0.0) * (j[carbo] ?? 0.0) * i.gram!/100,
+                                   (j[water] ?? 0.0) * i.gram!/100,
+                                   (j[nzhk] ?? 0.0) * i.gram!/100,
+                                   (j[hol] ?? 0.0) * i.gram!/100,
+                                   (j[pv] ?? 0.0) * i.gram!/100,
+                                   (j[zola] ?? 0.0) * i.gram!/100,
+                                   (j[na] ?? 0.0) * i.gram!/100,
+                                   (j[k] ?? 0.0) * i.gram!/100,
+                                   (j[ca] ?? 0.0) * i.gram!/100,
+                                   (j[mg] ?? 0.0) * i.gram!/100,
+                                   (j[p] ?? 0.0) * i.gram!/100,
+                                   (j[fe] ?? 0.0) * i.gram!/100,
+                                   (j[a] ?? 0.0) * i.gram!/100,
+                                   (j[b1] ?? 0.0) * i.gram!/100,
+                                   (j[b2] ?? 0.0) * i.gram!/100,
+                                   (j[rr] ?? 0.0) * i.gram!/100,
+                                   (j[c] ?? 0.0) * i.gram!/100,
+                                   (j[re] ?? 0.0) * i.gram!/100,
+                                   (j[kar] ?? 0.0) * i.gram!/100,
+                                   (j[mds] ?? 0.0) * i.gram!/100,
+                                   (j[kr] ?? 0.0) * i.gram!/100,
+                                   (j[te] ?? 0.0) * i.gram!/100,
+                                   (j[ok] ?? 0.0) * i.gram!/100,
+                                   (j[ne] ?? 0.0) * i.gram!/100,
+                                   (j[zn] ?? 0.0) * i.gram!/100,
+                                   (j[cu] ?? 0.0) * i.gram!/100,
+                                   (j[mn] ?? 0.0) * i.gram!/100,
+                                   (j[se] ?? 0.0) * i.gram!/100,
+                                   (j[b5] ?? 0.0) * i.gram!/100,
+                                   (j[b6] ?? 0.0) * i.gram!/100,
+                                   (j[fol] ?? 0.0) * i.gram!/100,
+                                   (j[b9] ?? 0.0) * i.gram!/100,
+                                   (j[dfe] ?? 0.0) * i.gram!/100,
+                                   (j[holin] ?? 0.0) * i.gram!/100,
+                                   (j[b12] ?? 0.0) * i.gram!/100,
+                                   (j[ear] ?? 0.0) * i.gram!/100,
+                                   (j[a_kar] ?? 0.0) * i.gram!/100,
+                                   (j[b_kript] ?? 0.0) * i.gram!/100,
+                                   (j[likopin] ?? 0.0) * i.gram!/100,
+                                   (j[lut_z] ?? 0.0) * i.gram!/100,
+                                   (j[vit_e] ?? 0.0) * i.gram!/100,
+                                   (j[vit_d] ?? 0.0) * i.gram!/100,
+                                   (j[d_mezd] ?? 0.0) * i.gram!/100,
+                                   (j[vit_k] ?? 0.0) * i.gram!/100,
+                                   (j[mzhk] ?? 0.0) * i.gram!/100,
+                                   (j[pzhk] ?? 0.0) * i.gram!/100,
+                                   (j[w_1ed] ?? 0.0) * i.gram!/100,
+                                   (j[op_1ed] ?? 0.0) * i.gram!/100,
+                                   (j[w_2ed] ?? 0.0) * i.gram!/100,
+                                   (j[op_2ed] ?? 0.0) * i.gram!/100,
+                                   (j[proc_pot] ?? 0.0) * i.gram!/100])
             }
         }
                 
@@ -423,7 +432,15 @@ func addNewFoodN(items: [foodToSave], newReceitName: String, category: String) {
         
         summOfParam = summOfParam.map({round($0*10)/10})
         
-        try db.run(food.insert(foodName <- resultingName, cat <- category, carbo <- summOfParam[0], prot <- summOfParam[1], fat <- summOfParam[2], ec <- summOfParam[3], gi <- summOfParam[4], water <- summOfParam[5], nzhk <- summOfParam[6], hol <- summOfParam[7], pv <- summOfParam[8], zola <- summOfParam[9], na <- summOfParam[10], k <- summOfParam[11], ca <- summOfParam[12], mg <- summOfParam[13], p <- summOfParam[14], fe <- summOfParam[15], a <- summOfParam[16], b1 <- summOfParam[17], b2 <- summOfParam[18], rr <- summOfParam[19], c <- summOfParam[20], re <- summOfParam[21], kar <- summOfParam[22], mds <- summOfParam[23], kr <- summOfParam[24], te <- summOfParam[25], ok <- summOfParam[26], ne <- summOfParam[27], zn <- summOfParam[28], cu <- summOfParam[29], mn <- summOfParam[30], se <- summOfParam[31], b5 <- summOfParam[32], b6 <- summOfParam[33], fol <- summOfParam[34], b9 <- summOfParam[35], dfe <- summOfParam[36], holin <- summOfParam[37], b12 <- summOfParam[38], ear <- summOfParam[39], a_kar <- summOfParam[40], b_kript <- summOfParam[41], likopin <- summOfParam[42], lut_z <- summOfParam[43], vit_e <- summOfParam[44], vit_d <- summOfParam[45], d_mezd <- summOfParam[46], vit_k <- summOfParam[47], mzhk <- summOfParam[48], pzhk <- summOfParam[49], w_1ed <- summOfParam[50], op_1ed <- summOfParam[51], w_2ed <- summOfParam[52], op_2ed <- summOfParam[53], proc_pot <- summOfParam[54], additional <- 0, favor <- 1))
+        let insertID = try db.run(food.insert(foodName <- resultingName, cat <- category, carbo <- summOfParam[0], prot <- summOfParam[1], fat <- summOfParam[2], ec <- summOfParam[3], gi <- summOfParam[4], water <- summOfParam[5], nzhk <- summOfParam[6], hol <- summOfParam[7], pv <- summOfParam[8], zola <- summOfParam[9], na <- summOfParam[10], k <- summOfParam[11], ca <- summOfParam[12], mg <- summOfParam[13], p <- summOfParam[14], fe <- summOfParam[15], a <- summOfParam[16], b1 <- summOfParam[17], b2 <- summOfParam[18], rr <- summOfParam[19], c <- summOfParam[20], re <- summOfParam[21], kar <- summOfParam[22], mds <- summOfParam[23], kr <- summOfParam[24], te <- summOfParam[25], ok <- summOfParam[26], ne <- summOfParam[27], zn <- summOfParam[28], cu <- summOfParam[29], mn <- summOfParam[30], se <- summOfParam[31], b5 <- summOfParam[32], b6 <- summOfParam[33], fol <- summOfParam[34], b9 <- summOfParam[35], dfe <- summOfParam[36], holin <- summOfParam[37], b12 <- summOfParam[38], ear <- summOfParam[39], a_kar <- summOfParam[40], b_kript <- summOfParam[41], likopin <- summOfParam[42], lut_z <- summOfParam[43], vit_e <- summOfParam[44], vit_d <- summOfParam[45], d_mezd <- summOfParam[46], vit_k <- summOfParam[47], mzhk <- summOfParam[48], pzhk <- summOfParam[49], w_1ed <- summOfParam[50], op_1ed <- summOfParam[51], w_2ed <- summOfParam[52], op_2ed <- summOfParam[53], proc_pot <- summOfParam[54], additional <- 0, favor <- 1, inMyRecipes <- 1))
+        
+        let recipesTable = Table("usersRecipes")
+        let food_id = Expression<Int>("food_id")
+        let item_id = Expression<Int>("item_id")
+        let gram = Expression<Double>("gram")
+        for i in items {
+            try db.run(recipesTable.insert(food_id <- Int(insertID), item_id <- i.table_id, gram <- i.gram!))
+        }
     }
     catch {
         print(error)

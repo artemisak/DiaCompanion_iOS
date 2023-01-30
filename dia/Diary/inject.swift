@@ -27,10 +27,10 @@ struct inject: View {
     @Binding var hasChanged: Bool
     var body: some View {
         List {
-            Section(header: Text("Общая информация").font(.system(size: 15.5))){
+            Section(header: Text("Общая информация").font(.caption)){
                 TextField("Ед.", text: $t)
                     .keyboardType(.decimalPad)
-                NavigationLink(destination: injectTypePicker(previewIndex: $previewIndex).navigationBarTitleDisplayMode(.inline), label: {
+                NavigationLink(destination: injectTypePicker(previewIndex: $previewIndex), label: {
                     HStack{
                         Text("Тип действия")
                         Spacer()
@@ -38,7 +38,7 @@ struct inject: View {
                             .foregroundColor(.gray)
                     }
                 })
-                NavigationLink(destination: injectPicker(previewIndex1: $previewIndex1).navigationBarTitleDisplayMode(.inline), label: {
+                NavigationLink(destination: injectPicker(previewIndex1: $previewIndex1), label: {
                     HStack{
                         Text("Прием пищи")
                         Spacer()
@@ -65,7 +65,7 @@ struct inject: View {
                         }
                         let dateFormatter = DateFormatter()
                         dateFormatter.dateFormat = "HH:mm dd.MM.yyyy"
-                        addInject(ed: try convert(txt: t), type: previewIndex.rawValue, priem: previewIndex1.rawValue, time: dateFormatter.string(from: date))
+                        pacientManager.provider.addInject(ed: try convert(txt: t), type: previewIndex.rawValue, priem: previewIndex1.rawValue, time: dateFormatter.string(from: date))
                         presentationMode.wrappedValue.dismiss()
                     } catch {
                         isCorrect = true
@@ -99,7 +99,7 @@ struct injectTypePicker: View {
     @Binding var previewIndex: injectType
     var body: some View {
         List {
-            Picker(selection: $previewIndex, label: Text("Тип действия").font(.system(size: 15.5))) {
+            Picker(selection: $previewIndex, label: Text("Тип действия").font(.caption)) {
                 Text("Ультракороткий").tag(injectType.ultra)
                 Text("Короткий").tag(injectType.kor)
                 Text("Пролонгированный").tag(injectType.prolong)
@@ -112,7 +112,7 @@ struct injectPicker: View {
     @Binding var previewIndex1: injects
     var body: some View {
         List {
-            Picker(selection: $previewIndex1, label: Text("Прием пищи").font(.system(size: 15.5))) {
+            Picker(selection: $previewIndex1, label: Text("Прием пищи").font(.caption)) {
                 Text("Натощак").tag(injects.natoshak)
                 Text("Завтрак").tag(injects.zavtrak)
                 Text("Обед").tag(injects.obed)

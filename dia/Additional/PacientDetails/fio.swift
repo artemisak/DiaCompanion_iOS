@@ -35,7 +35,7 @@ struct fio: View {
                     Button(action: {
                         do {
                             lineColor = Color.black
-                            addName(pName: try checkName(txt: txt))
+                            pacientManager.provider.addName(pName: try pacientManager.provider.checkName(txt: txt))
                             pFio.toggle()
                         } catch {
                             lineColor = Color.red
@@ -50,7 +50,7 @@ struct fio: View {
             .padding([.leading, .trailing])
         }
         .onAppear(perform: {
-            txt = getPreloadDFIO()
+            txt = pacientManager.provider.getPreloadDFIO()
             focuseField = true
         })
     }

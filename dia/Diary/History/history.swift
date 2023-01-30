@@ -71,12 +71,12 @@ struct history: View {
     var body: some View {
         VStack(spacing: .zero) {
             VStack(spacing: .zero){
-                NavigationLink(isActive: $redirectToEnterFood, destination: {enterFood(enabled: enabled, sugar: sugar, date: date, ftpreviewIndex: ftpreviewIndex, idForDelete: idFordelete, hasChanged: $hasChanged)}, label: {EmptyView()}).buttonStyle(TransparentButton()).isHidden(true)
-                NavigationLink(isActive: $redirectToEnterAct, destination: {enterAct(t: actTime, date: actDate, actpreviewIndex: actPreviewIndex, idForDelete: idFordelete, hasChanged: $hasChanged)}, label: {EmptyView()}).buttonStyle(TransparentButton()).isHidden(true)
-                NavigationLink(isActive: $redirectToEnterInject, destination: {inject(t: tInject, date: dateInject, previewIndex: previewIndexInject, previewIndex1: previewIndexInject1, idForDelete: idFordelete, hasChanged: $hasChanged)}, label: {EmptyView()}).buttonStyle(TransparentButton()).isHidden(true)
-                NavigationLink(isActive: $redirectToEnterSugar, destination: {sugarChange(t: tSugar, date: dateSugar, isAct: isActSugar, bool1: bool1Sugar, spreviewIndex: spreviewIndexSugar, idForDelete: idFordelete, hasChanged: $hasChanged)}, label: {EmptyView()}).buttonStyle(TransparentButton()).isHidden(true)
-                NavigationLink(isActive: $redirectToEnterKetonur, destination: {ketonur(t: tKetonur, date: dateKetonur, idForDelete: idFordelete, hasChanged: $hasChanged)}, label: {EmptyView()}).buttonStyle(TransparentButton()).isHidden(true)
-                NavigationLink(isActive: $redirectToEnterMassa, destination: {massa(t: tMassa, date: dateMassa, idForDelete: idFordelete, hasChanged: $hasChanged)}, label: {EmptyView()}).buttonStyle(TransparentButton()).isHidden(true)
+                NavigationLink(isActive: $redirectToEnterFood, destination: {enterFood(enabled: enabled, sugar: sugar, date: date, ftpreviewIndex: ftpreviewIndex, idForDelete: idFordelete, hasChanged: $hasChanged)}, label: {EmptyView()}).buttonStyle(TransparentButton()).hidden()
+                NavigationLink(isActive: $redirectToEnterAct, destination: {enterAct(t: actTime, date: actDate, actpreviewIndex: actPreviewIndex, idForDelete: idFordelete, hasChanged: $hasChanged)}, label: {EmptyView()}).buttonStyle(TransparentButton()).hidden()
+                NavigationLink(isActive: $redirectToEnterInject, destination: {inject(t: tInject, date: dateInject, previewIndex: previewIndexInject, previewIndex1: previewIndexInject1, idForDelete: idFordelete, hasChanged: $hasChanged)}, label: {EmptyView()}).buttonStyle(TransparentButton()).hidden()
+                NavigationLink(isActive: $redirectToEnterSugar, destination: {sugarChange(t: tSugar, date: dateSugar, isAct: isActSugar, bool1: bool1Sugar, spreviewIndex: spreviewIndexSugar, idForDelete: idFordelete, hasChanged: $hasChanged)}, label: {EmptyView()}).buttonStyle(TransparentButton()).hidden()
+                NavigationLink(isActive: $redirectToEnterKetonur, destination: {ketonur(t: tKetonur, date: dateKetonur, idForDelete: idFordelete, hasChanged: $hasChanged)}, label: {EmptyView()}).buttonStyle(TransparentButton()).hidden()
+                NavigationLink(isActive: $redirectToEnterMassa, destination: {massa(t: tMassa, date: dateMassa, idForDelete: idFordelete, hasChanged: $hasChanged)}, label: {EmptyView()}).buttonStyle(TransparentButton()).hidden()
             }
             Picker("Фильтр", selection: $fillterDefault, content: {
                 Text("День").tag(fillterBy.day)
@@ -104,15 +104,15 @@ struct history: View {
             List {
                 ForEach(hList.fillterList, id: \.id){ i in
                     doRow(first: i.name, second: i.date, third: i.metaInfo, typeOfRow: i.type)
-                        .swipeActions(edge: .trailing, allowsFullSwipe: true, content: {
+                        .swipeActions(edge: .trailing , content: {
                             Button {
-                                removeRows(at: IndexSet(integer: hList.histList.firstIndex(of: i)!))
+                                removeRow(at: IndexSet(integer: hList.histList.firstIndex(of: i)!))
                             } label: {
                                 Image(systemName: "trash.fill")
                             }
                             .tint(.red)
                         })
-                        .swipeActions(edge: .trailing, allowsFullSwipe: true, content: {
+                        .swipeActions(edge: .trailing, content: {
                             Button {
                                 if i.type == 0 {
                                     idFordelete = []
@@ -120,10 +120,10 @@ struct history: View {
                                         idFordelete.append(j)
                                     }
                                     date = convertToDate(d: i.date)
-                                    collection.addedFoodItems = []
+                                    collection.editedFoodItems = []
                                     for (j, k) in zip(i.metaInfo, i.metaInfo.indices) {
-                                        collection.addedFoodItems.append(food(table_id: i.tbID[k], name: j[0], prot: Double(j[2])!, fat: Double(j[3])!, carbo: Double(j[4])!, kkal: Double(j[5])!, gi: Double(j[6])!, index: 0, position: Int(k), gram: Double(j[1])!)
-                                            )
+                                        collection.editedFoodItems.append(foodItem(table_id: i.tbID[k], name: j[0], prot: Double(j[2])!, fat: Double(j[3])!, carbo: Double(j[4])!, kkal: Double(j[5])!, gi: Double(j[6])!, index: 0, position: Int(k), gram: Double(j[1])!)
+                                        )
                                     }
                                     if i.metaInfo.last![8] != "0.0" {
                                         sugar = i.metaInfo.last![8]
@@ -144,9 +144,9 @@ struct history: View {
                                     default:
                                         ftpreviewIndex = .zavtrak
                                     }
-                                    Task {
+                                    DispatchQueue.main.asyncAfter(deadline: .now()+0.01, execute: {
                                         redirectToEnterFood = true
-                                    }
+                                    })
                                 }
                                 else if i.type == 1 {
                                     idFordelete = []
@@ -171,9 +171,9 @@ struct history: View {
                                     default:
                                         actPreviewIndex = act.zar
                                     }
-                                    Task {
+                                    DispatchQueue.main.asyncAfter(deadline: .now()+0.01, execute: {
                                         redirectToEnterAct = true
-                                    }
+                                    })
                                 }
                                 else if i.type == 2 {
                                     idFordelete = []
@@ -206,9 +206,9 @@ struct history: View {
                                     default:
                                         previewIndexInject = injectType.ultra
                                     }
-                                    Task {
+                                    DispatchQueue.main.asyncAfter(deadline: .now()+0.01, execute: {
                                         redirectToEnterInject = true
-                                    }
+                                    })
                                 }
                                 else if i.type == 3 {
                                     idFordelete = []
@@ -234,9 +234,9 @@ struct history: View {
                                         spreviewIndexSugar = .natoshak
                                     }
                                     bool1Sugar = try! convertToInt(txt: i.metaInfo[0][2])
-                                    Task {
+                                    DispatchQueue.main.asyncAfter(deadline: .now()+0.01, execute: {
                                         redirectToEnterSugar = true
-                                    }
+                                    })
                                 }
                                 else if i.type == 4 {
                                     idFordelete = []
@@ -245,9 +245,9 @@ struct history: View {
                                     }
                                     tKetonur = i.metaInfo[0][0]
                                     dateKetonur = convertToDate(d: i.date)
-                                    Task {
+                                    DispatchQueue.main.asyncAfter(deadline: .now()+0.01, execute: {
                                         redirectToEnterKetonur = true
-                                    }
+                                    })
                                 }
                                 else if i.type == 5 {
                                     idFordelete = []
@@ -256,9 +256,9 @@ struct history: View {
                                     }
                                     tMassa = i.metaInfo[0][0]
                                     dateMassa = convertToDate(d: i.date)
-                                    Task {
+                                    DispatchQueue.main.asyncAfter(deadline: .now()+0.01, execute: {
                                         redirectToEnterMassa = true
-                                    }
+                                    })
                                 }
                             } label: {
                                 Image(systemName: "pencil")
@@ -293,11 +293,11 @@ struct history: View {
                 }
             }
         }
-        .navigationTitle("История записей")
+        .navigationTitle("История")
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing, content: {
                 NavigationLink {
-                    fillterPicker(listOfValues: $deselected).navigationBarTitleDisplayMode(.inline)
+                    fillterPicker(listOfValues: $deselected)
                 } label: {
                     Image(systemName: "gear")
                 }
@@ -371,12 +371,12 @@ struct history: View {
                     Text("\($0)")
                 }
             } header: {
-                Text("Дополнительная информация").font(.system(size: 15.5))
+                Text("Дополнительная информация").font(.caption)
             }
             Section {
                 Text(date)
             } header: {
-                Text("Время приема").font(.system(size: 15.5))
+                Text("Время приема").font(.caption)
             }
             Section {
                 ForEach(info, id: \.self){foodItem in
@@ -386,7 +386,7 @@ struct history: View {
                     }
                 }
             } header: {
-                Text("Список блюд").font(.system(size: 15.5))
+                Text("Список блюд").font(.caption)
             }
         }
         .navigationBarTitleDisplayMode(.large)
@@ -399,17 +399,17 @@ struct history: View {
             Section {
                 Text(info[0][1])
             } header: {
-                Text("Длительность, мин.").font(.system(size: 15.5))
+                Text("Длительность, мин.").font(.caption)
             }
             Section {
                 Text(date)
             } header: {
-                Text("Время начала").font(.system(size: 15.5))
+                Text("Время начала").font(.caption)
             }
             Section {
                 Text(info[0][0])
             } header: {
-                Text("Тип нагрузки").font(.system(size: 15.5))
+                Text("Тип нагрузки").font(.caption)
             }
         }
         .navigationTitle("Физическая активность")
@@ -421,22 +421,22 @@ struct history: View {
             Section {
                 Text(info[0][0])
             } header: {
-                Text("Кол-во ед.").font(.system(size: 15.5))
+                Text("Кол-во ед.").font(.caption)
             }
             Section {
                 Text(info[0][1])
             } header: {
-                Text("Прием пищи").font(.system(size: 15.5))
+                Text("Прием пищи").font(.caption)
             }
             Section {
                 Text(info[0][2])
             } header: {
-                Text("Тип действия").font(.system(size: 15.5))
+                Text("Тип действия").font(.caption)
             }
             Section {
                 Text(date)
             } header: {
-                Text("Время измерения").font(.system(size: 15.5))
+                Text("Время измерения").font(.caption)
             }
         }.navigationTitle("Введение инсулина")
     }
@@ -447,17 +447,17 @@ struct history: View {
             Section {
                 Text(info[0][0])
             } header: {
-                Text("Уровень сахара в крови ммоль/л").font(.system(size: 15.5))
+                Text("Уровень сахара в крови ммоль/л").font(.caption)
             }
             Section {
                 Text(date)
             } header: {
-                Text("Время").font(.system(size: 15.5))
+                Text("Время").font(.caption)
             }
             Section {
                 Text(info[0][1])
             } header: {
-                Text("Период").font(.system(size: 15.5))
+                Text("Период").font(.caption)
             }
         }.navigationTitle("Измерение сахара")
     }
@@ -468,12 +468,12 @@ struct history: View {
             Section {
                 Text(info[0][0])
             } header: {
-                Text("Общая информация").font(.system(size: 15.5))
+                Text("Общая информация").font(.caption)
             }
             Section {
                 Text(date)
             } header: {
-                Text("Время измерения").font(.system(size: 15.5))
+                Text("Время измерения").font(.caption)
             }
         }
         .navigationTitle("Уровень кетонов в моче")
@@ -485,18 +485,18 @@ struct history: View {
             Section {
                 Text(info[0][0])
             } header: {
-                Text("Общая информация").font(.system(size: 15.5))
+                Text("Общая информация").font(.caption)
             }
             Section {
                 Text(date)
             } header: {
-                Text("Время измерения").font(.system(size: 15.5))
+                Text("Время измерения").font(.caption)
             }
         }
         .navigationTitle("Измерение массы тела")
     }
     
-    func removeRows(at offsets: IndexSet) {
+    func removeRow(at offsets: IndexSet) {
         offsets.sorted(by: > ).forEach {i in
             deleteAndSave(idToDelete: hList.fillterList[i].bdID, table: hList.fillterList[i].type, info: [hList.fillterList[i].date, hList.fillterList[i].name])
             hList.histList.removeAll(where: {$0.bdID == hList.fillterList[i].bdID && $0.type == hList.fillterList[i].type && $0.date == hList.fillterList[i].date && $0.name == hList.fillterList[i].name})

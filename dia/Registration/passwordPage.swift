@@ -13,7 +13,7 @@ struct passwordPage: View {
     @State private var nextField: Bool = false
     @State private var isLoading: Bool = false
     @FocusState private var focusedField: Bool
-    @EnvironmentObject var loginManager: Router
+    @EnvironmentObject var routeManager: Router
     var body: some View {
         VStack(spacing: 20) {
             Spacer()
@@ -40,7 +40,7 @@ struct passwordPage: View {
             }
             if !isValidPassword {
                 Text("Неверный пароль")
-                    .font(.system(size: 20))
+                    .font(.caption)
                     .foregroundColor(.red)
                     .frame(maxWidth: .infinity, alignment: .leading)
             }
@@ -51,13 +51,13 @@ struct passwordPage: View {
                 }
                 else {
                     withAnimation(.default){
-                        isValidPassword = loginManager.checkEnteredPassord(pass)
+                        isValidPassword = routeManager.checkEnteredPassord(pass)
                     }
                     if isValidPassword {
                         focusedField = false
                         isLoading = true
                         Task {
-                            await loginManager.setLogged()
+                            await routeManager.setLogged()
                             isLoading = false
                             nextField = true
                         }
@@ -72,7 +72,7 @@ struct passwordPage: View {
             })
             .buttonStyle(RoundedRectangleButtonStyle())
             NavigationLink(isActive: $nextField, destination: {versionChoose()}, label: {EmptyView()})
-                .buttonStyle(TransparentButton()).isHidden(true)
+                .buttonStyle(TransparentButton()).hidden()
             
         }
         .padding()

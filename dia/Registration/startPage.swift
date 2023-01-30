@@ -7,79 +7,45 @@
 
 import SwiftUI
 
-enum Route: Hashable {
-    case login
-    case password
-    case version
-    case helper
-}
-
-struct RouteStruct: Hashable {
-    var pages: Route
-    @ViewBuilder
-    func makeView() -> some View {
-        switch pages {
-        case .login:
-            loginPage()
-        case .password:
-            passwordPage()
-        case .version:
-            versionChoose()
-        case .helper:
-            regHelper()
-        }
-    }
-}
-
 struct startPage: View {
-    @StateObject private var loginManager = Router()
-    @StateObject var collection = foodCollections()
+    @StateObject var routeManager = Router()
     var body: some View {
         if #available(iOS 16.0, *) {
             Group {
-                if (loginManager.isLoggedIn && loginManager.isChoosed) {
-                    NavigationStack {
-                        mainPage()
-                    }
+                if (routeManager.isLoggedIn && routeManager.isChoosed) {
+                    mainMenuGroup()
                 }
-                if (!loginManager.isLoggedIn || !loginManager.isChoosed) {
+                if (!routeManager.isLoggedIn || !routeManager.isChoosed) {
                     NavigationStack {
                         loginPage()
-                            .navigationDestination(for: RouteStruct.self) { route in
-                                route.makeView()
-                            }
                     }
                 }
             }
             .transition(.slide)
-            .animation(Animation.default, value: loginManager.animateTransition)
+            .animation(Animation.default, value: routeManager.animateTransition)
             .onAppear {
-                loginManager.checkIfLogged()
+                routeManager.checkIfLogged()
             }
-            .environmentObject(collection)
-            .environmentObject(loginManager)
+            .environmentObject(routeManager)
             
         } else {
             Group {
-                if (loginManager.isLoggedIn && loginManager.isChoosed) {
-                    NavigationView {
-                        mainPage()
-                    }
+                if (routeManager.isLoggedIn && routeManager.isChoosed) {
+                    mainMenuGroup()
                 }
-                if (!loginManager.isLoggedIn || !loginManager.isChoosed) {
+                if (!routeManager.isLoggedIn || !routeManager.isChoosed) {
                     NavigationView {
                         loginPage()
                     }
+                    .navigationViewStyle(StackNavigationViewStyle())
                 }
             }
-            .navigationViewStyle(StackNavigationViewStyle())
             .transition(.slide)
-            .animation(Animation.default, value: loginManager.animateTransition)
+            .animation(Animation.default, value: routeManager.animateTransition)
             .onAppear {
-                loginManager.checkIfLogged()
+                routeManager.checkIfLogged()
             }
-            .environmentObject(loginManager)
-            .environmentObject(collection)
+            .environmentObject(routeManager)
         }
     }
 }

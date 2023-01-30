@@ -6,6 +6,7 @@ class Router: ObservableObject {
     @Published var isChoosed = false
     @Published var version = 1
     @Published var animateTransition = false
+    @Published var tabViewStatment: Int = 1
     
     func checkIfLogged() {
         do {

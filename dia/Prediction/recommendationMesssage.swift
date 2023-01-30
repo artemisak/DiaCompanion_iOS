@@ -8,59 +8,69 @@
 import Foundation
 import SQLite
 
-func getMessage(highGI: Bool, manyCarbo: Bool, highBGBefore: Bool, lowPV: Bool, bg_pred: Double, isTrue: inout Bool) -> String {
+func getMessage(highBGPredict: Bool, highBGBefore: Bool, manyCarbo: Bool, unequalGLDistribution: Bool, highGI: Bool) -> String {
     var txt = ""
-    if (highGI && bg_pred >= 6.8) {
-        txt = "Рекомендуется исключить из рациона или уменьшить количество " +
-        "продуктов с высоким гликемическим индексом (более 55)"
-    } else if (manyCarbo && bg_pred >= 6.8) {
-        txt = "Рекомендовано уменьшить количество углеводов в приеме пищи"
-    } else if (highBGBefore && bg_pred >= 6.8) {
-        txt = "Высокий уровень глюкозы до еды. " +
-        "Рекомендовано уменьшить количество углеводов во время перекусов."
-    } else if (lowPV && bg_pred >= 6.8) {
-        txt = "В последнее время в Вашем рационе было недостаточно пищевых волокон. " +
-        "Добавьте в рацион разрешённые овощи, фрукты, злаковые, отруби " +
-        "(см. обучающие материалы)."
-    } else if (bg_pred >= 6.8) {
-        txt = "Вероятно, уровень глюкозы после еды будет высоким, " +
-        "рекомендована прогулка после приема пищи."
-    }
-    if txt != "" {
-        isTrue = true
+    print(highBGPredict, highBGBefore, manyCarbo, unequalGLDistribution, highGI)
+    if highBGPredict {
+        if highBGBefore {
+            txt = "Высокий уровень глюкозы до еды. " +
+            "Рекомендовано уменьшить количество углеводов во время перекусов."
+        } else if manyCarbo {
+            if (unequalGLDistribution) {
+                txt = "Уменьшите количество продуктов с высокой гликемической нагрузкой (ГН)"
+            } else if highGI {
+                txt = "Уменьшите количество продуктов с высоким гликемическим индексом (ГИ)"
+            }
+        } else {
+            txt = "Вероятно, уровень глюкозы после еды будет высоким, " +
+            "рекомендована прогулка после приема пищи."
+        }
     }
     return txt
 }
 
-
-// если больше 3 раз за два дня
-
-func checkGI(listOfFood: [food]) -> Bool {
-    return listOfFood.contains(where: {$0.gi > 55})
-}
-
-func checkCarbo(foodType: String, listOfFood: [food]) -> Bool {
-    var sum = 0.0
-    for i in listOfFood {
-        sum += i.carbo
-    }
-    if foodType == "Завтрак" && sum > 30 {
-        return true
-    } else if foodType != "" && sum > 60 {
+func checkUnequalGlDistribution(listOfFood: [foodItem]) -> Bool {
+    var temp = listOfFood
+    temp = temp.sorted(by: {$0.gl > $1.gl})
+    let totalGL = temp.map{$0.gl}.reduce(0, +)
+    let partialGL = Array(temp[0..<temp.count/2]).map{$0.gl}.reduce(0, +)
+    if partialGL / totalGL >= 0.6 {
         return true
     }
     return false
 }
 
-func checkBGBefore(BG0: Double) -> Bool {
-    if BG0 > 6.7 {
+func checkBGPredicted(BG1: Double) -> Bool {
+    if BG1 > 6.8 {
         return true
     } else {
         return false
     }
 }
 
-func checkPV(listOfFood: [food], date: Date) -> Bool {
+func checkGI(listOfFood: [foodItem]) -> Bool {
+    return listOfFood.contains(where: {$0.gi >= 55})
+}
+
+func checkCarbo(foodType: String, listOfFood: [foodItem]) -> Bool {
+    let sum = listOfFood.map{$0.carbo}.reduce(0, +)
+    if foodType == "Завтрак" && sum > 15 {
+        return true
+    } else if foodType != "" && sum > 30 {
+        return true
+    }
+    return false
+}
+
+func checkBGBefore(BG0: Double) -> Bool {
+    if BG0 > 6.8 {
+        return true
+    } else {
+        return false
+    }
+}
+
+func checkPV(listOfFood: [foodItem], date: Date) -> Bool {
     var lowPV = false
     do {
         var sum = 0.0
@@ -115,7 +125,6 @@ func checkPV(listOfFood: [food], date: Date) -> Bool {
         } else if sum + sumYest < 28 {
             lowPV = true
         }
-//        если регулярно раз в три дня в день меньше 20
     }
     catch {
         print(error)

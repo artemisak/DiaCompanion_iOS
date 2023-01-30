@@ -35,7 +35,7 @@ struct weekS: View {
                     }.buttonStyle(TransparentButton())
                     Divider()
                     Button(action: {
-                        addWeekDay(week: Int(selections1[0]), day: Int(selections1[1]))
+                        pacientManager.provider.addWeekDay(week: Int(selections1[0]), day: Int(selections1[1]))
                         bWeek.toggle()
                     }){
                         Text("Сохранить")
@@ -46,7 +46,7 @@ struct weekS: View {
             .padding([.leading, .trailing], 15)
         }
         .onAppear{
-            selections1 = getPreloadWeek()
+            selections1 = pacientManager.provider.getPreloadWeek()
         }
     }
 }

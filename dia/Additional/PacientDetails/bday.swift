@@ -35,7 +35,7 @@ struct bday: View {
                         let dateFormatter = DateFormatter()
                         dateFormatter.locale = Locale(identifier: "ru_RU")
                         dateFormatter.setLocalizedDateFormatFromTemplate("dd.MM.yyyy")
-                        addDate(pDate: dateFormatter.string(from: vDate))
+                        pacientManager.provider.addDate(pDate: dateFormatter.string(from: vDate))
                         vDate = Date.now
                         pDate.toggle()
                     }){
@@ -47,7 +47,7 @@ struct bday: View {
             .padding([.leading, .trailing], 15)
         }
         .onAppear(perform: {
-            vDate = getPreloadBD()
+            vDate = pacientManager.provider.getPreloadBD()
         })
     }
 }

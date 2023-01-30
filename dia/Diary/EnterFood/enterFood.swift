@@ -19,7 +19,7 @@ struct ftPicker: View {
     @Binding var ftpreviewIndex: ftype
     var body: some View {
         List {
-            Picker(selection: $ftpreviewIndex, label: Text("Прием пищи")) {
+            Picker(selection: $ftpreviewIndex, label: Text("Прием пищи").font(.caption)) {
                 Text("Завтрак").tag(ftype.zavtrak)
                 Text("Обед").tag(ftype.obed)
                 Text("Ужин").tag(ftype.uzin)
@@ -31,7 +31,7 @@ struct ftPicker: View {
 
 struct enterFood: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    @EnvironmentObject var islogin: Router
+    @EnvironmentObject var routeManager: Router
     @EnvironmentObject var collection: foodCollections
     @State var enabled : Bool
     @State var sugar: String
@@ -55,10 +55,11 @@ struct enterFood: View {
     @State private var errorMessage: String = ""
     @State private var recommendMessage: String = ""
     @State private var isVisible: Bool = false
+    @State private var isUnsavedChanges: Bool = false
     @Binding var hasChanged: Bool
     var body: some View {
         List {
-            Section(header: Text("Общая информация")){
+            Section(header: Text("Общая информация").font(.caption)){
                 NavigationLink(destination: ftPicker(ftpreviewIndex: $ftpreviewIndex), label: {
                     HStack {
                         Text("Прием пищи")
@@ -74,11 +75,11 @@ struct enterFood: View {
                     )
                 }
             }
-            if islogin.version != 2 {
-                Section(header: Text("Уровень сахара в крови")) {
+            if routeManager.version != 2 {
+                Section(header: Text("Уровень сахара в крови").font(.caption)) {
                     Toggle(isOn: $enabled) {Text("Записать текущий УСК")}
                         .onChange(of: enabled){ _ in
-                            if (!checkBMI() && enabled) {
+                            if (!pacientManager.provider.checkBMI() && enabled) {
                                 alertMessage = true
                                 enabled = false
                             }
@@ -95,6 +96,9 @@ struct enterFood: View {
                         .frame(maxWidth: .infinity)
                         .foregroundColor(fontColor)
                         .listRowBackground(recColor)
+                    if isVisible {
+                        Text(recommendMessage)
+                    }
                     TextField("5,0 ммоль/л", text: $sugar)
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                         .keyboardType(.decimalPad)
@@ -102,7 +106,7 @@ struct enterFood: View {
                         .foregroundColor(scolor)
                 }
             }
-            Section(header: Text("Потребленные продукты")){
+            Section(header: Text("Потребленные продукты").font(.caption)){
                 NavigationLink(destination: { enterPoint() }, label: {
                     HStack {
                         Text("Добавить")
@@ -111,7 +115,7 @@ struct enterFood: View {
                 }).foregroundColor(Color("AccentColor"))
             }
             Section {
-                ForEach(collection.addedFoodItems, id: \.id) {i in
+                ForEach(collection.whereToSave == .addedFoodItems ? collection.addedFoodItems : collection.editedFoodItems, id: \.id) {i in
                     Label {
                         Text("\(i.name) (\(i.gram!, specifier: "%.1f") г.)")
                     } icon: {
@@ -119,17 +123,31 @@ struct enterFood: View {
                     }
                     .labelStyle(centerLabel())
                     .swipeActions {
-                        Button(action: {removeRows(i: collection.addedFoodItems.firstIndex(where: {$0.id == i.id})!)}, label: {
+                        Button(action: {
+                            if collection.whereToSave == .addedFoodItems {
+                                removeRows(i: collection.addedFoodItems.firstIndex(where: {$0.id == i.id})!)
+                            } else {
+                                removeRows(i: collection.editedFoodItems.firstIndex(where: {$0.id == i.id})!)
+                            }
+                        }, label: {
                             Image(systemName: "trash.fill")
                         })
                         .tint(Color.red)
                     }
                     .swipeActions {
                         Button(action: {
-                            id0 = collection.addedFoodItems.firstIndex(where: {$0.id == i.id})!
-                            collection.selectedItem = i
-                            withAnimation(.default){
-                                showEditView = true
+                            if collection.whereToSave == .addedFoodItems {
+                                id0 = collection.addedFoodItems.firstIndex(where: {$0.id == i.id})!
+                                collection.selectedItem = i
+                                withAnimation(.default){
+                                    showEditView = true
+                                }
+                            } else {
+                                id0 = collection.editedFoodItems.firstIndex(where: {$0.id == i.id})!
+                                collection.selectedItem = i
+                                withAnimation(.default){
+                                    showEditView = true
+                                }
                             }
                         }, label: {
                             Image(systemName: "pencil")
@@ -141,10 +159,17 @@ struct enterFood: View {
         }
         .ignoresSafeArea(.keyboard)
         .navigationTitle("Приемы пищи")
+        .navigationBarBackButtonHidden()
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing, content: {
                 Button(action: {
-                    saveInDB()
+                    if collection.whereToSave == .addedFoodItems {
+                        saveInDB(workList: collection.addedFoodItems)
+                        collection.addedFoodItems = []
+                    } else {
+                        saveInDB(workList: collection.editedFoodItems)
+                        collection.editedFoodItems = []
+                    }
                 }) {
                     Text("Сохранить")
                 }
@@ -160,47 +185,116 @@ struct enterFood: View {
                     Text("Готово").foregroundColor(Color(red: 0/255, green: 150/255, blue: 255/255))
                 })
             })
+            ToolbarItem(placement: .navigationBarLeading, content: {
+                Button {
+                    switch collection.whereToSave {
+                    case .addedFoodItems:
+                        if collection.addedFoodItems.isEmpty {
+                            presentationMode.wrappedValue.dismiss()
+                        } else {
+                            isUnsavedChanges = true
+                        }
+                    case .editingFoodItems:
+                        if collection.editedFoodItems.isEmpty {
+                            presentationMode.wrappedValue.dismiss()
+                        } else {
+                            isUnsavedChanges = true
+                        }
+                    default:
+                        presentationMode.wrappedValue.dismiss()
+                    }
+                } label: {
+                    HStack {
+                        Text(Image(systemName: "chevron.left")).font(.body).fontWeight(.semibold)
+                        Text("Назад").font(.body)
+                    }
+                }
+            })
         }
         .sheet(isPresented: $showEditView, content: { addGramButton(gram: String(collection.selectedItem!.gram!).split(separator: ".").joined(separator: ","), editing: true, isShowingSheet: $showEditView, showSuccesNotify: .constant(false))})
-        .alert("Рекомендации", isPresented: $isVisible, actions: {Button {} label: {Text("ОК")}}, message: {Text(recommendMessage)})
-        .task {
-            updatePrediction()
+        .alert("Несохраненные изменения", isPresented: $isUnsavedChanges, actions: {
+            Button(role: .destructive, action: {
+                switch collection.whereToSave {
+                case .addedFoodItems:
+                    collection.addedFoodItems = []
+                case .editingFoodItems:
+                    collection.editedFoodItems = []
+                default:
+                    break
+                }
+                presentationMode.wrappedValue.dismiss()
+            }, label: {Text("Покинуть")})
+        }, message: {Text("Вы внесли изменения, но не сохранили их. Если вы покините страницу - временные данные будут удалены.")})
+        .onAppear {
+            if idForDelete.isEmpty {
+                collection.whereToSave = .addedFoodItems
+            } else {
+                collection.whereToSave = .editingFoodItems
+            }
+            if collection.whereToSave == .addedFoodItems {
+                date = Date()
+                updatePrediction(workList: collection.addedFoodItems)
+            } else {
+                updatePrediction(workList: collection.editedFoodItems)
+            }
         }
         .onReceive(collection.$addedFoodItems, perform: { _ in
-            updatePrediction()
+            updatePrediction(workList: collection.addedFoodItems)
+        })
+        .onReceive(collection.$editedFoodItems, perform: { _ in
+            updatePrediction(workList: collection.editedFoodItems)
         })
         .onChange(of: sugar){ _ in
-            updatePrediction()
+            if collection.whereToSave == .addedFoodItems {
+                updatePrediction(workList: collection.addedFoodItems)
+            } else {
+                updatePrediction(workList: collection.editedFoodItems)
+            }
         }
         .onChange(of: ftpreviewIndex, perform: { _ in
-            updatePrediction()
+            if collection.whereToSave == .addedFoodItems {
+                updatePrediction(workList: collection.addedFoodItems)
+            } else {
+                updatePrediction(workList: collection.editedFoodItems)
+            }
         })
         .onChange(of: date, perform: { _ in
-            updatePrediction()
+            if collection.whereToSave == .addedFoodItems {
+                updatePrediction(workList: collection.addedFoodItems)
+            } else {
+                updatePrediction(workList: collection.editedFoodItems)
+            }
         })
     }
     func removeRows(i: Int){
-        collection.addedFoodItems.remove(at: i)
+        if collection.whereToSave == .addedFoodItems {
+            collection.addedFoodItems.remove(at: i)
+        } else {
+            collection.editedFoodItems.remove(at: i)
+        }
     }
-    func updatePrediction(){
+    func updatePrediction(workList: [foodItem]){
         do {
-            if (collection.addedFoodItems.count != 0 && sugar != "" && islogin.version != 2) {
+            if (workList.count != 0 && sugar != "" && routeManager.version != 2) {
                 var food: [String] = []
                 var gram: [Double] = []
-                collection.addedFoodItems.forEach {
+                workList.forEach {
                     food.append($0.name)
                     gram.append($0.gram!)
                 }
                 let foodNutrients = getData(BG0: try convert(txt: sugar), foodtype: ftpreviewIndex, foodN: food, gram: gram, picker_date: date)
                 res = try getPredict(BG0: foodNutrients.BG0, gl: foodNutrients.gl, carbo: foodNutrients.carbo, prot: foodNutrients.protb6h, t1: foodNutrients.food_type1, t2: foodNutrients.food_type2, t3: foodNutrients.food_type3, t4: foodNutrients.food_type4, kr: foodNutrients.kr, BMI: foodNutrients.BMI)
+                recommendMessage = getMessage(highBGPredict: checkBGPredicted(BG1: res), highBGBefore: checkBGBefore(BG0: try convert(txt: sugar)), manyCarbo: checkCarbo(foodType: ftpreviewIndex.rawValue, listOfFood: workList), unequalGLDistribution: checkUnequalGlDistribution(listOfFood: workList), highGI: checkGI(listOfFood: workList))
                 if res < 6.8 {
                     sugarlvl = "УСК не превысит норму"
                     recColor = Color.green.opacity(0.7)
                     fontColor = Color.white
+                    isVisible = false
                 } else {
                     sugarlvl = "УСК превысит норму"
                     recColor = Color(red: 255/255, green: 91/255, blue: 36/255)
                     fontColor = Color.white
+                    isVisible = true
                 }
                 scolor = .black
             } else {
@@ -219,7 +313,7 @@ struct enterFood: View {
             scolor = .red
         }
     }
-    func saveInDB(){
+    func saveInDB(workList: [foodItem]){
         permission = checkIfAlreadyEx(selectedDate: date, idForDelete: idForDelete)
         if permission {
             errorMessage = "Удалите или отредактиируйте уже существующий прием пищи"
@@ -231,13 +325,11 @@ struct enterFood: View {
                     deleteFromBD(idToDelete: idForDelete, table: 0)
                     hasChanged = true
                 }
-                recommendMessage = getMessage(highGI: checkGI(listOfFood: collection.addedFoodItems), manyCarbo: checkCarbo(foodType: ftpreviewIndex.rawValue, listOfFood: collection.addedFoodItems), highBGBefore: checkBGBefore(BG0: _BG0), lowPV: checkPV(listOfFood: collection.addedFoodItems, date: date), bg_pred: res, isTrue: &isVisible)
-                for i in collection.addedFoodItems {
+                for i in workList {
                     SaveToDB(FoodName: i.name, gram: "\(i.gram!)", table_id: "\(i.table_id)", selectedDate: date, selectedType: ftpreviewIndex.rawValue)
                 }
                 addPredictedRecord(selectedDate: date, selectedType: ftpreviewIndex.rawValue, BG0: _BG0, BG1: res)
                 collection.selectedItem = nil
-                collection.addedFoodItems = []
                 self.presentationMode.wrappedValue.dismiss()
             }
             catch {
@@ -251,13 +343,11 @@ struct enterFood: View {
                 deleteFromBD(idToDelete: idForDelete, table: 0)
                 hasChanged = true
             }
-            recommendMessage = getMessage(highGI: checkGI(listOfFood: collection.addedFoodItems), manyCarbo: checkCarbo(foodType: ftpreviewIndex.rawValue, listOfFood: collection.addedFoodItems), highBGBefore: checkBGBefore(BG0: 5.0), lowPV: checkPV(listOfFood: collection.addedFoodItems, date: date), bg_pred: res, isTrue: &isVisible)
-            for i in collection.addedFoodItems {
+            for i in workList {
                 SaveToDB(FoodName: i.name, gram: "\(i.gram!)", table_id: "\(i.table_id)", selectedDate: date, selectedType: ftpreviewIndex.rawValue)
             }
             addPredictedRecord(selectedDate: date, selectedType: ftpreviewIndex.rawValue, BG0: 0.0, BG1: 0.0)
             collection.selectedItem = nil
-            collection.addedFoodItems = []
             self.presentationMode.wrappedValue.dismiss()
         }
     }

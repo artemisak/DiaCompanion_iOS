@@ -3,8 +3,11 @@ import xlsxwriter
 import SwiftUI
 
 class exportTable {
+    
+    static let sheets = exportTable()
+    
     func generate(version: Int) -> URL {
-        let userName = getName().0
+        let userName = excelManager.sheetsManager.getName().0
         let documentDirectory = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
         let fileURL = documentDirectory.appendingPathComponent("tables.xlsx")
 
@@ -142,7 +145,7 @@ class exportTable {
         worksheet_set_column(worksheet7, 2, 2, 27, nil)
         worksheet_set_column(worksheet7, 3, 3, 20, nil)
         
-        let tbl = getFoodRecords()
+        let tbl = excelManager.sheetsManager.getFoodRecords()
         
         let formater = DateFormatter()
         formater.dateFormat = "dd.MM.yyyy"
@@ -463,14 +466,14 @@ class exportTable {
         worksheet_write_string(worksheet1, lxw_row_t(3+r1+2), 55, "Мононенасыщенные жирные кислоты, в г.", merge_format3)
         worksheet_write_string(worksheet1, lxw_row_t(3+r1+2), 56, "Полиненасыщенные жирные кислоты, в г.", merge_format3)
         
-        let info = getWeeksInfo()
+        let info = excelManager.sheetsManager.getWeeksInfo()
         let pweek = info.0
         let pday = info.1
         let pdate = info.2
         
         for i in 0..<tbl.count {
             if (version != 3 && version != 4){
-                worksheet_write_string(worksheet1, lxw_row_t(3+r1+3+i), 0, "\(defWeek(nowDate: tbl[i].day, dateBegin: pdate, weekOfStart: pweek, dayOfStartWeek: pday))", nil)
+                worksheet_write_string(worksheet1, lxw_row_t(3+r1+3+i), 0, "\(excelManager.sheetsManager.defWeek(nowDate: tbl[i].day, dateBegin: pdate, weekOfStart: pweek, dayOfStartWeek: pday))", nil)
             }
             worksheet_write_string(worksheet1, lxw_row_t(3+r1+3+i), 1, formater.string(from: tbl[i].day), nil)
             worksheet_write_string(worksheet1, lxw_row_t(3+r1+3+i), 5, "\(round(Array(tbl[i].g.joined()).compactMap(Double.init).reduce(0,+)*100)/100)", nil)
@@ -551,8 +554,9 @@ class exportTable {
             worksheet_set_column(worksheet2, 30, 30, 15, nil);
             worksheet_set_column(worksheet2, 31, 31, 27, nil);
             
-            let tbl2 = getSugarRecords().0
-            let tbl3 = getSugarRecords().1
+            let sugar = excelManager.sheetsManager.getSugarRecords()
+            let tbl2 = sugar.0
+            let tbl3 = sugar.1
             
             worksheet_merge_range(worksheet2, 0, 0, 0, 13, userName, nil);
             worksheet_merge_range(worksheet2, 1, 0, 1, 13, "Измерение сахара", merge_format41);
@@ -577,7 +581,7 @@ class exportTable {
             var i1 = 0
             for i in 0..<tbl2.count {
                 if (version == 3 && version == 4){
-                    worksheet_write_string(worksheet2, lxw_row_t(i1+3), 0, "\(defWeek(nowDate: formater.date(from: tbl2[i].date)!, dateBegin: pdate, weekOfStart: pweek, dayOfStartWeek: pday))", nil)
+                    worksheet_write_string(worksheet2, lxw_row_t(i1+3), 0, "\(excelManager.sheetsManager.defWeek(nowDate: formater.date(from: tbl2[i].date)!, dateBegin: pdate, weekOfStart: pweek, dayOfStartWeek: pday))", nil)
                 }
                 worksheet_write_string(worksheet2, lxw_row_t(i1+3), 1, tbl2[i].date, nil)
                 // Натощак
@@ -811,7 +815,7 @@ class exportTable {
             worksheet_protect(worksheet2, "pass123", nil)
         }
         
-        let tbl4 =  getActivityRecords()
+        let tbl4 =   excelManager.sheetsManager.getActivityRecords()
         worksheet_merge_range(worksheet3, 0, 0, 0, 7, userName, nil)
         worksheet_write_string(worksheet3, 1, 0, "Физическая нагрузка", merge_format41)
         if (version == 3 && version == 4){
@@ -929,7 +933,7 @@ class exportTable {
             }
         }
         
-        let tbl5 = getKetons()
+        let tbl5 = excelManager.sheetsManager.getKetons()
         let df = DateFormatter()
         df.dateFormat = "dd.MM.yyyy"
         let df1 = DateFormatter()
@@ -946,14 +950,14 @@ class exportTable {
         
         for i in 0..<tbl5.count {
             if version != 3 && version != 4 {
-                worksheet_write_string(worksheet4, lxw_row_t(3+i), 0, "\(defWeek(nowDate: tbl5[i].date, dateBegin: pdate, weekOfStart: pweek, dayOfStartWeek: pday))", nil)
+                worksheet_write_string(worksheet4, lxw_row_t(3+i), 0, "\(excelManager.sheetsManager.defWeek(nowDate: tbl5[i].date, dateBegin: pdate, weekOfStart: pweek, dayOfStartWeek: pday))", nil)
             }
             worksheet_write_string(worksheet4, lxw_row_t(3+i), 1, df.string(from: tbl5[i].date), nil)
             worksheet_write_string(worksheet4, lxw_row_t(3+i), 2, df1.string(from: tbl5[i].time), nil)
             worksheet_write_string(worksheet4, lxw_row_t(3+i), 3, "\(tbl5[i].lvl)", nil)
         }
         
-        let tbl6 = getMassa()
+        let tbl6 = excelManager.sheetsManager.getMassa()
         worksheet_merge_range(worksheet5, 0, 0, 0, 3, userName, nil)
         worksheet_write_string(worksheet5, 1, 0, "Масса тела", merge_format41)
         if version != 3 && version != 4 {
@@ -965,14 +969,14 @@ class exportTable {
         
         for i in 0..<tbl6.count {
             if version != 3 && version != 4 {
-                worksheet_write_string(worksheet5, lxw_row_t(3+i), 0, "\(defWeek(nowDate: tbl6[i].date, dateBegin: pdate, weekOfStart: pweek, dayOfStartWeek: pday))", nil)
+                worksheet_write_string(worksheet5, lxw_row_t(3+i), 0, "\(excelManager.sheetsManager.defWeek(nowDate: tbl6[i].date, dateBegin: pdate, weekOfStart: pweek, dayOfStartWeek: pday))", nil)
             }
             worksheet_write_string(worksheet5, lxw_row_t(3+i), 1, df.string(from: tbl6[i].date), nil)
             worksheet_write_string(worksheet5, lxw_row_t(3+i), 2, df1.string(from: tbl6[i].time), nil)
             worksheet_write_string(worksheet5, lxw_row_t(3+i), 3, "\(tbl6[i].weight)", nil)
         }
         
-        let tbl7 = getFullDays()
+        let tbl7 = excelManager.sheetsManager.getFullDays()
         worksheet_merge_range(worksheet6, 0, 0, 0, 3, userName, nil)
         worksheet_write_string(worksheet6, 1, 0, "Список полных дней", merge_format41)
         worksheet_write_string(worksheet6, 2, 0, "Дата", merge_format41)
@@ -981,7 +985,7 @@ class exportTable {
             worksheet_write_string(worksheet6, lxw_row_t(3+i), 0, df.string(from: tbl7[i].days), nil)
         }
         
-        let tbl8 = getDeletedRecords()
+        let tbl8 = excelManager.sheetsManager.getDeletedRecords()
         worksheet_merge_range(worksheet7, 0, 0, 0, 3, userName, nil)
         worksheet_write_string(worksheet7, 1, 0, "Удаленные записи", merge_format41)
         worksheet_write_string(worksheet7, 2, 0, "Дата", merge_format41)

@@ -13,7 +13,7 @@ struct loginPage: View {
     @State private var nextField: Bool = false
     @State private var isLoading: Bool = false
     @FocusState private var focusedField: Bool
-    @EnvironmentObject var loginManager: Router
+    @EnvironmentObject var routeManager: Router
     var body: some View {
         VStack(spacing: 20) {
             VStack(spacing: 20) {
@@ -40,7 +40,7 @@ struct loginPage: View {
             }
             if !isValidLogin {
                 Text("Такого аккаунта не существует")
-                    .font(.system(size: 20))
+                    .font(.caption)
                     .foregroundColor(.red)
                     .frame(maxWidth: .infinity, alignment: .leading)
             }
@@ -51,7 +51,7 @@ struct loginPage: View {
                     }
                 } else {
                     withAnimation(.default){
-                        isValidLogin = loginManager.checkEnteredLogin(login)
+                        isValidLogin = routeManager.checkEnteredLogin(login)
                         if isValidLogin {
                             focusedField = false
                             nextField = true
@@ -63,7 +63,7 @@ struct loginPage: View {
             }
             .buttonStyle(RoundedRectangleButtonStyle())
             NavigationLink(isActive: $nextField, destination: {passwordPage()}, label: {EmptyView()})
-                .buttonStyle(TransparentButton()).isHidden(true)
+                .buttonStyle(TransparentButton()).hidden()
             NavigationLink(destination: {
                 regHelper()
             }, label: {

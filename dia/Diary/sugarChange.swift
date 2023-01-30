@@ -22,10 +22,10 @@ struct sugarChange: View {
     @Binding var hasChanged : Bool
     var body: some View {
         List {
-            Section(header: Text("Общая информация").font(.system(size: 15.5))){
+            Section(header: Text("Общая информация").font(.caption)){
                 TextField("Уровень сахара в крови, ммоль/л", text: $t)
                     .keyboardType(.decimalPad)
-                NavigationLink(destination: sugarPicker(spreviewIndex: $spreviewIndex).navigationBarTitleDisplayMode(.inline), label: {
+                NavigationLink(destination: sugarPicker(spreviewIndex: $spreviewIndex), label: {
                     HStack {
                         Text("Период")
                         Spacer()
@@ -60,7 +60,7 @@ struct sugarChange: View {
                         } else {
                             bool1 = 0
                         }
-                        addSugarChange(lvl: try convert(txt: t), period: spreviewIndex.rawValue, physical: bool1, time: dateFormatter.string(from: date))
+                        pacientManager.provider.addSugarChange(lvl: try convert(txt: t), period: spreviewIndex.rawValue, physical: bool1, time: dateFormatter.string(from: date))
                         self.presentationMode.wrappedValue.dismiss()
                     } catch {
                         isCorrect = true
@@ -81,7 +81,7 @@ struct sugarChange: View {
                 })
             })
         }
-        .navigationTitle("Измерение сахара")
+        .navigationTitle("Сахар")
         .onAppear(perform: {
             UIScrollView.appearance().keyboardDismissMode = .onDrag
             UITableView.appearance().showsVerticalScrollIndicator = false
@@ -93,7 +93,7 @@ struct sugarPicker: View {
     @Binding var spreviewIndex: selectedvar
     var body: some View {
         List {
-            Picker(selection: $spreviewIndex , label: Text("Период").font(.system(size: 15.5))) {
+            Picker(selection: $spreviewIndex , label: Text("Период").font(.caption)) {
                 Text("Натощак").tag(selectedvar.natoshak)
                 Text("После завтрака").tag(selectedvar.zavtrak)
                 Text("После обеда").tag(selectedvar.obed)

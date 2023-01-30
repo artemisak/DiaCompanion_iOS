@@ -36,7 +36,7 @@ struct pWeight: View {
                     Button(action: {
                         do {
                             lineColor = Color.black
-                            addWeight(Weight: try convert(txt: txt))
+                            pacientManager.provider.addWeight(Weight: try convert(txt: txt))
                             bWeight.toggle()
                         } catch {
                             lineColor = Color.red
@@ -51,7 +51,7 @@ struct pWeight: View {
             .padding([.leading, .trailing], 15)
         }
         .onAppear(perform: {
-            txt = getPreloadDWeight()
+            txt = pacientManager.provider.getPreloadDWeight()
             focusedField = true
         })
     }

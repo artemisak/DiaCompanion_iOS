@@ -13,17 +13,17 @@ struct aboutApp: View {
             Section {
                 Text("Межплатформенный комплекс программного обеспечения, сочетающий традиционные методы контроля показаний сахара в крови с машинным обучением.")
             } header: {
-                Text("Описание")
+                Text("Описание").font(.caption)
             }
             Section {
                 Link(destination: URL(string: "https://github.com/artemisak/swiftDia/blob/main/README.md")!){Text("Политика конфиденциальности")}
             } header: {
-                Text("Сопроводительные документы")
+                Text("Сопроводительные документы").font(.caption)
             }
             Section {
                 Link(destination: URL(string: "https://github.com/artemisak")!) {Text("GitHub")}
             } header: {
-                Text("Другие проекты")
+                Text("Другие проекты").font(.caption)
             }
             Section {
                 Link(destination: URL(string: "https://www.sqlite.org/index.html")!) {
@@ -36,7 +36,7 @@ struct aboutApp: View {
                     Text("CocoaPods")
                 }
             } header: {
-                Text("Использованные ресурсы")
+                Text("Использованные ресурсы").font(.caption)
             }
         }
         .navigationTitle("О приложении")

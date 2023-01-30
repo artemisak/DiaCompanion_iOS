@@ -49,7 +49,7 @@ struct currentV: View {
                     }.buttonStyle(TransparentButton())
                     Divider()
                     Button(action: {
-                        addVrach(pVrach: selectedVrach.rawValue)
+                        pacientManager.provider.addVrach(pVrach: selectedVrach.rawValue)
                         pV.toggle()
                     }){
                         Text("Сохранить")
@@ -60,7 +60,7 @@ struct currentV: View {
             .padding([.leading, .trailing], 15)
         }
         .onAppear {
-            selectedVrach = getPreloadDoc()
+            selectedVrach = pacientManager.provider.getPreloadDoc()
         }
     }
 }

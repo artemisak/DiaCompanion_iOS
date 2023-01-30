@@ -34,7 +34,7 @@ struct dStart: View {
                         let dateFormatter = DateFormatter()
                         dateFormatter.locale = Locale(identifier: "ru_RU")
                         dateFormatter.setLocalizedDateFormatFromTemplate("dd.MM.yyyy")
-                        addDateS(pDate: dateFormatter.string(from: vDate))
+                        pacientManager.provider.addDateS(pDate: dateFormatter.string(from: vDate))
                         vDate = Date.now
                         bStart.toggle()
                     }){
@@ -46,7 +46,7 @@ struct dStart: View {
             .padding([.leading, .trailing], 15)
         }
         .onAppear {
-            vDate = getPreloadStartDate()
+            vDate = pacientManager.provider.getPreloadStartDate()
         }
     }
 }

@@ -21,11 +21,11 @@ struct enterAct: View {
     @Binding var hasChanged: Bool
     var body: some View {
         List {
-            Section(header: Text("Общая информация").font(.system(size: 15.5))){
+            Section(header: Text("Общая информация").font(.caption)){
                 TextField("Длительность, мин.", text: $t)
                     .keyboardType(.numberPad)
                     .focused($focusedField)
-                NavigationLink(destination: actPicker(actpreviewIndex: $actpreviewIndex).navigationBarTitleDisplayMode(.inline), label: {
+                NavigationLink(destination: actPicker(actpreviewIndex: $actpreviewIndex), label: {
                     HStack{
                         Text("Род занятий")
                         Spacer()
@@ -52,7 +52,7 @@ struct enterAct: View {
                         let intT = try convertToInt(txt: t)
                         let dateFormatter = DateFormatter()
                         dateFormatter.dateFormat = "HH:mm dd.MM.yyyy"
-                        addAct(min: intT, rod: actpreviewIndex.rawValue, time: dateFormatter.string(from: date))
+                        pacientManager.provider.addAct(min: intT, rod: actpreviewIndex.rawValue, time: dateFormatter.string(from: date))
                         presentationMode.wrappedValue.dismiss()
                     } catch {
                         isCorrect = true
@@ -87,7 +87,7 @@ struct actPicker: View {
     @Binding var actpreviewIndex: act
     var body: some View {
         Form{
-            Picker(selection: $actpreviewIndex, label: Text("Род занятий").font(.system(size: 15.5))) {
+            Picker(selection: $actpreviewIndex, label: Text("Род занятий").font(.caption)) {
                 Text("Зарядка").tag(act.zar)
                 Text("Сон").tag(act.sleep)
                 Text("Ходьба").tag(act.hod)

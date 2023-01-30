@@ -36,7 +36,7 @@ struct pHeight: View {
                     Button(action: {
                         do {
                             lineColor = Color.black
-                            addHeight(Height: try convert(txt: txt))
+                            pacientManager.provider.addHeight(Height: try convert(txt: txt))
                             bHeight.toggle()
                         } catch {
                             lineColor = Color.red
@@ -51,7 +51,7 @@ struct pHeight: View {
             .padding([.leading, .trailing], 15)
         }
         .onAppear(perform: {
-            txt = getPreloadDHeight()
+            txt = pacientManager.provider.getPreloadDHeight()
             focusedField = true
         })
     }

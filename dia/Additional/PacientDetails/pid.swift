@@ -36,7 +36,7 @@ struct pid: View {
                     Button(action: {
                         do {
                             lineColor = .black
-                            addID(id: try convertToInt(txt: txt))
+                            pacientManager.provider.addID(id: try convertToInt(txt: txt))
                             bid.toggle()
                         } catch {
                             lineColor = .red
@@ -51,7 +51,7 @@ struct pid: View {
             .padding([.leading, .trailing], 15)
         }
         .onAppear(perform: {
-            txt = getPreloadDID()
+            txt = pacientManager.provider.getPreloadDID()
             focuseField = true
         })
     }
