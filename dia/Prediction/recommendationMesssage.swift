@@ -10,7 +10,6 @@ import SQLite
 
 func getMessage(highBGPredict: Bool, highBGBefore: Bool, manyCarbo: Bool, unequalGLDistribution: Bool, highGI: Bool) -> String {
     var txt = ""
-    print(highBGPredict, highBGBefore, manyCarbo, unequalGLDistribution, highGI)
     if highBGPredict {
         if highBGBefore {
             txt = "Высокий уровень глюкозы до еды. " +
@@ -20,6 +19,9 @@ func getMessage(highBGPredict: Bool, highBGBefore: Bool, manyCarbo: Bool, unequa
                 txt = "Уменьшите количество продуктов с высокой гликемической нагрузкой (ГН)"
             } else if highGI {
                 txt = "Уменьшите количество продуктов с высоким гликемическим индексом (ГИ)"
+            } else {
+                txt = "Вероятно, уровень глюкозы после еды будет высоким, " +
+                "рекомендована прогулка после приема пищи."
             }
         } else {
             txt = "Вероятно, уровень глюкозы после еды будет высоким, " +
