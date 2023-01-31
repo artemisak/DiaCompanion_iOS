@@ -25,7 +25,7 @@ struct listHeader: View {
                 Button {
                     sorting.toggle()
                 } label: {
-                    Image(systemName: "arrow.up.arrow.down")
+                    Image(systemName: "arrow.up.arrow.down.square").resizable().scaledToFit().frame(maxWidth: 25, maxHeight: 25)
                 }
                 .confirmationDialog("Порядок фильтрации", isPresented: $sorting) {
                     Button {

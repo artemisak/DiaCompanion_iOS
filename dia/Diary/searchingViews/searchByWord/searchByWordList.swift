@@ -72,7 +72,7 @@ struct searchByWordList: View {
                             }
                         }
                     } header: {
-                        listHeader().font(.subheadline)
+                        listHeader().font(.body)
                     }
                 }
                 .listStyle(.insetGrouped)

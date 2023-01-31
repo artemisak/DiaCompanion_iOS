@@ -313,7 +313,7 @@ struct history: View {
                     Text(first)
                     Spacer()
                     Text(second)
-                }
+                }.foregroundColor(.black)
             }).listRowBackground(Color(red: 240/255, green: 254/255, blue: 237/255))
         }
         else if (typeOfRow == 1 && deselected[3].selected) {
@@ -322,7 +322,7 @@ struct history: View {
                     Text(first)
                     Spacer()
                     Text(second)
-                }
+                }.foregroundColor(.black)
             }).listRowBackground(Color(red: 249/255, green: 252/255, blue: 209/255))
         }
         else if (typeOfRow == 2 && deselected[1].selected) {
@@ -331,7 +331,7 @@ struct history: View {
                     Text(first)
                     Spacer()
                     Text(second)
-                }
+                }.foregroundColor(.black)
             }).listRowBackground(Color(red: 238/255, green: 249/255, blue: 253/255))
         }
         else if (typeOfRow == 3 && deselected[0].selected) {
@@ -340,7 +340,7 @@ struct history: View {
                     Text(first)
                     Spacer()
                     Text(second)
-                }
+                }.foregroundColor(.black)
             }).listRowBackground(Color(red: 254/255, green: 242/255, blue: 246/255))
         }
         else if (typeOfRow == 4 && deselected[4].selected) {
@@ -349,7 +349,7 @@ struct history: View {
                     Text(first)
                     Spacer()
                     Text(second)
-                }
+                }.foregroundColor(.black)
             })
         }
         else if (typeOfRow == 5 && deselected[5].selected) {
@@ -358,7 +358,7 @@ struct history: View {
                     Text(first)
                     Spacer()
                     Text(second)
-                }
+                }.foregroundColor(.black)
             })
         }
     }
