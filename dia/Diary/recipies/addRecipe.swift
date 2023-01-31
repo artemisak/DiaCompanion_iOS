@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct addCustomMeal: View {
+struct addRecipe: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @EnvironmentObject var collection: foodCollections
     @State var editExistRow: Bool
@@ -17,6 +17,7 @@ struct addCustomMeal: View {
     @State private var permission: Bool = false
     @State private var errorMessage: String = "Заполните поля в соотвествии с требованиями"
     @State private var showEditView: Bool = false
+    @State private var isUnsavedChanges: Bool = false
     @FocusState private var focus: Bool
     var body: some View {
         List {
@@ -62,11 +63,30 @@ struct addCustomMeal: View {
                         .tint(Color.orange)
                     }
                 }
+            } header: {
+                if (!collection.recipeFoodItems.isEmpty && collection.whereToSave == .recipeFoodItems) {
+                    Text("ГИ / ГН / Наименование, г.").frame(minWidth: 0, maxWidth: .infinity).font(.body)
+                }
             }
         }
         .ignoresSafeArea(.keyboard, edges: .bottom)
+        .navigationBarBackButtonHidden()
         .navigationTitle(editExistRow ? "Изменить рецепт" : "Создать рецепт")
         .toolbar {
+            ToolbarItem(placement: .navigationBarLeading, content: {
+                Button {
+                    if collection.whereToSave == .recipeFoodItems && collection.recipeFoodItems.isEmpty {
+                        presentationMode.wrappedValue.dismiss()
+                    } else {
+                        isUnsavedChanges = true
+                    }
+                } label: {
+                    HStack {
+                        Text(Image(systemName: "chevron.left")).font(.body).fontWeight(.semibold)
+                        Text("Назад").font(.body)
+                    }
+                }
+            })
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
                     do {
@@ -93,6 +113,14 @@ struct addCustomMeal: View {
         .alert(isPresented: $permission) {
             Alert(title: Text("Статус операции"), message: Text(errorMessage), dismissButton: .default(Text("ОК")))
         }
+        .alert("Несохраненные изменения", isPresented: $isUnsavedChanges, actions: {
+            Button(role: .destructive, action: {
+                if collection.whereToSave == .recipeFoodItems {
+                    collection.recipeFoodItems = []
+                }
+                presentationMode.wrappedValue.dismiss()
+            }, label: {Text("Покинуть")})
+        }, message: {Text("Вы внесли изменения, но не сохранили их. Если вы покините страницу - временные данные будут удалены.")})
     }
     func removeRows(i: Int){
         collection.recipeFoodItems.remove(at: i)

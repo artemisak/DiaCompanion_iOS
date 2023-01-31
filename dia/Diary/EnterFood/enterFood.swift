@@ -155,6 +155,10 @@ struct enterFood: View {
                         .tint(Color.orange)
                     }
                 }
+            } header: {
+                if (!collection.addedFoodItems.isEmpty && collection.whereToSave == .addedFoodItems) || (!collection.editedFoodItems.isEmpty && collection.whereToSave == .editingFoodItems) {
+                    Text("ГИ / ГН / Наименование, г.").frame(minWidth: 0, maxWidth: .infinity).font(.body)
+                }
             }
         }
         .ignoresSafeArea(.keyboard)

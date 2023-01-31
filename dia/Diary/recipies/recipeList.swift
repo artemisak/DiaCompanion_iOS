@@ -33,12 +33,14 @@ struct recipeList: View {
                             }
                             .swipeActions {
                                 NavigationLink(destination: {
-                                    addCustomMeal(editExistRow: true, idToDelete: i.table_id, foodNotation: i.name, selectedCat: .alcohol)
+                                    addRecipe(editExistRow: true, idToDelete: i.table_id, foodNotation: i.name, selectedCat: .alcohol)
                                         .task {
                                             collection.whereToSave = .recipeFoodItems
+                                            var temp = [foodItem]()
                                             for j in 0..<i.item_id.count {
-                                                collection.recipeFoodItems.append(foodItem(table_id: i.item_id[j], name: i.item_name[j], prot: i.prot[j], fat: i.fat[j], carbo: i.carbo[j], kkal: i.kkal[j], gi: i.gi[j], gram: i.gram[j]))
+                                                temp.append(foodItem(table_id: i.item_id[j], name: i.item_name[j], prot: i.prot[j], fat: i.fat[j], carbo: i.carbo[j], kkal: i.kkal[j], gi: i.gi[j], gram: i.gram[j]))
                                             }
+                                            collection.recipeFoodItems = temp
                                         }
                                 }) {
                                     Image(systemName: "pencil")
@@ -62,7 +64,7 @@ struct recipeList: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 NavigationLink(destination: {
-                    addCustomMeal(editExistRow: false, foodNotation: "", selectedCat: .alcohol)
+                    addRecipe(editExistRow: false, foodNotation: "", selectedCat: .alcohol)
                         .task {
                             collection.whereToSave = .recipeFoodItems
                         }

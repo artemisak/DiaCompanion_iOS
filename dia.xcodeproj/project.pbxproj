@@ -16,7 +16,7 @@
 		A71CAEF228280F7600C6AC9F /* predictManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71CAEF128280F7600C6AC9F /* predictManager.swift */; };
 		A7230C7F27705AED00B68244 /* excelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7230C7E27705AED00B68244 /* excelManager.swift */; };
 		A7289FB4294F530A00B35BD3 /* aboutApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7289FB3294F530A00B35BD3 /* aboutApp.swift */; };
-		A73C74F628CF2BF2008D09BF /* addCustomMeal.swift in Sources */ = {isa = PBXBuildFile; fileRef = A73C74F528CF2BF2008D09BF /* addCustomMeal.swift */; };
+		A73C74F628CF2BF2008D09BF /* addRecipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = A73C74F528CF2BF2008D09BF /* addRecipe.swift */; };
 		A73D3CBD297C52DF0041E712 /* recipeRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = A73D3CBC297C52DF0041E712 /* recipeRow.swift */; };
 		A7491D81297A905E005AAA18 /* mainMenuGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7491D80297A905E005AAA18 /* mainMenuGroup.swift */; };
 		A7491D83297AA07B005AAA18 /* recipeList.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7491D82297AA07B005AAA18 /* recipeList.swift */; };
@@ -113,7 +113,7 @@
 		A71CAEF128280F7600C6AC9F /* predictManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = predictManager.swift; sourceTree = "<group>"; };
 		A7230C7E27705AED00B68244 /* excelManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = excelManager.swift; sourceTree = "<group>"; };
 		A7289FB3294F530A00B35BD3 /* aboutApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = aboutApp.swift; sourceTree = "<group>"; };
-		A73C74F528CF2BF2008D09BF /* addCustomMeal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = addCustomMeal.swift; sourceTree = "<group>"; };
+		A73C74F528CF2BF2008D09BF /* addRecipe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = addRecipe.swift; sourceTree = "<group>"; };
 		A73D3CBC297C52DF0041E712 /* recipeRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = recipeRow.swift; sourceTree = "<group>"; };
 		A7491D80297A905E005AAA18 /* mainMenuGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = mainMenuGroup.swift; sourceTree = "<group>"; };
 		A7491D82297AA07B005AAA18 /* recipeList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = recipeList.swift; sourceTree = "<group>"; };
@@ -223,6 +223,7 @@
 		A760B5792987DB8200402094 /* recipies */ = {
 			isa = PBXGroup;
 			children = (
+				A73C74F528CF2BF2008D09BF /* addRecipe.swift */,
 				A7491D82297AA07B005AAA18 /* recipeList.swift */,
 				A73D3CBC297C52DF0041E712 /* recipeRow.swift */,
 				A7491D84297AA66D005AAA18 /* recipeModel.swift */,
@@ -324,7 +325,6 @@
 			isa = PBXGroup;
 			children = (
 				AC3C959A26D1B570005B1393 /* enterFood.swift */,
-				A73C74F528CF2BF2008D09BF /* addCustomMeal.swift */,
 			);
 			path = EnterFood;
 			sourceTree = "<group>";
@@ -633,7 +633,7 @@
 				AC37A67B276147AF00558E55 /* excelGenerator.swift in Sources */,
 				A7A4A45728EC5CCC0032652C /* predictModel.mlpackage in Sources */,
 				A7DF49DB291A851B007A9371 /* HorizontalBarChartView.swift in Sources */,
-				A73C74F628CF2BF2008D09BF /* addCustomMeal.swift in Sources */,
+				A73C74F628CF2BF2008D09BF /* addRecipe.swift in Sources */,
 				ACCBA996272B1DA300D785F6 /* RKViewController.swift in Sources */,
 				AC631E0F26CEA90D0033CCFF /* settings.swift in Sources */,
 				ACF4E40E272DB126002D2797 /* RKManager.swift in Sources */,

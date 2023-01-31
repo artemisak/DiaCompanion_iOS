@@ -14,8 +14,12 @@ struct recipeRow: View {
     @State var item: [recipe]
     var body: some View {
         List {
-            ForEach(item, id: \.id){i in
-                Text("\(i.item), \(i.gram.formatted(.number)) г.")
+            Section {
+                ForEach(item, id: \.id){i in
+                    Text("\(i.item), \(i.gram.formatted(.number)) г.")
+                }
+            } header: {
+                Text("Составляющие").font(.caption)
             }
         }
         .navigationTitle(name)
