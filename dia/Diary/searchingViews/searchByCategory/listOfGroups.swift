@@ -14,9 +14,6 @@ struct listOfGroups: View {
             NavigationLink(destination: {
                 inGroupList(category: element.category)
                     .searchable(text: $collection.textToSearch, placement: .navigationBarDrawer(displayMode: .always))
-                    .onSubmit(of: .search) {
-                        collection.fillList()
-                    }
             }, label: {
                 Text(element.category)
             })

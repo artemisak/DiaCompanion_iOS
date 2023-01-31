@@ -12,9 +12,9 @@ struct enterPoint: View {
     var body: some View {
         searchViewsGroup()
             .searchable(text: $collection.textToSearch, placement: .navigationBarDrawer(displayMode: .always))
-            .onSubmit(of: .search) {
+            .onReceive(collection.$textToSearch, perform: {_ in
                 collection.fillList()
-            }
+            })
     }
 }
 

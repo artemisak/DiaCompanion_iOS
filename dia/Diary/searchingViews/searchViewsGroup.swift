@@ -20,13 +20,11 @@ struct searchViewsGroup: View {
             }
         }
         .navigationTitle("Продукты питания")
-        .ignoresSafeArea(.keyboard, edges: .bottom)
+        .ignoresSafeArea(.keyboard)
         .animation(.none, value: isSearching)
-        .task {
+        .onChange(of: isSearching, perform: {_ in
             collection.resetConfigurationValues()
-            collection.listOfFood = []
-            collection.listOfPinnedFood = []
-        }
+        })
     }
 }
 
