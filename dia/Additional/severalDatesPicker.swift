@@ -22,10 +22,10 @@ struct severalDatesPicker: View {
     func startUp() {
         rkManager3.selectedDates = pacientManager.provider.getDatesFromDB()
         rkManager3.colors.weekdayHeaderColor = Color.blue
-        rkManager3.colors.monthHeaderColor = Color.black
+        rkManager3.colors.monthHeaderColor = Color("listButtonColor")
         rkManager3.colors.textColor = Color.blue
         rkManager3.colors.disabledColor = Color.red
         rkManager3.colors.todayBackColor = Color.blue
-        rkManager3.colors.weekdayHeaderColor = Color.black
+        rkManager3.colors.weekdayHeaderColor = Color("listButtonColor")
     }
 }

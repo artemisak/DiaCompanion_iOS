@@ -19,7 +19,7 @@ struct RKCell: View {
             .fontWeight(rkDate.getFontWeight())
             .foregroundColor(rkDate.getTextColor())
             .frame(width: cellWidth, height: cellWidth)
-            .font(.caption)
+            .font(.body)
             .background(rkDate.getBackgroundColor())
             .cornerRadius(cellWidth/2)
             .frame(minWidth: 0, maxWidth: .infinity)

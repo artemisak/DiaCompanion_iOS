@@ -25,7 +25,7 @@ struct TransparentButton: ButtonStyle {
         configuration.label
             .frame(maxWidth: .infinity)
             .background(Color.white.opacity(0.0001))
-            .foregroundColor(.black)
+            .foregroundColor(Color("listButtonColor"))
             .frame(height: 50)
     }
 }

@@ -25,38 +25,38 @@ struct pacientCart: View {
                 Section(header: Text("Данные пациента").font(.caption)){
                     Button(action: {withAnimation(.default){pFio.toggle()}}) {
                         Text("ФИО")
-                    }.foregroundColor(.black)
+                    }.foregroundColor(Color("listButtonColor"))
                     Button(action: {withAnimation(.default){pDate.toggle()}}) {
                         Text("Дата рождения")
-                    }.foregroundColor(.black)
+                    }.foregroundColor(Color("listButtonColor"))
                     Button(action: {withAnimation(.default){pV.toggle()}}) {
                         Text("Лечащий врач")
-                    }.foregroundColor(.black)
+                    }.foregroundColor(Color("listButtonColor"))
                     Button(action: {withAnimation(.default){bStart.toggle()}}) {
                         Text("Дата начала ведения дневника")
-                    }.foregroundColor(.black)
+                    }.foregroundColor(Color("listButtonColor"))
                     if routeManager.version != 3 && routeManager.version != 4 {
                         Button(action: {withAnimation(.default){bWeek.toggle()}}) {
                             Text("Неделя берем. на начало исследования")
-                        }.foregroundColor(.black)
+                        }.foregroundColor(Color("listButtonColor"))
                     }
                     Button(action: {withAnimation(.default){bid.toggle()}}) {
                         Text("Индивидуальный номер пациента")
-                    }.foregroundColor(.black)
+                    }.foregroundColor(Color("listButtonColor"))
                     Button(action: {withAnimation(.default){bWeight.toggle()}}) {
                         if routeManager.version != 3 && routeManager.version != 4 {
                             Text("Вес до беременности, кг")
                         } else {
                             Text("Вес, кг")
                         }
-                    }.foregroundColor(.black)
+                    }.foregroundColor(Color("listButtonColor"))
                     Button(action: {withAnimation(.default){bHeight.toggle()}}) {
                         if routeManager.version != 3 && routeManager.version != 4 {
                             Text("Рост до беременности, см")
                         } else {
                             Text("Рост, см")
                         }
-                    }.foregroundColor(.black)
+                    }.foregroundColor(Color("listButtonColor"))
                 }
             }
             .ignoresSafeArea(.keyboard)

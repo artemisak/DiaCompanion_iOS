@@ -82,7 +82,7 @@ struct passwordPage: View {
             ToolbarItem(placement: .principal) {
                 HStack {
                     Text("Dia ID")
-                        .foregroundColor(Color.black)
+                        .foregroundColor(Color("listButtonColor"))
                         .font(.title)
                         .fontWeight(.bold)
                         .fixedSize()

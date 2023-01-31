@@ -3,11 +3,11 @@ import SwiftUI
 struct pWeight: View {
     @Binding var bWeight: Bool
     @Binding var txt: String
-    @State private var lineColor: Color = Color.black
+    @State private var lineColor: Color = Color("listButtonColor")
     @FocusState var focusedField: Bool
     var body: some View {
         ZStack{
-            Color.black.opacity(0.2).ignoresSafeArea()
+            Color("Popup_Background").ignoresSafeArea()
             VStack(spacing:0){
                 Text("Вес до беременности, в кг")
                     .padding()
@@ -35,7 +35,7 @@ struct pWeight: View {
                     Divider()
                     Button(action: {
                         do {
-                            lineColor = Color.black
+                            lineColor = Color("listButtonColor")
                             pacientManager.provider.addWeight(Weight: try convert(txt: txt))
                             bWeight.toggle()
                         } catch {
@@ -47,7 +47,7 @@ struct pWeight: View {
                     .buttonStyle(TransparentButton())
                 }.frame(height: 50)
             }
-            .background(Color.white.cornerRadius(10))
+            .background(Color("Popup_Field").cornerRadius(10))
             .padding([.leading, .trailing], 15)
         }
         .onAppear(perform: {

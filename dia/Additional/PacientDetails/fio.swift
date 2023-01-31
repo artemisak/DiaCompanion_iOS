@@ -3,11 +3,11 @@ import SwiftUI
 struct fio: View {
     @Binding var pFio: Bool
     @Binding var txt: String
-    @State private var lineColor = Color.black
+    @State private var lineColor = Color("listButtonColor")
     @FocusState var focuseField: Bool
     var body: some View {
         ZStack{
-            Color.black.opacity(0.2).ignoresSafeArea()
+            Color("Popup_Background").ignoresSafeArea()
             VStack(spacing: .zero){
                 Text("ФИО пациента")
                     .padding()
@@ -34,7 +34,7 @@ struct fio: View {
                     Divider()
                     Button(action: {
                         do {
-                            lineColor = Color.black
+                            lineColor = Color("listButtonColor")
                             pacientManager.provider.addName(pName: try pacientManager.provider.checkName(txt: txt))
                             pFio.toggle()
                         } catch {
@@ -46,7 +46,7 @@ struct fio: View {
                     .buttonStyle(TransparentButton())
                 }.frame(height: 50)
             }
-            .background(Color.white.cornerRadius(10))
+            .background(Color("Popup_Field").cornerRadius(10))
             .padding([.leading, .trailing])
         }
         .onAppear(perform: {

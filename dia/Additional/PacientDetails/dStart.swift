@@ -5,7 +5,7 @@ struct dStart: View {
     @Binding var vDate: Date
     var body: some View {
         ZStack{
-            Color.black.opacity(0.2).ignoresSafeArea()
+            Color("Popup_Background").ignoresSafeArea()
             VStack(spacing: 0){
                 Text("Дата начала ведения дневника")
                     .padding()
@@ -42,7 +42,7 @@ struct dStart: View {
                     }.buttonStyle(TransparentButton())
                 }.frame(height: 50)
             }
-            .background(Color.white.cornerRadius(10))
+            .background(Color("Popup_Field").cornerRadius(10))
             .padding([.leading, .trailing], 15)
         }
         .onAppear {

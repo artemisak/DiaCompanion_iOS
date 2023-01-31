@@ -26,7 +26,7 @@ struct loginPage: View {
                                 }
                             }
                         })
-                        .foregroundColor(.black)
+                        .foregroundColor(Color("listButtonColor"))
                         .textInputAutocapitalization(.never)
                         .disableAutocorrection(true)
                         .focused($focusedField)
@@ -81,7 +81,7 @@ struct loginPage: View {
             ToolbarItem(placement: .principal) {
                 HStack {
                     Text("Dia ID")
-                        .foregroundColor(Color.black)
+                        .foregroundColor(Color("listButtonColor"))
                         .font(.title)
                         .fontWeight(.bold)
                         .fixedSize()

@@ -104,7 +104,7 @@ struct enterFood: View {
                         .keyboardType(.decimalPad)
                         .disabled(enabled == false)
                         .foregroundColor(scolor)
-                }
+                }.listRowSeparator(.hidden)
             }
             Section(header: Text("Потребленные продукты").font(.caption)){
                 NavigationLink(destination: { enterPoint() }, label: {
@@ -303,8 +303,8 @@ struct enterFood: View {
                 scolor = .black
             } else {
                 sugarlvl = "УСК не определен"
-                recColor = Color.gray.opacity(0.3)
-                fontColor = Color.black
+                recColor = Color("BG_Undefined")
+                fontColor = Color("BG_Font_Undefined")
             }
         }
         catch inputErorrs.decimalError {
