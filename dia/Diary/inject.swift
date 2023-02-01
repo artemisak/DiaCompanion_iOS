@@ -52,6 +52,9 @@ struct inject: View {
                     displayedComponents: [.date, .hourAndMinute]
                 )
                 .datePickerStyle(.graphical)
+                .onAppear {
+                    if idForDelete.isEmpty {date = Date()}
+                }
             }
         }
         .ignoresSafeArea(.keyboard, edges: .bottom)
@@ -87,10 +90,6 @@ struct inject: View {
             })
         }
         .navigationTitle("Инсулин")
-        .onAppear(perform: {
-            UIScrollView.appearance().keyboardDismissMode = .onDrag
-            UITableView.appearance().showsVerticalScrollIndicator = false
-        })
     }
 }
 

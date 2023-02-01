@@ -36,23 +36,25 @@ struct mainMenu: View {
                     }
                     .foregroundColor(Color("listButtonColor"))
                 }
-                NavigationLink {
-                    sugarChange(t: "", date: localDate, isAct:  false, bool1: 0, spreviewIndex: .natoshak, idForDelete: [], hasChanged: .constant(false))
-                } label: {
-                    HStack {
-                        Image("sugar_level").resizable().scaledToFit().frame(width: 36, height: 36)
-                        Text("Измерение сахара")
+                if routeManager.version != 4 {
+                    NavigationLink {
+                        sugarChange(t: "", date: localDate, isAct:  false, spreviewIndex: .natoshak, idForDelete: [], hasChanged: .constant(false))
+                    } label: {
+                        HStack {
+                            Image("sugar_level").resizable().scaledToFit().frame(width: 36, height: 36)
+                            Text("Измерение сахара")
+                        }
+                        .foregroundColor(Color("listButtonColor"))
                     }
-                    .foregroundColor(Color("listButtonColor"))
-                }
-                NavigationLink {
-                    inject(t: "", date: localDate, previewIndex: injectType.ultra, previewIndex1: injects.natoshak, idForDelete: [], hasChanged: .constant(false))
-                } label: {
-                    HStack {
-                        Image("insulin").resizable().scaledToFit().frame(width: 36, height: 36)
-                        Text("Введение инсулина")
+                    NavigationLink {
+                        inject(t: "", date: localDate, previewIndex: injectType.ultra, previewIndex1: injects.natoshak, idForDelete: [], hasChanged: .constant(false))
+                    } label: {
+                        HStack {
+                            Image("insulin").resizable().scaledToFit().frame(width: 36, height: 36)
+                            Text("Введение инсулина")
+                        }
+                        .foregroundColor(Color("listButtonColor"))
                     }
-                    .foregroundColor(Color("listButtonColor"))
                 }
                 NavigationLink {
                     enterAct(t: "", date: localDate, actpreviewIndex: act.zar, idForDelete: [], hasChanged: .constant(false))

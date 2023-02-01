@@ -20,6 +20,9 @@ struct ketonur: View {
                     displayedComponents: [.date, .hourAndMinute]
                 )
                 .datePickerStyle(.graphical)
+                .onAppear {
+                    if idForDelete.isEmpty {date = Date()}
+                }
             }
         }
         .navigationTitle(Text("Кетонурия"))
@@ -58,9 +61,5 @@ struct ketonur: View {
             })
         }
         .ignoresSafeArea(.keyboard)
-        .onAppear {
-            UIScrollView.appearance().keyboardDismissMode = .onDrag
-            UITableView.appearance().showsVerticalScrollIndicator = false
-        }
     }
 }

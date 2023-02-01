@@ -38,6 +38,9 @@ struct enterAct: View {
                     displayedComponents: [.date, .hourAndMinute]
                 )
                 .datePickerStyle(.graphical)
+                .onAppear {
+                    if idForDelete.isEmpty {date = Date()}
+                }
             }
         }
         .navigationTitle("Aктивность")
@@ -76,10 +79,6 @@ struct enterAct: View {
             })
         })
         .ignoresSafeArea(.keyboard)
-        .onAppear(perform: {
-            UIScrollView.appearance().keyboardDismissMode = .onDrag
-            UITableView.appearance().showsVerticalScrollIndicator = false
-        })
     }
 }
 

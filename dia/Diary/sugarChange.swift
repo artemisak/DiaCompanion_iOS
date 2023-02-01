@@ -15,9 +15,9 @@ struct sugarChange: View {
     @State var t : String
     @State var date : Date
     @State var isAct : Bool
-    @State var bool1 : Int
     @State var spreviewIndex : selectedvar
     @State var idForDelete : [Int]
+    @State private var bool1 : Int = 0
     @State private var isCorrect : Bool = false
     @Binding var hasChanged : Bool
     var body: some View {
@@ -42,6 +42,9 @@ struct sugarChange: View {
                     displayedComponents: [.date, .hourAndMinute]
                 )
                 .datePickerStyle(.graphical)
+                .onAppear {
+                    if idForDelete.isEmpty {date = Date()}
+                }
             }
         }
         .ignoresSafeArea(.keyboard, edges: .bottom)
@@ -82,10 +85,6 @@ struct sugarChange: View {
             })
         }
         .navigationTitle("Сахар")
-        .onAppear(perform: {
-            UIScrollView.appearance().keyboardDismissMode = .onDrag
-            UITableView.appearance().showsVerticalScrollIndicator = false
-        })
     }
 }
 

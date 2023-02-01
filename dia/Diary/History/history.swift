@@ -59,7 +59,6 @@ struct history: View {
     @State private var tSugar : String = ""
     @State private var dateSugar : Date = Date()
     @State private var isActSugar : Bool = false
-    @State private var bool1Sugar : Int = 0
     @State private var spreviewIndexSugar : selectedvar = selectedvar.natoshak
     @State private var hasChanged: Bool = false
     @State private var tKetonur: String = ""
@@ -75,7 +74,7 @@ struct history: View {
                 NavigationLink(isActive: $redirectToEnterFood, destination: {enterFood(enabled: enabled, sugar: sugar, date: date, ftpreviewIndex: ftpreviewIndex, idForDelete: idFordelete, hasChanged: $hasChanged)}, label: {EmptyView()}).buttonStyle(TransparentButton()).hidden()
                 NavigationLink(isActive: $redirectToEnterAct, destination: {enterAct(t: actTime, date: actDate, actpreviewIndex: actPreviewIndex, idForDelete: idFordelete, hasChanged: $hasChanged)}, label: {EmptyView()}).buttonStyle(TransparentButton()).hidden()
                 NavigationLink(isActive: $redirectToEnterInject, destination: {inject(t: tInject, date: dateInject, previewIndex: previewIndexInject, previewIndex1: previewIndexInject1, idForDelete: idFordelete, hasChanged: $hasChanged)}, label: {EmptyView()}).buttonStyle(TransparentButton()).hidden()
-                NavigationLink(isActive: $redirectToEnterSugar, destination: {sugarChange(t: tSugar, date: dateSugar, isAct: isActSugar, bool1: bool1Sugar, spreviewIndex: spreviewIndexSugar, idForDelete: idFordelete, hasChanged: $hasChanged)}, label: {EmptyView()}).buttonStyle(TransparentButton()).hidden()
+                NavigationLink(isActive: $redirectToEnterSugar, destination: {sugarChange(t: tSugar, date: dateSugar, isAct: isActSugar, spreviewIndex: spreviewIndexSugar, idForDelete: idFordelete, hasChanged: $hasChanged)}, label: {EmptyView()}).buttonStyle(TransparentButton()).hidden()
                 NavigationLink(isActive: $redirectToEnterKetonur, destination: {ketonur(t: tKetonur, date: dateKetonur, idForDelete: idFordelete, hasChanged: $hasChanged)}, label: {EmptyView()}).buttonStyle(TransparentButton()).hidden()
                 NavigationLink(isActive: $redirectToEnterMassa, destination: {massa(t: tMassa, date: dateMassa, idForDelete: idFordelete, hasChanged: $hasChanged)}, label: {EmptyView()}).buttonStyle(TransparentButton()).hidden()
             }
@@ -236,7 +235,7 @@ struct history: View {
                                             default:
                                                 spreviewIndexSugar = .natoshak
                                             }
-                                            bool1Sugar = try! convertToInt(txt: i.metaInfo[0][2])
+                                            isActSugar = try! convertToInt(txt: i.metaInfo[0][2]).intToBool
                                             DispatchQueue.main.asyncAfter(deadline: .now()+0.01, execute: {
                                                 redirectToEnterSugar = true
                                             })

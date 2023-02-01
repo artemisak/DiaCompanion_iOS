@@ -65,6 +65,7 @@ struct settings: View {
                         routeManager.isLoggedIn = false
                         routeManager.isChoosed = false
                         routeManager.version = 1
+                        routeManager.tabViewStatment = 1
                         Task {
                             await pacientManager.provider.deleteAccaunt()
                         }

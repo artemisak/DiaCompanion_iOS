@@ -20,6 +20,9 @@ struct massa: View {
                     displayedComponents: [.date, .hourAndMinute]
                 )
                 .datePickerStyle(.graphical)
+                .onAppear {
+                    if idForDelete.isEmpty {date = Date()}
+                }
             }
         }
         .navigationTitle(Text("Вес"))
@@ -56,9 +59,5 @@ struct massa: View {
             })
         }
         .ignoresSafeArea(.keyboard)
-        .onAppear {
-            UIScrollView.appearance().keyboardDismissMode = .onDrag
-            UITableView.appearance().showsVerticalScrollIndicator = false
-        }
     }
 }
