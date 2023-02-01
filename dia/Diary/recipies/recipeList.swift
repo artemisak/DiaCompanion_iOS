@@ -13,7 +13,7 @@ struct recipeList: View {
     @State private var food: [foodItem] = []
     var body: some View {
         ZStack {
-            Color("SystemBackground").ignoresSafeArea()
+            Color(UIColor.systemBackground).ignoresSafeArea()
             VStack {
                 if !allRecipes.recipes.isEmpty {
                     List {

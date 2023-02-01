@@ -1,4 +1,5 @@
 import SwiftUI
+import Algorithms
 
 struct deselectRow: Identifiable, Hashable {
     var id = UUID()
@@ -102,173 +103,177 @@ struct history: View {
             .pickerStyle(.segmented)
             .padding()
             List {
-                ForEach(hList.fillterList, id: \.id){ i in
-                    doRow(first: i.name, second: i.date, third: i.metaInfo, typeOfRow: i.type)
-                        .swipeActions(edge: .trailing , content: {
-                            Button {
-                                removeRow(at: IndexSet(integer: hList.histList.firstIndex(of: i)!))
-                            } label: {
-                                Image(systemName: "trash.fill")
-                            }
-                            .tint(.red)
-                        })
-                        .swipeActions(edge: .trailing, content: {
-                            Button {
-                                if i.type == 0 {
-                                    idFordelete = []
-                                    for j in i.bdID {
-                                        idFordelete.append(j)
+                ForEach(Array(hList.fillterList.map({$0.getDate()}).uniqued()), id: \.self) {day in
+                    Section {
+                        ForEach(hList.fillterList.filter({$0.getDate() == day}), id: \.id){ i in
+                            doRow(first: i.name, second: i.date, third: i.metaInfo, typeOfRow: i.type)
+                                .swipeActions(edge: .trailing , content: {
+                                    Button {
+                                        removeRow(at: IndexSet(integer: hList.histList.firstIndex(of: i)!))
+                                    } label: {
+                                        Image(systemName: "trash.fill")
                                     }
-                                    date = convertToDate(d: i.date)
-                                    collection.editedFoodItems = []
-                                    for (j, k) in zip(i.metaInfo, i.metaInfo.indices) {
-                                        collection.editedFoodItems.append(foodItem(table_id: i.tbID[k], name: j[0], prot: Double(j[2])!, fat: Double(j[3])!, carbo: Double(j[4])!, kkal: Double(j[5])!, gi: Double(j[6])!, index: 0, position: Int(k), gram: Double(j[1])!)
-                                        )
+                                    .tint(.red)
+                                })
+                                .swipeActions(edge: .trailing, content: {
+                                    Button {
+                                        if i.type == 0 {
+                                            idFordelete = []
+                                            for j in i.bdID {
+                                                idFordelete.append(j)
+                                            }
+                                            date = convertToDate(d: i.date)
+                                            collection.editedFoodItems = []
+                                            for (j, k) in zip(i.metaInfo, i.metaInfo.indices) {
+                                                collection.editedFoodItems.append(foodItem(table_id: i.tbID[k], name: j[0], prot: Double(j[2])!, fat: Double(j[3])!, carbo: Double(j[4])!, kkal: Double(j[5])!, gi: Double(j[6])!, index: 0, position: Int(k), gram: Double(j[1])!)
+                                                )
+                                            }
+                                            if i.metaInfo.last![8] != "0.0" {
+                                                sugar = i.metaInfo.last![8]
+                                                enabled = true
+                                            } else {
+                                                sugar = ""
+                                                enabled = false
+                                            }
+                                            switch i.name.split(separator: " ")[0] {
+                                            case "Завтрак":
+                                                ftpreviewIndex = .zavtrak
+                                            case "Обед":
+                                                ftpreviewIndex = .obed
+                                            case "Ужин":
+                                                ftpreviewIndex = .uzin
+                                            case "Перекусы":
+                                                ftpreviewIndex = .perekus
+                                            default:
+                                                ftpreviewIndex = .zavtrak
+                                            }
+                                            DispatchQueue.main.asyncAfter(deadline: .now()+0.01, execute: {
+                                                redirectToEnterFood = true
+                                            })
+                                        }
+                                        else if i.type == 1 {
+                                            idFordelete = []
+                                            for j in i.bdID {
+                                                idFordelete.append(j)
+                                            }
+                                            actTime = i.metaInfo[0][1]
+                                            actDate = convertToDate(d: i.date)
+                                            switch i.metaInfo[0][0]{
+                                            case "Зарядка":
+                                                actPreviewIndex = act.zar
+                                            case "Сон":
+                                                actPreviewIndex = act.sleep
+                                            case "Ходьба":
+                                                actPreviewIndex = act.hod
+                                            case "Спорт":
+                                                actPreviewIndex = act.sport
+                                            case "Уборка в квартире":
+                                                actPreviewIndex = act.uborka
+                                            case "Работа в огороде":
+                                                actPreviewIndex = act.rabota
+                                            default:
+                                                actPreviewIndex = act.zar
+                                            }
+                                            DispatchQueue.main.asyncAfter(deadline: .now()+0.01, execute: {
+                                                redirectToEnterAct = true
+                                            })
+                                        }
+                                        else if i.type == 2 {
+                                            idFordelete = []
+                                            for j in i.bdID {
+                                                idFordelete.append(j)
+                                            }
+                                            tInject = i.metaInfo[0][0]
+                                            dateInject = convertToDate(d: i.date)
+                                            switch i.metaInfo[0][1] {
+                                            case "Натощак":
+                                                previewIndexInject1 = injects.natoshak
+                                            case "Завтрак":
+                                                previewIndexInject1 = injects.zavtrak
+                                            case "Обед":
+                                                previewIndexInject1 = injects.obed
+                                            case "Ужин":
+                                                previewIndexInject1 = injects.uzin
+                                            case "Дополнительно":
+                                                previewIndexInject1 = injects.dop
+                                            default:
+                                                previewIndexInject1 = injects.natoshak
+                                            }
+                                            switch i.metaInfo[0][2] {
+                                            case "Ультракороткий":
+                                                previewIndexInject = injectType.ultra
+                                            case "Короткий":
+                                                previewIndexInject = injectType.kor
+                                            case "Пролонгированный":
+                                                previewIndexInject = injectType.prolong
+                                            default:
+                                                previewIndexInject = injectType.ultra
+                                            }
+                                            DispatchQueue.main.asyncAfter(deadline: .now()+0.01, execute: {
+                                                redirectToEnterInject = true
+                                            })
+                                        }
+                                        else if i.type == 3 {
+                                            idFordelete = []
+                                            for j in i.bdID {
+                                                idFordelete.append(j)
+                                            }
+                                            tSugar = i.metaInfo[0][0]
+                                            dateSugar = convertToDate(d: i.date)
+                                            switch i.metaInfo[0][1] {
+                                            case "Натощак":
+                                                spreviewIndexSugar = .natoshak
+                                            case "После завтрака":
+                                                spreviewIndexSugar = .zavtrak
+                                            case "После обеда":
+                                                spreviewIndexSugar = .obed
+                                            case "После ужина":
+                                                spreviewIndexSugar = .uzin
+                                            case "Дополнительно":
+                                                spreviewIndexSugar = .dop
+                                            case "При родах":
+                                                spreviewIndexSugar = .rodi
+                                            default:
+                                                spreviewIndexSugar = .natoshak
+                                            }
+                                            bool1Sugar = try! convertToInt(txt: i.metaInfo[0][2])
+                                            DispatchQueue.main.asyncAfter(deadline: .now()+0.01, execute: {
+                                                redirectToEnterSugar = true
+                                            })
+                                        }
+                                        else if i.type == 4 {
+                                            idFordelete = []
+                                            for j in i.bdID {
+                                                idFordelete.append(j)
+                                            }
+                                            tKetonur = i.metaInfo[0][0]
+                                            dateKetonur = convertToDate(d: i.date)
+                                            DispatchQueue.main.asyncAfter(deadline: .now()+0.01, execute: {
+                                                redirectToEnterKetonur = true
+                                            })
+                                        }
+                                        else if i.type == 5 {
+                                            idFordelete = []
+                                            for j in i.bdID {
+                                                idFordelete.append(j)
+                                            }
+                                            tMassa = i.metaInfo[0][0]
+                                            dateMassa = convertToDate(d: i.date)
+                                            DispatchQueue.main.asyncAfter(deadline: .now()+0.01, execute: {
+                                                redirectToEnterMassa = true
+                                            })
+                                        }
+                                    } label: {
+                                        Image(systemName: "pencil")
                                     }
-                                    if i.metaInfo.last![8] != "0.0" {
-                                        sugar = i.metaInfo.last![8]
-                                        enabled = true
-                                    } else {
-                                        sugar = ""
-                                        enabled = false
-                                    }
-                                    switch i.name.split(separator: " ")[0] {
-                                    case "Завтрак":
-                                        ftpreviewIndex = .zavtrak
-                                    case "Обед":
-                                        ftpreviewIndex = .obed
-                                    case "Ужин":
-                                        ftpreviewIndex = .uzin
-                                    case "Перекусы":
-                                        ftpreviewIndex = .perekus
-                                    default:
-                                        ftpreviewIndex = .zavtrak
-                                    }
-                                    DispatchQueue.main.asyncAfter(deadline: .now()+0.01, execute: {
-                                        redirectToEnterFood = true
-                                    })
-                                }
-                                else if i.type == 1 {
-                                    idFordelete = []
-                                    for j in i.bdID {
-                                        idFordelete.append(j)
-                                    }
-                                    actTime = i.metaInfo[0][1]
-                                    actDate = convertToDate(d: i.date)
-                                    switch i.metaInfo[0][0]{
-                                    case "Зарядка":
-                                        actPreviewIndex = act.zar
-                                    case "Сон":
-                                        actPreviewIndex = act.sleep
-                                    case "Ходьба":
-                                        actPreviewIndex = act.hod
-                                    case "Спорт":
-                                        actPreviewIndex = act.sport
-                                    case "Уборка в квартире":
-                                        actPreviewIndex = act.uborka
-                                    case "Работа в огороде":
-                                        actPreviewIndex = act.rabota
-                                    default:
-                                        actPreviewIndex = act.zar
-                                    }
-                                    DispatchQueue.main.asyncAfter(deadline: .now()+0.01, execute: {
-                                        redirectToEnterAct = true
-                                    })
-                                }
-                                else if i.type == 2 {
-                                    idFordelete = []
-                                    for j in i.bdID {
-                                        idFordelete.append(j)
-                                    }
-                                    tInject = i.metaInfo[0][0]
-                                    dateInject = convertToDate(d: i.date)
-                                    switch i.metaInfo[0][1] {
-                                    case "Натощак":
-                                        previewIndexInject1 = injects.natoshak
-                                    case "Завтрак":
-                                        previewIndexInject1 = injects.zavtrak
-                                    case "Обед":
-                                        previewIndexInject1 = injects.obed
-                                    case "Ужин":
-                                        previewIndexInject1 = injects.uzin
-                                    case "Дополнительно":
-                                        previewIndexInject1 = injects.dop
-                                    default:
-                                        previewIndexInject1 = injects.natoshak
-                                    }
-                                    switch i.metaInfo[0][2] {
-                                    case "Ультракороткий":
-                                        previewIndexInject = injectType.ultra
-                                    case "Короткий":
-                                        previewIndexInject = injectType.kor
-                                    case "Пролонгированный":
-                                        previewIndexInject = injectType.prolong
-                                    default:
-                                        previewIndexInject = injectType.ultra
-                                    }
-                                    DispatchQueue.main.asyncAfter(deadline: .now()+0.01, execute: {
-                                        redirectToEnterInject = true
-                                    })
-                                }
-                                else if i.type == 3 {
-                                    idFordelete = []
-                                    for j in i.bdID {
-                                        idFordelete.append(j)
-                                    }
-                                    tSugar = i.metaInfo[0][0]
-                                    dateSugar = convertToDate(d: i.date)
-                                    switch i.metaInfo[0][1] {
-                                    case "Натощак":
-                                        spreviewIndexSugar = .natoshak
-                                    case "После завтрака":
-                                        spreviewIndexSugar = .zavtrak
-                                    case "После обеда":
-                                        spreviewIndexSugar = .obed
-                                    case "После ужина":
-                                        spreviewIndexSugar = .uzin
-                                    case "Дополнительно":
-                                        spreviewIndexSugar = .dop
-                                    case "При родах":
-                                        spreviewIndexSugar = .rodi
-                                    default:
-                                        spreviewIndexSugar = .natoshak
-                                    }
-                                    bool1Sugar = try! convertToInt(txt: i.metaInfo[0][2])
-                                    DispatchQueue.main.asyncAfter(deadline: .now()+0.01, execute: {
-                                        redirectToEnterSugar = true
-                                    })
-                                }
-                                else if i.type == 4 {
-                                    idFordelete = []
-                                    for j in i.bdID {
-                                        idFordelete.append(j)
-                                    }
-                                    tKetonur = i.metaInfo[0][0]
-                                    dateKetonur = convertToDate(d: i.date)
-                                    DispatchQueue.main.asyncAfter(deadline: .now()+0.01, execute: {
-                                        redirectToEnterKetonur = true
-                                    })
-                                }
-                                else if i.type == 5 {
-                                    idFordelete = []
-                                    for j in i.bdID {
-                                        idFordelete.append(j)
-                                    }
-                                    tMassa = i.metaInfo[0][0]
-                                    dateMassa = convertToDate(d: i.date)
-                                    DispatchQueue.main.asyncAfter(deadline: .now()+0.01, execute: {
-                                        redirectToEnterMassa = true
-                                    })
-                                }
-                            } label: {
-                                Image(systemName: "pencil")
-                            }
-                            .tint(.orange)
-                        })
+                                    .tint(.orange)
+                                })
+                        }.listRowSeparator(.hidden)
+                    } header: {
+                        Text(day).font(.caption)
+                    }
                 }
             }
-            .lineLimit(2)
-            .listStyle(.grouped)
         }
         .task {
             if hList.histList.isEmpty {
@@ -310,55 +315,73 @@ struct history: View {
         if (typeOfRow == 0 && deselected[2].selected) {
             NavigationLink(destination: doFoodInfoPage(info: third, date: second, titleName: first), label: {
                 HStack {
+                    Image("meal").resizable().scaledToFit().frame(width: 36, height: 36)
                     Text(first)
                     Spacer()
-                    Text(second)
-                }.foregroundColor(.black)
-            }).listRowBackground(Color(red: 240/255, green: 254/255, blue: 237/255))
+                    HStack(alignment: .center){
+                        Text(second[0..<5])
+                    }.frame(width: 75)
+                }.foregroundColor(Color("listButtonColor"))
+            })
         }
         else if (typeOfRow == 1 && deselected[3].selected) {
             NavigationLink(destination: doActInfoPage(info: third, date: second), label: {
                 HStack {
+                    Image("workoutSleep").resizable().scaledToFit().frame(width: 36, height: 36)
                     Text(first)
                     Spacer()
-                    Text(second)
-                }.foregroundColor(.black)
-            }).listRowBackground(Color(red: 249/255, green: 252/255, blue: 209/255))
+                    HStack(alignment: .center){
+                        Text(second[0..<5])
+                    }.frame(width: 75)
+                }.foregroundColor(Color("listButtonColor"))
+            })
         }
         else if (typeOfRow == 2 && deselected[1].selected) {
             NavigationLink(destination: doInjectInfoPage(info: third, date: second), label: {
                 HStack {
+                    Image("insulin").resizable().scaledToFit().frame(width: 36, height: 36)
                     Text(first)
                     Spacer()
-                    Text(second)
-                }.foregroundColor(.black)
-            }).listRowBackground(Color(red: 238/255, green: 249/255, blue: 253/255))
+                    HStack(alignment: .center){
+                        Text(second[0..<5])
+                    }.frame(width: 75)
+                }.foregroundColor(Color("listButtonColor"))
+            })
         }
         else if (typeOfRow == 3 && deselected[0].selected) {
             NavigationLink(destination: doInjectSugarPage(info: third, date: second), label: {
                 HStack {
+                    Image("sugar_level").resizable().scaledToFit().frame(width: 36, height: 36)
                     Text(first)
                     Spacer()
-                    Text(second)
-                }.foregroundColor(.black)
-            }).listRowBackground(Color(red: 254/255, green: 242/255, blue: 246/255))
+                    HStack(alignment: .center){
+                        Text(second[0..<5])
+                    }.frame(width: 75)
+                }.foregroundColor(Color("listButtonColor"))
+            })
         }
         else if (typeOfRow == 4 && deselected[4].selected) {
             NavigationLink(destination: doKetonurInfoPage(info: third, date: second), label: {
                 HStack {
+                    Image("keton").resizable().scaledToFit().frame(width: 36, height: 36)
                     Text(first)
                     Spacer()
-                    Text(second)
-                }.foregroundColor(.black)
+                    HStack(alignment: .center){
+                        Text(second[0..<5])
+                    }.frame(width: 75)
+                }.foregroundColor(Color("listButtonColor"))
             })
         }
         else if (typeOfRow == 5 && deselected[5].selected) {
             NavigationLink(destination: doMassaInfoPage(info: third, date: second), label: {
                 HStack {
+                    Image("weight").resizable().scaledToFit().frame(width: 36, height: 36)
                     Text(first)
                     Spacer()
-                    Text(second)
-                }.foregroundColor(.black)
+                    HStack(alignment: .center){
+                        Text(second[0..<5])
+                    }.frame(width: 75)
+                }.foregroundColor(Color("listButtonColor"))
             })
         }
     }

@@ -112,7 +112,7 @@ class historyList: ObservableObject {
             let sugarTime = Expression<String>("time")
             
             for i in try db.prepare(sugar.select(sugarId, sugarLvL, sugarPeriod, sugarPhysical, sugarTime)) {
-                histList.append(hList(type: 3, name: "\(i[sugarLvL]) м/л (\(i[sugarPeriod]))", date: i[sugarTime], bdID: [i[sugarId]], tbID: [], metaInfo: [[String(i[sugarLvL]), i[sugarPeriod], String(i[sugarPhysical])]]))
+                histList.append(hList(type: 3, name: "\(i[sugarLvL]) ммоль/л (\(i[sugarPeriod]))", date: i[sugarTime], bdID: [i[sugarId]], tbID: [], metaInfo: [[String(i[sugarLvL]), i[sugarPeriod], String(i[sugarPhysical])]]))
             }
             
             // MARK: Заполняем кетоны
@@ -122,7 +122,7 @@ class historyList: ObservableObject {
             let ketonTime = Expression<String>("time")
             
             for i in try db.prepare(keton.select(id,ketonMmol,ketonTime)) {
-                histList.append(hList(type: 4, name: "Кетоны: \(i[ketonMmol]) ммоль/л", date: i[ketonTime], bdID: [i[ketonId]], tbID: [], metaInfo: [[String(i[ketonMmol])]]))
+                histList.append(hList(type: 4, name: "\(i[ketonMmol]) ммоль/л", date: i[ketonTime], bdID: [i[ketonId]], tbID: [], metaInfo: [[String(i[ketonMmol])]]))
             }
             
             // MARK: Заполняем измерение массы
@@ -146,7 +146,7 @@ class historyList: ObservableObject {
     }
     
     func refillHistoryList() -> Void {
-        histList.removeAll()
+        histList = []
         FillHistoryList()
     }
 }
@@ -242,5 +242,13 @@ func deleteAndSave(idToDelete: [Int], table: Int, info: [Any]) {
     }
     catch {
         print(error)
+    }
+}
+
+extension hList {
+    func getDate() -> String {
+        let df = DateFormatter()
+        df.dateFormat = "HH:mm dd.MM.yyyy"
+        return df.date(from: self.date)!.formatted(date: .numeric, time: .omitted)
     }
 }
