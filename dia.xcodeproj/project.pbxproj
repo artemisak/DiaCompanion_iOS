@@ -236,10 +236,10 @@
 		A760B57A2987DD1600402094 /* mainMenu */ = {
 			isa = PBXGroup;
 			children = (
+				A7491D80297A905E005AAA18 /* mainMenuGroup.swift */,
 				A7004F3129782C3A008CA708 /* mainMenu.swift */,
 				A7004F2F2978263F008CA708 /* consumptionIndicator.swift */,
 				A7C997862983B68200A38F2D /* dayConsumptionModel.swift */,
-				A7491D80297A905E005AAA18 /* mainMenuGroup.swift */,
 			);
 			path = mainMenu;
 			sourceTree = "<group>";

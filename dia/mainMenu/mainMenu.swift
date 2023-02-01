@@ -31,7 +31,7 @@ struct mainMenu: View {
                     enterFood(enabled: false, sugar: "", date: localDate, ftpreviewIndex: ftype.zavtrak, idForDelete: [], hasChanged: .constant(false))
                 } label: {
                     HStack {
-                        Image("meal").resizable().scaledToFit().frame(width: 44, height: 44)
+                        Image("meal").resizable().scaledToFit().frame(width: 36, height: 36)
                         Text("Приемы пищи")
                     }
                     .foregroundColor(Color("listButtonColor"))
@@ -40,7 +40,7 @@ struct mainMenu: View {
                     sugarChange(t: "", date: localDate, isAct:  false, bool1: 0, spreviewIndex: .natoshak, idForDelete: [], hasChanged: .constant(false))
                 } label: {
                     HStack {
-                        Image("sugar_level").resizable().scaledToFit().frame(width: 44, height: 44)
+                        Image("sugar_level").resizable().scaledToFit().frame(width: 36, height: 36)
                         Text("Измерение сахара")
                     }
                     .foregroundColor(Color("listButtonColor"))
@@ -49,7 +49,7 @@ struct mainMenu: View {
                     inject(t: "", date: localDate, previewIndex: injectType.ultra, previewIndex1: injects.natoshak, idForDelete: [], hasChanged: .constant(false))
                 } label: {
                     HStack {
-                        Image("insulin").resizable().scaledToFit().frame(width: 44, height: 44)
+                        Image("insulin").resizable().scaledToFit().frame(width: 36, height: 36)
                         Text("Введение инсулина")
                     }
                     .foregroundColor(Color("listButtonColor"))
@@ -58,7 +58,7 @@ struct mainMenu: View {
                     enterAct(t: "", date: localDate, actpreviewIndex: act.zar, idForDelete: [], hasChanged: .constant(false))
                 } label: {
                     HStack {
-                        Image("workout").resizable().scaledToFit().frame(width: 44, height: 44)
+                        Image("workoutSleep").resizable().scaledToFit().frame(width: 36, height: 36)
                         Text("Физическая активность")
                     }
                     .foregroundColor(Color("listButtonColor"))
@@ -67,7 +67,7 @@ struct mainMenu: View {
                     massa(t: "", date: localDate, idForDelete: [], hasChanged: .constant(false))
                 } label: {
                     HStack {
-                        Image("weight").resizable().scaledToFit().frame(width: 44, height: 44)
+                        Image("weight").resizable().scaledToFit().frame(width: 36, height: 36)
                         Text("Измерение веса")
                     }
                     .foregroundColor(Color("listButtonColor"))
@@ -76,7 +76,7 @@ struct mainMenu: View {
                     ketonur(t: "", date: localDate, idForDelete: [], hasChanged: .constant(false))
                 } label: {
                     HStack {
-                        Image("keton").resizable().scaledToFit().frame(width: 44, height: 44)
+                        Image("keton").resizable().scaledToFit().frame(width: 36, height: 36)
                         Text("Уровень кетонурии")
                     }
                     .foregroundColor(Color("listButtonColor"))
