@@ -1,13 +1,14 @@
 //
-//  PDFManager.swift
+//  PDFView.swift
 //  dia
 //
-//  Created by Артём Исаков on 24.04.2022.
+//  Created by Артём Исаков on 01.02.2023.
 //
 
 import Foundation
 import SwiftUI
 import PDFKit
+
 
 struct PDFKitView: View {
     var url: URL

@@ -42,12 +42,12 @@
 		A783B43728D1384000059BBD /* reserved.db in Resources */ = {isa = PBXBuildFile; fileRef = A783B43628D1384000059BBD /* reserved.db */; };
 		A78E381E2813F0680096E2E2 /* extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A78E381D2813F0680096E2E2 /* extensions.swift */; };
 		A79A5CB3298A4B94007D5170 /* Algorithms in Frameworks */ = {isa = PBXBuildFile; productRef = A79A5CB2298A4B94007D5170 /* Algorithms */; };
+		A79A5CB7298A9215007D5170 /* PDFView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79A5CB6298A9215007D5170 /* PDFView.swift */; };
 		A7A4A45728EC5CCC0032652C /* predictModel.mlpackage in Sources */ = {isa = PBXBuildFile; fileRef = A7A4A45628EC5CCC0032652C /* predictModel.mlpackage */; };
 		A7BD994727CA46FC0090D9D7 /* helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7BD994627CA46FC0090D9D7 /* helper.swift */; };
 		A7C997872983B68200A38F2D /* dayConsumptionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C997862983B68200A38F2D /* dayConsumptionModel.swift */; };
 		A7CE328929225AF4002D8FB0 /* passwordPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7CE328829225AF4002D8FB0 /* passwordPage.swift */; };
 		A7D0976A2809FE16000A12E1 /* buttonStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7D097692809FE16000A12E1 /* buttonStyles.swift */; };
-		A7D27E022815ADDC00DC00E9 /* pdfManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7D27E012815ADDC00DC00E9 /* pdfManager.swift */; };
 		A7DCBBB327BD8AD4009A3A16 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A7DCBBB227BD8AD4009A3A16 /* Launch Screen.storyboard */; };
 		A7DF49D0291A851B007A9371 /* BarsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7DF49C2291A851A007A9371 /* BarsView.swift */; };
 		A7DF49D1291A851B007A9371 /* AxisView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7DF49C3291A851A007A9371 /* AxisView.swift */; };
@@ -139,13 +139,13 @@
 		A77B7EE92973F01700CFEBD5 /* enterPoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = enterPoint.swift; sourceTree = "<group>"; };
 		A783B43628D1384000059BBD /* reserved.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = reserved.db; sourceTree = "<group>"; };
 		A78E381D2813F0680096E2E2 /* extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = extensions.swift; sourceTree = "<group>"; };
+		A79A5CB6298A9215007D5170 /* PDFView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFView.swift; sourceTree = "<group>"; };
 		A79A9354284D58F300C0A1AE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = /Users/artemisakov/Documents/swiftDia/dia/Info.plist; sourceTree = "<absolute>"; };
 		A7A4A45628EC5CCC0032652C /* predictModel.mlpackage */ = {isa = PBXFileReference; lastKnownFileType = folder.mlpackage; path = predictModel.mlpackage; sourceTree = "<group>"; };
 		A7BD994627CA46FC0090D9D7 /* helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = helper.swift; sourceTree = "<group>"; };
 		A7C997862983B68200A38F2D /* dayConsumptionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dayConsumptionModel.swift; sourceTree = "<group>"; };
 		A7CE328829225AF4002D8FB0 /* passwordPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = passwordPage.swift; sourceTree = "<group>"; };
 		A7D097692809FE16000A12E1 /* buttonStyles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = buttonStyles.swift; sourceTree = "<group>"; };
-		A7D27E012815ADDC00DC00E9 /* pdfManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = pdfManager.swift; sourceTree = "<group>"; };
 		A7DCBBB227BD8AD4009A3A16 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		A7DF49C2291A851A007A9371 /* BarsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BarsView.swift; sourceTree = "<group>"; };
 		A7DF49C3291A851A007A9371 /* AxisView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AxisView.swift; sourceTree = "<group>"; };
@@ -316,8 +316,8 @@
 				A7491D86297AF5C6005AAA18 /* pacientCart.swift */,
 				AC2C506027289C360009E8EE /* severalDatesPicker.swift */,
 				A7BD994627CA46FC0090D9D7 /* helper.swift */,
+				A79A5CB6298A9215007D5170 /* PDFView.swift */,
 				A7289FB3294F530A00B35BD3 /* aboutApp.swift */,
-				A7D27E012815ADDC00DC00E9 /* pdfManager.swift */,
 				A78EA622291D1B6500B2CDD2 /* PacientDetails */,
 			);
 			path = Additional;
@@ -641,6 +641,7 @@
 				AC37A67B276147AF00558E55 /* excelGenerator.swift in Sources */,
 				A7A4A45728EC5CCC0032652C /* predictModel.mlpackage in Sources */,
 				A7DF49DB291A851B007A9371 /* HorizontalBarChartView.swift in Sources */,
+				A79A5CB7298A9215007D5170 /* PDFView.swift in Sources */,
 				A73C74F628CF2BF2008D09BF /* addRecipe.swift in Sources */,
 				ACCBA996272B1DA300D785F6 /* RKViewController.swift in Sources */,
 				AC631E0F26CEA90D0033CCFF /* settings.swift in Sources */,
@@ -697,7 +698,6 @@
 				AC6327022751012C00C25E23 /* historyManager.swift in Sources */,
 				A77B7EE22973EFFC00CFEBD5 /* inGroupList.swift in Sources */,
 				AC32A68227260081001DDB9F /* pid.swift in Sources */,
-				A7D27E022815ADDC00DC00E9 /* pdfManager.swift in Sources */,
 				A7DF49D5291A851B007A9371 /* LineChartShape.swift in Sources */,
 				ACEDB4812721AA7F00DBB67C /* fio.swift in Sources */,
 				A74A1CC228B1016C0038C79F /* startPage.swift in Sources */,
