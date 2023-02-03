@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct pacientCart: View {
+    @EnvironmentObject var routeManager: Router
     @State private var pFio: Bool = false
     @State private var pV: Bool = false
     @State private var pDate: Bool = false
@@ -18,84 +19,153 @@ struct pacientCart: View {
     @State private var bHeight: Bool = false
     @State private var txt: String = ""
     @State private var vDate = Date()
-    @EnvironmentObject var routeManager: Router
     var body: some View {
-        ZStack {
-            List {
-                Section(header: Text("Данные пациента").font(.caption)){
-                    Button(action: {withAnimation(.default){pFio.toggle()}}) {
-                        Text("ФИО")
-                    }.foregroundColor(Color("listButtonColor"))
-                    Button(action: {withAnimation(.default){pDate.toggle()}}) {
-                        Text("Дата рождения")
-                    }.foregroundColor(Color("listButtonColor"))
-                    Button(action: {withAnimation(.default){pV.toggle()}}) {
-                        Text("Лечащий врач")
-                    }.foregroundColor(Color("listButtonColor"))
-                    Button(action: {withAnimation(.default){bStart.toggle()}}) {
-                        Text("Дата начала ведения дневника")
-                    }.foregroundColor(Color("listButtonColor"))
-                    if routeManager.version != 3 && routeManager.version != 4 {
-                        Button(action: {withAnimation(.default){bWeek.toggle()}}) {
-                            Text("Неделя берем. на начало исследования")
+        if (routeManager.isLoggedIn && routeManager.isChoosed) {
+            ZStack {
+                List {
+                    Section(header: Text("Данные пациента").font(.caption)){
+                        Button(action: {withAnimation(.default){pFio.toggle()}}) {
+                            Text("ФИО")
+                        }.foregroundColor(Color("listButtonColor"))
+                        Button(action: {withAnimation(.default){pDate.toggle()}}) {
+                            Text("Дата рождения")
+                        }.foregroundColor(Color("listButtonColor"))
+                        Button(action: {withAnimation(.default){pV.toggle()}}) {
+                            Text("Лечащий врач")
+                        }.foregroundColor(Color("listButtonColor"))
+                        Button(action: {withAnimation(.default){bStart.toggle()}}) {
+                            Text("Дата начала ведения дневника")
+                        }.foregroundColor(Color("listButtonColor"))
+                        if routeManager.version != 3 && routeManager.version != 4 {
+                            Button(action: {withAnimation(.default){bWeek.toggle()}}) {
+                                Text("Неделя берем. на начало исследования")
+                            }.foregroundColor(Color("listButtonColor"))
+                        }
+                        Button(action: {withAnimation(.default){bid.toggle()}}) {
+                            Text("Индивидуальный номер пациента")
+                        }.foregroundColor(Color("listButtonColor"))
+                        Button(action: {withAnimation(.default){bWeight.toggle()}}) {
+                            if routeManager.version != 3 && routeManager.version != 4 {
+                                Text("Вес до беременности, кг")
+                            } else {
+                                Text("Вес, кг")
+                            }
+                        }.foregroundColor(Color("listButtonColor"))
+                        Button(action: {withAnimation(.default){bHeight.toggle()}}) {
+                            if routeManager.version != 3 && routeManager.version != 4 {
+                                Text("Рост до беременности, см")
+                            } else {
+                                Text("Рост, см")
+                            }
                         }.foregroundColor(Color("listButtonColor"))
                     }
-                    Button(action: {withAnimation(.default){bid.toggle()}}) {
-                        Text("Индивидуальный номер пациента")
-                    }.foregroundColor(Color("listButtonColor"))
-                    Button(action: {withAnimation(.default){bWeight.toggle()}}) {
-                        if routeManager.version != 3 && routeManager.version != 4 {
-                            Text("Вес до беременности, кг")
-                        } else {
-                            Text("Вес, кг")
-                        }
-                    }.foregroundColor(Color("listButtonColor"))
-                    Button(action: {withAnimation(.default){bHeight.toggle()}}) {
-                        if routeManager.version != 3 && routeManager.version != 4 {
-                            Text("Рост до беременности, см")
-                        } else {
-                            Text("Рост, см")
-                        }
-                    }.foregroundColor(Color("listButtonColor"))
+                }
+                .ignoresSafeArea(.keyboard)
+                if bWeek {
+                    weekS(bWeek: $bWeek)
+                }
+                if pV {
+                    currentV(pV:$pV)
+                }
+                if pFio {
+                    fio(pFio: $pFio, txt: $txt)
+                }
+                if pDate {
+                    bday(pDate: $pDate, vDate: $vDate)
+                }
+                if bStart {
+                    dStart(bStart: $bStart, vDate: $vDate)
+                }
+                if bid {
+                    pid(bid: $bid, txt: $txt)
+                }
+                if bWeight {
+                    pWeight(bWeight: $bWeight, txt: $txt)
+                }
+                if bHeight {
+                    pHeight(bHeight: $bHeight, txt: $txt)
                 }
             }
-            .ignoresSafeArea(.keyboard)
-            .listStyle(.insetGrouped)
-            if bWeek {
-                weekS(bWeek: $bWeek)
+            .navigationBarTitle("Персональная карта")
+        } else {
+            ZStack {
+                List {
+                    Section(header: Text("Данные пациента").font(.caption)){
+                        Button(action: {withAnimation(.default){pFio.toggle()}}) {
+                            Text("ФИО")
+                        }.foregroundColor(Color("listButtonColor"))
+                        Button(action: {withAnimation(.default){pDate.toggle()}}) {
+                            Text("Дата рождения")
+                        }.foregroundColor(Color("listButtonColor"))
+                        Button(action: {withAnimation(.default){pV.toggle()}}) {
+                            Text("Лечащий врач")
+                        }.foregroundColor(Color("listButtonColor"))
+                        Button(action: {withAnimation(.default){bStart.toggle()}}) {
+                            Text("Дата начала ведения дневника")
+                        }.foregroundColor(Color("listButtonColor"))
+                        if routeManager.version != 3 && routeManager.version != 4 {
+                            Button(action: {withAnimation(.default){bWeek.toggle()}}) {
+                                Text("Неделя берем. на начало исследования")
+                            }.foregroundColor(Color("listButtonColor"))
+                        }
+                        Button(action: {withAnimation(.default){bid.toggle()}}) {
+                            Text("Индивидуальный номер пациента")
+                        }.foregroundColor(Color("listButtonColor"))
+                        Button(action: {withAnimation(.default){bWeight.toggle()}}) {
+                            if routeManager.version != 3 && routeManager.version != 4 {
+                                Text("Вес до беременности, кг")
+                            } else {
+                                Text("Вес, кг")
+                            }
+                        }.foregroundColor(Color("listButtonColor"))
+                        Button(action: {withAnimation(.default){bHeight.toggle()}}) {
+                            if routeManager.version != 3 && routeManager.version != 4 {
+                                Text("Рост до беременности, см")
+                            } else {
+                                Text("Рост, см")
+                            }
+                        }.foregroundColor(Color("listButtonColor"))
+                    }
+                }
+                .ignoresSafeArea(.keyboard)
+                if bWeek {
+                    weekS(bWeek: $bWeek)
+                }
+                if pV {
+                    currentV(pV:$pV)
+                }
+                if pFio {
+                    fio(pFio: $pFio, txt: $txt)
+                }
+                if pDate {
+                    bday(pDate: $pDate, vDate: $vDate)
+                }
+                if bStart {
+                    dStart(bStart: $bStart, vDate: $vDate)
+                }
+                if bid {
+                    pid(bid: $bid, txt: $txt)
+                }
+                if bWeight {
+                    pWeight(bWeight: $bWeight, txt: $txt)
+                }
+                if bHeight {
+                    pHeight(bHeight: $bHeight, txt: $txt)
+                }
             }
-            if pV {
-                currentV(pV:$pV)
-            }
-            if pFio {
-                fio(pFio: $pFio, txt: $txt)
-            }
-            if pDate {
-                bday(pDate: $pDate, vDate: $vDate)
-            }
-            if bStart {
-                dStart(bStart: $bStart, vDate: $vDate)
-            }
-            if bid {
-                pid(bid: $bid, txt: $txt)
-            }
-            if bWeight {
-                pWeight(bWeight: $bWeight, txt: $txt)
-            }
-            if bHeight {
-                pHeight(bHeight: $bHeight, txt: $txt)
-            }
-        }
-        .navigationBarTitle("Персональная карта")
-        .toolbar {
-            ToolbarItemGroup(placement: .keyboard, content: {
-                Spacer()
-                Button(action: {
-                    UIApplication.shared.dismissedKeyboard()
-                }, label: {
-                    Text("Готово")
+            .navigationBarTitle("Персональная карта")
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing, content: {
+                    Button {
+                        Task {
+                            await routeManager.setChoosed()
+                            routeManager.animateTransition = true
+                        }
+                    } label: {
+                        Text("Завершить")
+                    }
                 })
-            })
+            }
         }
     }
 }

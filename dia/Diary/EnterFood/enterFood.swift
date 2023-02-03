@@ -75,7 +75,7 @@ struct enterFood: View {
                     )
                 }
             }
-            if routeManager.version != 2 {
+            if routeManager.version == 1 {
                 Section(header: Text("Уровень сахара в крови").font(.caption)) {
                     Toggle(isOn: $enabled) {Text("Записать текущий УСК")}
                         .onChange(of: enabled){ _ in

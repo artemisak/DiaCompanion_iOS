@@ -7,3 +7,5 @@
 */
 
 "Назад" = "Back";
+"Выберите версию" = "Choose version";
+"Версия позволяет вести контроль за приемами пищи, физической активностью и уровнем сахара в крови. В версию внедрена рекомендательная система, помогающая корректировать прием пищи пациенток.\nПредназначен для беременных пациенток, страдающих ГСД" = "This version allows you to monitor food intake, physical activity, and blood sugar levels. The version includes a recommendation system to help adjust the patient's food intake.nnDesigned for pregnant patients with GDM";

@@ -15,7 +15,7 @@ struct searchByWordList: View {
         GeometryReader {geometry in
             ZStack {
                 List {
-                    Section{
+                    Section {
                         ForEach($collection.listOfPinnedFood, id: \.id) { $dish in
                             Button {
                                 collection.selectedItem = dish
@@ -67,8 +67,10 @@ struct searchByWordList: View {
                                 }
                                 .tint(.blue)
                             }
-                            .onAppear {
-                                collection.appendList(item_id: dish.id)
+                            .task {
+                                if !collection.listOfFood.isEmpty {
+                                    await collection.appendList(item_id: dish.id)
+                                }
                             }
                         }
                     } header: {

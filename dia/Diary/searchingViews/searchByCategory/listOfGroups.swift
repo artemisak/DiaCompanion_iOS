@@ -10,16 +10,35 @@ import SwiftUI
 struct listOfGroups: View {
     @EnvironmentObject var collection: foodCollections
     var body: some View {
-        List(collection.listOfGroups, id: \.id) {element in
-            NavigationLink(destination: {
-                inGroupList(category: element.category)
-                    .searchable(text: $collection.textToSearch, placement: .navigationBarDrawer(displayMode: .always))
-            }, label: {
-                Text(element.category)
-            })
-        }
-        .task {
-            collection.retrieveCat()
+        if #available(iOS 16, *){
+            List(collection.listOfGroups, id: \.id) {element in
+                NavigationLink(destination: {
+                    inGroupList(category: element.category)
+                        .searchable(text: $collection.textToSearch, placement: .navigationBarDrawer(displayMode: .always))
+                }, label: {
+                    Text(element.category)
+                })
+            }
+            .task {
+                collection.retrieveCat()
+            }
+        } else {
+            List(collection.listOfGroups, id: \.id) {element in
+                NavigationLink(destination: {
+                    inGroupList(category: element.category)
+                        .searchable(text: $collection.textToSearch, placement: .navigationBarDrawer(displayMode: .always))
+                        .onSubmit(of: .search){
+                            Task {
+                                await collection.assetList()
+                            }
+                        }
+                }, label: {
+                    Text(element.category)
+                })
+            }
+            .task {
+                collection.retrieveCat()
+            }
         }
     }
 }

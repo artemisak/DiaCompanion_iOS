@@ -10,11 +10,23 @@ import SwiftUI
 struct enterPoint: View {
     @EnvironmentObject var collection: foodCollections
     var body: some View {
-        searchViewsGroup()
-            .searchable(text: $collection.textToSearch, placement: .navigationBarDrawer(displayMode: .always))
-            .onReceive(collection.$textToSearch, perform: {_ in
-                collection.fillList()
-            })
+        if #available(iOS 16, *){
+            searchViewsGroup()
+                .searchable(text: $collection.textToSearch, placement: .navigationBarDrawer(displayMode: .always))
+                .onReceive(collection.$textToSearch, perform: {_ in
+                    Task {
+                        await collection.assetList()
+                    }
+                })
+        } else {
+            searchViewsGroup()
+                .searchable(text: $collection.textToSearch, placement: .navigationBarDrawer(displayMode: .always))
+                .onSubmit(of: .search){
+                    Task {
+                        await collection.assetList()
+                    }
+                }
+        }
     }
 }
 

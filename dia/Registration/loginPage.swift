@@ -18,7 +18,8 @@ struct loginPage: View {
         VStack(spacing: 20) {
             VStack(spacing: 20) {
                 VStack(alignment: .leading, spacing: .zero) {
-                    TextField("Логин", text: $login)
+                    TextField("", text: $login, prompt: Text("almazov@mail.ru").foregroundColor(.gray))
+                        .labelsHidden()
                         .onChange(of: login, perform: {i in
                             if !isValidLogin {
                                 withAnimation(.default){
@@ -26,14 +27,13 @@ struct loginPage: View {
                                 }
                             }
                         })
-                        .foregroundColor(Color("listButtonColor"))
                         .textInputAutocapitalization(.never)
                         .disableAutocorrection(true)
                         .focused($focusedField)
                 }
                 .padding()
                 .background(RoundedRectangle(cornerRadius: 10)
-                    .stroke(isValidLogin ? Color.gray.opacity(0.5) : Color.red, lineWidth: 1))
+                    .stroke(isValidLogin ? Color("buttonStroke") : Color("buttonStrokeAlert"), lineWidth: 1))
                 .onTapGesture {
                     focusedField = true
                 }
@@ -41,7 +41,7 @@ struct loginPage: View {
             if !isValidLogin {
                 Text("Такого аккаунта не существует")
                     .font(.caption)
-                    .foregroundColor(.red)
+                    .foregroundColor(Color("buttonStrokeAlert"))
                     .frame(maxWidth: .infinity, alignment: .leading)
             }
             Button {
@@ -59,7 +59,7 @@ struct loginPage: View {
                     }
                 }
             } label: {
-                Text("Далее").frame(height: 25)
+                Text("Далее").font(.body).frame(height: 25)
             }
             .buttonStyle(RoundedRectangleButtonStyle())
             NavigationLink(isActive: $nextField, destination: {passwordPage()}, label: {EmptyView()})
@@ -68,7 +68,7 @@ struct loginPage: View {
                 regHelper()
             }, label: {
                 HStack{
-                    Text("Регистрация")
+                    Text("Регистрация").font(.body)
                     Image(systemName: "questionmark.circle")
                 }
             })
@@ -87,7 +87,7 @@ struct loginPage: View {
                         .fixedSize()
                     Image("ofIconTransparent")
                         .resizable()
-                        .frame(width: 35.0, height: 35.0)
+                        .frame(width: 36.0, height: 36.0)
                         .zIndex(1)
                 }
             }

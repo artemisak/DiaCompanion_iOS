@@ -29,20 +29,26 @@ struct listHeader: View {
                 }
                 .confirmationDialog("Порядок фильтрации", isPresented: $sorting) {
                     Button {
-                        collection.rule = .downGI
-                        collection.fillList()
+                        Task {
+                            collection.rule = .downGI
+                            await collection.assetList()
+                        }
                     } label: {
                         Text("По возрастанию ГИ")
                     }
                     Button {
-                        collection.rule = .upGI
-                        collection.fillList()
+                        Task {
+                            collection.rule = .upGI
+                            await collection.assetList()
+                        }
                     } label: {
                         Text("По убыванию ГИ")
                     }
                     Button {
-                        collection.rule = .relevant
-                        collection.fillList()
+                        Task {
+                            collection.rule = .relevant
+                            await collection.assetList()
+                        }
                     } label: {
                         Text("По релевантности")
                     }

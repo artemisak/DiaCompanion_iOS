@@ -69,8 +69,10 @@ struct inGroupList: View {
                                 }
                                 .tint(.blue)
                             }
-                            .onAppear {
-                                collection.appendListInGroups(item_id: dish.id)
+                            .task {
+                                if !collection.listOfFoodInGroups.isEmpty {
+                                    await collection.appendListInGroups(item_id: dish.id)
+                                }
                             }
                         }
                     } header: {
@@ -92,10 +94,8 @@ struct inGroupList: View {
             .sheet(isPresented: $showPopover, content: {addGramButton(gram: "100,0", editing: false, isShowingSheet: $showPopover, showSuccesNotify: $showSuccesNotify)})
             .onChange(of: isSearching, perform: {newValue in
                 if !newValue {
-                    Task.detached {
-                        Task {@MainActor in
-                            collection.fillList()
-                        }
+                    Task {
+                        await collection.assetList()
                     }
                 }
             })
@@ -110,7 +110,9 @@ struct inGroupList: View {
             })
             .onAppear {
                 collection.groupToSearch = category
-                collection.fillList()
+                Task {
+                    await collection.assetList()
+                }
             }
         }
     }

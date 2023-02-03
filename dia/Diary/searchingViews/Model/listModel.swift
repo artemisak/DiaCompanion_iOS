@@ -97,6 +97,7 @@ struct foodItem: Identifiable, Hashable {
     }
 }
 
+@MainActor
 class foodCollections: ObservableObject {
     @Published var textToSearch: String  = ""
     @Published var groupToSearch: String = ""
@@ -168,7 +169,7 @@ class foodCollections: ObservableObject {
         listOfGroups = temp
     }
  
-    func fillList() {
+    func fillList() async -> ([foodItem],[foodItem]) {
         _lastVisibleIndex = 0
         _position = 0
         
@@ -184,7 +185,7 @@ class foodCollections: ObservableObject {
             print("Error opening database")
             sqlite3_close(db)
             db = nil
-            return
+            return ([],[])
         }
         
         var statement: OpaquePointer?
@@ -217,6 +218,8 @@ class foodCollections: ObservableObject {
                     sql += " AND name LIKE '%\(name[i])%' OR name LIKE '%\(name[i].firstCapitalized)%'"
                 }
             }
+        } else {
+            return ([],[])
         }
         
         switch rule {
@@ -278,41 +281,48 @@ class foodCollections: ObservableObject {
         db = nil
         
         _resultsOfSearch = temp
-        
+
         let tempSlice0 = temp.filter({$0.index == 0})
         let tempSlice1 = temp.filter({$0.index == 1})
+
+        return (tempSlice0,tempSlice1)
+    }
+
+    func assetList() async {
+        let tempSlice = await fillList()
         var upperBound = 0
-        if tempSlice0.count < 15 && tempSlice0.count != 0 {
-            upperBound = tempSlice0.count-1
-            if groupToSearch != "" {
-                listOfFoodInGroups = Array(tempSlice0[0..<upperBound])
-                listOfPinnedFoodInGroups = tempSlice1
-                showListToolbar = true
+        if tempSlice.0.count < 15 && tempSlice.0.count > 1 {
+            upperBound = tempSlice.0.count-1
+            if self.groupToSearch != "" {
+                self.listOfFoodInGroups = Array(tempSlice.0[0..<upperBound])
+                self.listOfPinnedFoodInGroups = tempSlice.1
+                self.showListToolbar = true
             } else {
-                listOfFood = Array(tempSlice0[0..<upperBound])
-                listOfPinnedFood = tempSlice1
-                showListToolbar = true
+                self.listOfFood = Array(tempSlice.0[0..<upperBound])
+                self.listOfPinnedFood = tempSlice.1
+                self.showListToolbar = true
             }
-        } else if tempSlice0.count >= 15 && tempSlice0.count != 0 {
+        } else if tempSlice.0.count >= 15 {
             upperBound = 15
-            if groupToSearch != "" {
-                listOfFoodInGroups = Array(tempSlice0[0..<upperBound])
-                listOfPinnedFoodInGroups = tempSlice1
-                showListToolbar = true
+            if self.groupToSearch != "" {
+                self.listOfFoodInGroups = Array(tempSlice.0[0..<upperBound])
+                self.listOfPinnedFoodInGroups = tempSlice.1
+                self.showListToolbar = true
             } else {
-                listOfFood = Array(tempSlice0[0..<upperBound])
-                listOfPinnedFood = tempSlice1
-                showListToolbar = true
+                self.listOfFood = Array(tempSlice.0[0..<upperBound])
+                self.listOfPinnedFood = tempSlice.1
+                self.showListToolbar = true
             }
         } else {
-            listOfFood = []
-            listOfPinnedFood = []
-            listOfFoodInGroups = []
-            listOfPinnedFoodInGroups = []
+            self.listOfFood = tempSlice.0
+            self.listOfPinnedFood = tempSlice.1
+            self.listOfFoodInGroups = tempSlice.0
+            self.listOfPinnedFoodInGroups = tempSlice.1
+            self.showListToolbar = false
         }
     }
     
-    func appendList(item_id: UUID) {
+    func appendList(item_id: UUID) async {
         if getItemID(item_id, 0)! > _lastVisibleIndex {
             _lastVisibleIndex = getItemID(item_id, 0)!
         }
@@ -323,7 +333,7 @@ class foodCollections: ObservableObject {
         }
     }
     
-    func appendListInGroups(item_id: UUID) {
+    func appendListInGroups(item_id: UUID) async {
         if getItemID(item_id, 2)! > _lastVisibleIndex {
             _lastVisibleIndex = getItemID(item_id, 2)!
         }

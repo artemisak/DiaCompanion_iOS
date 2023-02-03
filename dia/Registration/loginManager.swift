@@ -67,7 +67,7 @@ class Router: ObservableObject {
     }
     
     @MainActor
-    func setChoosed(number: Int) async {
+    func setChoosed() async {
         Task {
             do {
                 let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
@@ -79,10 +79,8 @@ class Router: ObservableObject {
                 let choosed = Expression<Int>("versionChoosed")
                 let version = Expression<Int>("version")
                 try db.run(tb.update(choosed <- 1))
-                try db.run(tb.update(version <- number))
-                self.version = number
+                try db.run(tb.update(version <- self.version))
                 self.isChoosed = true
-                self.animateTransition = true
             }
             catch {
                 print(error)

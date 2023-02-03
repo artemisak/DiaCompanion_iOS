@@ -8,6 +8,7 @@ struct diaApp: App {
             if #available(iOS 16, *){
                 startPage()
                     .dynamicTypeSize(main_font)
+                    .accessibilityIgnoresInvertColors(true)
                     .environment(\.defaultMinListRowHeight, 55)
                     .onAppear {
                         let x = UIScreen.main.bounds.size.width
@@ -51,6 +52,7 @@ struct diaApp: App {
             } else {
                 startPage()
                     .dynamicTypeSize(main_font)
+                    .accessibilityIgnoresInvertColors(true)
                     .environment(\.defaultMinListRowHeight, 55)
                     .onAppear {
                         let x = UIScreen.main.bounds.size.width
