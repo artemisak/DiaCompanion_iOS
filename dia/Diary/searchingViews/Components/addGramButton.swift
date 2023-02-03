@@ -19,7 +19,7 @@ struct addGramButton: View {
             NavigationStack {
                 Form {
                     Section {
-                        TextField("Граммы", text: $gram)
+                        TextField("", text: $gram, prompt: Text("Граммы")).labelsHidden()
                             .keyboardType(.decimalPad)
                             .onReceive(Just(gram)) { newValue in
                                 let filtered = newValue.filter { "0123456789,".contains($0) }

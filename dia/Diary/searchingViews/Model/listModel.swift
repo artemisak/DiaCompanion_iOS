@@ -97,7 +97,6 @@ struct foodItem: Identifiable, Hashable {
     }
 }
 
-@MainActor
 class foodCollections: ObservableObject {
     @Published var textToSearch: String  = ""
     @Published var groupToSearch: String = ""
@@ -287,7 +286,8 @@ class foodCollections: ObservableObject {
 
         return (tempSlice0,tempSlice1)
     }
-
+    
+    @MainActor
     func assetList() async {
         let tempSlice = await fillList()
         var upperBound = 0
@@ -322,6 +322,7 @@ class foodCollections: ObservableObject {
         }
     }
     
+    @MainActor
     func appendList(item_id: UUID) async {
         if getItemID(item_id, 0)! > _lastVisibleIndex {
             _lastVisibleIndex = getItemID(item_id, 0)!
@@ -333,6 +334,7 @@ class foodCollections: ObservableObject {
         }
     }
     
+    @MainActor
     func appendListInGroups(item_id: UUID) async {
         if getItemID(item_id, 2)! > _lastVisibleIndex {
             _lastVisibleIndex = getItemID(item_id, 2)!

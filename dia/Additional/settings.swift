@@ -3,31 +3,52 @@ import PDFKit
 
 struct settings: View {
     @Environment(\.presentationMode) var presentationMode
+    @EnvironmentObject var routeManager: Router
     @State private var fileUrl = Bundle.main.url(forResource: "Education", withExtension: "pdf")!
     @State private var phelper : Bool = false
     @State private var eraseAccount = false
     @State private var eraseDB = false
     @State private var eraseDBprogress = false
     @State private var arrowAngle = 0.0
-    @EnvironmentObject var routeManager: Router
     var body: some View {
         List {
             Section(header: Text("Карта пациента").font(.caption)){
-                NavigationLink(destination: pacientCart()) {
-                    Button("Данные пациента", action: {})
-                }.foregroundColor(Color("listButtonColor"))
-                NavigationLink(destination: severalDatesPicker()) {
-                    Button("Отметить полные дни", action: {})
-                }.foregroundColor(Color("listButtonColor"))
-                NavigationLink(destination: PDFKitView(url: fileUrl).ignoresSafeArea(.all, edges: .bottom).navigationTitle("Обучение").navigationBarTitleDisplayMode(.inline)) {
-                    Button("Обучение", action: {})
-                }.foregroundColor(Color("listButtonColor"))
-                NavigationLink(destination: helper(phelper: $phelper)) {
-                    Button("Помощь", action: {})
-                }.foregroundColor(Color("listButtonColor"))
-                NavigationLink(destination: aboutApp()){
-                    Button("О приложении", action: {})
-                }.foregroundColor(Color("listButtonColor"))
+                NavigationLink(destination: {
+                    if #available(iOS 16, *){
+                        pacientCart()
+                            .toolbar(.hidden, for: .tabBar)
+                    } else {
+                        pacientCart().hiddenTabBar()
+                    }
+                }) {Text("Данные пациента")}.foregroundColor(Color("listButtonColor"))
+                NavigationLink(destination: {
+                    if #available(iOS 16, *){
+                        severalDatesPicker().toolbar(.hidden, for: .tabBar)
+                    } else {
+                        severalDatesPicker().hiddenTabBar()
+                    }
+                }) {Text("Отметить полные дни")}.foregroundColor(Color("listButtonColor"))
+                NavigationLink(destination: {
+                    if #available(iOS 16, *){
+                        PDFKitView(url: fileUrl).ignoresSafeArea(.all, edges: .bottom).navigationTitle("Обучение").navigationBarTitleDisplayMode(.inline).toolbar(.hidden, for: .tabBar)
+                    } else {
+                        PDFKitView(url: fileUrl).ignoresSafeArea(.all, edges: .bottom).navigationTitle("Обучение").navigationBarTitleDisplayMode(.inline).hiddenTabBar()
+                    }
+                }) {Text("Обучение")}.foregroundColor(Color("listButtonColor"))
+                NavigationLink(destination: {
+                    if #available(iOS 16, *){
+                        helper(phelper: $phelper).toolbar(.hidden, for: .tabBar)
+                    } else {
+                        helper(phelper: $phelper).hiddenTabBar()
+                    }
+                }) {Text("Помощь")}.foregroundColor(Color("listButtonColor"))
+                NavigationLink(destination: {
+                    if #available(iOS 16, *){
+                        aboutApp().toolbar(.hidden, for: .tabBar)
+                    } else {
+                        aboutApp().hiddenTabBar()
+                    }
+                }){Text("О приложении")}.foregroundColor(Color("listButtonColor"))
             }
             Section(header: Text("Параметры восстановления").font(.caption)){
                 Button {

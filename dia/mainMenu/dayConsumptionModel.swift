@@ -45,16 +45,17 @@ class dayConsumptionModel : ObservableObject {
     func retriveImage() async -> sunStatment? {
         let timeFormatter = DateFormatter()
         timeFormatter.dateFormat = "HH:mm"
-        if (Date() > timeFormatter.date(from: "00:00")!) && (Date() < timeFormatter.date(from: "04:00")!) {
+        let now = timeFormatter.date(from: Date().formatted(date: .omitted, time: .shortened))!
+        if (now > timeFormatter.date(from: "00:00")!) && (now < timeFormatter.date(from: "04:00")!) {
             return .moon
         }
-        else if (Date() > timeFormatter.date(from: "04:00")!) && (Date() < timeFormatter.date(from: "07:00")!) {
+        else if (now > timeFormatter.date(from: "04:00")!) && (now < timeFormatter.date(from: "07:00")!) {
             return .sunrise
         }
-        else if (Date() > timeFormatter.date(from: "07:00")!) && (Date() < timeFormatter.date(from: "17:00")!) {
+        else if (now > timeFormatter.date(from: "07:00")!) && (now < timeFormatter.date(from: "17:00")!) {
             return .sunMax
         }
-        else if (Date() > timeFormatter.date(from: "17:00")!) && (Date() < timeFormatter.date(from: "21:00")!) {
+        else if (now > timeFormatter.date(from: "17:00")!) && (now < timeFormatter.date(from: "21:00")!) {
             return .sunset
         } else {
             return nil

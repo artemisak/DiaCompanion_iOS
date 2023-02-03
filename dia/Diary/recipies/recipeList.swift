@@ -64,14 +64,23 @@ struct recipeList: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 NavigationLink(destination: {
-                    addRecipe(editExistRow: false, foodNotation: "", selectedCat: .alcohol)
-                        .task {
-                            collection.whereToSave = .recipeFoodItems
-                        }
+                    if #available(iOS 16, *){
+                        addRecipe(editExistRow: false, foodNotation: "", selectedCat: .alcohol)
+                            .task {
+                                collection.whereToSave = .recipeFoodItems
+                            }
+                            .toolbar(.hidden, for: .tabBar)
+                    } else {
+                        addRecipe(editExistRow: false, foodNotation: "", selectedCat: .alcohol)
+                            .task {
+                                collection.whereToSave = .recipeFoodItems
+                            }
+                            .hiddenTabBar()
+                    }
                 }, label: {
                     HStack{
                         Text("Добавить")
-                        Image(systemName: "folder.badge.plus")
+                        Image(systemName: "plus")
                     }
                 })
             }

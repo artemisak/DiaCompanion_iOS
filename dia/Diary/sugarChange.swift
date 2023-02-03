@@ -29,7 +29,7 @@ struct sugarChange: View {
                     HStack {
                         Text("Период")
                         Spacer()
-                        Text("\(spreviewIndex.rawValue)")
+                        Text(LocalizedStringKey(spreviewIndex.rawValue))
                             .foregroundColor(.gray)
                     }
                 })

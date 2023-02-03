@@ -22,7 +22,10 @@ struct mainMenu: View {
                 consumptionIndicator(food_prot: $consumption.prot, food_fat: $consumption.fat, food_carbo: $consumption.carbo, food_kkal: $consumption.kkal, nowDate: $localDateSTR)
             } header: {
                 HStack {
-                    Text("Сегодня - \(localDate.formatted())")
+                    HStack(spacing:0) {
+                        Text("Сегодня")
+                        Text(" - \(localDate.formatted())")
+                    }
                     Image(systemName: consumption.sunImage.rawValue)
                 }.font(.caption)
             }
@@ -38,7 +41,12 @@ struct mainMenu: View {
                 }
                 if routeManager.version != 4 {
                     NavigationLink {
-                        sugarChange(t: "", date: localDate, isAct:  false, spreviewIndex: .natoshak, idForDelete: [], hasChanged: .constant(false))
+                        if #available(iOS 16, *){
+                            sugarChange(t: "", date: localDate, isAct:  false, spreviewIndex: .natoshak, idForDelete: [], hasChanged: .constant(false)).toolbar(.hidden, for: .tabBar)
+                        }
+                        else {
+                            sugarChange(t: "", date: localDate, isAct:  false, spreviewIndex: .natoshak, idForDelete: [], hasChanged: .constant(false)).hiddenTabBar()
+                        }
                     } label: {
                         HStack {
                             Image("sugar_level").resizable().scaledToFit().frame(width: 36, height: 36)
@@ -47,7 +55,11 @@ struct mainMenu: View {
                         .foregroundColor(Color("listButtonColor"))
                     }
                     NavigationLink {
-                        inject(t: "", date: localDate, previewIndex: injectType.ultra, previewIndex1: injects.natoshak, idForDelete: [], hasChanged: .constant(false))
+                        if #available(iOS 16, *){
+                            inject(t: "", date: localDate, previewIndex: injectType.ultra, previewIndex1: injects.natoshak, idForDelete: [], hasChanged: .constant(false)).toolbar(.hidden, for: .tabBar)
+                        } else {
+                            inject(t: "", date: localDate, previewIndex: injectType.ultra, previewIndex1: injects.natoshak, idForDelete: [], hasChanged: .constant(false)).hiddenTabBar()
+                        }
                     } label: {
                         HStack {
                             Image("insulin").resizable().scaledToFit().frame(width: 36, height: 36)
@@ -57,7 +69,11 @@ struct mainMenu: View {
                     }
                 }
                 NavigationLink {
-                    enterAct(t: "", date: localDate, actpreviewIndex: act.zar, idForDelete: [], hasChanged: .constant(false))
+                    if #available(iOS 16, *){
+                        enterAct(t: "", date: localDate, actpreviewIndex: act.zar, idForDelete: [], hasChanged: .constant(false)).toolbar(.hidden, for: .tabBar)
+                    } else {
+                        enterAct(t: "", date: localDate, actpreviewIndex: act.zar, idForDelete: [], hasChanged: .constant(false)).hiddenTabBar()
+                    }
                 } label: {
                     HStack {
                         Image("workoutSleep").resizable().scaledToFit().frame(width: 36, height: 36)
@@ -66,7 +82,11 @@ struct mainMenu: View {
                     .foregroundColor(Color("listButtonColor"))
                 }
                 NavigationLink {
-                    massa(t: "", date: localDate, idForDelete: [], hasChanged: .constant(false))
+                    if #available(iOS 16, *){
+                        massa(t: "", date: localDate, idForDelete: [], hasChanged: .constant(false)).toolbar(.hidden, for: .tabBar)
+                    } else {
+                        massa(t: "", date: localDate, idForDelete: [], hasChanged: .constant(false)).hiddenTabBar()
+                    }
                 } label: {
                     HStack {
                         Image("weight").resizable().scaledToFit().frame(width: 36, height: 36)
@@ -75,7 +95,11 @@ struct mainMenu: View {
                     .foregroundColor(Color("listButtonColor"))
                 }
                 NavigationLink {
-                    ketonur(t: "", date: localDate, idForDelete: [], hasChanged: .constant(false))
+                    if #available(iOS 16, *){
+                        ketonur(t: "", date: localDate, idForDelete: [], hasChanged: .constant(false)).toolbar(.hidden, for: .tabBar)
+                    } else {
+                        ketonur(t: "", date: localDate, idForDelete: [], hasChanged: .constant(false)).hiddenTabBar()
+                    }
                 } label: {
                     HStack {
                         Image("keton").resizable().scaledToFit().frame(width: 36, height: 36)
@@ -99,7 +123,13 @@ struct mainMenu: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
                 NavigationLink {
-                    history()
+                    if #available(iOS 16, *){
+                        history()
+                            .toolbar(.hidden, for: .tabBar)
+                    } else {
+                        history()
+                            .hiddenTabBar()
+                    }
                 } label: {
                     HStack {
                         Image(systemName: "tray.2")

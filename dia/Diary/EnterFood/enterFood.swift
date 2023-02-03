@@ -20,10 +20,10 @@ struct ftPicker: View {
     var body: some View {
         List {
             Picker(selection: $ftpreviewIndex, label: Text("Прием пищи").font(.caption)) {
-                Text("Завтрак").tag(ftype.zavtrak)
-                Text("Обед").tag(ftype.obed)
-                Text("Ужин").tag(ftype.uzin)
-                Text("Перекусы").tag(ftype.perekus)
+                Text(LocalizedStringKey("Завтрак")).tag(ftype.zavtrak)
+                Text(LocalizedStringKey("Обед")).tag(ftype.obed)
+                Text(LocalizedStringKey("Ужин")).tag(ftype.uzin)
+                Text(LocalizedStringKey("Перекусы")).tag(ftype.perekus)
             }.pickerStyle(.inline)
         }
     }
@@ -42,10 +42,10 @@ struct enterFood: View {
     @State private var showEditView: Bool = false
     @State private var id0: Int = 0
     @State private var isEditing: Bool = false
-    @State private var sugarlvl: String = "УСК не определен"
+    @State private var sugarlvl: LocalizedStringKey = "УСК не определен"
     @State private var isHidden: Bool = true
     @State private var isSheetShown: Bool = false
-    @State private var scolor = Color.black
+    @State private var scolor = Color("listButtonColor")
     @State private var recColor = Color.gray.opacity(0.2)
     @State private var fontColor = Color.black
     @State private var alertMessage: Bool = false
@@ -58,217 +58,444 @@ struct enterFood: View {
     @State private var isUnsavedChanges: Bool = false
     @Binding var hasChanged: Bool
     var body: some View {
-        List {
-            Section(header: Text("Общая информация").font(.caption)){
-                NavigationLink(destination: ftPicker(ftpreviewIndex: $ftpreviewIndex), label: {
-                    HStack {
-                        Text("Прием пищи")
-                        Spacer()
-                        Text("\(ftpreviewIndex.rawValue)")
-                    }
-                })
-                VStack {
-                    DatePicker(
-                        "Дата",
-                        selection: $date,
-                        displayedComponents: [.date, .hourAndMinute]
-                    )
-                }
-            }
-            if routeManager.version == 1 {
-                Section(header: Text("Уровень сахара в крови").font(.caption)) {
-                    Toggle(isOn: $enabled) {Text("Записать текущий УСК")}
-                        .onChange(of: enabled){ _ in
-                            if (!pacientManager.provider.checkBMI() && enabled) {
-                                alertMessage = true
-                                enabled = false
-                            }
-                            sugar = ""
-                            sugarlvl = "УСК не определен"
-                        }
-                        .alert(isPresented: $alertMessage) {
-                            Alert(title: Text("Статус операции"), message: Text("Необходимо указать рост и вес \nдо беременности в карте пациента"), dismissButton: .default(Text("ОК")))
-                        }
-                }
+        if #available(iOS 16, *){
+            List {
                 Section {
-                    Text("\(sugarlvl)")
+                    Text(sugarlvl)
                         .bold()
                         .frame(maxWidth: .infinity)
                         .foregroundColor(fontColor)
                         .listRowBackground(recColor)
                     if isVisible {
-                        Text(recommendMessage)
+                        Text(LocalizedStringKey(recommendMessage))
                     }
-                    TextField("5,0 ммоль/л", text: $sugar)
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
-                        .keyboardType(.decimalPad)
-                        .disabled(enabled == false)
-                        .foregroundColor(scolor)
                 }.listRowSeparator(.hidden)
+                Section(header: Text("Общая информация").font(.caption)){
+                    NavigationLink(destination: ftPicker(ftpreviewIndex: $ftpreviewIndex), label: {
+                        HStack {
+                            Text("Прием пищи")
+                            Spacer()
+                            Text(LocalizedStringKey(ftpreviewIndex.rawValue))
+                        }
+                    })
+                    VStack {
+                        DatePicker(
+                            "Дата",
+                            selection: $date,
+                            displayedComponents: [.date, .hourAndMinute]
+                        )
+                    }
+                }
+                if routeManager.version == 1 {
+                    Section(header: Text("Уровень сахара в крови").font(.caption)) {
+                        Toggle(isOn: $enabled) {Text("Записать текущий УСК")}
+                            .onChange(of: enabled){ _ in
+                                if (!pacientManager.provider.checkBMI() && enabled) {
+                                    alertMessage = true
+                                    enabled = false
+                                }
+                                sugar = ""
+                                sugarlvl = "УСК не определен"
+                            }
+                            .alert(isPresented: $alertMessage) {
+                                Alert(title: Text("Статус операции"), message: Text("Необходимо указать рост и вес \nдо беременности в карте пациента"), dismissButton: .default(Text("ОК")))
+                            }
+                        TextField("5,0 ммоль/л", text: $sugar)
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                            .keyboardType(.decimalPad)
+                            .disabled(enabled == false)
+                            .foregroundColor(scolor)
+                    }
+                }
+                if (!collection.addedFoodItems.isEmpty && collection.whereToSave == .addedFoodItems) || (!collection.editedFoodItems.isEmpty && collection.whereToSave == .editingFoodItems) {
+                    Section {
+                        ForEach(collection.whereToSave == .addedFoodItems ? collection.addedFoodItems : collection.editedFoodItems, id: \.id) {i in
+                            Label {
+                                VStack(spacing: 0){
+                                    Text(LocalizedStringKey(i.name)).fixedSize(horizontal: true, vertical: false)
+                                    HStack(spacing: 0) {
+                                        Text(" \(i.gram!, specifier: "%.1f") ")
+                                        Text(LocalizedStringKey("г."))
+                                    }
+                                }
+                            } icon: {
+                                giIndicator(gi: i.gi, gl: i.gl)
+                            }
+                            .labelStyle(centerLabel())
+                            .swipeActions {
+                                Button(action: {
+                                    if collection.whereToSave == .addedFoodItems {
+                                        removeRows(i: collection.addedFoodItems.firstIndex(where: {$0.id == i.id})!)
+                                    } else {
+                                        removeRows(i: collection.editedFoodItems.firstIndex(where: {$0.id == i.id})!)
+                                    }
+                                }, label: {
+                                    Image(systemName: "trash.fill")
+                                })
+                                .tint(Color.red)
+                            }
+                            .swipeActions {
+                                Button(action: {
+                                    if collection.whereToSave == .addedFoodItems {
+                                        id0 = collection.addedFoodItems.firstIndex(where: {$0.id == i.id})!
+                                        collection.selectedItem = i
+                                        withAnimation(.default){
+                                            showEditView = true
+                                        }
+                                    } else {
+                                        id0 = collection.editedFoodItems.firstIndex(where: {$0.id == i.id})!
+                                        collection.selectedItem = i
+                                        withAnimation(.default){
+                                            showEditView = true
+                                        }
+                                    }
+                                }, label: {
+                                    Image(systemName: "pencil")
+                                })
+                                .tint(Color.orange)
+                            }
+                        }
+                    } header: {
+                        Text("ГИ / ГН / Наименование, г.").frame(minWidth: 0, maxWidth: .infinity).font(.body)
+                    }
+                }
             }
-            Section(header: Text("Потребленные продукты").font(.caption)){
+            .ignoresSafeArea(.keyboard)
+            .navigationTitle("Приемы пищи")
+            .navigationBarTitleDisplayMode(.large)
+            .navigationBarBackButtonHidden()
+            .toolbar(.hidden, for: .tabBar)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing, content: {
+                    Button(action: {
+                        if collection.whereToSave == .addedFoodItems {
+                            saveInDB(workList: collection.addedFoodItems)
+                            collection.addedFoodItems = []
+                        } else {
+                            saveInDB(workList: collection.editedFoodItems)
+                            collection.editedFoodItems = []
+                        }
+                    }) {
+                        Text("Сохранить")
+                    }
+                    .alert(isPresented: $permission) {
+                        Alert(title: Text("Статус операции"), message: Text(errorMessage), dismissButton: .default(Text("ОК")))
+                    }
+                })
+                ToolbarItemGroup(placement: .bottomBar, content: {
+                    Spacer()
+                    NavigationLink(destination: { enterPoint() }, label: {
+                            Image(systemName: "square.and.pencil")
+                    }).foregroundColor(Color("AccentColor"))
+                })
+                ToolbarItem(placement: .navigationBarLeading, content: {
+                    Button {
+                        switch collection.whereToSave {
+                        case .addedFoodItems:
+                            if collection.addedFoodItems.isEmpty {
+                                presentationMode.wrappedValue.dismiss()
+                            } else {
+                                isUnsavedChanges = true
+                            }
+                        case .editingFoodItems:
+                            if collection.editedFoodItems.isEmpty {
+                                presentationMode.wrappedValue.dismiss()
+                            } else {
+                                isUnsavedChanges = true
+                            }
+                        default:
+                            presentationMode.wrappedValue.dismiss()
+                        }
+                    } label: {
+                        HStack {
+                            Text(Image(systemName: "chevron.left")).font(.body).fontWeight(.semibold)
+                            Text("Назад").font(.body)
+                        }
+                    }
+                })
+                ToolbarItemGroup(placement: .keyboard, content: {
+                    Spacer()
+                    Button(action: {
+                        UIApplication.shared.dismissedKeyboard()
+                    }, label: {
+                        Text("Готово").foregroundColor(Color(red: 0/255, green: 150/255, blue: 255/255))
+                    })
+                })
+            }
+            .sheet(isPresented: $showEditView, content: { addGramButton(gram: String(collection.selectedItem!.gram!).split(separator: ".").joined(separator: ","), editing: true, isShowingSheet: $showEditView, showSuccesNotify: .constant(false))})
+            .alert("Несохраненные изменения", isPresented: $isUnsavedChanges, actions: {
+                Button(role: .destructive, action: {
+                    switch collection.whereToSave {
+                    case .addedFoodItems:
+                        collection.addedFoodItems = []
+                    case .editingFoodItems:
+                        collection.editedFoodItems = []
+                    default:
+                        break
+                    }
+                    presentationMode.wrappedValue.dismiss()
+                }, label: {Text("Покинуть")})
+            }, message: {Text("Вы внесли изменения, но не сохранили их. Если вы покините страницу - временные данные будут удалены.")})
+            .onAppear {
+                if idForDelete.isEmpty {
+                    collection.whereToSave = .addedFoodItems
+                } else {
+                    collection.whereToSave = .editingFoodItems
+                }
+                if collection.whereToSave == .addedFoodItems {
+                    date = Date()
+                    updatePrediction(workList: collection.addedFoodItems)
+                } else {
+                    updatePrediction(workList: collection.editedFoodItems)
+                }
+            }
+            .onReceive(collection.$addedFoodItems, perform: { _ in
+                updatePrediction(workList: collection.addedFoodItems)
+            })
+            .onReceive(collection.$editedFoodItems, perform: { _ in
+                updatePrediction(workList: collection.editedFoodItems)
+            })
+            .onChange(of: sugar){ _ in
+                if collection.whereToSave == .addedFoodItems {
+                    updatePrediction(workList: collection.addedFoodItems)
+                } else {
+                    updatePrediction(workList: collection.editedFoodItems)
+                }
+            }
+            .onChange(of: ftpreviewIndex, perform: { _ in
+                if collection.whereToSave == .addedFoodItems {
+                    updatePrediction(workList: collection.addedFoodItems)
+                } else {
+                    updatePrediction(workList: collection.editedFoodItems)
+                }
+            })
+            .onChange(of: date, perform: { _ in
+                if collection.whereToSave == .addedFoodItems {
+                    updatePrediction(workList: collection.addedFoodItems)
+                } else {
+                    updatePrediction(workList: collection.editedFoodItems)
+                }
+            })
+        }
+        else {
+            List {
+                Section {
+                    Text(sugarlvl)
+                        .bold()
+                        .frame(maxWidth: .infinity)
+                        .foregroundColor(fontColor)
+                        .listRowBackground(recColor)
+                    if isVisible {
+                        Text(LocalizedStringKey(recommendMessage))
+                    }
+                }.listRowSeparator(.hidden)
+                Section(header: Text("Общая информация").font(.caption)){
+                    NavigationLink(destination: ftPicker(ftpreviewIndex: $ftpreviewIndex), label: {
+                        HStack {
+                            Text("Прием пищи")
+                            Spacer()
+                            Text(LocalizedStringKey(ftpreviewIndex.rawValue))
+                        }
+                    })
+                    VStack {
+                        DatePicker(
+                            "Дата",
+                            selection: $date,
+                            displayedComponents: [.date, .hourAndMinute]
+                        )
+                    }
+                }
+                if routeManager.version == 1 {
+                    Section(header: Text("Уровень сахара в крови").font(.caption)) {
+                        Toggle(isOn: $enabled) {Text("Записать текущий УСК")}
+                            .onChange(of: enabled){ _ in
+                                if (!pacientManager.provider.checkBMI() && enabled) {
+                                    alertMessage = true
+                                    enabled = false
+                                }
+                                sugar = ""
+                                sugarlvl = "УСК не определен"
+                            }
+                            .alert(isPresented: $alertMessage) {
+                                Alert(title: Text("Статус операции"), message: Text("Необходимо указать рост и вес \nдо беременности в карте пациента"), dismissButton: .default(Text("ОК")))
+                            }
+                        TextField("5,0 ммоль/л", text: $sugar)
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                            .keyboardType(.decimalPad)
+                            .disabled(enabled == false)
+                            .foregroundColor(scolor)
+                    }
+                }
+                if (!collection.addedFoodItems.isEmpty && collection.whereToSave == .addedFoodItems) || (!collection.editedFoodItems.isEmpty && collection.whereToSave == .editingFoodItems) {
+                    Section {
+                        ForEach(collection.whereToSave == .addedFoodItems ? collection.addedFoodItems : collection.editedFoodItems, id: \.id) {i in
+                            Label {
+                                HStack(spacing: 0){
+                                    Text(LocalizedStringKey(i.name))
+                                    Text(" \(i.gram!, specifier: "%.1f") ")
+                                    Text(LocalizedStringKey("г."))
+                                }
+                            } icon: {
+                                giIndicator(gi: i.gi, gl: i.gl)
+                            }
+                            .labelStyle(centerLabel())
+                            .swipeActions {
+                                Button(action: {
+                                    if collection.whereToSave == .addedFoodItems {
+                                        removeRows(i: collection.addedFoodItems.firstIndex(where: {$0.id == i.id})!)
+                                    } else {
+                                        removeRows(i: collection.editedFoodItems.firstIndex(where: {$0.id == i.id})!)
+                                    }
+                                }, label: {
+                                    Image(systemName: "trash.fill")
+                                })
+                                .tint(Color.red)
+                            }
+                            .swipeActions {
+                                Button(action: {
+                                    if collection.whereToSave == .addedFoodItems {
+                                        id0 = collection.addedFoodItems.firstIndex(where: {$0.id == i.id})!
+                                        collection.selectedItem = i
+                                        withAnimation(.default){
+                                            showEditView = true
+                                        }
+                                    } else {
+                                        id0 = collection.editedFoodItems.firstIndex(where: {$0.id == i.id})!
+                                        collection.selectedItem = i
+                                        withAnimation(.default){
+                                            showEditView = true
+                                        }
+                                    }
+                                }, label: {
+                                    Image(systemName: "pencil")
+                                })
+                                .tint(Color.orange)
+                            }
+                        }
+                    } header: {
+                        Text("ГИ / ГН / Наименование, г.").frame(minWidth: 0, maxWidth: .infinity).font(.body)
+                    }
+                }
                 NavigationLink(destination: { enterPoint() }, label: {
-                    HStack {
+                    HStack{
                         Text("Добавить")
-                        Image(systemName: "folder.badge.plus")
+                        Image(systemName: "plus")
                     }
                 }).foregroundColor(Color("AccentColor"))
             }
-            Section {
-                ForEach(collection.whereToSave == .addedFoodItems ? collection.addedFoodItems : collection.editedFoodItems, id: \.id) {i in
-                    Label {
-                        Text("\(i.name) (\(i.gram!, specifier: "%.1f") г.)")
-                    } icon: {
-                        giIndicator(gi: i.gi, gl: i.gl)
+            .ignoresSafeArea(.keyboard)
+            .navigationTitle("Приемы пищи")
+            .navigationBarTitleDisplayMode(.large)
+            .navigationBarBackButtonHidden()
+            .hiddenTabBar()
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing, content: {
+                    Button(action: {
+                        if collection.whereToSave == .addedFoodItems {
+                            saveInDB(workList: collection.addedFoodItems)
+                            collection.addedFoodItems = []
+                        } else {
+                            saveInDB(workList: collection.editedFoodItems)
+                            collection.editedFoodItems = []
+                        }
+                    }) {
+                        Text("Сохранить")
                     }
-                    .labelStyle(centerLabel())
-                    .swipeActions {
-                        Button(action: {
-                            if collection.whereToSave == .addedFoodItems {
-                                removeRows(i: collection.addedFoodItems.firstIndex(where: {$0.id == i.id})!)
-                            } else {
-                                removeRows(i: collection.editedFoodItems.firstIndex(where: {$0.id == i.id})!)
-                            }
-                        }, label: {
-                            Image(systemName: "trash.fill")
-                        })
-                        .tint(Color.red)
+                    .alert(isPresented: $permission) {
+                        Alert(title: Text("Статус операции"), message: Text(errorMessage), dismissButton: .default(Text("ОК")))
                     }
-                    .swipeActions {
-                        Button(action: {
-                            if collection.whereToSave == .addedFoodItems {
-                                id0 = collection.addedFoodItems.firstIndex(where: {$0.id == i.id})!
-                                collection.selectedItem = i
-                                withAnimation(.default){
-                                    showEditView = true
-                                }
-                            } else {
-                                id0 = collection.editedFoodItems.firstIndex(where: {$0.id == i.id})!
-                                collection.selectedItem = i
-                                withAnimation(.default){
-                                    showEditView = true
-                                }
-                            }
-                        }, label: {
-                            Image(systemName: "pencil")
-                        })
-                        .tint(Color.orange)
-                    }
-                }
-            } header: {
-                if (!collection.addedFoodItems.isEmpty && collection.whereToSave == .addedFoodItems) || (!collection.editedFoodItems.isEmpty && collection.whereToSave == .editingFoodItems) {
-                    Text("ГИ / ГН / Наименование, г.").frame(minWidth: 0, maxWidth: .infinity).font(.body)
-                }
-            }
-        }
-        .ignoresSafeArea(.keyboard)
-        .navigationTitle("Приемы пищи")
-        .navigationBarBackButtonHidden()
-        .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing, content: {
-                Button(action: {
-                    if collection.whereToSave == .addedFoodItems {
-                        saveInDB(workList: collection.addedFoodItems)
-                        collection.addedFoodItems = []
-                    } else {
-                        saveInDB(workList: collection.editedFoodItems)
-                        collection.editedFoodItems = []
-                    }
-                }) {
-                    Text("Сохранить")
-                }
-                .alert(isPresented: $permission) {
-                    Alert(title: Text("Статус операции"), message: Text(errorMessage), dismissButton: .default(Text("ОК")))
-                }
-            })
-            ToolbarItemGroup(placement: .keyboard, content: {
-                Spacer()
-                Button(action: {
-                    UIApplication.shared.dismissedKeyboard()
-                }, label: {
-                    Text("Готово").foregroundColor(Color(red: 0/255, green: 150/255, blue: 255/255))
                 })
-            })
-            ToolbarItem(placement: .navigationBarLeading, content: {
-                Button {
+                ToolbarItem(placement: .navigationBarLeading, content: {
+                    Button {
+                        switch collection.whereToSave {
+                        case .addedFoodItems:
+                            if collection.addedFoodItems.isEmpty {
+                                presentationMode.wrappedValue.dismiss()
+                            } else {
+                                isUnsavedChanges = true
+                            }
+                        case .editingFoodItems:
+                            if collection.editedFoodItems.isEmpty {
+                                presentationMode.wrappedValue.dismiss()
+                            } else {
+                                isUnsavedChanges = true
+                            }
+                        default:
+                            presentationMode.wrappedValue.dismiss()
+                        }
+                    } label: {
+                        HStack {
+                            Text(Image(systemName: "chevron.left")).font(.body).fontWeight(.semibold)
+                            Text("Назад").font(.body)
+                        }
+                    }
+                })
+                ToolbarItemGroup(placement: .keyboard, content: {
+                    Spacer()
+                    Button(action: {
+                        UIApplication.shared.dismissedKeyboard()
+                    }, label: {
+                        Text("Готово").foregroundColor(Color(red: 0/255, green: 150/255, blue: 255/255))
+                    })
+                })
+            }
+            .sheet(isPresented: $showEditView, content: { addGramButton(gram: String(collection.selectedItem!.gram!).split(separator: ".").joined(separator: ","), editing: true, isShowingSheet: $showEditView, showSuccesNotify: .constant(false))})
+            .alert("Несохраненные изменения", isPresented: $isUnsavedChanges, actions: {
+                Button(role: .destructive, action: {
                     switch collection.whereToSave {
                     case .addedFoodItems:
-                        if collection.addedFoodItems.isEmpty {
-                            presentationMode.wrappedValue.dismiss()
-                        } else {
-                            isUnsavedChanges = true
-                        }
+                        collection.addedFoodItems = []
                     case .editingFoodItems:
-                        if collection.editedFoodItems.isEmpty {
-                            presentationMode.wrappedValue.dismiss()
-                        } else {
-                            isUnsavedChanges = true
-                        }
+                        collection.editedFoodItems = []
                     default:
-                        presentationMode.wrappedValue.dismiss()
+                        break
                     }
-                } label: {
-                    HStack {
-                        Text(Image(systemName: "chevron.left")).font(.body).fontWeight(.semibold)
-                        Text("Назад").font(.body)
-                    }
+                    presentationMode.wrappedValue.dismiss()
+                }, label: {Text("Покинуть")})
+            }, message: {Text("Вы внесли изменения, но не сохранили их. Если вы покините страницу - временные данные будут удалены.")})
+            .onAppear {
+                UITabBar.appearance().isHidden = true
+                if idForDelete.isEmpty {
+                    collection.whereToSave = .addedFoodItems
+                } else {
+                    collection.whereToSave = .editingFoodItems
+                }
+                if collection.whereToSave == .addedFoodItems {
+                    date = Date()
+                    updatePrediction(workList: collection.addedFoodItems)
+                } else {
+                    updatePrediction(workList: collection.editedFoodItems)
+                }
+            }
+            .onReceive(collection.$addedFoodItems, perform: { _ in
+                updatePrediction(workList: collection.addedFoodItems)
+            })
+            .onReceive(collection.$editedFoodItems, perform: { _ in
+                updatePrediction(workList: collection.editedFoodItems)
+            })
+            .onChange(of: sugar){ _ in
+                if collection.whereToSave == .addedFoodItems {
+                    updatePrediction(workList: collection.addedFoodItems)
+                } else {
+                    updatePrediction(workList: collection.editedFoodItems)
+                }
+            }
+            .onChange(of: ftpreviewIndex, perform: { _ in
+                if collection.whereToSave == .addedFoodItems {
+                    updatePrediction(workList: collection.addedFoodItems)
+                } else {
+                    updatePrediction(workList: collection.editedFoodItems)
+                }
+            })
+            .onChange(of: date, perform: { _ in
+                if collection.whereToSave == .addedFoodItems {
+                    updatePrediction(workList: collection.addedFoodItems)
+                } else {
+                    updatePrediction(workList: collection.editedFoodItems)
                 }
             })
         }
-        .sheet(isPresented: $showEditView, content: { addGramButton(gram: String(collection.selectedItem!.gram!).split(separator: ".").joined(separator: ","), editing: true, isShowingSheet: $showEditView, showSuccesNotify: .constant(false))})
-        .alert("Несохраненные изменения", isPresented: $isUnsavedChanges, actions: {
-            Button(role: .destructive, action: {
-                switch collection.whereToSave {
-                case .addedFoodItems:
-                    collection.addedFoodItems = []
-                case .editingFoodItems:
-                    collection.editedFoodItems = []
-                default:
-                    break
-                }
-                presentationMode.wrappedValue.dismiss()
-            }, label: {Text("Покинуть")})
-        }, message: {Text("Вы внесли изменения, но не сохранили их. Если вы покините страницу - временные данные будут удалены.")})
-        .onAppear {
-            if idForDelete.isEmpty {
-                collection.whereToSave = .addedFoodItems
-            } else {
-                collection.whereToSave = .editingFoodItems
-            }
-            if collection.whereToSave == .addedFoodItems {
-                date = Date()
-                updatePrediction(workList: collection.addedFoodItems)
-            } else {
-                updatePrediction(workList: collection.editedFoodItems)
-            }
-        }
-        .onReceive(collection.$addedFoodItems, perform: { _ in
-            updatePrediction(workList: collection.addedFoodItems)
-        })
-        .onReceive(collection.$editedFoodItems, perform: { _ in
-            updatePrediction(workList: collection.editedFoodItems)
-        })
-        .onChange(of: sugar){ _ in
-            if collection.whereToSave == .addedFoodItems {
-                updatePrediction(workList: collection.addedFoodItems)
-            } else {
-                updatePrediction(workList: collection.editedFoodItems)
-            }
-        }
-        .onChange(of: ftpreviewIndex, perform: { _ in
-            if collection.whereToSave == .addedFoodItems {
-                updatePrediction(workList: collection.addedFoodItems)
-            } else {
-                updatePrediction(workList: collection.editedFoodItems)
-            }
-        })
-        .onChange(of: date, perform: { _ in
-            if collection.whereToSave == .addedFoodItems {
-                updatePrediction(workList: collection.addedFoodItems)
-            } else {
-                updatePrediction(workList: collection.editedFoodItems)
-            }
-        })
+
     }
     func removeRows(i: Int){
         if collection.whereToSave == .addedFoodItems {
@@ -300,7 +527,7 @@ struct enterFood: View {
                     fontColor = Color.white
                     isVisible = true
                 }
-                scolor = .black
+                scolor = Color("listButtonColor")
             } else {
                 sugarlvl = "УСК не определен"
                 recColor = Color("BG_Undefined")
