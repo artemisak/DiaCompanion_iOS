@@ -111,13 +111,7 @@ struct enterFood: View {
                     Section {
                         ForEach(collection.whereToSave == .addedFoodItems ? collection.addedFoodItems : collection.editedFoodItems, id: \.id) {i in
                             Label {
-                                VStack(spacing: 0){
-                                    Text(LocalizedStringKey(i.name)).fixedSize(horizontal: true, vertical: false)
-                                    HStack(spacing: 0) {
-                                        Text(" \(i.gram!, specifier: "%.1f") ")
-                                        Text(LocalizedStringKey("г."))
-                                    }
-                                }
+                                Text("\(i.name) (\(i.gram!, specifier: "%.1f") г.)")
                             } icon: {
                                 giIndicator(gi: i.gi, gl: i.gl)
                             }
@@ -330,11 +324,7 @@ struct enterFood: View {
                     Section {
                         ForEach(collection.whereToSave == .addedFoodItems ? collection.addedFoodItems : collection.editedFoodItems, id: \.id) {i in
                             Label {
-                                HStack(spacing: 0){
-                                    Text(LocalizedStringKey(i.name))
-                                    Text(" \(i.gram!, specifier: "%.1f") ")
-                                    Text(LocalizedStringKey("г."))
-                                }
+                                Text("\(i.name) (\(i.gram!, specifier: "%.1f") г.)")
                             } icon: {
                                 giIndicator(gi: i.gi, gl: i.gl)
                             }
