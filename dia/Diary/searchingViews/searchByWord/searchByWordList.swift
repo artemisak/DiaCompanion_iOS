@@ -67,9 +67,9 @@ struct searchByWordList: View {
                                 }
                                 .tint(.blue)
                             }
-                            .task {
-                                if !collection.listOfFood.isEmpty {
-                                    await collection.appendList(item_id: dish.id)
+                            .onAppear {
+                                if collection.isSearching {
+                                    collection.appendList(item_id: dish.id)
                                 }
                             }
                         }

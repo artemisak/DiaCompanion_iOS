@@ -8,10 +8,10 @@
 import SwiftUI
 
 struct giIndicator: View {
-    @State var gi: Double
-    @State var gl: Double
+    @Binding var gi: Double
+    @Binding var gl: Double
     var mainColor: Color {
-        if gi > 70.0 {
+        if gi >= 70.0 {
             return Color.red
         }
         else if gi < 70.0 && gi > 20.0 {
@@ -36,6 +36,6 @@ struct giIndicator: View {
 
 struct giIndicator_Previews: PreviewProvider {
     static var previews: some View {
-        giIndicator(gi: round(Double(800.4)*100)/100, gl: round(Double(710.5)*100)/100)
+        giIndicator(gi: .constant(round(Double(800.4)*100)/100), gl: .constant(round(Double(710.5)*100)/100))
     }
 }

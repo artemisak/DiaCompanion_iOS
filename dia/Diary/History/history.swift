@@ -124,7 +124,7 @@ struct history: View {
                                             date = convertToDate(d: i.date)
                                             collection.editedFoodItems = []
                                             for (j, k) in zip(i.metaInfo, i.metaInfo.indices) {
-                                                collection.editedFoodItems.append(foodItem(table_id: i.tbID[k], name: j[0], prot: Double(j[2])!, fat: Double(j[3])!, carbo: Double(j[4])!, kkal: Double(j[5])!, gi: Double(j[6])!, index: 0, position: Int(k), gram: Double(j[1])!)
+                                                collection.editedFoodItems.append(foodItem(table_id: i.tbID[k], name: j[0], prot: Double(j[2])!, fat: Double(j[3])!, carbo: Double(j[4])!*100/Double(j[1])!, kkal: Double(j[5])!, gi: Double(j[6])!, index: 0, position: Int(k), gram: Double(j[1])!)
                                                 )
                                             }
                                             if i.metaInfo.last![8] != "0.0" {
@@ -405,7 +405,7 @@ struct history: View {
                     Label {
                         Text("\(foodItem[0])")
                     } icon: {
-                        giIndicator(gi: round(Double(foodItem[6])!*100)/100, gl: round(Double(foodItem[7])!*100)/100)
+                        giIndicator(gi: .constant(round(Double(foodItem[6])!*100)/100), gl: .constant(round(Double(foodItem[7])!*100)/100))
                     }
                     .labelStyle(centerLabel())
                 }

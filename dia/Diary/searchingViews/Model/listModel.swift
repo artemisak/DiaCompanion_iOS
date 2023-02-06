@@ -89,10 +89,14 @@ struct foodItem: Identifiable, Hashable {
     var position: Int?
     var gram: Double?
     var gl: Double {
-        if self.gram != nil {
-            return self.carbo*(self.gram!/100)*self.gi/100
-        } else {
-            return self.carbo*self.gi/100
+        get {
+            if self.gram != nil {
+                return self.carbo*(self.gram!/100)*self.gi/100
+            } else {
+                return self.carbo*self.gi/100
+            }
+        } set {
+            
         }
     }
 }
@@ -102,6 +106,7 @@ class foodCollections: ObservableObject {
     @Published var groupToSearch: String = ""
     @Published var rule: fillerRule = .relevant
     @Published var showListToolbar: Bool = false
+    @Published var isSearching: Bool = false
     
     @Published var listOfGroups = [foodGroups]()
     @Published var listOfFood = [foodItem]()
@@ -123,7 +128,7 @@ class foodCollections: ObservableObject {
         textToSearch = ""
         groupToSearch = ""
         rule = .relevant
-        showListToolbar = false
+        isSearching = false
     }
     
     func retrieveCat() {
@@ -297,10 +302,12 @@ class foodCollections: ObservableObject {
                 self.listOfFoodInGroups = Array(tempSlice.0[0..<upperBound])
                 self.listOfPinnedFoodInGroups = tempSlice.1
                 self.showListToolbar = true
+                self.isSearching = true
             } else {
                 self.listOfFood = Array(tempSlice.0[0..<upperBound])
                 self.listOfPinnedFood = tempSlice.1
                 self.showListToolbar = true
+                self.isSearching = true
             }
         } else if tempSlice.0.count >= 15 {
             upperBound = 15
@@ -308,10 +315,12 @@ class foodCollections: ObservableObject {
                 self.listOfFoodInGroups = Array(tempSlice.0[0..<upperBound])
                 self.listOfPinnedFoodInGroups = tempSlice.1
                 self.showListToolbar = true
+                self.isSearching = true
             } else {
                 self.listOfFood = Array(tempSlice.0[0..<upperBound])
                 self.listOfPinnedFood = tempSlice.1
                 self.showListToolbar = true
+                self.isSearching = true
             }
         } else {
             self.listOfFood = tempSlice.0
@@ -319,11 +328,11 @@ class foodCollections: ObservableObject {
             self.listOfFoodInGroups = tempSlice.0
             self.listOfPinnedFoodInGroups = tempSlice.1
             self.showListToolbar = false
+            self.isSearching = true
         }
     }
     
-    @MainActor
-    func appendList(item_id: UUID) async {
+    func appendList(item_id: UUID) {
         if getItemID(item_id, 0)! > _lastVisibleIndex {
             _lastVisibleIndex = getItemID(item_id, 0)!
         }
@@ -334,8 +343,7 @@ class foodCollections: ObservableObject {
         }
     }
     
-    @MainActor
-    func appendListInGroups(item_id: UUID) async {
+    func appendListInGroups(item_id: UUID) {
         if getItemID(item_id, 2)! > _lastVisibleIndex {
             _lastVisibleIndex = getItemID(item_id, 2)!
         }

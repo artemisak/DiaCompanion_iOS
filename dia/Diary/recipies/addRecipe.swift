@@ -38,11 +38,11 @@ struct addRecipe: View {
                 }).foregroundColor(Color("AccentColor"))
             }
             Section {
-                ForEach(collection.recipeFoodItems, id: \.id){ i in
+                ForEach($collection.recipeFoodItems, id: \.id){ $i in
                     Label {
                         Text("\(i.name) (\(i.gram!, specifier: "%.1f") г.)")
                     } icon: {
-                        giIndicator(gi: i.gi, gl: i.gl)
+                        giIndicator(gi: $i.gi, gl: $i.gl)
                     }
                     .labelStyle(centerLabel())
                     .swipeActions {

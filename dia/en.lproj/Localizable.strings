@@ -39,7 +39,7 @@
 "Записать текущий УСК" = "Set current BG rate";
 "УСК не определен" = "Insufficient data";
 "УСК превысит норму" = "BG will exceed the target value";
-"УСК не превысит норму" = "BG level within the target value";
+"УСК не превысит норму" = "BG will be within the targets";
 "5,0 ммоль/л" = "5,0 mmol/l";
 "Потребленные продукты" = "Consumed product";
 "Добавить" = "Add item";
@@ -55,15 +55,3 @@
 "После ужина" = "After dinner";
 "Дополнительно" = "Optional";
 "При родах" = "In childbirth";
-"Салат зеленый с огурцами и помидорами" = "Vegetable salad";
-"Треска, тушенная в томате с овощами" = "Stewed cod";
-"Рис бурый" = "Brown rice";
-"Хлеб зерновой (мука в/с и зерно дробленое)" = "Grain bread";
-"Чай, с травами, ромашкой, заваренный" = "Green tea";
-"Картофель, жаренный во фритюре  брусочками" = "Fried potatoes";
-"Мясо в белом соусе (говядина)" = "Beef in white sauce";
-"Пицца, покрытая сыром, обычная корочка" = "Cheese pizza";
-"Компот вишневый" = "Cherry compote";
-"г." = "g.";
-
-

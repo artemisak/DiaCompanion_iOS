@@ -69,9 +69,9 @@ struct inGroupList: View {
                                 }
                                 .tint(.blue)
                             }
-                            .task {
-                                if !collection.listOfFoodInGroups.isEmpty {
-                                    await collection.appendListInGroups(item_id: dish.id)
+                            .onAppear {
+                                if collection.isSearching {
+                                    collection.appendListInGroups(item_id: dish.id)
                                 }
                             }
                         }

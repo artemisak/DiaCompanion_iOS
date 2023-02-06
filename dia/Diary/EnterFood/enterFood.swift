@@ -109,11 +109,11 @@ struct enterFood: View {
                 }
                 if (!collection.addedFoodItems.isEmpty && collection.whereToSave == .addedFoodItems) || (!collection.editedFoodItems.isEmpty && collection.whereToSave == .editingFoodItems) {
                     Section {
-                        ForEach(collection.whereToSave == .addedFoodItems ? collection.addedFoodItems : collection.editedFoodItems, id: \.id) {i in
+                        ForEach(collection.whereToSave == .addedFoodItems ? $collection.addedFoodItems : $collection.editedFoodItems, id: \.id) {$i in
                             Label {
                                 Text("\(i.name) (\(i.gram!, specifier: "%.1f") г.)")
                             } icon: {
-                                giIndicator(gi: i.gi, gl: i.gl)
+                                giIndicator(gi: $i.gi, gl: $i.gl)
                             }
                             .labelStyle(centerLabel())
                             .swipeActions {
@@ -322,11 +322,11 @@ struct enterFood: View {
                 }
                 if (!collection.addedFoodItems.isEmpty && collection.whereToSave == .addedFoodItems) || (!collection.editedFoodItems.isEmpty && collection.whereToSave == .editingFoodItems) {
                     Section {
-                        ForEach(collection.whereToSave == .addedFoodItems ? collection.addedFoodItems : collection.editedFoodItems, id: \.id) {i in
+                        ForEach(collection.whereToSave == .addedFoodItems ? $collection.addedFoodItems : $collection.editedFoodItems, id: \.id) {$i in
                             Label {
                                 Text("\(i.name) (\(i.gram!, specifier: "%.1f") г.)")
                             } icon: {
-                                giIndicator(gi: i.gi, gl: i.gl)
+                                giIndicator(gi: $i.gi, gl: $i.gl)
                             }
                             .labelStyle(centerLabel())
                             .swipeActions {

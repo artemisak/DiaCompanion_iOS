@@ -17,7 +17,7 @@ struct addGramButton: View {
     var body: some View {
         if #available(iOS 16, *) {
             NavigationStack {
-                Form {
+                List {
                     Section {
                         TextField("", text: $gram, prompt: Text("Граммы")).labelsHidden()
                             .keyboardType(.decimalPad)
@@ -92,9 +92,9 @@ struct addGramButton: View {
             }
         } else {
             NavigationView {
-                Form {
+                List {
                     Section {
-                        TextField("Граммы", text: $gram)
+                        TextField("", text: $gram, prompt: Text("Граммы")).labelsHidden()
                             .keyboardType(.decimalPad)
                             .onReceive(Just(gram)) { newValue in
                                 let filtered = newValue.filter { "0123456789,".contains($0) }
@@ -106,23 +106,59 @@ struct addGramButton: View {
                         Text("Информация о продукте").font(.caption)
                     }
                 }
-                .toolbar{
+                .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing, content: {
                         Button {
                             do {
-                                collection.selectedItem!.gram = try convert(txt: gram)
-                                collection.addedFoodItems.append(collection.selectedItem!)
-                                isShowingSheet.toggle()
-                                DispatchQueue.main.asyncAfter(deadline: .now()+0.3, execute: {
-                                    withAnimation {
-                                        showSuccesNotify = true
+                                switch collection.whereToSave {
+                                case .addedFoodItems:
+                                    if !editing {
+                                    collection.selectedItem!.gram = try convert(txt: gram)
+                                    collection.addedFoodItems.append(collection.selectedItem!)
+                                    isShowingSheet.toggle()
+                                        DispatchQueue.main.asyncAfter(deadline: .now()+0.3, execute: {
+                                            withAnimation {
+                                                showSuccesNotify = true
+                                            }
+                                        })
+                                    } else {
+                                        collection.addedFoodItems[collection.addedFoodItems.firstIndex(where: {$0.id == collection.selectedItem!.id})!].gram = try convert(txt: gram)
+                                        isShowingSheet.toggle()
                                     }
-                                })
+                                case .editingFoodItems:
+                                    if !editing {
+                                    collection.selectedItem!.gram = try convert(txt: gram)
+                                    collection.editedFoodItems.append(collection.selectedItem!)
+                                    isShowingSheet.toggle()
+                                        DispatchQueue.main.asyncAfter(deadline: .now()+0.3, execute: {
+                                            withAnimation {
+                                                showSuccesNotify = true
+                                            }
+                                        })
+                                    } else {
+                                        collection.editedFoodItems[collection.editedFoodItems.firstIndex(where: {$0.id == collection.selectedItem!.id})!].gram = try convert(txt: gram)
+                                        isShowingSheet.toggle()
+                                    }
+                                case .recipeFoodItems:
+                                    if !editing {
+                                    collection.selectedItem!.gram = try convert(txt: gram)
+                                    collection.recipeFoodItems.append(collection.selectedItem!)
+                                    isShowingSheet.toggle()
+                                        DispatchQueue.main.asyncAfter(deadline: .now()+0.3, execute: {
+                                            withAnimation {
+                                                showSuccesNotify = true
+                                            }
+                                        })
+                                    } else {
+                                        collection.recipeFoodItems[collection.recipeFoodItems.firstIndex(where: {$0.id == collection.selectedItem!.id})!].gram = try convert(txt: gram)
+                                        isShowingSheet.toggle()
+                                    }
+                                }
                             } catch {
                                 print(error)
                             }
                         } label: {
-                            Text("Добавить")
+                            Text(editing ? "Сохранить" : "Добавить")
                         }
                     })
                 }
