@@ -128,12 +128,11 @@ struct enterFood: View {
                 if (!collection.addedFoodItems.isEmpty && collection.whereToSave == .addedFoodItems) || (!collection.editedFoodItems.isEmpty && collection.whereToSave == .editingFoodItems) {
                     Section {
                         ForEach(collection.whereToSave == .addedFoodItems ? $collection.addedFoodItems : $collection.editedFoodItems, id: \.id) {$i in
-                            Label {
-                                Text("\(i.name) (\(i.gram!, specifier: "%.1f") г.)")
-                            } icon: {
+                            VStack(alignment: .leading) {
                                 giIndicator(gi: $i.gi, carbo: $i.carbo, gl: $i.gl)
+                                Text("\(i.name) (\(i.gram!, specifier: "%.1f") г.)")
                             }
-                            .labelStyle(centerLabel())
+                            .padding(.vertical, 10)
                             .swipeActions {
                                 Button(action: {
                                     if collection.whereToSave == .addedFoodItems {
@@ -168,7 +167,7 @@ struct enterFood: View {
                             }
                         }
                     } header: {
-                        Text("ГИ / ГН / Наименование, г.").frame(minWidth: 0, maxWidth: .infinity).font(.body)
+                        Text("ГИ / ГН / Угл. / Наименование, г.").frame(minWidth: 0, maxWidth: .infinity).font(.body)
                     }
                 }
             }
@@ -197,7 +196,7 @@ struct enterFood: View {
                 ToolbarItemGroup(placement: .bottomBar, content: {
                     Spacer()
                     NavigationLink(destination: { enterPoint() }, label: {
-                            Image(systemName: "square.and.pencil")
+                        Image(systemName: "square.and.pencil")
                     }).foregroundColor(Color("AccentColor"))
                 })
                 ToolbarItem(placement: .navigationBarLeading, content: {
@@ -356,12 +355,11 @@ struct enterFood: View {
                 if (!collection.addedFoodItems.isEmpty && collection.whereToSave == .addedFoodItems) || (!collection.editedFoodItems.isEmpty && collection.whereToSave == .editingFoodItems) {
                     Section {
                         ForEach(collection.whereToSave == .addedFoodItems ? $collection.addedFoodItems : $collection.editedFoodItems, id: \.id) {$i in
-                            Label {
-                                Text("\(i.name) (\(i.gram!, specifier: "%.1f") г.)")
-                            } icon: {
+                            VStack(alignment: .leading) {
                                 giIndicator(gi: $i.gi, carbo: $i.carbo, gl: $i.gl)
+                                Text("\(i.name) (\(i.gram!, specifier: "%.1f") г.)")
                             }
-                            .labelStyle(centerLabel())
+                            .padding(.vertical, 10)
                             .swipeActions {
                                 Button(action: {
                                     if collection.whereToSave == .addedFoodItems {
@@ -396,7 +394,7 @@ struct enterFood: View {
                             }
                         }
                     } header: {
-                        Text("ГИ / ГН / Наименование, г.").frame(minWidth: 0, maxWidth: .infinity).font(.body)
+                        Text("ГИ / ГН / Угл. / Наименование, г.").frame(minWidth: 0, maxWidth: .infinity).font(.body)
                     }
                 }
                 NavigationLink(destination: { enterPoint() }, label: {
@@ -518,7 +516,7 @@ struct enterFood: View {
                 }
             })
         }
-
+        
     }
     func removeRows(i: Int){
         if collection.whereToSave == .addedFoodItems {

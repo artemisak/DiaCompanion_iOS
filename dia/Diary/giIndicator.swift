@@ -24,16 +24,16 @@ struct giIndicator: View {
     }
     var body: some View {
         HStack {
-            Text(String(format: "%.0f", gi))
+            Text(String(format: "%.0f", gi)).font(.body).padding(.horizontal, 7)
             Divider().overlay{mainColor}
-            Text(String(format: "%.0f", carbo))
+            Text(String(format: "%.0f", carbo)).font(.body).padding(.horizontal, 7)
             Divider().overlay{mainColor}
-            Text(String(format: "%.0f", gl))
+            Text(String(format: "%.0f", gl)).font(.body).padding(.horizontal, 7)
         }
         .padding(5)
         .background(RoundedRectangle(cornerRadius: 7).stroke(mainColor))
         .foregroundColor(mainColor)
-        .frame(height: 44)
+        .frame(height: 36, alignment: .leading)
     }
 }
 

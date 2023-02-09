@@ -128,6 +128,7 @@ class foodCollections: ObservableObject {
         textToSearch = ""
         groupToSearch = ""
         rule = .relevant
+        showListToolbar = false
         isSearching = false
     }
     
@@ -328,7 +329,7 @@ class foodCollections: ObservableObject {
             self.listOfFoodInGroups = tempSlice.0
             self.listOfPinnedFoodInGroups = tempSlice.1
             self.showListToolbar = false
-            self.isSearching = true
+            self.isSearching = false
         }
     }
     

@@ -22,9 +22,9 @@ struct searchViewsGroup: View {
         .navigationTitle("Продукты питания")
         .ignoresSafeArea(.keyboard)
         .animation(.none, value: isSearching)
-        .onChange(of: isSearching, perform: {_ in
+        .onAppear {
             collection.resetConfigurationValues()
-        })
+        }
     }
 }
 
