@@ -9,6 +9,7 @@ import SwiftUI
 
 struct giIndicator: View {
     @Binding var gi: Double
+    @Binding var carbo: Double
     @Binding var gl: Double
     var mainColor: Color {
         if gi >= 70.0 {
@@ -23,9 +24,11 @@ struct giIndicator: View {
     }
     var body: some View {
         HStack {
-            Text(String(format: "%.1f", gi))
+            Text(String(format: "%.0f", gi))
             Divider().overlay{mainColor}
-            Text(String(format: "%.1f", gl))
+            Text(String(format: "%.0f", carbo))
+            Divider().overlay{mainColor}
+            Text(String(format: "%.0f", gl))
         }
         .padding(5)
         .background(RoundedRectangle(cornerRadius: 7).stroke(mainColor))
@@ -36,6 +39,6 @@ struct giIndicator: View {
 
 struct giIndicator_Previews: PreviewProvider {
     static var previews: some View {
-        giIndicator(gi: .constant(round(Double(800.4)*100)/100), gl: .constant(round(Double(710.5)*100)/100))
+        giIndicator(gi: .constant(round(Double(800.8)*100)/100), carbo: .constant(round(Double(800.2)*100)/100), gl: .constant(round(Double(710.5)*100)/100))
     }
 }

@@ -22,7 +22,7 @@ struct addGramButton: View {
                         TextField("", text: $gram, prompt: Text("Граммы")).labelsHidden()
                             .keyboardType(.decimalPad)
                             .onReceive(Just(gram)) { newValue in
-                                let filtered = newValue.filter { "0123456789,".contains($0) }
+                                let filtered = newValue.filter { "0123456789,.".contains($0) }
                                 if filtered != newValue {
                                     gram = filtered
                                 }
@@ -97,7 +97,7 @@ struct addGramButton: View {
                         TextField("", text: $gram, prompt: Text("Граммы")).labelsHidden()
                             .keyboardType(.decimalPad)
                             .onReceive(Just(gram)) { newValue in
-                                let filtered = newValue.filter { "0123456789,".contains($0) }
+                                let filtered = newValue.filter { "0123456789,.".contains($0) }
                                 if filtered != newValue {
                                     gram = filtered
                                 }

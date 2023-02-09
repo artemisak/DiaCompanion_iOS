@@ -405,7 +405,7 @@ struct history: View {
                     Label {
                         Text("\(foodItem[0])")
                     } icon: {
-                        giIndicator(gi: .constant(round(Double(foodItem[6])!*100)/100), gl: .constant(round(Double(foodItem[7])!*100)/100))
+                        giIndicator(gi: .constant(round(Double(foodItem[6])!)), carbo: .constant(round(Double(foodItem[4])!)), gl: .constant(round(Double(foodItem[7])!)))
                     }
                     .labelStyle(centerLabel())
                 }

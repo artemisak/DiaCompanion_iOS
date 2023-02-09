@@ -8,24 +8,31 @@
 import Foundation
 import SQLite
 
-func getMessage(highBGPredict: Bool, highBGBefore: Bool, manyCarbo: Bool, unequalGLDistribution: Bool, highGI: Bool) -> String {
-    var txt = ""
+struct recomendation: Identifiable, Hashable {
+    var id = UUID()
+    var text: String
+}
+
+func getMessage(highBGPredict: Bool, highBGBefore: Bool, moderateAmountOfCarbo: Bool, tooManyCarbo: Bool, unequalGLDistribution: Bool, highGI: Bool) -> [recomendation] {
+    var temp  = [recomendation]()
     if highBGPredict {
         if highBGBefore {
-            txt = "Высокий уровень глюкозы до еды. Рекомендовано уменьшить количество углеводов во время перекусов. Если перекусов не было, проконсультируитесь с врачом"
-        } else if manyCarbo {
+            temp.append(recomendation(text: "Высокий уровень глюкозы до еды. Рекомендовано уменьшить количество углеводов во время перекусов. Если перекусов не было, проконсультируитесь с врачом."))
+        }
+        if moderateAmountOfCarbo {
             if (unequalGLDistribution) {
-                txt = "Уменьшите количество продуктов с высокой гликемической нагрузкой (ГН)"
+                temp.append(recomendation(text: "Уменьшите количество продуктов с высокой гликемической нагрузкой (ГН)."))
             } else if highGI {
-                txt = "Рекомендуется исключить из рациона или уменьшить количество продуктов с высоким гликемическим индексом (более 55)"
-            } else {
-                txt = "Вероятно, уровень глюкозы после еды будет высоким, рекомендована прогулка после приема пищи"
+                temp.append(recomendation(text: "Рекомендуется исключить из рациона или уменьшить количество продуктов с высоким гликемическим индексом (более 55)."))
+            } else if tooManyCarbo {
+                temp.append(recomendation(text: "Уменьшите количество продуктов, содержащих углеводы."))
             }
-        } else {
-            txt = "Вероятно, уровень глюкозы после еды будет высоким, рекомендована прогулка после приема пищи"
+        }
+        if temp.isEmpty {
+            temp.append(recomendation(text: "Вероятно, уровень глюкозы после еды будет высоким, рекомендована прогулка после приема пищи."))
         }
     }
-    return txt
+    return temp
 }
 
 func checkUnequalGlDistribution(listOfFood: [foodItem]) -> Bool {
@@ -51,14 +58,22 @@ func checkGI(listOfFood: [foodItem]) -> Bool {
     return listOfFood.contains(where: {$0.gi >= 55})
 }
 
-func checkCarbo(foodType: String, listOfFood: [foodItem]) -> Bool {
+func checkCarbo(foodType: String, listOfFood: [foodItem]) -> (Bool, Bool) {
     let sum = listOfFood.map{$0.carbo}.reduce(0, +)
     if foodType == "Завтрак" && sum > 15 {
-        return true
+        if sum > 30 {
+            return (true, true)
+        } else {
+            return (true, false)
+        }
     } else if foodType != "" && sum > 30 {
-        return true
+        if sum > 60 {
+            return (true, true)
+        } else {
+            return (true, false)
+        }
     }
-    return false
+    return (false, false)
 }
 
 func checkBGBefore(BG0: Double) -> Bool {

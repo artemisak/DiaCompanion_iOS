@@ -53,9 +53,10 @@ struct enterFood: View {
     @State private var correctness: Bool = false
     @State private var res: Double = 0.0
     @State private var errorMessage: String = ""
-    @State private var recommendMessage: String = ""
     @State private var isVisible: Bool = false
     @State private var isUnsavedChanges: Bool = false
+    @State private var recCardID = UUID()
+    @State private var recomendationCards = [recomendation]()
     @Binding var hasChanged: Bool
     var body: some View {
         if #available(iOS 16, *){
@@ -67,7 +68,24 @@ struct enterFood: View {
                         .foregroundColor(fontColor)
                         .listRowBackground(recColor)
                     if isVisible {
-                        Text(LocalizedStringKey(recommendMessage))
+                        VStack {
+                            TabView(selection: $recCardID) {
+                                ForEach(recomendationCards) { row in
+                                    Text(row.text).font(.body).frame(minWidth: 0, maxWidth: .infinity, alignment: .leading).minimumScaleFactor(0.01)
+                                }
+                            }
+                            .frame(height: 100)
+                            .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
+                            if recomendationCards.count > 1{
+                                HStack(spacing: 2) {
+                                    ForEach(recomendationCards) { row in
+                                        Circle()
+                                            .fill(row.id == recCardID ? Color.gray : Color.gray.opacity(0.5))
+                                            .frame(width: 10, height: 10)
+                                    }
+                                }
+                            }
+                        }
                     }
                 }.listRowSeparator(.hidden)
                 Section(header: Text("Общая информация").font(.caption)){
@@ -113,7 +131,7 @@ struct enterFood: View {
                             Label {
                                 Text("\(i.name) (\(i.gram!, specifier: "%.1f") г.)")
                             } icon: {
-                                giIndicator(gi: $i.gi, gl: $i.gl)
+                                giIndicator(gi: $i.gi, carbo: $i.carbo, gl: $i.gl)
                             }
                             .labelStyle(centerLabel())
                             .swipeActions {
@@ -280,7 +298,22 @@ struct enterFood: View {
                         .foregroundColor(fontColor)
                         .listRowBackground(recColor)
                     if isVisible {
-                        Text(LocalizedStringKey(recommendMessage))
+                        VStack {
+                            TabView(selection: $recCardID) {
+                                ForEach(recomendationCards) { row in
+                                    Text(row.text).font(.body).frame(minWidth: 0, maxWidth: .infinity, alignment: .leading).minimumScaleFactor(0.01)
+                                }
+                            }
+                            .frame(height: 100)
+                            .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
+                            HStack(spacing: 2) {
+                                ForEach(recomendationCards) { row in
+                                    Circle()
+                                        .fill(row.id == recCardID ? Color.gray : Color.gray.opacity(0.5))
+                                        .frame(width: 10, height: 10)
+                                }
+                            }
+                        }
                     }
                 }.listRowSeparator(.hidden)
                 Section(header: Text("Общая информация").font(.caption)){
@@ -326,7 +359,7 @@ struct enterFood: View {
                             Label {
                                 Text("\(i.name) (\(i.gram!, specifier: "%.1f") г.)")
                             } icon: {
-                                giIndicator(gi: $i.gi, gl: $i.gl)
+                                giIndicator(gi: $i.gi, carbo: $i.carbo, gl: $i.gl)
                             }
                             .labelStyle(centerLabel())
                             .swipeActions {
@@ -505,7 +538,9 @@ struct enterFood: View {
                 }
                 let foodNutrients = getData(BG0: try convert(txt: sugar), foodtype: ftpreviewIndex, foodN: food, gram: gram, picker_date: date)
                 res = try getPredict(BG0: foodNutrients.BG0, gl: foodNutrients.gl, carbo: foodNutrients.carbo, prot: foodNutrients.protb6h, t1: foodNutrients.food_type1, t2: foodNutrients.food_type2, t3: foodNutrients.food_type3, t4: foodNutrients.food_type4, kr: foodNutrients.kr, BMI: foodNutrients.BMI)
-                recommendMessage = getMessage(highBGPredict: checkBGPredicted(BG1: res), highBGBefore: checkBGBefore(BG0: try convert(txt: sugar)), manyCarbo: checkCarbo(foodType: ftpreviewIndex.rawValue, listOfFood: workList), unequalGLDistribution: checkUnequalGlDistribution(listOfFood: workList), highGI: checkGI(listOfFood: workList))
+                let checkCarbo = checkCarbo(foodType: ftpreviewIndex.rawValue, listOfFood: workList)
+                recomendationCards = getMessage(highBGPredict: checkBGPredicted(BG1: res), highBGBefore: checkBGBefore(BG0: try convert(txt: sugar)), moderateAmountOfCarbo: checkCarbo.0, tooManyCarbo: checkCarbo.1, unequalGLDistribution: checkUnequalGlDistribution(listOfFood: workList), highGI: checkGI(listOfFood: workList))
+                recCardID = recomendationCards.isEmpty ? UUID() : recomendationCards[0].id
                 if res < 6.8 {
                     sugarlvl = "УСК не превысит норму"
                     recColor = Color.green.opacity(0.7)
@@ -522,6 +557,7 @@ struct enterFood: View {
                 sugarlvl = "УСК не определен"
                 recColor = Color("BG_Undefined")
                 fontColor = Color("BG_Font_Undefined")
+                isVisible = false
             }
         }
         catch inputErorrs.decimalError {
