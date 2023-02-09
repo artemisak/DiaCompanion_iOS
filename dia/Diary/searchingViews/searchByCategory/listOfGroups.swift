@@ -19,9 +19,6 @@ struct listOfGroups: View {
                     Text(element.category)
                 })
             }
-            .task {
-                collection.retrieveCat()
-            }
         } else {
             List(collection.listOfGroups, id: \.id) {element in
                 NavigationLink(destination: {
@@ -35,9 +32,6 @@ struct listOfGroups: View {
                 }, label: {
                     Text(element.category)
                 })
-            }
-            .task {
-                collection.retrieveCat()
             }
         }
     }

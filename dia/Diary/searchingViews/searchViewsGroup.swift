@@ -17,14 +17,18 @@ struct searchViewsGroup: View {
             }
             else {
                 listOfGroups()
+                    .task {
+                        collection.listOfPinnedFood.removeAll()
+                        collection.listOfFood.removeAll()
+                    }
             }
         }
         .navigationTitle("Продукты питания")
         .ignoresSafeArea(.keyboard)
         .animation(.none, value: isSearching)
-        .onAppear {
+        .onChange(of: isSearching, perform: {_ in
             collection.resetConfigurationValues()
-        }
+        })
     }
 }
 
