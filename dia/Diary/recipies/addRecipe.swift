@@ -39,12 +39,11 @@ struct addRecipe: View {
             }
             Section {
                 ForEach($collection.recipeFoodItems, id: \.id){ $i in
-                    Label {
-                        Text("\(i.name) (\(i.gram!, specifier: "%.1f") г.)")
-                    } icon: {
+                    VStack(alignment: .leading) {
                         giIndicator(gi: $i.gi, carbo: $i.carbo, gl: $i.gl)
+                        Text("\(i.name) (\(i.gram!, specifier: "%.1f") г.)")
                     }
-                    .labelStyle(centerLabel())
+                    .padding(.vertical, 7)
                     .swipeActions {
                         Button(action: {removeRows(i: collection.recipeFoodItems.firstIndex(where: {$0.id == i.id})!)}, label: {
                             Image(systemName: "trash.fill")
@@ -65,7 +64,7 @@ struct addRecipe: View {
                 }
             } header: {
                 if (!collection.recipeFoodItems.isEmpty && collection.whereToSave == .recipeFoodItems) {
-                    Text("ГИ / ГН / Наименование, г.").frame(minWidth: 0, maxWidth: .infinity).font(.body)
+                    Text("ГИ / ГН / Угл. / Продукт, г.").frame(minWidth: 0, maxWidth: .infinity).font(.body)
                 }
             }
         }
@@ -91,6 +90,7 @@ struct addRecipe: View {
                 Button {
                     do {
                         diaryManager.provider.addNewFood(items: try checkIsEmpty(items: collection.recipeFoodItems), newReceitName: try pacientManager.provider.checkName(txt: foodNotation), category: selectedCat.rawValue, isEditing: editExistRow, idToDelete: idToDelete)
+                        collection.recipeFoodItems = []
                         presentationMode.wrappedValue.dismiss()
                     }
                     catch {

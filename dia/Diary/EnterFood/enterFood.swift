@@ -132,7 +132,7 @@ struct enterFood: View {
                                 giIndicator(gi: $i.gi, carbo: $i.carbo, gl: $i.gl)
                                 Text("\(i.name) (\(i.gram!, specifier: "%.1f") г.)")
                             }
-                            .padding(.vertical, 10)
+                            .padding(.vertical, 7)
                             .swipeActions {
                                 Button(action: {
                                     if collection.whereToSave == .addedFoodItems {
@@ -167,7 +167,7 @@ struct enterFood: View {
                             }
                         }
                     } header: {
-                        Text("ГИ / ГН / Угл. / Наименование, г.").frame(minWidth: 0, maxWidth: .infinity).font(.body)
+                        Text("ГИ / ГН / Угл. / Продукт, г.").frame(minWidth: 0, maxWidth: .infinity).font(.body)
                     }
                 }
             }
@@ -359,7 +359,7 @@ struct enterFood: View {
                                 giIndicator(gi: $i.gi, carbo: $i.carbo, gl: $i.gl)
                                 Text("\(i.name) (\(i.gram!, specifier: "%.1f") г.)")
                             }
-                            .padding(.vertical, 10)
+                            .padding(.vertical, 7)
                             .swipeActions {
                                 Button(action: {
                                     if collection.whereToSave == .addedFoodItems {
@@ -394,7 +394,7 @@ struct enterFood: View {
                             }
                         }
                     } header: {
-                        Text("ГИ / ГН / Угл. / Наименование, г.").frame(minWidth: 0, maxWidth: .infinity).font(.body)
+                        Text("ГИ / ГН / Угл. / Продукт, г.").frame(minWidth: 0, maxWidth: .infinity).font(.body)
                     }
                 }
                 NavigationLink(destination: { enterPoint() }, label: {
