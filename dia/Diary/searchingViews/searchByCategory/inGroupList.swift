@@ -77,6 +77,10 @@ struct inGroupList: View {
                         }
                     } header: {
                         listHeader().font(.body)
+                    } footer: {
+                        if collection.showListToolbar {
+                            Text("База данных  - проприетарная собственность ФГБУ НМИЦ им. В.А. Алмазова").frame(minWidth: 0, maxWidth: .infinity).multilineTextAlignment(.center)
+                        }
                     }
                 }
                 .listStyle(.insetGrouped)
@@ -108,11 +112,11 @@ struct inGroupList: View {
                     })
                 }
             })
-            .onAppear {
-                collection.groupToSearch = category
-                Task {
+            .task {
+//                Task {
+                    collection.groupToSearch = category
                     await collection.assetList()
-                }
+//                }
             }
         }
     }

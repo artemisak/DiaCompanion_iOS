@@ -18,8 +18,7 @@ struct searchViewsGroup: View {
             else {
                 listOfGroups()
                     .task {
-                        collection.listOfPinnedFood.removeAll()
-                        collection.listOfFood.removeAll()
+                        await collection.clearAllList()
                     }
             }
         }

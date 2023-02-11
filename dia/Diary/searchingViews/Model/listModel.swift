@@ -490,4 +490,13 @@ class foodCollections: ObservableObject {
         }
         db = nil
     }
+    
+    @MainActor
+    func clearAllList() async {
+        listOfPinnedFood.removeAll()
+        listOfFood.removeAll()
+        listOfFoodInGroups.removeAll()
+        listOfPinnedFoodInGroups.removeAll()
+    }
+    
 }
