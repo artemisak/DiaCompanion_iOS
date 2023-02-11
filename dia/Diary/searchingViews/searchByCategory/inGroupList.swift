@@ -91,7 +91,7 @@ struct inGroupList: View {
             }
             .ignoresSafeArea(.keyboard)
             .navigationTitle(category)
-            .sheet(isPresented: $showPopover, content: {addGramButton(gram: "100,0", editing: false, isShowingSheet: $showPopover, showSuccesNotify: $showSuccesNotify)})
+            .sheet(isPresented: $showPopover, content: {addGramButton(gram: "100,0", editing: false, isShowingSheet: $showPopover, showSuccesNotify: $showSuccesNotify).dynamicTypeSize(.xLarge)})
             .onChange(of: isSearching, perform: {newValue in
                 if !newValue {
                     Task {

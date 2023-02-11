@@ -89,7 +89,7 @@ struct searchByWordList: View {
             }
         }
         .ignoresSafeArea(.keyboard)
-        .sheet(isPresented: $showPopover, content: {addGramButton(gram: "100,0", editing: false, isShowingSheet: $showPopover, showSuccesNotify: $showSuccesNotify)})
+        .sheet(isPresented: $showPopover, content: {addGramButton(gram: "100,0", editing: false, isShowingSheet: $showPopover, showSuccesNotify: $showSuccesNotify).dynamicTypeSize(.xLarge)})
         .onChange(of: showSuccesNotify, perform: {newValue in
             if newValue {
                 DispatchQueue.main.asyncAfter(deadline: .now()+1.85, execute: {

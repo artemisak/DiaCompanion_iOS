@@ -61,33 +61,35 @@ struct enterFood: View {
     var body: some View {
         if #available(iOS 16, *){
             List {
-                Section {
-                    Text(sugarlvl)
-                        .bold()
-                        .frame(maxWidth: .infinity)
-                        .foregroundColor(fontColor)
-                        .listRowBackground(recColor)
-                    if isVisible {
-                        VStack {
-                            TabView(selection: $recCardID) {
-                                ForEach(recomendationCards) { row in
-                                    Text(row.text).font(.body).frame(minWidth: 0, maxWidth: .infinity, alignment: .leading).minimumScaleFactor(0.01)
-                                }
-                            }
-                            .frame(height: 100)
-                            .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
-                            if recomendationCards.count > 1{
-                                HStack(spacing: 2) {
+                if routeManager.version == 1 {
+                    Section {
+                        Text(sugarlvl)
+                            .bold()
+                            .frame(maxWidth: .infinity)
+                            .foregroundColor(fontColor)
+                            .listRowBackground(recColor)
+                        if isVisible {
+                            VStack {
+                                TabView(selection: $recCardID) {
                                     ForEach(recomendationCards) { row in
-                                        Circle()
-                                            .fill(row.id == recCardID ? Color.gray : Color.gray.opacity(0.5))
-                                            .frame(width: 10, height: 10)
+                                        Text(row.text).font(.body).frame(minWidth: 0, maxWidth: .infinity, alignment: .leading).minimumScaleFactor(0.01)
+                                    }
+                                }
+                                .frame(height: 100)
+                                .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
+                                if recomendationCards.count > 1{
+                                    HStack(spacing: 2) {
+                                        ForEach(recomendationCards) { row in
+                                            Circle()
+                                                .fill(row.id == recCardID ? Color.gray : Color.gray.opacity(0.5))
+                                                .frame(width: 10, height: 10)
+                                        }
                                     }
                                 }
                             }
                         }
-                    }
-                }.listRowSeparator(.hidden)
+                    }.listRowSeparator(.hidden)
+                }
                 Section(header: Text("Общая информация").font(.caption)){
                     NavigationLink(destination: ftPicker(ftpreviewIndex: $ftpreviewIndex), label: {
                         HStack {
@@ -260,10 +262,10 @@ struct enterFood: View {
                     updatePrediction(workList: collection.editedFoodItems)
                 }
             }
-            .onReceive(collection.$addedFoodItems, perform: { _ in
+            .onChange(of: collection.addedFoodItems, perform: { _ in
                 updatePrediction(workList: collection.addedFoodItems)
             })
-            .onReceive(collection.$editedFoodItems, perform: { _ in
+            .onChange(of: collection.editedFoodItems, perform: { _ in
                 updatePrediction(workList: collection.editedFoodItems)
             })
             .onChange(of: sugar){ _ in
@@ -290,31 +292,33 @@ struct enterFood: View {
         }
         else {
             List {
-                Section {
-                    Text(sugarlvl)
-                        .bold()
-                        .frame(maxWidth: .infinity)
-                        .foregroundColor(fontColor)
-                        .listRowBackground(recColor)
-                    if isVisible {
-                        VStack {
-                            TabView(selection: $recCardID) {
-                                ForEach(recomendationCards) { row in
-                                    Text(row.text).font(.body).frame(minWidth: 0, maxWidth: .infinity, alignment: .leading).minimumScaleFactor(0.01)
+                if routeManager.version == 1 {
+                    Section {
+                        Text(sugarlvl)
+                            .bold()
+                            .frame(maxWidth: .infinity)
+                            .foregroundColor(fontColor)
+                            .listRowBackground(recColor)
+                        if isVisible {
+                            VStack {
+                                TabView(selection: $recCardID) {
+                                    ForEach(recomendationCards) { row in
+                                        Text(row.text).font(.body).frame(minWidth: 0, maxWidth: .infinity, alignment: .leading).minimumScaleFactor(0.01)
+                                    }
                                 }
-                            }
-                            .frame(height: 100)
-                            .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
-                            HStack(spacing: 2) {
-                                ForEach(recomendationCards) { row in
-                                    Circle()
-                                        .fill(row.id == recCardID ? Color.gray : Color.gray.opacity(0.5))
-                                        .frame(width: 10, height: 10)
+                                .frame(height: 100)
+                                .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
+                                HStack(spacing: 2) {
+                                    ForEach(recomendationCards) { row in
+                                        Circle()
+                                            .fill(row.id == recCardID ? Color.gray : Color.gray.opacity(0.5))
+                                            .frame(width: 10, height: 10)
+                                    }
                                 }
                             }
                         }
-                    }
-                }.listRowSeparator(.hidden)
+                    }.listRowSeparator(.hidden)
+                }
                 Section(header: Text("Общая информация").font(.caption)){
                     NavigationLink(destination: ftPicker(ftpreviewIndex: $ftpreviewIndex), label: {
                         HStack {
@@ -475,7 +479,6 @@ struct enterFood: View {
                 }, label: {Text("Покинуть")})
             }, message: {Text("Вы внесли изменения, но не сохранили их. Если вы покините страницу - временные данные будут удалены.")})
             .onAppear {
-                UITabBar.appearance().isHidden = true
                 if idForDelete.isEmpty {
                     collection.whereToSave = .addedFoodItems
                 } else {
@@ -488,10 +491,10 @@ struct enterFood: View {
                     updatePrediction(workList: collection.editedFoodItems)
                 }
             }
-            .onReceive(collection.$addedFoodItems, perform: { _ in
+            .onChange(of: collection.addedFoodItems, perform: { _ in
                 updatePrediction(workList: collection.addedFoodItems)
             })
-            .onReceive(collection.$editedFoodItems, perform: { _ in
+            .onChange(of: collection.editedFoodItems, perform: { _ in
                 updatePrediction(workList: collection.editedFoodItems)
             })
             .onChange(of: sugar){ _ in
