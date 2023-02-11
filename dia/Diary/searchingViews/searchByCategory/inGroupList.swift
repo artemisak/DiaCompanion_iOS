@@ -113,10 +113,8 @@ struct inGroupList: View {
                 }
             })
             .task {
-//                Task {
-                    collection.groupToSearch = category
-                    await collection.assetList()
-//                }
+                collection.groupToSearch = category
+                await collection.assetList()
             }
         }
     }
