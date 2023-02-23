@@ -403,7 +403,7 @@ struct history: View {
             Section {
                 ForEach(info, id: \.self){foodItem in
                     VStack(alignment: .leading) {
-                        giIndicator(gi: .constant(round(Double(foodItem[6])!)), carbo: .constant(round(Double(foodItem[4])!)), gl: .constant(round(Double(foodItem[7])!)))
+                        indicatorGroup(gi: .constant(round(Double(foodItem[6])!)), carbo: .constant(round(Double(foodItem[4])!)), gl: .constant(round(Double(foodItem[7])!)))
                         Text("\(foodItem[0])")
                     }.padding(.vertical, 7)
                 }

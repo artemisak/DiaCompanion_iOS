@@ -88,15 +88,24 @@ struct foodItem: Identifiable, Hashable {
     var index: Int?
     var position: Int?
     var gram: Double?
+    var weightedСarbo: Double {
+        get {
+            guard self.gram != nil else {
+                return self.carbo
+            }
+            return self.carbo*self.gram!/100
+        } set {
+
+        }
+    }
     var gl: Double {
         get {
-            if self.gram != nil {
-                return self.carbo*(self.gram!/100)*self.gi/100
-            } else {
+            guard self.gram != nil else {
                 return self.carbo*self.gi/100
             }
+            return self.carbo*(self.gram!/100)*self.gi/100
         } set {
-            
+
         }
     }
 }
@@ -130,6 +139,11 @@ class foodCollections: ObservableObject {
         rule = .relevant
         showListToolbar = false
         isSearching = false
+    }
+    
+    func clearAllList() {
+        listOfPinnedFood = []
+        listOfFood = []
     }
     
     func retrieveCat() {
@@ -296,38 +310,36 @@ class foodCollections: ObservableObject {
     @MainActor
     func assetList() async {
         let tempSlice = await fillList()
-        var upperBound = 0
         if tempSlice.0.count < 15 && tempSlice.0.count > 1 {
-            upperBound = tempSlice.0.count-1
+            let upperBound = tempSlice.0.count-1
             if self.groupToSearch != "" {
                 self.listOfFoodInGroups = Array(tempSlice.0[0..<upperBound])
                 self.listOfPinnedFoodInGroups = tempSlice.1
-                self.showListToolbar = true
-                self.isSearching = true
             } else {
                 self.listOfFood = Array(tempSlice.0[0..<upperBound])
                 self.listOfPinnedFood = tempSlice.1
-                self.showListToolbar = true
-                self.isSearching = true
             }
+            self.showListToolbar = true
+            self.isSearching = true
         } else if tempSlice.0.count >= 15 {
-            upperBound = 15
+            let upperBound = 15
             if self.groupToSearch != "" {
                 self.listOfFoodInGroups = Array(tempSlice.0[0..<upperBound])
                 self.listOfPinnedFoodInGroups = tempSlice.1
-                self.showListToolbar = true
-                self.isSearching = true
             } else {
                 self.listOfFood = Array(tempSlice.0[0..<upperBound])
                 self.listOfPinnedFood = tempSlice.1
-                self.showListToolbar = true
-                self.isSearching = true
             }
+            self.showListToolbar = true
+            self.isSearching = true
         } else {
-            self.listOfFood = tempSlice.0
-            self.listOfPinnedFood = tempSlice.1
-            self.listOfFoodInGroups = tempSlice.0
-            self.listOfPinnedFoodInGroups = tempSlice.1
+            if self.groupToSearch != "" {
+                self.listOfFoodInGroups = tempSlice.0
+                self.listOfPinnedFoodInGroups = tempSlice.1
+            } else {
+                self.listOfFood = tempSlice.0
+                self.listOfPinnedFood = tempSlice.1
+            }
             self.showListToolbar = false
             self.isSearching = false
         }
@@ -337,8 +349,8 @@ class foodCollections: ObservableObject {
         if getItemID(item_id, 0)! > _lastVisibleIndex {
             _lastVisibleIndex = getItemID(item_id, 0)!
         }
-        if (_lastVisibleIndex == listOfFood.count-1) && (listOfFood.count + listOfPinnedFood.count != _resultsOfSearch.count){
-            let lowerBound =  listOfFood[_lastVisibleIndex].position
+        if (_lastVisibleIndex >= listOfFood.count-5) && (listOfFood.count + listOfPinnedFood.count != _resultsOfSearch.count){
+            let lowerBound =  listOfFood.last!.position
             let upperBound = _resultsOfSearch.filter({$0.index == 0 && $0.position! > lowerBound!}).count < 15 ? _resultsOfSearch.filter({$0.index == 0 && $0.position! > lowerBound!}).count : 15
             listOfFood.append(contentsOf: Array(_resultsOfSearch.filter({$0.index == 0 && $0.position! > lowerBound!})[0..<upperBound]))
         }
@@ -348,8 +360,8 @@ class foodCollections: ObservableObject {
         if getItemID(item_id, 2)! > _lastVisibleIndex {
             _lastVisibleIndex = getItemID(item_id, 2)!
         }
-        if (_lastVisibleIndex == listOfFoodInGroups.count-1) && (listOfFoodInGroups.count + listOfPinnedFoodInGroups.count != _resultsOfSearch.count){
-            let lowerBound =  listOfFoodInGroups[_lastVisibleIndex].position
+        if (_lastVisibleIndex >= listOfFoodInGroups.count-5) && (listOfFoodInGroups.count + listOfPinnedFoodInGroups.count != _resultsOfSearch.count){
+            let lowerBound =  listOfFoodInGroups.last!.position
             let upperBound = _resultsOfSearch.filter({$0.index == 0 && $0.position! > lowerBound!}).count < 15 ? _resultsOfSearch.filter({$0.index == 0 && $0.position! > lowerBound!}).count : 15
             listOfFoodInGroups.append(contentsOf: Array(_resultsOfSearch.filter({$0.index == 0 && $0.position! > lowerBound!})[0..<upperBound]))
         }
@@ -361,15 +373,16 @@ class foodCollections: ObservableObject {
         case 0:
             var temp = listOfFood[idx]
             temp.index = 1
-            temp.id = UUID()
             listOfPinnedFood.insert(temp, at: listOfPinnedFood.count)
+            _resultsOfSearch[_resultsOfSearch.firstIndex(where: {$0.id == item_id})!].index = 1
             changeDataBaseIndex(table_id: temp.table_id, 1)
         case 1:
             var temp = listOfPinnedFood[idx]
             temp.index = 0
-            temp.id = UUID()
             if temp.position! < listOfFood.last!.position! {
-                listOfFood.insert(temp, at: temp.position!)
+                let newPosition = listOfFood.firstIndex(where: { $0.position! > temp.position!})!
+                listOfFood.insert(temp, at: newPosition)
+                _resultsOfSearch[_resultsOfSearch.firstIndex(where: {$0.id == item_id})!].index = 0
             } else {
                 _resultsOfSearch[_resultsOfSearch.firstIndex(where: {$0.id == item_id})!].index = 0
             }
@@ -385,15 +398,16 @@ class foodCollections: ObservableObject {
         case 2:
             var temp = listOfFoodInGroups[idx]
             temp.index = 1
-            temp.id = UUID()
             listOfPinnedFoodInGroups.insert(temp, at: listOfPinnedFoodInGroups.count)
+            _resultsOfSearch[_resultsOfSearch.firstIndex(where: {$0.id == item_id})!].index = 1
             changeDataBaseIndex(table_id: temp.table_id, 1)
         case 3:
             var temp = listOfPinnedFoodInGroups[idx]
             temp.index = 0
-            temp.id = UUID()
             if temp.position! < listOfFoodInGroups.last!.position! {
-                listOfFoodInGroups.insert(temp, at: temp.position!)
+                let newPosition = listOfFoodInGroups.firstIndex(where: { $0.position! > temp.position!})!
+                listOfFoodInGroups.insert(temp, at: newPosition)
+                _resultsOfSearch[_resultsOfSearch.firstIndex(where: {$0.id == item_id})!].index = 0
             } else {
                 _resultsOfSearch[_resultsOfSearch.firstIndex(where: {$0.id == item_id})!].index = 0
             }
@@ -490,11 +504,5 @@ class foodCollections: ObservableObject {
         }
         db = nil
     }
-    
-    @MainActor
-    func clearAllList() async {
-        listOfPinnedFood = []
-        listOfFood = []
-    }
-    
+        
 }

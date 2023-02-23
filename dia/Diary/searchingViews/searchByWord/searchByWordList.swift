@@ -81,7 +81,8 @@ struct searchByWordList: View {
                         }
                     }
                 }
-                .listStyle(.insetGrouped)
+                .listStyle(.grouped)
+                .padding(.top, -35)
                 VStack {
                     if showSuccesNotify {
                         VStack {

@@ -7,8 +7,6 @@ struct settings: View {
     @State private var fileUrl = Bundle.main.url(forResource: "Education", withExtension: "pdf")!
     @State private var phelper : Bool = false
     @State private var eraseAccount = false
-    @State private var eraseDB = false
-    @State private var eraseDBprogress = false
     @State private var arrowAngle = 0.0
     var body: some View {
         List {
@@ -49,27 +47,6 @@ struct settings: View {
                         aboutApp().hiddenTabBar()
                     }
                 }){Text("О приложении")}.foregroundColor(Color("listButtonColor"))
-            }
-            Section(header: Text("Параметры восстановления").font(.caption)){
-                Button {
-                    eraseDB = true
-                } label: {
-                    HStack{
-                        if eraseDBprogress {
-                            ProgressView().frame(width: 22.5)
-                        } else {
-                            Image(systemName: "arrow.clockwise").frame(width: 22.5)
-                        }
-                        Text("Восстановить базу данных").padding(.leading)
-                        Spacer()
-                    }.foregroundColor(Color.accentColor)
-                }
-                .confirmationDialog("Восстановление подразумевает отмену всех вносимых в вами в базу данных имзенений.", isPresented: $eraseDB, titleVisibility: .visible, actions: {
-                    Button("ОК", action: {
-                        eraseDBprogress = true
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {eraseDBprogress = diaryManager.provider.restoreDB()})
-                    })
-                })
             }
             Section(header: Text("Управление аккаунтом").font(.caption)) {
                 Button(action: {

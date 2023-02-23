@@ -13,7 +13,7 @@ struct enterPoint: View {
         if #available(iOS 16, *){
             searchViewsGroup()
                 .searchable(text: $collection.textToSearch, placement: .navigationBarDrawer(displayMode: .always))
-                .onReceive(collection.$textToSearch, perform: {_ in
+                .onReceive(collection.$textToSearch.debounce(for: .seconds(0.25), scheduler: DispatchQueue.main), perform: {_ in
                     Task {
                         await collection.assetList()
                     }

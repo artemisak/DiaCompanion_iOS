@@ -25,7 +25,7 @@
 		A74A1CC228B1016C0038C79F /* startPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74A1CC128B1016C0038C79F /* startPage.swift */; };
 		A760B57D2987E04C00402094 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = A760B57F2987E04C00402094 /* Localizable.strings */; };
 		A760B5822987E05C00402094 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = A760B5842987E05C00402094 /* Localizable.strings */; };
-		A767CC7F2944C0BE0093A979 /* giIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A767CC7E2944C0BE0093A979 /* giIndicator.swift */; };
+		A767CC7F2944C0BE0093A979 /* indicatorGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = A767CC7E2944C0BE0093A979 /* indicatorGroup.swift */; };
 		A775CAF8298695B70077979D /* diaryStatblock.swift in Sources */ = {isa = PBXBuildFile; fileRef = A775CAF7298695B70077979D /* diaryStatblock.swift */; };
 		A777150028D71931005C5793 /* versionChoose.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77714FF28D71931005C5793 /* versionChoose.swift */; };
 		A77793652987D18C00DB0737 /* utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77793642987D18C00DB0737 /* utilities.swift */; };
@@ -67,6 +67,8 @@
 		A7F4486B291EB5AD00A4B379 /* loginPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7F4486A291EB5AD00A4B379 /* loginPage.swift */; };
 		A7F8A597288ED30100C13F36 /* Education.pdf in Resources */ = {isa = PBXBuildFile; fileRef = A7F8A596288ED30100C13F36 /* Education.pdf */; };
 		A7FBB23B27FC257D00828432 /* regHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7FBB23A27FC257D00828432 /* regHelper.swift */; };
+		A7FEDA6E29A6076D0050778A /* BypassProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7FEDA6D29A6076D0050778A /* BypassProtocol.swift */; };
+		A7FEDA7429A608C70050778A /* indicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7FEDA7329A608C70050778A /* indicator.swift */; };
 		AC2603202690691E00C4A520 /* diaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC26031F2690691E00C4A520 /* diaApp.swift */; };
 		AC2603242690691F00C4A520 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AC2603232690691F00C4A520 /* Assets.xcassets */; };
 		AC2603272690691F00C4A520 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AC2603262690691F00C4A520 /* Preview Assets.xcassets */; };
@@ -123,7 +125,7 @@
 		A74A1CC128B1016C0038C79F /* startPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = startPage.swift; sourceTree = "<group>"; };
 		A760B57E2987E04C00402094 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		A760B5832987E05C00402094 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
-		A767CC7E2944C0BE0093A979 /* giIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = giIndicator.swift; sourceTree = "<group>"; };
+		A767CC7E2944C0BE0093A979 /* indicatorGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = indicatorGroup.swift; sourceTree = "<group>"; };
 		A775CAF7298695B70077979D /* diaryStatblock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = diaryStatblock.swift; sourceTree = "<group>"; };
 		A77714FF28D71931005C5793 /* versionChoose.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = versionChoose.swift; sourceTree = "<group>"; };
 		A77793642987D18C00DB0737 /* utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = utilities.swift; sourceTree = "<group>"; };
@@ -165,6 +167,8 @@
 		A7F4486A291EB5AD00A4B379 /* loginPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = loginPage.swift; sourceTree = "<group>"; };
 		A7F8A596288ED30100C13F36 /* Education.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = Education.pdf; sourceTree = "<group>"; };
 		A7FBB23A27FC257D00828432 /* regHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = regHelper.swift; sourceTree = "<group>"; };
+		A7FEDA6D29A6076D0050778A /* BypassProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BypassProtocol.swift; sourceTree = "<group>"; };
+		A7FEDA7329A608C70050778A /* indicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = indicator.swift; sourceTree = "<group>"; };
 		AC26031C2690691E00C4A520 /* dia.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = dia.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AC26031F2690691E00C4A520 /* diaApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = diaApp.swift; sourceTree = "<group>"; };
 		AC2603232690691F00C4A520 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -390,7 +394,7 @@
 				AC7A53F626DBF77B00FE65E7 /* enterAct.swift */,
 				ACD86E8026DE820B0027B8ED /* sugarChange.swift */,
 				AC2D32E327359EC50022AFD9 /* diaryManager.swift */,
-				A767CC7E2944C0BE0093A979 /* giIndicator.swift */,
+				A7FEDA6C29A6070E0050778A /* indicator */,
 				A78EA628291D1D0000B2CDD2 /* History */,
 				A78EA624291D1BFD00B2CDD2 /* EnterFood */,
 				A760B5792987DB8200402094 /* recipies */,
@@ -444,6 +448,16 @@
 				ACF4E409272DB126002D2797 /* RKMonth.swift */,
 			);
 			path = RKCalendar;
+			sourceTree = "<group>";
+		};
+		A7FEDA6C29A6070E0050778A /* indicator */ = {
+			isa = PBXGroup;
+			children = (
+				A7FEDA7329A608C70050778A /* indicator.swift */,
+				A767CC7E2944C0BE0093A979 /* indicatorGroup.swift */,
+				A7FEDA6D29A6076D0050778A /* BypassProtocol.swift */,
+			);
+			path = indicator;
 			sourceTree = "<group>";
 		};
 		AC2603132690691E00C4A520 = {
@@ -657,7 +671,9 @@
 				A7DF49D6291A851B007A9371 /* Previews.swift in Sources */,
 				A7DF49D4291A851B007A9371 /* LineChartView.swift in Sources */,
 				A70BCC3A27B9471E00C22703 /* loginManager.swift in Sources */,
+				A7FEDA7429A608C70050778A /* indicator.swift in Sources */,
 				A7DF49D8291A851B007A9371 /* LegendView.swift in Sources */,
+				A7FEDA6E29A6076D0050778A /* BypassProtocol.swift in Sources */,
 				ACD86E8126DE820B0027B8ED /* sugarChange.swift in Sources */,
 				A77B7EE32973EFFC00CFEBD5 /* listOfGroups.swift in Sources */,
 				ACF2F0AA26DEA8300066753D /* history.swift in Sources */,
@@ -709,7 +725,7 @@
 				A7DF49D1291A851B007A9371 /* AxisView.swift in Sources */,
 				A706DA822843867800473941 /* export.swift in Sources */,
 				A70FC0FB28AA969E00E154DB /* recommendationMesssage.swift in Sources */,
-				A767CC7F2944C0BE0093A979 /* giIndicator.swift in Sources */,
+				A767CC7F2944C0BE0093A979 /* indicatorGroup.swift in Sources */,
 				A7491D83297AA07B005AAA18 /* recipeList.swift in Sources */,
 				AC32A6862726060D001DDB9F /* pHeight.swift in Sources */,
 				AC3B847526EBA1F200E98681 /* ketonur.swift in Sources */,
@@ -880,7 +896,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"dia/Preview Content\"";
 				DEVELOPMENT_TEAM = A73KYTXV9C;
 				ENABLE_PREVIEWS = YES;
@@ -892,7 +908,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.1.7;
+				MARKETING_VERSION = 2.1.8;
 				PRODUCT_BUNDLE_IDENTIFIER = app.dia;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -913,7 +929,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"dia/Preview Content\"";
 				DEVELOPMENT_TEAM = A73KYTXV9C;
 				ENABLE_PREVIEWS = YES;
@@ -925,7 +941,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.1.7;
+				MARKETING_VERSION = 2.1.8;
 				PRODUCT_BUNDLE_IDENTIFIER = app.dia;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";

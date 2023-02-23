@@ -555,13 +555,29 @@ class excelManager {
             let userName = Expression<String?>("fio")
             let dateOfBirth = Expression<String?>("birthday")
             let doc = Expression<String?>("doc")
+            let vesrion = Expression<Int>("version")
             
             let df = DateFormatter()
             df.dateFormat = "dd.MM.yyyy"
             
-            for i in try db.prepare(foodTable.select(id, userName, dateOfBirth, doc)){
-                fio = "Dial\(i[id]) Пациент: \(i[userName] ?? "Новый пользователь"); Дата рождения: \(i[dateOfBirth] ?? "01.01.1999"); Лечащий врач: \(i[doc] ?? "Попова Полина Викторовна"); Программа: DiaCompanion iOS Dial v\(Bundle.main.infoDictionary!["CFBundleShortVersionString"]!)"
-                shortFio = "Dial\(i[id]) \(i[userName] ?? "Новый_пользователь 1") \(df.string(from: Date.now))"
+            for i in try db.prepare(foodTable.select(id, userName, dateOfBirth, doc, vesrion)){
+                switch i[vesrion] {
+                case 1:
+                    fio = "Dia\(i[id]) Пациент: \(i[userName] ?? "Новый пользователь"); Дата рождения: \(i[dateOfBirth] ?? "01.01.1999"); Лечащий врач: \(i[doc] ?? "Попова Полина Викторовна"); Программа: DiaCompanion iOS Dial v\(Bundle.main.infoDictionary!["CFBundleShortVersionString"]!)"
+                    shortFio = "Dia\(i[id]) \(i[userName] ?? "Новый_пользователь 1") \(df.string(from: Date.now))"
+                case 2:
+                    fio = "GDM\(i[id]) Пациент: \(i[userName] ?? "Новый пользователь"); Дата рождения: \(i[dateOfBirth] ?? "01.01.1999"); Лечащий врач: \(i[doc] ?? "Попова Полина Викторовна"); Программа: DiaCompanion iOS Dial v\(Bundle.main.infoDictionary!["CFBundleShortVersionString"]!)"
+                    shortFio = "GDM\(i[id]) \(i[userName] ?? "Новый_пользователь 1") \(df.string(from: Date.now))"
+                case 3:
+                    fio = "MS\(i[id]) Пациент: \(i[userName] ?? "Новый пользователь"); Дата рождения: \(i[dateOfBirth] ?? "01.01.1999"); Лечащий врач: \(i[doc] ?? "Попова Полина Викторовна"); Программа: DiaCompanion iOS Dial v\(Bundle.main.infoDictionary!["CFBundleShortVersionString"]!)"
+                    shortFio = "MS\(i[id]) \(i[userName] ?? "Новый_пользователь 1") \(df.string(from: Date.now))"
+                case 4:
+                    fio = "PCOS\(i[id]) Пациент: \(i[userName] ?? "Новый пользователь"); Дата рождения: \(i[dateOfBirth] ?? "01.01.1999"); Лечащий врач: \(i[doc] ?? "Попова Полина Викторовна"); Программа: DiaCompanion iOS Dial v\(Bundle.main.infoDictionary!["CFBundleShortVersionString"]!)"
+                    shortFio = "PCOS\(i[id]) \(i[userName] ?? "Новый_пользователь 1") \(df.string(from: Date.now))"
+                default:
+                    fio = "ID\(i[id]) Пациент: \(i[userName] ?? "Новый пользователь"); Дата рождения: \(i[dateOfBirth] ?? "01.01.1999"); Лечащий врач: \(i[doc] ?? "Попова Полина Викторовна"); Программа: DiaCompanion iOS Dial v\(Bundle.main.infoDictionary!["CFBundleShortVersionString"]!)"
+                    shortFio = "ID\(i[id]) \(i[userName] ?? "Новый_пользователь 1") \(df.string(from: Date.now))"
+                }
             }
         }
         catch {

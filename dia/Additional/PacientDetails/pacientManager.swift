@@ -539,6 +539,8 @@ class pacientManager {
                 return Vrachi.Tkachuk
             case "Васюкова Елена Андреева":
                 return Vrachi.Vasukova
+            case "Пашкова Кристина Валерьевна":
+                return Vrachi.Pashkova
             default:
                 return Vrachi.without
             }
@@ -598,7 +600,7 @@ class pacientManager {
     
     func getVersionName(number: Int) -> String {
         switch number {
-        case 1: return "GDM RCT"
+        case 1: return "Dia"
         case 2: return "GDM"
         case 3: return "MS"
         case 4: return "PCOS"

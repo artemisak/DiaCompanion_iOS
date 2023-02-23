@@ -68,6 +68,8 @@ func findAdress() throws -> [String] {
             return ["aleksandra.tkachuk.1988@mail.com","diacompanion@gmail.com"]
         case "Васюкова Елена Андреева":
             return ["elenavasukova2@gmail.com","diacompanion@gmail.com"]
+        case "Пашкова Кристина Валерьевна":
+            return ["kristinapaskova95@gmail.com","diacompanion@gmail.com"]
         default:
             return [""]
         }

@@ -7,6 +7,7 @@ enum Vrachi: String, CaseIterable, Identifiable {
     case Popova = "Попова Полина Викторовна"
     case Tkachuk = "Ткачут Александра Сергеевна"
     case Vasukova = "Васюкова Елена Андреева"
+    case Pashkova = "Пашкова Кристина Валерьевна"
     case without = ""
     
     var id: String { self.rawValue }
@@ -33,6 +34,7 @@ struct currentV: View {
                         .font(.system(size: 500))
                         .minimumScaleFactor(0.015)
                     Text("Васюкова Елена Андреева").tag(Vrachi.Vasukova)
+                    Text("Пашкова Кристина Валерьевна").tag(Vrachi.Pashkova)
                     Text("Без врача").tag(Vrachi.without)
                 }
                 .pickerStyle(.wheel)

@@ -40,7 +40,7 @@ struct addRecipe: View {
             Section {
                 ForEach($collection.recipeFoodItems, id: \.id){ $i in
                     VStack(alignment: .leading) {
-                        giIndicator(gi: $i.gi, carbo: $i.carbo, gl: $i.gl)
+                        indicatorGroup(gi: $i.gi, carbo: $i.weightedСarbo, gl: $i.gl)
                         Text("\(i.name) (\(i.gram!, specifier: "%.1f") г.)")
                     }
                     .padding(.vertical, 7)

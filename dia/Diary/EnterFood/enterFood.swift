@@ -131,7 +131,7 @@ struct enterFood: View {
                     Section {
                         ForEach(collection.whereToSave == .addedFoodItems ? $collection.addedFoodItems : $collection.editedFoodItems, id: \.id) {$i in
                             VStack(alignment: .leading) {
-                                giIndicator(gi: $i.gi, carbo: $i.carbo, gl: $i.gl)
+                                indicatorGroup(gi: $i.gi, carbo: $i.weightedСarbo, gl: $i.gl)
                                 Text("\(i.name) (\(i.gram!, specifier: "%.1f") г.)")
                             }
                             .padding(.vertical, 7)
@@ -169,7 +169,9 @@ struct enterFood: View {
                             }
                         }
                     } header: {
-                        Text("ГИ / ГН / Угл. / Продукт, г.").frame(minWidth: 0, maxWidth: .infinity).font(.body)
+                        Text("Список потребленных продуктов").font(.caption)
+                    } footer: {
+                        Text("Смахните влево, чтобы удалить или отредактировать").font(.caption).frame(minWidth: 0, maxWidth: .infinity).multilineTextAlignment(.center)
                     }
                 }
             }
@@ -289,6 +291,7 @@ struct enterFood: View {
                     updatePrediction(workList: collection.editedFoodItems)
                 }
             })
+            .animation(.default, value: isVisible)
         }
         else {
             List {
@@ -360,7 +363,7 @@ struct enterFood: View {
                     Section {
                         ForEach(collection.whereToSave == .addedFoodItems ? $collection.addedFoodItems : $collection.editedFoodItems, id: \.id) {$i in
                             VStack(alignment: .leading) {
-                                giIndicator(gi: $i.gi, carbo: $i.carbo, gl: $i.gl)
+                                indicatorGroup(gi: $i.gi, carbo: $i.weightedСarbo, gl: $i.gl)
                                 Text("\(i.name) (\(i.gram!, specifier: "%.1f") г.)")
                             }
                             .padding(.vertical, 7)
@@ -398,7 +401,9 @@ struct enterFood: View {
                             }
                         }
                     } header: {
-                        Text("ГИ / ГН / Угл. / Продукт, г.").frame(minWidth: 0, maxWidth: .infinity).font(.body)
+                        Text("Список потребленных продуктов").font(.caption)
+                    } footer: {
+                        Text("Смахните влево, чтобы удалить или отредактировать").font(.caption).frame(minWidth: 0, maxWidth: .infinity).multilineTextAlignment(.center)
                     }
                 }
                 NavigationLink(destination: { enterPoint() }, label: {
@@ -518,6 +523,7 @@ struct enterFood: View {
                     updatePrediction(workList: collection.editedFoodItems)
                 }
             })
+            .animation(.default, value: isVisible)
         }
         
     }
@@ -543,22 +549,28 @@ struct enterFood: View {
                 recomendationCards = getMessage(highBGPredict: checkBGPredicted(BG1: res), highBGBefore: checkBGBefore(BG0: try convert(txt: sugar)), moderateAmountOfCarbo: checkCarbo.0, tooManyCarbo: checkCarbo.1, unequalGLDistribution: checkUnequalGlDistribution(listOfFood: workList), highGI: checkGI(listOfFood: workList))
                 recCardID = recomendationCards.isEmpty ? UUID() : recomendationCards[0].id
                 if res < 6.8 {
-                    sugarlvl = "УСК не превысит норму"
-                    recColor = Color.green.opacity(0.7)
-                    fontColor = Color.white
                     isVisible = false
+                    withAnimation(.none){
+                        sugarlvl = "УСК не превысит норму"
+                        recColor = Color.green.opacity(0.7)
+                        fontColor = Color.white
+                    }
                 } else {
-                    sugarlvl = "УСК превысит норму"
-                    recColor = Color(red: 255/255, green: 91/255, blue: 36/255)
-                    fontColor = Color.white
                     isVisible = true
+                    withAnimation(.none){
+                        sugarlvl = "УСК превысит норму"
+                        recColor = Color(red: 255/255, green: 91/255, blue: 36/255)
+                        fontColor = Color.white
+                    }
                 }
                 scolor = Color("listButtonColor")
             } else {
-                sugarlvl = "УСК не определен"
-                recColor = Color("BG_Undefined")
-                fontColor = Color("BG_Font_Undefined")
                 isVisible = false
+                withAnimation(.none){
+                    sugarlvl = "УСК не определен"
+                    recColor = Color("BG_Undefined")
+                    fontColor = Color("BG_Font_Undefined")
+                }
             }
         }
         catch inputErorrs.decimalError {

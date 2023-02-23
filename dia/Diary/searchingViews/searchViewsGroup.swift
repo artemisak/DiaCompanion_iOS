@@ -18,11 +18,12 @@ struct searchViewsGroup: View {
             else {
                 listOfGroups()
                     .task {
-                        await collection.clearAllList()
+                        collection.clearAllList()
                     }
             }
         }
         .navigationTitle("Продукты питания")
+        .navigationBarTitleDisplayMode(.inline)
         .ignoresSafeArea(.keyboard)
         .animation(.none, value: isSearching)
         .onChange(of: isSearching, perform: {_ in
