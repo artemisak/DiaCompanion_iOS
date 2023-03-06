@@ -111,8 +111,9 @@ class diaryManager {
         }
     }
         
-    func addNewFood(items: [foodItem], newReceitName: String, category: String, isEditing: Bool, idToDelete: Int?) {
+    func addNewFood(items: [foodItem], newReceitName: String, category: String, isEditing: Bool, idToDelete: Int?, imageURL: String?) {
         do {
+            print(items, newReceitName, category, isEditing, idToDelete as Any, imageURL as Any)
             let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
             let path = documents + "/diacompanion.db"
             let sourcePath = Bundle.main.path(forResource: "diacompanion", ofType: "db")!
@@ -177,13 +178,11 @@ class diaryManager {
             let w_2ed = Expression<Double?>("w_2ed")
             let op_2ed = Expression<Double?>("op_2ed")
             let proc_pot = Expression<Double?>("proc_pot")
-            let additional = Expression<Double?>("additional")
             let favor = Expression<Int?>("favor")
-            let inMyRecipes = Expression<Int?>("inMyRecipes")
+            let url = Expression<String?>("url")
             
             let usersRecipes = Table("usersRecipes")
             let recipe_id = Expression<Int>("food_id")
-            
             if isEditing {
                 try db.run(food.filter(table_id == idToDelete!).delete())
                 try db.run(usersRecipes.filter(recipe_id == idToDelete!).delete())
@@ -267,7 +266,7 @@ class diaryManager {
             
             summOfParam = summOfParam.map({round($0*10)/10})
             
-            let insertID = try db.run(food.insert(foodName <- resultingName, cat <- category, carbo <- summOfParam[0], prot <- summOfParam[1], fat <- summOfParam[2], ec <- summOfParam[3], gi <- summOfParam[4], water <- summOfParam[5], nzhk <- summOfParam[6], hol <- summOfParam[7], pv <- summOfParam[8], zola <- summOfParam[9], na <- summOfParam[10], k <- summOfParam[11], ca <- summOfParam[12], mg <- summOfParam[13], p <- summOfParam[14], fe <- summOfParam[15], a <- summOfParam[16], b1 <- summOfParam[17], b2 <- summOfParam[18], rr <- summOfParam[19], c <- summOfParam[20], re <- summOfParam[21], kar <- summOfParam[22], mds <- summOfParam[23], kr <- summOfParam[24], te <- summOfParam[25], ok <- summOfParam[26], ne <- summOfParam[27], zn <- summOfParam[28], cu <- summOfParam[29], mn <- summOfParam[30], se <- summOfParam[31], b5 <- summOfParam[32], b6 <- summOfParam[33], fol <- summOfParam[34], b9 <- summOfParam[35], dfe <- summOfParam[36], holin <- summOfParam[37], b12 <- summOfParam[38], ear <- summOfParam[39], a_kar <- summOfParam[40], b_kript <- summOfParam[41], likopin <- summOfParam[42], lut_z <- summOfParam[43], vit_e <- summOfParam[44], vit_d <- summOfParam[45], d_mezd <- summOfParam[46], vit_k <- summOfParam[47], mzhk <- summOfParam[48], pzhk <- summOfParam[49], w_1ed <- summOfParam[50], op_1ed <- summOfParam[51], w_2ed <- summOfParam[52], op_2ed <- summOfParam[53], proc_pot <- summOfParam[54], additional <- 0, favor <- 1, inMyRecipes <- 1))
+            let insertID = try db.run(food.insert(foodName <- resultingName, cat <- category, carbo <- summOfParam[0], prot <- summOfParam[1], fat <- summOfParam[2], ec <- summOfParam[3], gi <- summOfParam[4], water <- summOfParam[5], nzhk <- summOfParam[6], hol <- summOfParam[7], pv <- summOfParam[8], zola <- summOfParam[9], na <- summOfParam[10], k <- summOfParam[11], ca <- summOfParam[12], mg <- summOfParam[13], p <- summOfParam[14], fe <- summOfParam[15], a <- summOfParam[16], b1 <- summOfParam[17], b2 <- summOfParam[18], rr <- summOfParam[19], c <- summOfParam[20], re <- summOfParam[21], kar <- summOfParam[22], mds <- summOfParam[23], kr <- summOfParam[24], te <- summOfParam[25], ok <- summOfParam[26], ne <- summOfParam[27], zn <- summOfParam[28], cu <- summOfParam[29], mn <- summOfParam[30], se <- summOfParam[31], b5 <- summOfParam[32], b6 <- summOfParam[33], fol <- summOfParam[34], b9 <- summOfParam[35], dfe <- summOfParam[36], holin <- summOfParam[37], b12 <- summOfParam[38], ear <- summOfParam[39], a_kar <- summOfParam[40], b_kript <- summOfParam[41], likopin <- summOfParam[42], lut_z <- summOfParam[43], vit_e <- summOfParam[44], vit_d <- summOfParam[45], d_mezd <- summOfParam[46], vit_k <- summOfParam[47], mzhk <- summOfParam[48], pzhk <- summOfParam[49], w_1ed <- summOfParam[50], op_1ed <- summOfParam[51], w_2ed <- summOfParam[52], op_2ed <- summOfParam[53], proc_pot <- summOfParam[54], favor <- 1, url <- imageURL))
             
             let recipesTable = Table("usersRecipes")
             let food_id = Expression<Int>("food_id")

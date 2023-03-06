@@ -97,5 +97,7 @@ struct diaApp: App {
     init(){
         UIScrollView.appearance().keyboardDismissMode = .onDrag
         UITableView.appearance().showsVerticalScrollIndicator = false
+        URLCache.shared.memoryCapacity = 50_000_000
+        URLCache.shared.diskCapacity = 1_000_000_000
     }
 }

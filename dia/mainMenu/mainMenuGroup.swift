@@ -15,7 +15,6 @@ struct mainMenuGroup: View {
             if #available(iOS 16, *) {
                 NavigationStack {
                     mainMenu()
-                        .showTabBar()
                 }
                 .tabItem {
                     Label("Главная", systemImage: "house")
@@ -34,8 +33,7 @@ struct mainMenuGroup: View {
             }
             if #available(iOS 16, *) {
                 NavigationStack {
-                    recipeList()
-                        .showTabBar()
+                    recipeAsyncList()
                 }
                 .tabItem {
                     Label("Рецепты", systemImage: "character.book.closed")
@@ -43,7 +41,7 @@ struct mainMenuGroup: View {
                 .tag(2)
             } else {
                 NavigationView {
-                    recipeList()
+                    recipeAsyncList()
                         .showTabBar()
                 }
                 .navigationViewStyle(.stack)
@@ -55,7 +53,6 @@ struct mainMenuGroup: View {
             if #available(iOS 16, *) {
                 NavigationStack {
                     settings()
-                        .showTabBar()
                 }
                 .tabItem {
                     Label("Дополнительно", systemImage:  "gearshape")
