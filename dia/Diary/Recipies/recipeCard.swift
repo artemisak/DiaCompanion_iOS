@@ -14,15 +14,15 @@ struct recipeCard: View {
         AsyncImage(url: imageURL, content: {image in
             image.resizable().scaledToFill()
         }, placeholder: {
-            LinearGradient(colors: [Color.gray, Color.gray.opacity(0.7)], startPoint: .bottom, endPoint: .top)
+            LinearGradient(colors: [Color.gray, Color.gray.opacity(0.65)], startPoint: .bottom, endPoint: .top)
         })
-        .frame(width: 150, height: 200)
+        .frame(width: 175, height: 225)
         .clipShape(RoundedRectangle(cornerRadius: 10))
         .overlay {
             VStack {
                 Spacer()
-                Text(title).font(.title3).bold().foregroundColor(.white).minimumScaleFactor(0.001).multilineTextAlignment(.leading).padding(.horizontal)
-            }
+                Text(title).font(.title2).bold().foregroundColor(.white).minimumScaleFactor(0.01).multilineTextAlignment(.leading)
+            }.padding()
         }
     }
 }
