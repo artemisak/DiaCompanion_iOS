@@ -113,7 +113,6 @@ class diaryManager {
         
     func addNewFood(items: [foodItem], newReceitName: String, category: String, isEditing: Bool, idToDelete: Int?, imageURL: String?) {
         do {
-            print(items, newReceitName, category, isEditing, idToDelete as Any, imageURL as Any)
             let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
             let path = documents + "/diacompanion.db"
             let sourcePath = Bundle.main.path(forResource: "diacompanion", ofType: "db")!

@@ -16,7 +16,6 @@
 		A71CAEF228280F7600C6AC9F /* predictManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71CAEF128280F7600C6AC9F /* predictManager.swift */; };
 		A7230C7F27705AED00B68244 /* excelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7230C7E27705AED00B68244 /* excelManager.swift */; };
 		A7289FB4294F530A00B35BD3 /* aboutApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7289FB3294F530A00B35BD3 /* aboutApp.swift */; };
-		A7344A5C29A9C09100982BD7 /* recipeCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7344A5B29A9C09100982BD7 /* recipeCard.swift */; };
 		A73C74F628CF2BF2008D09BF /* recipeInteractionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A73C74F528CF2BF2008D09BF /* recipeInteractionView.swift */; };
 		A7491D81297A905E005AAA18 /* mainMenuGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7491D80297A905E005AAA18 /* mainMenuGroup.swift */; };
 		A7491D85297AA66D005AAA18 /* recipeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7491D84297AA66D005AAA18 /* recipeModel.swift */; };
@@ -46,6 +45,7 @@
 		A7C997872983B68200A38F2D /* dayConsumptionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C997862983B68200A38F2D /* dayConsumptionModel.swift */; };
 		A7CE328929225AF4002D8FB0 /* passwordPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7CE328829225AF4002D8FB0 /* passwordPage.swift */; };
 		A7D0976A2809FE16000A12E1 /* buttonStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7D097692809FE16000A12E1 /* buttonStyles.swift */; };
+		A7D602B429B5E5250091CBCC /* recipeCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7D602B329B5E5250091CBCC /* recipeCard.swift */; };
 		A7DCBBB327BD8AD4009A3A16 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A7DCBBB227BD8AD4009A3A16 /* Launch Screen.storyboard */; };
 		A7DF49D0291A851B007A9371 /* BarsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7DF49C2291A851A007A9371 /* BarsView.swift */; };
 		A7DF49D1291A851B007A9371 /* AxisView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7DF49C3291A851A007A9371 /* AxisView.swift */; };
@@ -115,7 +115,6 @@
 		A71CAEF128280F7600C6AC9F /* predictManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = predictManager.swift; sourceTree = "<group>"; };
 		A7230C7E27705AED00B68244 /* excelManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = excelManager.swift; sourceTree = "<group>"; };
 		A7289FB3294F530A00B35BD3 /* aboutApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = aboutApp.swift; sourceTree = "<group>"; };
-		A7344A5B29A9C09100982BD7 /* recipeCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = recipeCard.swift; sourceTree = "<group>"; };
 		A73C74F528CF2BF2008D09BF /* recipeInteractionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = recipeInteractionView.swift; sourceTree = "<group>"; };
 		A7491D80297A905E005AAA18 /* mainMenuGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = mainMenuGroup.swift; sourceTree = "<group>"; };
 		A7491D84297AA66D005AAA18 /* recipeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = recipeModel.swift; sourceTree = "<group>"; };
@@ -145,6 +144,7 @@
 		A7C997862983B68200A38F2D /* dayConsumptionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dayConsumptionModel.swift; sourceTree = "<group>"; };
 		A7CE328829225AF4002D8FB0 /* passwordPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = passwordPage.swift; sourceTree = "<group>"; };
 		A7D097692809FE16000A12E1 /* buttonStyles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = buttonStyles.swift; sourceTree = "<group>"; };
+		A7D602B329B5E5250091CBCC /* recipeCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = recipeCard.swift; sourceTree = "<group>"; };
 		A7DCBBB227BD8AD4009A3A16 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		A7DF49C2291A851A007A9371 /* BarsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BarsView.swift; sourceTree = "<group>"; };
 		A7DF49C3291A851A007A9371 /* AxisView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AxisView.swift; sourceTree = "<group>"; };
@@ -229,8 +229,8 @@
 			children = (
 				A73C74F528CF2BF2008D09BF /* recipeInteractionView.swift */,
 				A7491D84297AA66D005AAA18 /* recipeModel.swift */,
+				A7D602B329B5E5250091CBCC /* recipeCard.swift */,
 				A7FAD8AC29A7E9A800D96873 /* recipeAsyncList.swift */,
-				A7344A5B29A9C09100982BD7 /* recipeCard.swift */,
 			);
 			path = Recipies;
 			sourceTree = "<group>";
@@ -666,6 +666,7 @@
 				A77B7EE82973F01100CFEBD5 /* searchViewsGroup.swift in Sources */,
 				A7DF49D6291A851B007A9371 /* Previews.swift in Sources */,
 				A7DF49D4291A851B007A9371 /* LineChartView.swift in Sources */,
+				A7D602B429B5E5250091CBCC /* recipeCard.swift in Sources */,
 				A70BCC3A27B9471E00C22703 /* loginManager.swift in Sources */,
 				A7FEDA7429A608C70050778A /* indicator.swift in Sources */,
 				A7DF49D8291A851B007A9371 /* LegendView.swift in Sources */,
@@ -696,7 +697,6 @@
 				ACF4E40F272DB126002D2797 /* RKWeekdayHeader.swift in Sources */,
 				A7491D81297A905E005AAA18 /* mainMenuGroup.swift in Sources */,
 				A7491D87297AF5C6005AAA18 /* pacientCart.swift in Sources */,
-				A7344A5C29A9C09100982BD7 /* recipeCard.swift in Sources */,
 				ACEDB47D2721A19400DBB67C /* dStart.swift in Sources */,
 				A78E381E2813F0680096E2E2 /* extensions.swift in Sources */,
 				AC71760627204582000376FD /* currentV.swift in Sources */,

@@ -128,8 +128,6 @@ class diaryStatblock: ObservableObject {
         
         var allFoodRecords = [foodRow]()
         while sqlite3_step(statement) == SQLITE_ROW {
-            print(df_alt.date(from: String(cString: sqlite3_column_text(statement, 0)))!)
-            print(df.date(from: String(cString: sqlite3_column_text(statement, 1)))!)
             allFoodRecords.append(foodRow(timeStamp: df_alt.date(from: String(cString: sqlite3_column_text(statement, 0)))!, dateTime: df.date(from: String(cString: sqlite3_column_text(statement, 1)))!, meals: String(cString: sqlite3_column_text(statement, 2)), carbo: sqlite3_column_double(statement, 3)))
         }
         
