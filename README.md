@@ -1,4 +1,4 @@
-# DiaCompanion_iOS
+# DiaCompanion iOS
 
 ## General information
 
