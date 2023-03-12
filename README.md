@@ -6,7 +6,8 @@ The multi-platform DiaCompanion suite is representative of the current generatio
 
 ## Details
 
-The app has been partially localised into English and supports iOS version 15 and higher. It can also be used on Mac computers running Mac OS Catalina.
+The app has been partially localised into English and supports iOS version 15 and higher. It can also be used on Mac computers running Mac OS Catalina. The development was carried out using the modern SwiftUI framework with the borrowing of some elements from UIKit.
+
 The principle of giving blood glucouse (BG) prediction is based on the analysis of current and previous meals, as well as physical activity one hour before and current BG level. The model also incorporates many other parameters, such as BMI, week of pregnancy, number of abortions and contraceptive use, but their importance for prediction purposes is markedly lower. You can read more about the model development process in our [article](https://ieeexplore.ieee.org/document/9281297/metrics#metrics). 
 
 We are now working to improve prediction accuracy by adding information about the composition and dynamics of the patient's gut microbiome. In addition, we have decided to drop the XGboost model in favour of CatBoost, as we have introduced many new categorical variables into the study.
