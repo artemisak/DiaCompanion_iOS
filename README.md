@@ -1,4 +1,9 @@
 # swiftDia
+
+## About
+
+The multi-platform DiaCompanion suite is representative of the current generation of m-Health. The app allows you to keep an electronic diary of your meals, physical activity and sleep. A decision tree regression-based dietary recommendation system accompanies the process. If your blood sugar level exceeds the predicted value, it will provide both general and personalised recommendations on how to improve your food intake.
+
 ПОЛИТИКА КОНФИДЕНЦИАЛЬНОСТИ ДЛЯ МОБИЛЬНОГО ПРИЛОЖЕНИЯ
 "ДИА КОМПАНЬОН"
 
