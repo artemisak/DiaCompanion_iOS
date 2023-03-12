@@ -12,7 +12,7 @@ The principle of giving recommendations is based on the analysis of current and 
 
 We are now working to improve prediction accuracy by adding information about the composition and dynamics of the patient's gut microbiome. In addition, we have decided to drop the XGboost model in favour of CatBoost, as we have introduced many new categorical variables into the study.
 
-![base screen](https://github.com/artemisak/DiaCompanion_iOS/blob/main/Screenshots/iPhone14%20Pro%20Deep%20Purple.png =120x80)
+![base screen](https://github.com/artemisak/DiaCompanion_iOS/blob/main/Screenshots/iPhone14%20Pro%20Deep%20Purple.png)
 ![normal_screen](https://github.com/artemisak/DiaCompanion_iOS/blob/main/Screenshots/iPhone14%20Pro%20Deep%20Purple-3.png)
 
 ![danger screen_1](https://github.com/artemisak/DiaCompanion_iOS/blob/main/Screenshots/iPhone14%20Pro%20Deep%20Purple-1.png)
