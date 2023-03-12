@@ -19,7 +19,8 @@ The recommendation system takes into account the predicted blood sugar levels an
 <div>
 <img src="https://github.com/artemisak/DiaCompanion_iOS/blob/main/Screenshots/iPhone14%20Pro%20Deep%20Purple.png" style='height: 35rem;'>
 <img src="https://github.com/artemisak/DiaCompanion_iOS/blob/main/Screenshots/iPhone14%20Pro%20Deep%20Purple-3.png" style='height: 35rem;'>
-
+</div>
+<div>
 <img src="https://github.com/artemisak/DiaCompanion_iOS/blob/main/Screenshots/iPhone14%20Pro%20Deep%20Purple-1.png" style='height: 35rem;'>
 <img src="https://github.com/artemisak/DiaCompanion_iOS/blob/main/Screenshots/iPhone14%20Pro%20Deep%20Purple-2.png" style='height: 35rem;'>
 </div>
