@@ -19,7 +19,8 @@ struct passwordPage: View {
             Spacer()
             VStack(spacing: 20) {
                 VStack(alignment: .leading, spacing: .zero) {
-                    SecureField("Пароль", text: $pass)
+                    SecureField("", text: $pass, prompt: Text("Пароль").font(.body))
+                        .labelsHidden()
                         .onChange(of: pass, perform: {i in
                             if !isValidPassword {
                                 withAnimation(.default){
@@ -67,7 +68,7 @@ struct passwordPage: View {
                 if isLoading {
                     ProgressView().tint(.white).frame(height: 25)
                 } else {
-                    Text("Войти").frame(height: 25)
+                    Text("Войти").font(.body).frame(height: 25)
                 }
             })
             .buttonStyle(RoundedRectangleButtonStyle())

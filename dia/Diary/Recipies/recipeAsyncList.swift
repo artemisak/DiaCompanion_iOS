@@ -21,7 +21,7 @@ struct recipeAsyncList: View {
             ScrollView {
                 LazyVGrid(columns: columns, spacing: 10) {
                     Section {
-                        ForEach(allRecipes.recipes, id: \.id){i in                        
+                        ForEach(allRecipes.recipes, id: \.id){i in
                             NavigationLink {
                                 recipeInteractionView(viewStatement: .view, preinitialized: true, details: i, idToDelete: i.table_id, foodNotation: i.name, selectedCat: .alcohol, imageURL: i.url)
                             } label: {
@@ -45,6 +45,10 @@ struct recipeAsyncList: View {
             }
             .task {
                 allRecipes.fillRecipes()
+            }
+            .onAppear {
+                URLCache.shared.memoryCapacity = 50_000_000
+                URLCache.shared.diskCapacity = 1_000_000_000
             }
         }
         .navigationTitle("Рецепты")
