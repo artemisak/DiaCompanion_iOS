@@ -77,12 +77,14 @@ struct searchByWordList: View {
                         listHeader().font(.body)
                     } footer: {
                         if collection.showListToolbar {
-                            Text("База данных - проприетарная собственность ФГБУ НМИЦ им. В.А. Алмазова").frame(minWidth: 0, maxWidth: .infinity).multilineTextAlignment(.center)
+                            Text("База данных - проприетарная собственность ФГБУ НМИЦ им. В.А. Алмазова")
+                                .font(.caption)
+                                .frame(minWidth: 0, maxWidth: .infinity)
+                                .multilineTextAlignment(.center)
                         }
                     }
                 }
                 .listStyle(.grouped)
-                .padding(.top, -35)
                 VStack {
                     if showSuccesNotify {
                         VStack {
