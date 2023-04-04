@@ -104,8 +104,8 @@ struct versionChoose: View {
             } footer: {
                 Text("Сделанный выбор можно изменить позже в настройках")
                     .font(.caption)
+                    .frame(minWidth: 0, maxWidth: .infinity)
                     .multilineTextAlignment(.center)
-                    .padding()
             }
         }
         .ignoresSafeArea(.keyboard)
