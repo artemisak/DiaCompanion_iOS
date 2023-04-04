@@ -67,7 +67,7 @@
 		A7F8A597288ED30100C13F36 /* Education.pdf in Resources */ = {isa = PBXBuildFile; fileRef = A7F8A596288ED30100C13F36 /* Education.pdf */; };
 		A7FAD8AD29A7E9A800D96873 /* recipeAsyncList.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7FAD8AC29A7E9A800D96873 /* recipeAsyncList.swift */; };
 		A7FBB23B27FC257D00828432 /* regHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7FBB23A27FC257D00828432 /* regHelper.swift */; };
-		A7FC63AE29DC1224000A16CA /* mainMenuGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7FC63AD29DC1224000A16CA /* mainMenuGroup.swift */; };
+		A7FC63B229DC1362000A16CA /* menuGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7FC63B129DC1362000A16CA /* menuGroup.swift */; };
 		A7FEDA6E29A6076D0050778A /* BypassProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7FEDA6D29A6076D0050778A /* BypassProtocol.swift */; };
 		A7FEDA7429A608C70050778A /* indicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7FEDA7329A608C70050778A /* indicator.swift */; };
 		AC2603202690691E00C4A520 /* diaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC26031F2690691E00C4A520 /* diaApp.swift */; };
@@ -163,7 +163,7 @@
 		A7F8A596288ED30100C13F36 /* Education.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = Education.pdf; sourceTree = "<group>"; };
 		A7FAD8AC29A7E9A800D96873 /* recipeAsyncList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = recipeAsyncList.swift; sourceTree = "<group>"; };
 		A7FBB23A27FC257D00828432 /* regHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = regHelper.swift; sourceTree = "<group>"; };
-		A7FC63AD29DC1224000A16CA /* mainMenuGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = mainMenuGroup.swift; sourceTree = "<group>"; };
+		A7FC63B129DC1362000A16CA /* menuGroup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = menuGroup.swift; sourceTree = "<group>"; };
 		A7FEDA6D29A6076D0050778A /* BypassProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BypassProtocol.swift; sourceTree = "<group>"; };
 		A7FEDA7329A608C70050778A /* indicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = indicator.swift; sourceTree = "<group>"; };
 		AC26031C2690691E00C4A520 /* dia.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = dia.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -231,7 +231,7 @@
 			children = (
 				A7004F3129782C3A008CA708 /* mainMenu.swift */,
 				A7004F2F2978263F008CA708 /* consumptionIndicator.swift */,
-				A7FC63AD29DC1224000A16CA /* mainMenuGroup.swift */,
+				A7FC63B129DC1362000A16CA /* menuGroup.swift */,
 				A7C997862983B68200A38F2D /* dayConsumptionModel.swift */,
 			);
 			path = MainMenu;
@@ -658,12 +658,12 @@
 				A7FBB23B27FC257D00828432 /* regHelper.swift in Sources */,
 				A7DF49D7291A851B007A9371 /* BarChartView.swift in Sources */,
 				ACF4E411272DB126002D2797 /* RKCell.swift in Sources */,
-				A7FC63AE29DC1224000A16CA /* mainMenuGroup.swift in Sources */,
 				A7DF49DC291A851B007A9371 /* DataPoint.swift in Sources */,
 				A7DF49D1291A851B007A9371 /* AxisView.swift in Sources */,
 				A706DA822843867800473941 /* export.swift in Sources */,
 				A70FC0FB28AA969E00E154DB /* recommendationMesssage.swift in Sources */,
 				A767CC7F2944C0BE0093A979 /* indicatorGroup.swift in Sources */,
+				A7FC63B229DC1362000A16CA /* menuGroup.swift in Sources */,
 				AC32A6862726060D001DDB9F /* pHeight.swift in Sources */,
 				AC3B847526EBA1F200E98681 /* ketonur.swift in Sources */,
 				A7BD994727CA46FC0090D9D7 /* helper.swift in Sources */,
