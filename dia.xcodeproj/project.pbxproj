@@ -17,7 +17,6 @@
 		A7230C7F27705AED00B68244 /* excelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7230C7E27705AED00B68244 /* excelManager.swift */; };
 		A7289FB4294F530A00B35BD3 /* aboutApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7289FB3294F530A00B35BD3 /* aboutApp.swift */; };
 		A73C74F628CF2BF2008D09BF /* recipeInteractionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A73C74F528CF2BF2008D09BF /* recipeInteractionView.swift */; };
-		A7491D81297A905E005AAA18 /* mainMenuGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7491D80297A905E005AAA18 /* mainMenuGroup.swift */; };
 		A7491D85297AA66D005AAA18 /* recipeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7491D84297AA66D005AAA18 /* recipeModel.swift */; };
 		A7491D87297AF5C6005AAA18 /* pacientCart.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7491D86297AF5C6005AAA18 /* pacientCart.swift */; };
 		A74A1CC228B1016C0038C79F /* startPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74A1CC128B1016C0038C79F /* startPage.swift */; };
@@ -68,6 +67,7 @@
 		A7F8A597288ED30100C13F36 /* Education.pdf in Resources */ = {isa = PBXBuildFile; fileRef = A7F8A596288ED30100C13F36 /* Education.pdf */; };
 		A7FAD8AD29A7E9A800D96873 /* recipeAsyncList.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7FAD8AC29A7E9A800D96873 /* recipeAsyncList.swift */; };
 		A7FBB23B27FC257D00828432 /* regHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7FBB23A27FC257D00828432 /* regHelper.swift */; };
+		A7FC63AC29DC1187000A16CA /* mainMenuGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7FC63AB29DC1187000A16CA /* mainMenuGroup.swift */; };
 		A7FEDA6E29A6076D0050778A /* BypassProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7FEDA6D29A6076D0050778A /* BypassProtocol.swift */; };
 		A7FEDA7429A608C70050778A /* indicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7FEDA7329A608C70050778A /* indicator.swift */; };
 		AC2603202690691E00C4A520 /* diaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC26031F2690691E00C4A520 /* diaApp.swift */; };
@@ -115,7 +115,6 @@
 		A7230C7E27705AED00B68244 /* excelManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = excelManager.swift; sourceTree = "<group>"; };
 		A7289FB3294F530A00B35BD3 /* aboutApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = aboutApp.swift; sourceTree = "<group>"; };
 		A73C74F528CF2BF2008D09BF /* recipeInteractionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = recipeInteractionView.swift; sourceTree = "<group>"; };
-		A7491D80297A905E005AAA18 /* mainMenuGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = mainMenuGroup.swift; sourceTree = "<group>"; };
 		A7491D84297AA66D005AAA18 /* recipeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = recipeModel.swift; sourceTree = "<group>"; };
 		A7491D86297AF5C6005AAA18 /* pacientCart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = pacientCart.swift; sourceTree = "<group>"; };
 		A74A1CC128B1016C0038C79F /* startPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = startPage.swift; sourceTree = "<group>"; };
@@ -164,6 +163,7 @@
 		A7F8A596288ED30100C13F36 /* Education.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = Education.pdf; sourceTree = "<group>"; };
 		A7FAD8AC29A7E9A800D96873 /* recipeAsyncList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = recipeAsyncList.swift; sourceTree = "<group>"; };
 		A7FBB23A27FC257D00828432 /* regHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = regHelper.swift; sourceTree = "<group>"; };
+		A7FC63AB29DC1187000A16CA /* mainMenuGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = mainMenuGroup.swift; sourceTree = "<group>"; };
 		A7FEDA6D29A6076D0050778A /* BypassProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BypassProtocol.swift; sourceTree = "<group>"; };
 		A7FEDA7329A608C70050778A /* indicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = indicator.swift; sourceTree = "<group>"; };
 		AC26031C2690691E00C4A520 /* dia.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = dia.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -229,7 +229,7 @@
 		A760B57A2987DD1600402094 /* MainMenu */ = {
 			isa = PBXGroup;
 			children = (
-				A7491D80297A905E005AAA18 /* mainMenuGroup.swift */,
+				A7FC63AB29DC1187000A16CA /* mainMenuGroup.swift */,
 				A7004F3129782C3A008CA708 /* mainMenu.swift */,
 				A7004F2F2978263F008CA708 /* consumptionIndicator.swift */,
 				A7C997862983B68200A38F2D /* dayConsumptionModel.swift */,
@@ -636,7 +636,6 @@
 				A7DF49E0291A85D9007A9371 /* details.swift in Sources */,
 				A77B7ED92973EFEA00CFEBD5 /* listHeader.swift in Sources */,
 				ACF4E40F272DB126002D2797 /* RKWeekdayHeader.swift in Sources */,
-				A7491D81297A905E005AAA18 /* mainMenuGroup.swift in Sources */,
 				A7491D87297AF5C6005AAA18 /* pacientCart.swift in Sources */,
 				ACEDB47D2721A19400DBB67C /* dStart.swift in Sources */,
 				A78E381E2813F0680096E2E2 /* extensions.swift in Sources */,
@@ -659,6 +658,7 @@
 				A7FBB23B27FC257D00828432 /* regHelper.swift in Sources */,
 				A7DF49D7291A851B007A9371 /* BarChartView.swift in Sources */,
 				ACF4E411272DB126002D2797 /* RKCell.swift in Sources */,
+				A7FC63AC29DC1187000A16CA /* mainMenuGroup.swift in Sources */,
 				A7DF49DC291A851B007A9371 /* DataPoint.swift in Sources */,
 				A7DF49D1291A851B007A9371 /* AxisView.swift in Sources */,
 				A706DA822843867800473941 /* export.swift in Sources */,
