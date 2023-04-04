@@ -41,6 +41,10 @@ struct mainMenuGroup: View {
                     Label("Рецепты", systemImage: "character.book.closed")
                 }
                 .tag(2)
+                .onAppear {
+                    URLCache.shared.memoryCapacity = 500_000_000
+                    URLCache.shared.diskCapacity = 1_000_000_000
+                }
             } else {
                 NavigationView {
                     recipeAsyncList()
@@ -51,6 +55,10 @@ struct mainMenuGroup: View {
                     Label("Рецепты", systemImage: "character.book.closed")
                 }
                 .tag(2)
+                .onAppear {
+                    URLCache.shared.memoryCapacity = 500_000_000
+                    URLCache.shared.diskCapacity = 1_000_000_000
+                }
             }
             if #available(iOS 16, *) {
                 NavigationStack {
