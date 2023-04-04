@@ -46,10 +46,6 @@ struct recipeAsyncList: View {
             .task {
                 allRecipes.fillRecipes()
             }
-            .onAppear {
-                URLCache.shared.memoryCapacity = 50_000_000
-                URLCache.shared.diskCapacity = 1_000_000_000
-            }
         }
         .navigationTitle("Рецепты")
         .toolbar {
