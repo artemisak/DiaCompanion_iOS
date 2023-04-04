@@ -42,7 +42,7 @@ struct mainMenuGroup: View {
                 }
                 .tag(2)
                 .onAppear {
-                    URLCache.shared.memoryCapacity = 500_000_000
+                    URLCache.shared.memoryCapacity = 50_000_000
                     URLCache.shared.diskCapacity = 1_000_000_000
                 }
             } else {
@@ -56,7 +56,7 @@ struct mainMenuGroup: View {
                 }
                 .tag(2)
                 .onAppear {
-                    URLCache.shared.memoryCapacity = 500_000_000
+                    URLCache.shared.memoryCapacity = 50_000_000
                     URLCache.shared.diskCapacity = 1_000_000_000
                 }
             }
