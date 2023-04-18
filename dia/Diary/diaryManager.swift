@@ -183,7 +183,6 @@ class diaryManager {
             let usersRecipes = Table("usersRecipes")
             let recipe_id = Expression<Int>("food_id")
             if isEditing {
-                try db.run(food.filter(table_id == idToDelete!).delete())
                 try db.run(usersRecipes.filter(recipe_id == idToDelete!).delete())
             }
             
@@ -253,26 +252,34 @@ class diaryManager {
                     parameters[i+1][j] = parameters[i][j] + parameters[i+1][j]
                 }
             }
+            
             var summOfParam = parameters.last!
             summOfParam[4] = round(summOfParam[4]/summOfParam[0]*100)/100
-            
-            var num = 1
-            var resultingName = newReceitName
-            while Array(try db.prepare(food.filter(foodName == resultingName))).count != 0 {
-                resultingName = newReceitName + " " + "(рецепт №\(num))"
-                num += 1
-            }
-            
             summOfParam = summOfParam.map({round($0*10)/10})
-            
-            let insertID = try db.run(food.insert(foodName <- resultingName, cat <- category, carbo <- summOfParam[0], prot <- summOfParam[1], fat <- summOfParam[2], ec <- summOfParam[3], gi <- summOfParam[4], water <- summOfParam[5], nzhk <- summOfParam[6], hol <- summOfParam[7], pv <- summOfParam[8], zola <- summOfParam[9], na <- summOfParam[10], k <- summOfParam[11], ca <- summOfParam[12], mg <- summOfParam[13], p <- summOfParam[14], fe <- summOfParam[15], a <- summOfParam[16], b1 <- summOfParam[17], b2 <- summOfParam[18], rr <- summOfParam[19], c <- summOfParam[20], re <- summOfParam[21], kar <- summOfParam[22], mds <- summOfParam[23], kr <- summOfParam[24], te <- summOfParam[25], ok <- summOfParam[26], ne <- summOfParam[27], zn <- summOfParam[28], cu <- summOfParam[29], mn <- summOfParam[30], se <- summOfParam[31], b5 <- summOfParam[32], b6 <- summOfParam[33], fol <- summOfParam[34], b9 <- summOfParam[35], dfe <- summOfParam[36], holin <- summOfParam[37], b12 <- summOfParam[38], ear <- summOfParam[39], a_kar <- summOfParam[40], b_kript <- summOfParam[41], likopin <- summOfParam[42], lut_z <- summOfParam[43], vit_e <- summOfParam[44], vit_d <- summOfParam[45], d_mezd <- summOfParam[46], vit_k <- summOfParam[47], mzhk <- summOfParam[48], pzhk <- summOfParam[49], w_1ed <- summOfParam[50], op_1ed <- summOfParam[51], w_2ed <- summOfParam[52], op_2ed <- summOfParam[53], proc_pot <- summOfParam[54], favor <- 1, url <- imageURL))
             
             let recipesTable = Table("usersRecipes")
             let food_id = Expression<Int>("food_id")
             let item_id = Expression<Int>("item_id")
             let gram = Expression<Double>("gram")
-            for i in items {
-                try db.run(recipesTable.insert(food_id <- Int(insertID), item_id <- i.table_id, gram <- i.gram!))
+            
+            if isEditing {
+                let editingRow = food.filter(table_id == idToDelete!)
+                try db.run(editingRow.update(foodName <- newReceitName, cat <- category, carbo <- summOfParam[0], prot <- summOfParam[1], fat <- summOfParam[2], ec <- summOfParam[3], gi <- summOfParam[4], water <- summOfParam[5], nzhk <- summOfParam[6], hol <- summOfParam[7], pv <- summOfParam[8], zola <- summOfParam[9], na <- summOfParam[10], k <- summOfParam[11], ca <- summOfParam[12], mg <- summOfParam[13], p <- summOfParam[14], fe <- summOfParam[15], a <- summOfParam[16], b1 <- summOfParam[17], b2 <- summOfParam[18], rr <- summOfParam[19], c <- summOfParam[20], re <- summOfParam[21], kar <- summOfParam[22], mds <- summOfParam[23], kr <- summOfParam[24], te <- summOfParam[25], ok <- summOfParam[26], ne <- summOfParam[27], zn <- summOfParam[28], cu <- summOfParam[29], mn <- summOfParam[30], se <- summOfParam[31], b5 <- summOfParam[32], b6 <- summOfParam[33], fol <- summOfParam[34], b9 <- summOfParam[35], dfe <- summOfParam[36], holin <- summOfParam[37], b12 <- summOfParam[38], ear <- summOfParam[39], a_kar <- summOfParam[40], b_kript <- summOfParam[41], likopin <- summOfParam[42], lut_z <- summOfParam[43], vit_e <- summOfParam[44], vit_d <- summOfParam[45], d_mezd <- summOfParam[46], vit_k <- summOfParam[47], mzhk <- summOfParam[48], pzhk <- summOfParam[49], w_1ed <- summOfParam[50], op_1ed <- summOfParam[51], w_2ed <- summOfParam[52], op_2ed <- summOfParam[53], proc_pot <- summOfParam[54], favor <- 1, url <- imageURL))
+                for i in items {
+                    try db.run(recipesTable.insert(food_id <- idToDelete!, item_id <- i.table_id, gram <- i.gram!))
+                }
+            }
+            else {
+                var num = 1
+                var resultingName = newReceitName
+                while Array(try db.prepare(food.filter(foodName == resultingName))).count != 0 {
+                    resultingName = newReceitName + " " + "(рецепт №\(num))"
+                    num += 1
+                }
+                let insertID = try db.run(food.insert(foodName <- resultingName, cat <- category, carbo <- summOfParam[0], prot <- summOfParam[1], fat <- summOfParam[2], ec <- summOfParam[3], gi <- summOfParam[4], water <- summOfParam[5], nzhk <- summOfParam[6], hol <- summOfParam[7], pv <- summOfParam[8], zola <- summOfParam[9], na <- summOfParam[10], k <- summOfParam[11], ca <- summOfParam[12], mg <- summOfParam[13], p <- summOfParam[14], fe <- summOfParam[15], a <- summOfParam[16], b1 <- summOfParam[17], b2 <- summOfParam[18], rr <- summOfParam[19], c <- summOfParam[20], re <- summOfParam[21], kar <- summOfParam[22], mds <- summOfParam[23], kr <- summOfParam[24], te <- summOfParam[25], ok <- summOfParam[26], ne <- summOfParam[27], zn <- summOfParam[28], cu <- summOfParam[29], mn <- summOfParam[30], se <- summOfParam[31], b5 <- summOfParam[32], b6 <- summOfParam[33], fol <- summOfParam[34], b9 <- summOfParam[35], dfe <- summOfParam[36], holin <- summOfParam[37], b12 <- summOfParam[38], ear <- summOfParam[39], a_kar <- summOfParam[40], b_kript <- summOfParam[41], likopin <- summOfParam[42], lut_z <- summOfParam[43], vit_e <- summOfParam[44], vit_d <- summOfParam[45], d_mezd <- summOfParam[46], vit_k <- summOfParam[47], mzhk <- summOfParam[48], pzhk <- summOfParam[49], w_1ed <- summOfParam[50], op_1ed <- summOfParam[51], w_2ed <- summOfParam[52], op_2ed <- summOfParam[53], proc_pot <- summOfParam[54], favor <- 1, url <- imageURL))
+                for i in items {
+                    try db.run(recipesTable.insert(food_id <- Int(insertID), item_id <- i.table_id, gram <- i.gram!))
+                }
             }
         }
         catch {
