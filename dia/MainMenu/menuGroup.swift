@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct mainMenuGroup: View {
+struct mainGroup: View {
     @EnvironmentObject var routeManager: Router
     @StateObject var collection = foodCollections()
     var body: some View {
@@ -87,7 +87,7 @@ struct mainMenuGroup: View {
 
 struct mainMenuGroup_Previews: PreviewProvider {
     static var previews: some View {
-        mainMenuGroup()
+        mainGroup()
     }
 }
 

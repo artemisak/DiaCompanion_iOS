@@ -13,7 +13,7 @@ struct startPage: View {
         if #available(iOS 16.0, *) {
             Group {
                 if (routeManager.isLoggedIn && routeManager.isChoosed) {
-                    mainMenuGroup()
+                    mainGroup()
                 }
                 if (!routeManager.isLoggedIn || !routeManager.isChoosed) {
                     NavigationStack {
@@ -31,7 +31,7 @@ struct startPage: View {
         } else {
             Group {
                 if (routeManager.isLoggedIn && routeManager.isChoosed) {
-                    mainMenuGroup()
+                    mainGroup()
                 }
                 if (!routeManager.isLoggedIn || !routeManager.isChoosed) {
                     NavigationView {
