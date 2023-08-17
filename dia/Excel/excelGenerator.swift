@@ -16,8 +16,9 @@ class exportTable {
         let worksheet3 = workbook_add_worksheet(workbook, "Физическая нагрузка и сон")
         let worksheet4 = workbook_add_worksheet(workbook, "Кетоны в моче")
         let worksheet5 = workbook_add_worksheet(workbook, "Масса тела")
-        let worksheet6 = workbook_add_worksheet(workbook, "Список полных дней")
-        let worksheet7 = workbook_add_worksheet(workbook, "Удаленные записи")
+        let worksheet6 = workbook_add_worksheet(workbook, "Полные дни")
+//        let worksheet7 = workbook_add_worksheet(workbook, "Удаленные записи")
+        let worksheet8 = workbook_add_worksheet(workbook, "Данные опроса")
         
         let merge_f = workbook_add_format(workbook);
         format_set_border(merge_f, UInt8(LXW_BORDER_DOTTED.rawValue))
@@ -139,10 +140,13 @@ class exportTable {
         
         worksheet_set_column(worksheet6, 0, 0, 17.5, nil)
         
-        worksheet_set_column(worksheet7, 0, 0, 17.5, nil)
-        worksheet_set_column(worksheet7, 1, 1, 10, nil)
-        worksheet_set_column(worksheet7, 2, 2, 27, nil)
-        worksheet_set_column(worksheet7, 3, 3, 20, nil)
+//        worksheet_set_column(worksheet7, 0, 0, 17.5, nil)
+//        worksheet_set_column(worksheet7, 1, 1, 10, nil)
+//        worksheet_set_column(worksheet7, 2, 2, 27, nil)
+//        worksheet_set_column(worksheet7, 3, 3, 20, nil)
+        
+        worksheet_set_column(worksheet8, 0, 0, 70, nil)
+        worksheet_set_column(worksheet8, 1, 1, 10, nil)
         
         let tbl = excelManager.sheetsManager.getFoodRecords()
         
@@ -540,7 +544,7 @@ class exportTable {
         }
         
         if version != 4 {
-            let worksheet2 = workbook_add_worksheet(workbook, "Изменения сахара и инсулин")
+            let worksheet2 = workbook_add_worksheet(workbook, "Уровень сахара и инсулин")
             
             worksheet_set_column(worksheet2, 0, 0, 20, nil);
             worksheet_set_column(worksheet2, 1, 1, 10, nil);
@@ -993,19 +997,31 @@ class exportTable {
             worksheet_write_string(worksheet6, lxw_row_t(3+i), 0, df.string(from: tbl7[i].days), nil)
         }
         
-        let tbl8 = excelManager.sheetsManager.getDeletedRecords()
-        worksheet_merge_range(worksheet7, 0, 0, 0, 3, userName, nil)
-        worksheet_write_string(worksheet7, 1, 0, "Удаленные записи", merge_format41)
-        worksheet_write_string(worksheet7, 2, 0, "Дата", merge_format41)
-        worksheet_write_string(worksheet7, 2, 1, "Время", merge_format41)
-        worksheet_write_string(worksheet7, 2, 2, "Тип", merge_format41)
-        worksheet_write_string(worksheet7, 2, 3, "Описание", merge_format41)
+//        let tbl8 = excelManager.sheetsManager.getDeletedRecords()
+//        worksheet_merge_range(worksheet7, 0, 0, 0, 3, userName, nil)
+//        worksheet_write_string(worksheet7, 1, 0, "Удаленные записи", merge_format41)
+//        worksheet_write_string(worksheet7, 2, 0, "Дата", merge_format41)
+//        worksheet_write_string(worksheet7, 2, 1, "Время", merge_format41)
+//        worksheet_write_string(worksheet7, 2, 2, "Тип", merge_format41)
+//        worksheet_write_string(worksheet7, 2, 3, "Описание", merge_format41)
+//
+//        for i in 0..<tbl8.count {
+//            worksheet_write_string(worksheet7, lxw_row_t(3+i), 0, df.string(from: tbl8[i].date), nil)
+//            worksheet_write_string(worksheet7, lxw_row_t(3+i), 1, df1.string(from: tbl8[i].time), nil)
+//            worksheet_write_string(worksheet7, lxw_row_t(3+i), 2, tbl8[i].type, nil)
+//            worksheet_write_string(worksheet7, lxw_row_t(3+i), 3, tbl8[i].context, nil)
+//        }
         
-        for i in 0..<tbl8.count {
-            worksheet_write_string(worksheet7, lxw_row_t(3+i), 0, df.string(from: tbl8[i].date), nil)
-            worksheet_write_string(worksheet7, lxw_row_t(3+i), 1, df1.string(from: tbl8[i].time), nil)
-            worksheet_write_string(worksheet7, lxw_row_t(3+i), 2, tbl8[i].type, nil)
-            worksheet_write_string(worksheet7, lxw_row_t(3+i), 3, tbl8[i].context, nil)
+        let tbl9 = excelManager.sheetsManager.getQuestionaryInfo()
+        worksheet_merge_range(worksheet8, 0, 0, 0, 3, userName, nil)
+        worksheet_write_string(worksheet8, 1, 0, "Опрос образа жизни", merge_format41)
+        worksheet_write_string(worksheet8, 2, 0, "Вопрос", merge_format41)
+        worksheet_write_string(worksheet8, 2, 1, "Ответ", merge_format41)
+        var i = 0
+        for (j,k) in zip(tbl9[0], tbl9[1]) {
+            worksheet_write_string(worksheet8, lxw_row_t(3+i), 0, j, nil)
+            worksheet_write_string(worksheet8, lxw_row_t(3+i), 1, k, nil)
+            i += 1
         }
         
         worksheet_protect(worksheet1, "pass123", nil)
@@ -1013,7 +1029,8 @@ class exportTable {
         worksheet_protect(worksheet4, "pass123", nil)
         worksheet_protect(worksheet5, "pass123", nil)
         worksheet_protect(worksheet6, "pass123", nil)
-        worksheet_protect(worksheet7, "pass123", nil)
+//        worksheet_protect(worksheet7, "pass123", nil)
+        worksheet_protect(worksheet8, "pass123", nil)
 
         let error = workbook_close(workbook)
         

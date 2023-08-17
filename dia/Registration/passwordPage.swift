@@ -74,7 +74,6 @@ struct passwordPage: View {
             .buttonStyle(RoundedRectangleButtonStyle())
             NavigationLink(isActive: $nextField, destination: {versionChoose()}, label: {EmptyView()})
                 .buttonStyle(TransparentButton()).hidden()
-            
         }
         .padding()
         .navigationBarTitleDisplayMode(.inline)

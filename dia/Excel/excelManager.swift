@@ -988,4 +988,93 @@ class excelManager {
             .lowercased()
             .replacingOccurrences(of: " ", with: "-") ?? nonLatin
     }
+    
+    func getQuestionaryInfo() -> [[String]] {
+        let questions: [String] = ["Беременнось по счету", "Количество родов", "Применение комбинированных оральных контрацептивов", "Брали ли у вас пролактин?", "Если брали, то было ли зафиксировано повышение?", "Если да, вам назначили препарат?", "Перечислите препараты не вошедшие в список", "Принимали ли вы витамин D до беременности?", "Перечислите препараты", "Принимали ли вы витамин D во время беременности?", "Перечислите препараты", "Отдыхали ли вы в жарких/солнечных странах во время беременности?", "Отпуск пришелся на I триместр беременности?", "Отпуск пришелся на II триместр беременности?", "Отпуск пришелся на III триместр беременности?", "Посещали ли вы солярий во время беременности?", "Гликированный гемоглобин", "Уровень триглицеридов", "Уровень холестерина", "Уровень глюкозы (натощак)", "Был ли ранее выявлен диабет у кровных родственников?", "Было ли замечено нарушение толерантности к глюкозе до беременности?", "Диагностировали ли вам гипертоническую болезнь до беременности?", "Диагностировали ли вам гипертоническую болезнь во время беременности?", "Курили ли вы за 6 месяцев до беременности?", "Курили вы до того как узнали о том, что беременны?", "Курите ли вы во время беременности?", "Укажите частоту потребления фруктов в неделю до беременности", "Укажите частоту потребления фруктов в неделю во время беременности", "Укажите частоту потребления пирожных в неделю до беременности", "Укажите частоту потребления пирожных в неделю во время беременности", "Укажите частоту потребления выпечки в неделю до беременности", "Укажите частоту потребления выпечки в неделю во время беременности", "Укажите частоту потребления шоколада в неделю до беременности", "Укажите частоту потребления шоколада в неделю во время беременности", "Укажите частоту потребления обезжиренных молочных продуктов в неделю до беременности", "Укажите частоту потребления обезжиренных молочных продуктов в неделю во время беременности", "Укажите частоту потребления не обезжиренных молочных продуктов в неделю до беременности", "Укажите частоту потребления не обезжиренных молочных продуктов в неделю во время беременности", "Укажите частоту потребления бобовых в неделю до беременности", "Укажите частоту потребления бобовых в неделю во время беременности", "Укажите частоту потребления мяса и мясных изделий в неделю до беременности", "Укажите частоту потребления мяса и мясных изделий в неделю во время беременности", "Укажите частоту потребления сухофруктов в неделю до беременности", "Укажите частоту потребления сухофруктов в неделю во время беременности", "Укажите частоту потребления рыбы и рыбных изделий в неделю до беременности", "Укажите частоту потребления рыбы и рыбных изделий в неделю во время беременности", "Укажите частоту потребления цельнозернового хлеба в неделю до беременности", "Укажите частоту потребления цельнозернового хлеба в неделю во время беременности", "Укажите частоту потребления любого хлеба в неделю до беременности", "Укажите частоту потребления любого хлеба в неделю во время беременности", "Укажите частоту потребления соусов и майонеза в неделю до беременности", "Укажите частоту потребления соусов и майонеза в неделю во время беременности", "Укажите частоту потребления овощей (сырых или приготовленных) в неделю до беременности", "Укажите частоту потребления овощей (сырых или приготовленных) в неделю во время беременности", "Укажите частоту потребления алкоголя в неделю до беременности", "Укажите частоту потребления алкоголя в неделю во время беременности", "Укажите частоту потребления сладких напитков в неделю до беременности", "Укажите частоту потребления сладких напитков в неделю во время беременности", "Укажите частоту потребления кофе в неделю до беременности", "Укажите частоту потребления кофе в неделю во время беременности", "Укажите частоту потребления сосисок и колбасы в неделю до беременности", "Укажите частоту потребления сосисок и колбасы в неделю во время беременности", "Укажите длительность легкой ходьбы до беременности, в день", "Укажите длительность легкой ходьбы во время беременности, в день", "Укажите среднее число лестничных пролетов, которые вы проходили в день до беременности", "Укажите среднее число лестничных пролетов, которые вы проходите в день во время беременности", "Укажите среднее число эпизодов посещения спортаза в неделю до беременности", "Укажите среднее число эпизодов посещения спортаза в неделю во время беременности"]
+        var answers: [String] = []
+        do {
+            let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
+            let path = documents + "/diacompanion.db"
+            let sourcePath = Bundle.main.path(forResource: "diacompanion", ofType: "db")!
+            _=copyDatabaseIfNeeded(sourcePath: sourcePath)
+            let db = try Connection(path)
+            
+            let questionaryT = Table("questionary")
+            let fpregnancy_n = Expression<String>("pregnancy_n")
+            let fdelivery_n = Expression<String>("delivery_n")
+            let fcontraceptive = Expression<String>("contraceptive")
+            let fprolactin_test = Expression<String>("prolactin_test")
+            let fheightened_prolactin = Expression<String>("heightened_prolactin")
+            let fprolactin_drug_prescribed = Expression<String>("prolactin_drug_prescribed")
+            let fprolactin_drug = Expression<String>("prolactin_drug")
+            let fvitamin_d_before = Expression<String>("vitamin_d_before")
+            let fvitamin_d_before_drug = Expression<String>("vitamin_d_before_drug")
+            let fvitamin_d_after = Expression<String>("vitamin_d_after")
+            let fvitamin_d_after_drug = Expression<String>("vitamin_d_after_drug")
+            let fweekendAtSouth = Expression<String>("weekendAtSouth")
+            let fweekendAtSouth_firstTrimester = Expression<String>("weekendAtSouth_firstTrimester")
+            let fweekendAtSouth_secondTrimester = Expression<String>("weekendAtSouth_secondTrimester")
+            let fweekendAtSouth_thirdTrimester = Expression<String>("weekendAtSouth_thirdTrimester")
+            let fsolarium = Expression<String>("solarium")
+            let fHbA1C = Expression<String>("HbA1C")
+            let ftriglycerides = Expression<String>("triglycerides")
+            let fcholesterol = Expression<String>("cholesterol")
+            let fglucose = Expression<String>("glucose")
+            let ffamily_diabetes = Expression<String>("family_diabetes")
+            let fimpaired_glucose_tolerance = Expression<String>("impaired_glucose_tolerance")
+            let fhypertension_before = Expression<String>("hypertension_before")
+            let fhypertension_after = Expression<String>("hypertension_after")
+            let fsmoking_before6month = Expression<String>("smoking_before6month")
+            let fsmoking_before_known = Expression<String>("smoking_before_known")
+            let fsmoking_after = Expression<String>("smoking_after")
+            let ffruits_before = Expression<String>("fruits_before")
+            let ffruits_after = Expression<String>("fruits_after")
+            let fbisquits_before = Expression<String>("bisquits_before")
+            let fbisquits_after = Expression<String>("bisquits_after")
+            let fbaking_before = Expression<String>("baking_before")
+            let fbaking_after = Expression<String>("baking_after")
+            let fchocolate_before = Expression<String>("chocolate_before")
+            let fchocolate_after = Expression<String>("chocolate_after")
+            let fmilk_before = Expression<String>("milk_before")
+            let fmilk_after = Expression<String>("milk_after")
+            let fmilk_before_alt = Expression<String>("milk_before_alt")
+            let fmilk_after_alt = Expression<String>("milk_after_alt")
+            let flegumes_before = Expression<String>("legumes_before")
+            let flegumes_after = Expression<String>("legumes_after")
+            let fmeat_before = Expression<String>("meat_before")
+            let fmeat_after = Expression<String>("meat_after")
+            let fdried_fruits_before = Expression<String>("dried_fruits_before")
+            let fdried_fruits_after = Expression<String>("dried_fruits_after")
+            let ffish_before = Expression<String>("fish_before")
+            let ffish_after = Expression<String>("fish_after")
+            let fgrain_bread_before = Expression<String>("grain_bread_before")
+            let fgrain_bread_after = Expression<String>("grain_bread_after")
+            let fany_bread_before = Expression<String>("any_bread_before")
+            let fany_bread_after = Expression<String>("any_bread_after")
+            let fsauce_before = Expression<String>("sauce_before")
+            let fsauce_after = Expression<String>("sauce_after")
+            let fvegetable_before = Expression<String>("vegetable_before")
+            let fvegetable_after = Expression<String>("vegetable_after")
+            let falcohol_before = Expression<String>("alcohol_before")
+            let falcohol_after = Expression<String>("alcohol_after")
+            let fsweet_drinks_before = Expression<String>("sweet_drinks_before")
+            let fsweet_drinks_after = Expression<String>("sweet_drinks_after")
+            let fcoffe_before = Expression<String>("coffe_before")
+            let fcoffe_after = Expression<String>("coffe_after")
+            let fsausages_before = Expression<String>("sausages_before")
+            let fsausages_after = Expression<String>("sausages_after")
+            let fwalk_before = Expression<String>("walk_before")
+            let fwalk_after = Expression<String>("walk_after")
+            let fstep_before = Expression<String>("step_before")
+            let fstep_after = Expression<String>("step_after")
+            let fsport_before = Expression<String>("sport_before")
+            let fsport_after = Expression<String>("sport_after")
+            for i in try db.prepare(questionaryT) {
+                answers.append(contentsOf: [i[fpregnancy_n], i[fdelivery_n], i[fcontraceptive], i[fprolactin_test], i[fheightened_prolactin], i[fprolactin_drug_prescribed], i[fprolactin_drug], i[fvitamin_d_before], i[fvitamin_d_before_drug], i[fvitamin_d_after], i[fvitamin_d_after_drug], i[fweekendAtSouth], i[fweekendAtSouth_firstTrimester], i[fweekendAtSouth_secondTrimester], i[fweekendAtSouth_thirdTrimester], i[fsolarium], i[fHbA1C], i[ftriglycerides], i[fcholesterol], i[fglucose], i[ffamily_diabetes], i[fimpaired_glucose_tolerance], i[fhypertension_before], i[fhypertension_after], i[fsmoking_before6month], i[fsmoking_before_known], i[fsmoking_after], i[ffruits_before], i[ffruits_after], i[fbisquits_before], i[fbisquits_after], i[fbaking_before], i[fbaking_after], i[fchocolate_before], i[fchocolate_after], i[fmilk_before], i[fmilk_after], i[fmilk_before_alt], i[fmilk_after_alt], i[flegumes_before], i[flegumes_after], i[fmeat_before], i[fmeat_after], i[fdried_fruits_before], i[fdried_fruits_after], i[ffish_before], i[ffish_after], i[fgrain_bread_before], i[fgrain_bread_after], i[fany_bread_before], i[fany_bread_after], i[fsauce_before], i[fsauce_after], i[fvegetable_before], i[fvegetable_after], i[falcohol_before], i[falcohol_after], i[fsweet_drinks_before], i[fsweet_drinks_after], i[fcoffe_before], i[fcoffe_after], i[fsausages_before], i[fsausages_after], i[fwalk_before], i[fwalk_after], i[fstep_before], i[fstep_after], i[fsport_before], i[fsport_after]])
+            }
+        } catch {
+            print(error)
+        }
+        return [questions, answers]
+    }
 }

@@ -1,6 +1,5 @@
 import Foundation
 import SQLite
-import SwiftUI
 
 enum inputErorrs: Error {
     case decimalError

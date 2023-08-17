@@ -1,0 +1,42 @@
+{
+  "Outputs" : {
+    "target" : {
+      "MLFeatureShortDescription" : "Blood glucose after the meal"
+    }
+  },
+  "Inputs" : {
+    "dinner" : {
+      "MLFeatureShortDescription" : "--"
+    },
+    "lunch" : {
+      "MLFeatureShortDescription" : "--"
+    },
+    "carbo" : {
+      "MLFeatureShortDescription" : "carbohydrates"
+    },
+    "breakfast" : {
+      "MLFeatureShortDescription" : "--"
+    },
+    "BG0" : {
+      "MLFeatureShortDescription" : "Blood glucose before the meal"
+    },
+    "kr" : {
+      "MLFeatureShortDescription" : "--"
+    },
+    "gl" : {
+      "MLFeatureShortDescription" : "glycaemic load"
+    },
+    "snack" : {
+      "MLFeatureShortDescription" : "--"
+    },
+    "BMI" : {
+      "MLFeatureShortDescription" : "--"
+    },
+    "prot_b6h" : {
+      "MLFeatureShortDescription" : "protein before six houres"
+    }
+  },
+  "TrainingInputs" : {
+
+  }
+}

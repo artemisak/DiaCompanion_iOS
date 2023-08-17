@@ -50,7 +50,7 @@ struct versionChoose: View {
                     
                 } label: {
                     HStack {
-                        Text("ГСД, диета (инсулинотерапия)").font(.body).bold()
+                        Text("ГСД, инсулинотерапия").font(.body).bold()
                         Spacer()
                         Image(systemName: "chevron.down").rotationEffect(.degrees(GDM ? 0 : -90))
                     }
@@ -114,7 +114,7 @@ struct versionChoose: View {
         .navigationBarBackButtonHidden()
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
-                NavigationLink("Далее", destination: pacientCart())
+                NavigationLink("Далее", destination: generalQuestions())
             }
         }
     }
