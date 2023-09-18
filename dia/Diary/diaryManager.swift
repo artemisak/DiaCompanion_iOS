@@ -119,7 +119,7 @@ class diaryManager {
             _=copyDatabaseIfNeeded(sourcePath: sourcePath)
             let db = try Connection(path)
             let food = Table("food")
-            let table_id = Expression<Int>("_id")
+            let table_id = Expression<Int>("id")
             let foodName = Expression<String>("name")
             let cat = Expression<String>("category")
             let carbo = Expression<Double?>("carbo")

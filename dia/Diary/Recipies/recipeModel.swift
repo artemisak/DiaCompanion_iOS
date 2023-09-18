@@ -48,7 +48,7 @@ class recipeModel: ObservableObject {
         }
         
         var statement: OpaquePointer?
-        let sql = "SELECT _id AS id, name, url, group_concat(item_id) AS item_id, group_concat(item_name, '//') AS item_name, group_concat(prot) AS prot, group_concat(fat) AS fat, group_concat(carbo) AS carbo, group_concat(kkal) AS kkal, group_concat(gi) AS gi, group_concat(gram) AS gram FROM (SELECT _id, name, url, item_id, (SELECT name FROM food INNER JOIN usersRecipes ON food._id = tab1.item_id) as item_name, (SELECT prot FROM food INNER JOIN usersRecipes ON food._id = tab1.item_id) as prot, (SELECT fat FROM food INNER JOIN usersRecipes ON food._id = tab1.item_id) as fat, (SELECT carbo FROM food INNER JOIN usersRecipes ON food._id = tab1.item_id) as carbo, (SELECT ec FROM food INNER JOIN usersRecipes ON food._id = tab1.item_id) as kkal, (SELECT gi FROM food INNER JOIN usersRecipes ON food._id = tab1.item_id) as gi, gram FROM (SELECT _id, name, url, item_id, gram FROM food INNER JOIN usersRecipes ON food._id = usersRecipes.food_id) AS tab1) GROUP BY _id"
+        let sql = "SELECT id, name, url, group_concat(item_id) AS item_id, group_concat(item_name, '//') AS item_name, group_concat(prot) AS prot, group_concat(fat) AS fat, group_concat(carbo) AS carbo, group_concat(kkal) AS kkal, group_concat(gi) AS gi, group_concat(gram) AS gram FROM (SELECT id, name, url, item_id, (SELECT name FROM food INNER JOIN usersRecipes ON food.id = tab1.item_id) as item_name, (SELECT prot FROM food INNER JOIN usersRecipes ON food.id = tab1.item_id) as prot, (SELECT fat FROM food INNER JOIN usersRecipes ON food.id = tab1.item_id) as fat, (SELECT carbo FROM food INNER JOIN usersRecipes ON food.id = tab1.item_id) as carbo, (SELECT ec FROM food INNER JOIN usersRecipes ON food.id = tab1.item_id) as kkal, (SELECT gi FROM food INNER JOIN usersRecipes ON food.id = tab1.item_id) as gi, gram FROM (SELECT food.id, name, url, item_id, gram FROM food INNER JOIN usersRecipes ON food.id = usersRecipes.food_id) AS tab1) GROUP BY id"
                 
         if sqlite3_prepare_v2(db, sql, -1, &statement, nil) != SQLITE_OK {
             let errmsg = String(cString: sqlite3_errmsg(db)!)
@@ -100,7 +100,7 @@ class recipeModel: ObservableObject {
         }
         
         var statement: OpaquePointer?
-        let sql = "DELETE FROM food WHERE _id = \(item.table_id); DELETE FROM usersRecipes WHERE food_id = \(item.table_id); DELETE FROM diary WHERE id_food = \(item.table_id);"
+        let sql = "DELETE FROM food WHERE id = \(item.table_id); DELETE FROM usersRecipes WHERE food_id = \(item.table_id); DELETE FROM diary WHERE id_food = \(item.table_id);"
         
         if sqlite3_prepare_v2(db, sql, -1, &statement, nil) != SQLITE_OK {
             let errmsg = String(cString: sqlite3_errmsg(db)!)

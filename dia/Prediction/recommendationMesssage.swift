@@ -47,7 +47,7 @@ func checkUnequalGlDistribution(listOfFood: [foodItem]) -> Bool {
 }
 
 func checkBGPredicted(BG1: Double) -> Bool {
-    if BG1 > 6.8 {
+    if BG1 > 0.51 {
         return true
     } else {
         return false
@@ -77,7 +77,7 @@ func checkCarbo(foodType: String, listOfFood: [foodItem]) -> (Bool, Bool) {
 }
 
 func checkBGBefore(BG0: Double) -> Bool {
-    if BG0 > 6.8 {
+    if BG0 > 0.51 {
         return true
     } else {
         return false
@@ -99,7 +99,7 @@ func checkPV(listOfFood: [foodItem], date: Date) -> Bool {
         let db = try Connection(path)
         
         let food = Table("food")
-        let id = Expression<String>("_id")
+        let id = Expression<String>("id")
         let pv = Expression<Double?>("pv")
         for i in listOfFood {
             for i1 in try db.prepare(food.select(pv).filter(id == "\(i.table_id)")){

@@ -56,19 +56,19 @@ func findAdress() throws -> [String] {
             doc_adress.append(i[doc]!)
         }
         switch doc_adress.first! {
-        case "Анопова Анна Дмитриевна":
+        case "Анопова А.Д.":
             return ["anopova.ann@gmail.com","diacompanion@gmail.com"]
-        case "Болотько Яна Алексеевна":
+        case "Болотько Я.А.":
             return ["yanabolotko@gmail.com","diacompanion@gmail.com"]
-        case "Дронова Александра Владимировна":
+        case "Дронова А.В.":
             return ["aleksandra-dronova@yandex.ru","diacompanion@gmail.com"]
-        case "Попова Полина Викторовна":
+        case "Попова П.В.":
             return ["pvpopova@yandex.ru","diacompanion@gmail.com"]
-        case "Ткачук Александра Сергеевна":
+        case "Ткачук А.С.":
             return ["aleksandra.tkachuk.1988@mail.com","diacompanion@gmail.com"]
-        case "Васюкова Елена Андреева":
+        case "Васюкова Е.А.":
             return ["elenavasukova2@gmail.com","diacompanion@gmail.com"]
-        case "Пашкова Кристина Валерьевна":
+        case "Пашкова К.В.":
             return ["kristinapaskova95@gmail.com","diacompanion@gmail.com"]
         default:
             return [""]

@@ -36,10 +36,10 @@
 "Дата" = "Date";
 "Время" = "Time";
 "Уровень сахара в крови" = "BG rate";
-"Записать текущий УСК" = "Set current BG rate";
-"УСК не определен" = "Insufficient data";
-"УСК превысит норму" = "BG will exceed the target value";
-"УСК не превысит норму" = "BG will be within the targets";
+"Записать текущий УГК" = "Set current BG rate";
+"УГК не определен" = "Insufficient data";
+"УГК превысит норму" = "BG will exceed the target value";
+"УГК не превысит норму" = "BG will be within the targets";
 "5,0 ммоль/л" = "5,0 mmol/l";
 "Потребленные продукты" = "Consumed product";
 "Добавить" = "Add item";

@@ -42,7 +42,7 @@ struct enterFood: View {
     @State private var showEditView: Bool = false
     @State private var id0: Int = 0
     @State private var isEditing: Bool = false
-    @State private var sugarlvl: LocalizedStringKey = "УСК не определен"
+    @State private var sugarlvl: LocalizedStringKey = "УГК не определен"
     @State private var isHidden: Bool = true
     @State private var isSheetShown: Bool = false
     @State private var scolor = Color("listButtonColor")
@@ -108,14 +108,14 @@ struct enterFood: View {
                 }
                 if routeManager.version == 1 {
                     Section(header: Text("Уровень сахара в крови").font(.caption)) {
-                        Toggle(isOn: $enabled) {Text("Записать текущий УСК")}
+                        Toggle(isOn: $enabled) {Text("Записать текущий УГК")}
                             .onChange(of: enabled){ _ in
                                 if (!pacientManager.provider.checkBMI() && enabled) {
                                     alertMessage = true
                                     enabled = false
                                 }
                                 sugar = ""
-                                sugarlvl = "УСК не определен"
+                                sugarlvl = "УГК не определен"
                             }
                             .alert(isPresented: $alertMessage) {
                                 Alert(title: Text("Статус операции"), message: Text("Необходимо указать рост и вес \nдо беременности в карте пациента"), dismissButton: .default(Text("ОК")))
@@ -340,14 +340,14 @@ struct enterFood: View {
                 }
                 if routeManager.version == 1 {
                     Section(header: Text("Уровень сахара в крови").font(.caption)) {
-                        Toggle(isOn: $enabled) {Text("Записать текущий УСК")}
+                        Toggle(isOn: $enabled) {Text("Записать текущий УГК")}
                             .onChange(of: enabled){ _ in
                                 if (!pacientManager.provider.checkBMI() && enabled) {
                                     alertMessage = true
                                     enabled = false
                                 }
                                 sugar = ""
-                                sugarlvl = "УСК не определен"
+                                sugarlvl = "УГК не определен"
                             }
                             .alert(isPresented: $alertMessage) {
                                 Alert(title: Text("Статус операции"), message: Text("Необходимо указать рост и вес \nдо беременности в карте пациента"), dismissButton: .default(Text("ОК")))
@@ -543,23 +543,23 @@ struct enterFood: View {
                     food.append($0.name)
                     gram.append($0.gram!)
                 }
-                let foodNutrients = predictManager.provider.getData(BG0: try convert(txt: sugar), foodtype: ftpreviewIndex, foodN: food, gram: gram, picker_date: date)
-                res = try predictManager.provider.getPredict(BG0: foodNutrients.BG0, gl: foodNutrients.gl, carbo: foodNutrients.carbo, prot: foodNutrients.protb6h, t1: foodNutrients.food_type1, t2: foodNutrients.food_type2, t3: foodNutrients.food_type3, t4: foodNutrients.food_type4, kr: foodNutrients.kr, BMI: foodNutrients.BMI)
+                let model_input = predictManager.provider.getData(BG0: try convert(txt: sugar), foodtype: ftpreviewIndex, foodN: food, gram: gram, picker_date: date)
+                res = try predictManager.provider.getPredict(meal_type_n: model_input.meal_type_n, gi: model_input.gi, gl: model_input.gl, carbo: model_input.carbo, mds: model_input.mds, kr: model_input.kr, ca: model_input.ca, fe: model_input.fe, carbo_b6h: model_input.carbo_b6h, prot_b6h: model_input.prot_b6h, fat_b6h: model_input.fat_b6h, pv_b12h: model_input.pv_b12h, BG: model_input.BG, BMI: model_input.BMI, HbA1C_V1: model_input.HbA1C_V1, TG_V1: model_input.TG_V1, Hol_V1: model_input.Hol_V1, weight: model_input.weight, age: model_input.age, fasting_glu: model_input.fasting_glu, pregnancy_week: model_input.pregnancy_week)
                 let checkCarbo = checkCarbo(foodType: ftpreviewIndex.rawValue, listOfFood: workList)
                 recomendationCards = getMessage(highBGPredict: checkBGPredicted(BG1: res), highBGBefore: checkBGBefore(BG0: try convert(txt: sugar)), moderateAmountOfCarbo: checkCarbo.0, tooManyCarbo: checkCarbo.1, unequalGLDistribution: checkUnequalGlDistribution(listOfFood: workList), highGI: checkGI(listOfFood: workList))
                 recCardID = recomendationCards.isEmpty ? UUID() : recomendationCards[0].id
-                if res < 6.8 {
-                    isVisible = false
+                if res > 0.51 {
+                    isVisible = true
                     withAnimation(.none){
-                        sugarlvl = "УСК не превысит норму"
-                        recColor = Color.green.opacity(0.7)
+                        sugarlvl = "УГК превысит норму"
+                        recColor = Color(red: 255/255, green: 91/255, blue: 36/255)
                         fontColor = Color.white
                     }
                 } else {
-                    isVisible = true
+                    isVisible = false
                     withAnimation(.none){
-                        sugarlvl = "УСК превысит норму"
-                        recColor = Color(red: 255/255, green: 91/255, blue: 36/255)
+                        sugarlvl = "УГК не превысит норму"
+                        recColor = Color.green.opacity(0.7)
                         fontColor = Color.white
                     }
                 }
@@ -567,7 +567,7 @@ struct enterFood: View {
             } else {
                 isVisible = false
                 withAnimation(.none){
-                    sugarlvl = "УСК не определен"
+                    sugarlvl = "УГК не определен"
                     recColor = Color("BG_Undefined")
                     fontColor = Color("BG_Font_Undefined")
                 }

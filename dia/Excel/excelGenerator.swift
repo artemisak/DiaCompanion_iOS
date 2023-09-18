@@ -235,8 +235,8 @@ class exportTable {
         worksheet_write_string(worksheet1, 2, 65, nil, nil)
         worksheet_write_string(worksheet1, 2, 66, "Углеводы, в г.", merge_format3)
         worksheet_write_string(worksheet1, 2, 67, "ГН", merge_format3)
-        worksheet_write_string(worksheet1, 2, 68, "УСК до еды", merge_format3)
-        worksheet_write_string(worksheet1, 2, 69, "Прогноз УСК", merge_format3)
+        worksheet_write_string(worksheet1, 2, 68, "УГК до еды", merge_format3)
+        worksheet_write_string(worksheet1, 2, 69, "Вероятность гипергликемии (в %)", merge_format3)
         worksheet_write_string(worksheet1, 2, 70, "Время добавления записи", merge_format3)
         
         var d = 0

@@ -18,7 +18,7 @@ struct loginPage: View {
         VStack(spacing: 20) {
             VStack(spacing: 20) {
                 VStack(alignment: .leading, spacing: .zero) {
-                    TextField("", text: $login, prompt: Text("almazov@mail.ru").font(.body))
+                    TextField("", text: $login, prompt: Text("Логин").font(.body))
                         .labelsHidden()
                         .onChange(of: login, perform: {i in
                             if !isValidLogin {

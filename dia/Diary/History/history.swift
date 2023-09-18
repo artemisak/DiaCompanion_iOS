@@ -36,7 +36,7 @@ struct history: View {
     }
     @StateObject private var hList = historyList()
     @EnvironmentObject var collection: foodCollections
-    @State private var fillterDefault = fillterBy.all
+    @State private var fillterDefault = fillterBy.week
     @State public var deselected = [deselectRow(name: "Измерение сахара"), deselectRow(name: "Иньекции инсулина"), deselectRow(name: "Прием пищи"), deselectRow(name: "Физическая нагрузка"), deselectRow(name: "Уровень кетонов в моче"), deselectRow(name: "Измерение массы тела")]
     @State private var redirectToEnterFood: Bool = false
     @State private var redirectToEnterAct: Bool = false
@@ -552,8 +552,8 @@ struct history: View {
         res[5] = "ГИ: " + "\(round((calc[5]/calc[3])*10)/10)"
         res[6] = "ГН: " + "\(round(calc[6]*10)/10)"
         if info.last![8] != "0.0" && info.last![9] != "0.0" {
-            res.append("УСК до приема пищи: " + info.last![8])
-            res.append("Прогнозируемый УСК после: " + info.last![9])
+            res.append("УГК до приема пищи: \(info.last![8])")
+            res.append("Вероятность гипергликемии: \(info.last![9])%")
         }
         return res
     }

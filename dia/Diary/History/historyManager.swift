@@ -33,7 +33,7 @@ class historyList: ObservableObject {
             let gram = Expression<String>("g")
             
             let foodInfo = Table("food")
-            let food_id = Expression<Int>("_id")
+            let food_id = Expression<Int>("id")
             let prot = Expression<Double>("prot")
             let fat = Expression<Double>("fat")
             let carbo = Expression<Double>("carbo")
@@ -63,7 +63,7 @@ class historyList: ObservableObject {
                     var temp1 = 0.0
                     for i2 in try db.prepare(sugarR.select(BG0,BG1).filter(sdate == histList[i].date[6..<16] && stime == histList[i].date[0..<5])){
                         temp0 = i2[BG0]
-                        temp1 = round(i2[BG1]*10)/10
+                        temp1 = round(i2[BG1]*100)
                     }
                     for i1 in try db.prepare(diary.select(id, table_id_key, gram, fName).filter(dateTime == histList[i].date && foodType == histList[i].name)){
                         histList[i].bdID.append(i1[id])

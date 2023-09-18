@@ -9,158 +9,128 @@ import SwiftUI
 
 struct pacientCart: View {
     @EnvironmentObject var routeManager: Router
-    @State private var pFio: Bool = false
-    @State private var pV: Bool = false
-    @State private var pDate: Bool = false
-    @State private var bStart: Bool = false
-    @State private var bWeek: Bool = false
-    @State private var bid: Bool = false
-    @State private var bWeight: Bool = false
-    @State private var bHeight: Bool = false
-    @State private var txt: String = ""
-    @State private var vDate = Date()
+    @State private var edit: Bool = true
+    @ObservedObject var viewModel = pacientViewModel()
+    let formatter: NumberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.maximumFractionDigits = 1
+        formatter.zeroSymbol = ""
+        return formatter
+    }()
     var body: some View {
         if (routeManager.isLoggedIn && routeManager.isChoosed) {
-            ZStack {
-                List {
-                    Section(header: Text("Данные пациента").font(.caption)){
-                        Button(action: {withAnimation(.default){pFio.toggle()}}) {
-                            Text("ФИО")
-                        }.foregroundColor(Color("listButtonColor"))
-                        Button(action: {withAnimation(.default){pDate.toggle()}}) {
-                            Text("Дата рождения")
-                        }.foregroundColor(Color("listButtonColor"))
-                        Button(action: {withAnimation(.default){pV.toggle()}}) {
-                            Text("Лечащий врач")
-                        }.foregroundColor(Color("listButtonColor"))
-                        Button(action: {withAnimation(.default){bStart.toggle()}}) {
-                            Text("Дата начала ведения дневника")
-                        }.foregroundColor(Color("listButtonColor"))
-                        if routeManager.version != 3 && routeManager.version != 4 {
-                            Button(action: {withAnimation(.default){bWeek.toggle()}}) {
-                                Text("Неделя берем. на начало исследования")
-                            }.foregroundColor(Color("listButtonColor"))
-                        }
-                        Button(action: {withAnimation(.default){bid.toggle()}}) {
-                            Text("Индивидуальный номер пациента")
-                        }.foregroundColor(Color("listButtonColor"))
-                        Button(action: {withAnimation(.default){bWeight.toggle()}}) {
-                            if routeManager.version != 3 && routeManager.version != 4 {
-                                Text("Вес до беременности, кг")
-                            } else {
-                                Text("Вес, кг")
-                            }
-                        }.foregroundColor(Color("listButtonColor"))
-                        Button(action: {withAnimation(.default){bHeight.toggle()}}) {
-                            if routeManager.version != 3 && routeManager.version != 4 {
-                                Text("Рост до беременности, см")
-                            } else {
-                                Text("Рост, см")
-                            }
-                        }.foregroundColor(Color("listButtonColor"))
+            Form {
+                Section {
+                    HStack {
+                        Text("ФИО").font(Font.body)
+                        TextField(text: $viewModel.woman.fio) {EmptyView()}.multilineTextAlignment(.trailing).padding(.trailing)
                     }
-                }
-                .ignoresSafeArea(.keyboard)
-                if bWeek {
-                    weekS(bWeek: $bWeek)
-                }
-                if pV {
-                    currentV(pV:$pV)
-                }
-                if pFio {
-                    fio(pFio: $pFio, txt: $txt)
-                }
-                if pDate {
-                    bday(pDate: $pDate, vDate: $vDate)
-                }
-                if bStart {
-                    dStart(bStart: $bStart, vDate: $vDate)
-                }
-                if bid {
-                    pid(bid: $bid, txt: $txt)
-                }
-                if bWeight {
-                    pWeight(bWeight: $bWeight, txt: $txt)
-                }
-                if bHeight {
-                    pHeight(bHeight: $bHeight, txt: $txt)
-                }
-            }
-            .navigationBarTitle("Персональная карта")
-        } else {
-            ZStack {
-                List {
-                    Section(header: Text("Данные пациента").font(.caption)){
-                        Button(action: {withAnimation(.default){pFio.toggle()}}) {
-                            Text("ФИО")
-                        }.foregroundColor(Color("listButtonColor"))
-                        Button(action: {withAnimation(.default){pDate.toggle()}}) {
-                            Text("Дата рождения")
-                        }.foregroundColor(Color("listButtonColor"))
-                        Button(action: {withAnimation(.default){pV.toggle()}}) {
-                            Text("Лечащий врач")
-                        }.foregroundColor(Color("listButtonColor"))
-                        Button(action: {withAnimation(.default){bStart.toggle()}}) {
-                            Text("Дата начала ведения дневника")
-                        }.foregroundColor(Color("listButtonColor"))
-                        if routeManager.version != 3 && routeManager.version != 4 {
-                            Button(action: {withAnimation(.default){bWeek.toggle()}}) {
-                                Text("Неделя берем. на начало исследования")
-                            }.foregroundColor(Color("listButtonColor"))
-                        }
-                        Button(action: {withAnimation(.default){bid.toggle()}}) {
-                            Text("Индивидуальный номер пациента")
-                        }.foregroundColor(Color("listButtonColor"))
-                        Button(action: {withAnimation(.default){bWeight.toggle()}}) {
-                            if routeManager.version != 3 && routeManager.version != 4 {
-                                Text("Вес до беременности, кг")
-                            } else {
-                                Text("Вес, кг")
-                            }
-                        }.foregroundColor(Color("listButtonColor"))
-                        Button(action: {withAnimation(.default){bHeight.toggle()}}) {
-                            if routeManager.version != 3 && routeManager.version != 4 {
-                                Text("Рост до беременности, см")
-                            } else {
-                                Text("Рост, см")
-                            }
-                        }.foregroundColor(Color("listButtonColor"))
+                    HStack {
+                        Text("Вес, кг.").font(Font.body)
+                        TextField(value: $viewModel.woman.weight, formatter: formatter) {EmptyView()}.multilineTextAlignment(.trailing).padding(.trailing)
                     }
-                }
-                .ignoresSafeArea(.keyboard)
-                if bWeek {
-                    weekS(bWeek: $bWeek)
-                }
-                if pV {
-                    currentV(pV:$pV)
-                }
-                if pFio {
-                    fio(pFio: $pFio, txt: $txt)
-                }
-                if pDate {
-                    bday(pDate: $pDate, vDate: $vDate)
-                }
-                if bStart {
-                    dStart(bStart: $bStart, vDate: $vDate)
-                }
-                if bid {
-                    pid(bid: $bid, txt: $txt)
-                }
-                if bWeight {
-                    pWeight(bWeight: $bWeight, txt: $txt)
-                }
-                if bHeight {
-                    pHeight(bHeight: $bHeight, txt: $txt)
-                }
+                    HStack {
+                        Text("Рост, см.").font(Font.body)
+                        TextField(value: $viewModel.woman.height, formatter: formatter) {EmptyView()}.multilineTextAlignment(.trailing).padding(.trailing)
+                    }
+                    DatePicker("День рождения", selection: $viewModel.woman.birthday, displayedComponents: [.date]).font(Font.body)
+                    HStack {
+                        Text("ID пациента").font(Font.body)
+                        TextField(value: $viewModel.woman.patientID, formatter: formatter) {EmptyView()}.multilineTextAlignment(.trailing).padding(.trailing)
+                    }
+                } header: {
+                    Text("О пациенте")
+                }.disabled(edit)
+                Section {
+                    Picker("Врач", selection: $viewModel.woman.selectedDoc) {
+                        ForEach(doc.allCases) { i in
+                            Text(i.rawValue).tag(i)
+                        }
+                    }.pickerStyle(.menu).font(Font.body).padding(.trailing)
+                    DatePicker("Начало мониторинга", selection: $viewModel.woman.start_date, displayedComponents: [.date])
+                    Picker("Неделя беременности", selection: $viewModel.woman.week_of_start){
+                        ForEach(1...40, id: \.self) { week in
+                            Text("\(week)")
+                        }
+                    }
+                    Picker("День недели", selection: $viewModel.woman.day_of_start){
+                        ForEach(1...7, id: \.self) { day in
+                            Text("\(day)")
+                        }
+                    }
+                } header: {
+                    Text("Мониторинг")
+                }.disabled(edit)
             }
-            .navigationBarTitle("Персональная карта")
+            .navigationTitle("Персональная карта")
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing, content: {
                     Button {
-                        Task {
-                            await routeManager.setChoosed()
-                            routeManager.animateTransition = true
+                        edit.toggle()
+                        if edit {
+                            Task {
+                                await pacientManager.provider.savePatientCart(name: viewModel.woman.fio, birthDay: viewModel.woman.birthday, doc: viewModel.woman.selectedDoc.rawValue, start_day: viewModel.woman.start_date, week: viewModel.woman.week_of_start, day: viewModel.woman.day_of_start, id: viewModel.woman.patientID, height: viewModel.woman.height, weight: viewModel.woman.weight)
+                            }
                         }
+                    } label: {
+                        Text(edit ? "Изменить" : "Сохранить")
+                    }
+                })
+            }
+        } else {
+            Form {
+                Section {
+                    HStack {
+                        Text("ФИО").font(Font.body)
+                        TextField(text: $viewModel.woman.fio) {EmptyView()}.multilineTextAlignment(.trailing).padding(.trailing)
+                    }
+                    HStack {
+                        Text("Вес, кг.").font(Font.body)
+                        TextField(value: $viewModel.woman.weight, formatter: formatter) {EmptyView()}.multilineTextAlignment(.trailing).padding(.trailing)
+                    }
+                    HStack {
+                        Text("Рост, см.").font(Font.body)
+                        TextField(value: $viewModel.woman.height, formatter: formatter) {EmptyView()}.multilineTextAlignment(.trailing).padding(.trailing)
+                    }
+                    DatePicker("День рождения", selection: $viewModel.woman.birthday, displayedComponents: [.date]).font(Font.body)
+                    HStack {
+                        Text("ID пациента").font(Font.body)
+                        TextField(value: $viewModel.woman.patientID, formatter: formatter) {EmptyView()}.multilineTextAlignment(.trailing).padding(.trailing)
+                    }
+                } header: {
+                    Text("О пациенте")
+                }
+                Section {
+                    Picker("Врач", selection: $viewModel.woman.selectedDoc) {
+                        ForEach(doc.allCases) { i in
+                            Text(i.rawValue).tag(i)
+                        }
+                    }.pickerStyle(.menu).font(Font.body).padding(.trailing)
+                    DatePicker("Начало мониторинга", selection: $viewModel.woman.start_date, displayedComponents: [.date])
+                    Picker("Неделя беременности", selection: $viewModel.woman.week_of_start) {
+                        ForEach(1...40, id: \.self) { week in
+                            Text("\(week)")
+                        }
+                    }
+                    Picker("День недели", selection: $viewModel.woman.day_of_start){
+                        ForEach(1...7, id: \.self) { day in
+                            Text("\(day)")
+                        }
+                    }
+                } header: {
+                    Text("Мониторинг")
+                }
+            }
+            .navigationTitle("Персональная карта")
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing, content: {
+                    Button {
+                            Task {
+                                await pacientManager.provider.savePatientCart(name: viewModel.woman.fio, birthDay: viewModel.woman.birthday, doc: viewModel.woman.selectedDoc.rawValue, start_day: viewModel.woman.start_date, week: viewModel.woman.week_of_start, day: viewModel.woman.day_of_start, id: viewModel.woman.patientID, height: viewModel.woman.height, weight: viewModel.woman.weight)
+                                await routeManager.setChoosed()
+                            }
+                            routeManager.animateTransition = true
                     } label: {
                         Text("Завершить")
                     }

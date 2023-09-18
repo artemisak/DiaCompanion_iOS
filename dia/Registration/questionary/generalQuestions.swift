@@ -106,6 +106,7 @@ struct generalQuestions: View {
     @State private var triglic = 0.0
     @State private var hl = 0.0
     @State private var fbg = 0.0
+    @State private var preg_week = 0.0
     let formatter: NumberFormatter = {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
@@ -214,6 +215,7 @@ struct generalQuestions: View {
                         .keyboardType(.decimalPad)
                     TextField("Уровень глюкозы (натощак)", value: $fbg, formatter: formatter)
                         .keyboardType(.decimalPad)
+                    TextField("Срок на момент сдачи анализов", value: $preg_week, formatter: formatter).keyboardType(.decimalPad)
                 } header: {
                     Text("Другие анализы").font(.title3)
                 }
@@ -231,7 +233,7 @@ struct generalQuestions: View {
                         NavigationLink(isActive: $nextField, destination: {lifeStyle()}, label: {EmptyView()}).buttonStyle(TransparentButton()).hidden()
                         Button {
                             Task {
-                                await questionaryManager.provider.saveGeneralQuestion(pregnancy_n: selectedPregNum.rawValue, delivery_n: selectedBirthCount.rawValue, contraceptive: selectedOralContr.rawValue, prolactin_test: selectedProlactin.rawValue, heightened_prolactin: selectedHeightenedProlactin.rawValue, prolactin_drug_prescribed: selectedDrags.rawValue, prolactin_drug: otherDrags, vitamin_d_before: selectedVitaminD.rawValue, vitamin_d_before_drug: vitaminDragsBefore, vitamin_d_after: selectedVitaminDosage.rawValue, vitamin_d_after_drug: vitaminDragsAfter, weekendAtSouth: selectedWeekendAtSouth.rawValue, weekendAtSouth_firstTrimester: selectedFirstTrimester.rawValue, weekendAtSouth_secondTrimester: selectedSecondTrimester.rawValue, weekendAtSouth_thirdTrimester: selectedThirdTrimester.rawValue, solarium: selectedSolarium.rawValue, HbA1C: String(hemoglobin), triglycerides: String(triglic), cholesterol: String(hl), glucose: String(fbg))
+                                await questionaryManager.provider.saveGeneralQuestion(pregnancy_n: selectedPregNum.rawValue, delivery_n: selectedBirthCount.rawValue, contraceptive: selectedOralContr.rawValue, prolactin_test: selectedProlactin.rawValue, heightened_prolactin: selectedHeightenedProlactin.rawValue, prolactin_drug_prescribed: selectedDrags.rawValue, prolactin_drug: otherDrags, vitamin_d_before: selectedVitaminD.rawValue, vitamin_d_before_drug: vitaminDragsBefore, vitamin_d_after: selectedVitaminDosage.rawValue, vitamin_d_after_drug: vitaminDragsAfter, weekendAtSouth: selectedWeekendAtSouth.rawValue, weekendAtSouth_firstTrimester: selectedFirstTrimester.rawValue, weekendAtSouth_secondTrimester: selectedSecondTrimester.rawValue, weekendAtSouth_thirdTrimester: selectedThirdTrimester.rawValue, solarium: selectedSolarium.rawValue, HbA1C: String(hemoglobin), triglycerides: String(triglic), cholesterol: String(hl), glucose: String(fbg), preg_week: String(preg_week))
                                 nextField = true
                             }
                         } label: {

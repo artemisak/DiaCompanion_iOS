@@ -242,7 +242,7 @@ class excelManager {
             dateFormatter1.setLocalizedDateFormatFromTemplate("HH:mm")
             
             let foodInfo = Table("food")
-            let id_info = Expression<Int>("_id")
+            let id_info = Expression<Int>("id")
             let foodN = Expression<String>("name")
             let carbo = Expression<Double?>("carbo")
             let prot = Expression<Double?>("prot")
@@ -563,19 +563,19 @@ class excelManager {
             for i in try db.prepare(foodTable.select(id, userName, dateOfBirth, doc, vesrion)){
                 switch i[vesrion] {
                 case 1:
-                    fio = "Dia\(i[id]) Пациент: \(i[userName] ?? "Новый пользователь"); Дата рождения: \(i[dateOfBirth] ?? "01.01.1999"); Лечащий врач: \(i[doc] ?? "Попова Полина Викторовна"); Программа: DiaCompanion iOS Dial v\(Bundle.main.infoDictionary!["CFBundleShortVersionString"]!)"
+                    fio = "Dia\(i[id]) Пациент: \(i[userName] ?? "Новый пользователь"); Дата рождения: \(i[dateOfBirth] ?? "01.01.1999"); Лечащий врач: \(i[doc] ?? "Попова П.В."); Программа: DiaCompanion iOS Dial v\(Bundle.main.infoDictionary!["CFBundleShortVersionString"]!)"
                     shortFio = "Dia\(i[id]) \(i[userName] ?? "Новый_пользователь 1") \(df.string(from: Date.now))"
                 case 2:
-                    fio = "GDM\(i[id]) Пациент: \(i[userName] ?? "Новый пользователь"); Дата рождения: \(i[dateOfBirth] ?? "01.01.1999"); Лечащий врач: \(i[doc] ?? "Попова Полина Викторовна"); Программа: DiaCompanion iOS Dial v\(Bundle.main.infoDictionary!["CFBundleShortVersionString"]!)"
+                    fio = "GDM\(i[id]) Пациент: \(i[userName] ?? "Новый пользователь"); Дата рождения: \(i[dateOfBirth] ?? "01.01.1999"); Лечащий врач: \(i[doc] ?? "Попова П.В."); Программа: DiaCompanion iOS Dial v\(Bundle.main.infoDictionary!["CFBundleShortVersionString"]!)"
                     shortFio = "GDM\(i[id]) \(i[userName] ?? "Новый_пользователь 1") \(df.string(from: Date.now))"
                 case 3:
-                    fio = "MS\(i[id]) Пациент: \(i[userName] ?? "Новый пользователь"); Дата рождения: \(i[dateOfBirth] ?? "01.01.1999"); Лечащий врач: \(i[doc] ?? "Попова Полина Викторовна"); Программа: DiaCompanion iOS Dial v\(Bundle.main.infoDictionary!["CFBundleShortVersionString"]!)"
+                    fio = "MS\(i[id]) Пациент: \(i[userName] ?? "Новый пользователь"); Дата рождения: \(i[dateOfBirth] ?? "01.01.1999"); Лечащий врач: \(i[doc] ?? "Попова П.В."); Программа: DiaCompanion iOS Dial v\(Bundle.main.infoDictionary!["CFBundleShortVersionString"]!)"
                     shortFio = "MS\(i[id]) \(i[userName] ?? "Новый_пользователь 1") \(df.string(from: Date.now))"
                 case 4:
-                    fio = "PCOS\(i[id]) Пациент: \(i[userName] ?? "Новый пользователь"); Дата рождения: \(i[dateOfBirth] ?? "01.01.1999"); Лечащий врач: \(i[doc] ?? "Попова Полина Викторовна"); Программа: DiaCompanion iOS Dial v\(Bundle.main.infoDictionary!["CFBundleShortVersionString"]!)"
+                    fio = "PCOS\(i[id]) Пациент: \(i[userName] ?? "Новый пользователь"); Дата рождения: \(i[dateOfBirth] ?? "01.01.1999"); Лечащий врач: \(i[doc] ?? "Попова П.В."); Программа: DiaCompanion iOS Dial v\(Bundle.main.infoDictionary!["CFBundleShortVersionString"]!)"
                     shortFio = "PCOS\(i[id]) \(i[userName] ?? "Новый_пользователь 1") \(df.string(from: Date.now))"
                 default:
-                    fio = "ID\(i[id]) Пациент: \(i[userName] ?? "Новый пользователь"); Дата рождения: \(i[dateOfBirth] ?? "01.01.1999"); Лечащий врач: \(i[doc] ?? "Попова Полина Викторовна"); Программа: DiaCompanion iOS Dial v\(Bundle.main.infoDictionary!["CFBundleShortVersionString"]!)"
+                    fio = "ID\(i[id]) Пациент: \(i[userName] ?? "Новый пользователь"); Дата рождения: \(i[dateOfBirth] ?? "01.01.1999"); Лечащий врач: \(i[doc] ?? "Попова П.В."); Программа: DiaCompanion iOS Dial v\(Bundle.main.infoDictionary!["CFBundleShortVersionString"]!)"
                     shortFio = "ID\(i[id]) \(i[userName] ?? "Новый_пользователь 1") \(df.string(from: Date.now))"
                 }
             }
