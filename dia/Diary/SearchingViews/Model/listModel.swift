@@ -215,7 +215,7 @@ class foodCollections: ObservableObject {
             for i in 0..<name.count {
                 switch i {
                 case 0:
-                    sql += "SELECT DISTINCT id, name, prot, fat, carbo, ec, gi, favor FROM (SELECT id, name, prot, fat, carbo, ec, gi, favor, 1 AS sort FROM food WHERE name LIKE '\(name[i].firstCapitalized)%' AND category = '\(groupToSearch)' UNION SELECT id, name, prot, fat, carbo, ec, gi, favor, 2 FROM food WHERE name LIKE '_%\(name[i].lowercased())%' AND category = '\(groupToSearch)' ORDER BY sort ASC)"
+                    sql += "SELECT DISTINCT _id, name, prot, fat, carbo, ec, gi, favor FROM (SELECT _id, name, prot, fat, carbo, ec, gi, favor, 1 AS sort FROM food WHERE name LIKE '\(name[i].firstCapitalized)%' AND category = '\(groupToSearch)' UNION SELECT _id, name, prot, fat, carbo, ec, gi, favor, 2 FROM food WHERE name LIKE '_%\(name[i].lowercased())%' AND category = '\(groupToSearch)' ORDER BY sort ASC)"
                 case 1:
                     sql += " WHERE name LIKE '%\(name[i])%' OR name LIKE '%\(name[i].firstCapitalized)%'"
                 default:
@@ -223,14 +223,14 @@ class foodCollections: ObservableObject {
                 }
             }
         } else if  textToSearch == "" && groupToSearch != "" {
-            sql = "SELECT id, name, prot, fat, carbo, ec, gi, favor FROM food WHERE category = '\(groupToSearch)'"
+            sql = "SELECT _id, name, prot, fat, carbo, ec, gi, favor FROM food WHERE category = '\(groupToSearch)'"
         } else if textToSearch != "" && groupToSearch == "" {
             var name = textToSearch.components(separatedBy: " ")
             name.removeAll(where: {$0.isEmpty})
             for i in 0..<name.count {
                 switch i {
                 case 0:
-                    sql += "SELECT DISTINCT id, name, prot, fat, carbo, ec, gi, favor FROM (SELECT id, name, prot, fat, carbo, ec, gi, favor, 1 AS sort FROM food WHERE name LIKE '\(name[i].firstCapitalized)%' UNION SELECT id, name, prot, fat, carbo, ec, gi, favor, 2 FROM food WHERE name LIKE '_%\(name[i].lowercased())%' ORDER BY sort ASC)"
+                    sql += "SELECT DISTINCT _id, name, prot, fat, carbo, ec, gi, favor FROM (SELECT _id, name, prot, fat, carbo, ec, gi, favor, 1 AS sort FROM food WHERE name LIKE '\(name[i].firstCapitalized)%' UNION SELECT _id, name, prot, fat, carbo, ec, gi, favor, 2 FROM food WHERE name LIKE '_%\(name[i].lowercased())%' ORDER BY sort ASC)"
                 case 1:
                     sql += " WHERE name LIKE '%\(name[i])%' OR name LIKE '%\(name[i].firstCapitalized)%'"
                 default:
@@ -256,7 +256,7 @@ class foodCollections: ObservableObject {
         }
         
         while sqlite3_step(statement) == SQLITE_ROW {
-            let id = Int(sqlite3_column_int64(statement, 0))
+            let _id = Int(sqlite3_column_int64(statement, 0))
             let _name = String(cString: sqlite3_column_text(statement, 1))
             
             var _prot = 0.0
@@ -284,7 +284,7 @@ class foodCollections: ObservableObject {
                 _index = Int(sqlite3_column_int64(statement, 7))
             }
             
-            temp.append(foodItem(table_id: id, name: _name, prot: _prot, fat: _fat, carbo: _carbo, kkal: _kkal, gi: _gi, index: _index, position: _position))
+            temp.append(foodItem(table_id: _id, name: _name, prot: _prot, fat: _fat, carbo: _carbo, kkal: _kkal, gi: _gi, index: _index, position: _position))
             _position += 1
         }
         
@@ -483,7 +483,7 @@ class foodCollections: ObservableObject {
         }
         
         var statement: OpaquePointer?
-        let sql = "UPDATE food SET favor = \(index) WHERE id = \(table_id)"
+        let sql = "UPDATE food SET favor = \(index) WHERE _id = \(table_id)"
         if sqlite3_prepare_v2(db, sql, -1, &statement, nil) != SQLITE_OK {
             let errmsg = String(cString: sqlite3_errmsg(db)!)
             print("Error preparing select: \(errmsg)")

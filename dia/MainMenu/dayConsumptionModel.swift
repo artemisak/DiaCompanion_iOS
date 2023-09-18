@@ -78,7 +78,7 @@ class dayConsumptionModel : ObservableObject {
 
         var statement: OpaquePointer?
         
-        let sql = "SELECT sum(prot*g/100), sum(fat*g/100), sum(carbo*g/100), sum(ec*g/100) FROM food INNER JOIN (SELECT id_food, g FROM diary WHERE date = '\(date)') as tb1 ON food.id = tb1.id_food"
+        let sql = "SELECT sum(prot*g/100), sum(fat*g/100), sum(carbo*g/100), sum(ec*g/100) FROM food INNER JOIN (SELECT id_food, g FROM diary WHERE date = '\(date)') as tb1 ON food._id = tb1.id_food"
 
         if sqlite3_prepare_v2(db, sql, -1, &statement, nil) != SQLITE_OK {
             let errmsg = String(cString: sqlite3_errmsg(db)!)
