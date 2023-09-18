@@ -14,8 +14,8 @@
 		A70BCC3A27B9471E00C22703 /* loginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A70BCC3927B9471E00C22703 /* loginManager.swift */; };
 		A70FC0FB28AA969E00E154DB /* recommendationMesssage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A70FC0FA28AA969E00E154DB /* recommendationMesssage.swift */; };
 		A71CAEF228280F7600C6AC9F /* predictManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71CAEF128280F7600C6AC9F /* predictManager.swift */; };
+		A722F5642AB8A3A0000C8D10 /* xgboost_model.mlpackage in Sources */ = {isa = PBXBuildFile; fileRef = A722F5632AB8A3A0000C8D10 /* xgboost_model.mlpackage */; };
 		A7230C7F27705AED00B68244 /* excelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7230C7E27705AED00B68244 /* excelManager.swift */; };
-		A727CB5B2AB43BE6002505D2 /* xgboost_model.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = A727CB5A2AB43BE6002505D2 /* xgboost_model.mlmodel */; };
 		A7289FB4294F530A00B35BD3 /* aboutApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7289FB3294F530A00B35BD3 /* aboutApp.swift */; };
 		A73A1F082A813A07007F4299 /* activityPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = A73A1F042A813A07007F4299 /* activityPreferences.swift */; };
 		A73A1F092A813A07007F4299 /* foodPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = A73A1F052A813A07007F4299 /* foodPreferences.swift */; };
@@ -109,8 +109,8 @@
 		A70BCC3927B9471E00C22703 /* loginManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = loginManager.swift; sourceTree = "<group>"; };
 		A70FC0FA28AA969E00E154DB /* recommendationMesssage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = recommendationMesssage.swift; sourceTree = "<group>"; };
 		A71CAEF128280F7600C6AC9F /* predictManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = predictManager.swift; sourceTree = "<group>"; };
+		A722F5632AB8A3A0000C8D10 /* xgboost_model.mlpackage */ = {isa = PBXFileReference; lastKnownFileType = folder.mlpackage; path = xgboost_model.mlpackage; sourceTree = "<group>"; };
 		A7230C7E27705AED00B68244 /* excelManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = excelManager.swift; sourceTree = "<group>"; };
-		A727CB5A2AB43BE6002505D2 /* xgboost_model.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = xgboost_model.mlmodel; sourceTree = "<group>"; };
 		A7289FB3294F530A00B35BD3 /* aboutApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = aboutApp.swift; sourceTree = "<group>"; };
 		A73A1F042A813A07007F4299 /* activityPreferences.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = activityPreferences.swift; sourceTree = "<group>"; };
 		A73A1F052A813A07007F4299 /* foodPreferences.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = foodPreferences.swift; sourceTree = "<group>"; };
@@ -471,7 +471,7 @@
 				A78EA623291D1BA800B2CDD2 /* Additional */,
 				A7F8A596288ED30100C13F36 /* Education.pdf */,
 				A7CF7A622AAC9A5700155D2F /* diacompanion.db */,
-				A727CB5A2AB43BE6002505D2 /* xgboost_model.mlmodel */,
+				A722F5632AB8A3A0000C8D10 /* xgboost_model.mlpackage */,
 				AC2603232690691F00C4A520 /* Assets.xcassets */,
 				A7DCBBB227BD8AD4009A3A16 /* Launch Screen.storyboard */,
 				A760B5842987E05C00402094 /* Localizable.strings */,
@@ -631,6 +631,7 @@
 				A78E381E2813F0680096E2E2 /* extensions.swift in Sources */,
 				A7289FB4294F530A00B35BD3 /* aboutApp.swift in Sources */,
 				ACF4E413272DB126002D2797 /* RKDate.swift in Sources */,
+				A722F5642AB8A3A0000C8D10 /* xgboost_model.mlpackage in Sources */,
 				AC2C506127289C360009E8EE /* severalDatesPicker.swift in Sources */,
 				AC2603202690691E00C4A520 /* diaApp.swift in Sources */,
 				A77793652987D18C00DB0737 /* utilities.swift in Sources */,
@@ -641,7 +642,6 @@
 				AC6327022751012C00C25E23 /* historyManager.swift in Sources */,
 				A77B7EE22973EFFC00CFEBD5 /* inGroupList.swift in Sources */,
 				A7DF49D5291A851B007A9371 /* LineChartShape.swift in Sources */,
-				A727CB5B2AB43BE6002505D2 /* xgboost_model.mlmodel in Sources */,
 				A74A1CC228B1016C0038C79F /* startPage.swift in Sources */,
 				A7DF49DD291A851B007A9371 /* LabelsView.swift in Sources */,
 				A7FBB23B27FC257D00828432 /* regHelper.swift in Sources */,
