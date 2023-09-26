@@ -119,7 +119,7 @@ class diaryStatblock: ObservableObject {
         let df_alt = DateFormatter()
         df_alt.dateFormat = "dd.MM.yyyy,HH:mm"
         
-        let sql = "SELECT timeStamp, dateTime, foodType AS meals, sum(g*carbo/100) AS carbo FROM diary LEFT JOIN food ON diary.id_food = food.id GROUP BY timeStamp, date, time, foodType"
+        let sql = "SELECT timeStamp, dateTime, foodType AS meals, sum(g*carbo/100) AS carbo FROM diary LEFT JOIN food ON diary.id_food = food._id GROUP BY timeStamp, date, time, foodType"
         
         if sqlite3_prepare_v2(db, sql, -1, &statement, nil) != SQLITE_OK {
             let errmsg = String(cString: sqlite3_errmsg(db)!)
