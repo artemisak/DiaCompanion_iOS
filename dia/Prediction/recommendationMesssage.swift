@@ -77,7 +77,7 @@ func checkCarbo(foodType: String, listOfFood: [foodItem]) -> (Bool, Bool) {
 }
 
 func checkBGBefore(BG0: Double) -> Bool {
-    if BG0 > 0.51 {
+    if BG0 > 7.0 {
         return true
     } else {
         return false

@@ -129,6 +129,14 @@ class foodCollections: ObservableObject {
     @Published var editedFoodItems = [foodItem]()
     @Published var recipeFoodItems = [foodItem]()
     
+    var showFoodCollections: Bool {
+        if (!addedFoodItems.isEmpty && whereToSave == .addedFoodItems) || (!editedFoodItems.isEmpty && whereToSave == .editingFoodItems) {
+            return true
+        } else {
+            return false
+        }
+    }
+    
     private var _resultsOfSearch = [foodItem]()
     private var _position: Int = 0
     private var _lastVisibleIndex: Int = 0

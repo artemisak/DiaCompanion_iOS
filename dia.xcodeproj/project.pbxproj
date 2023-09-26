@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 53;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -49,26 +49,12 @@
 		A7AF947F29D9F16D00745719 /* SQLite in Frameworks */ = {isa = PBXBuildFile; productRef = A7AF947E29D9F16D00745719 /* SQLite */; };
 		A7BD994727CA46FC0090D9D7 /* helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7BD994627CA46FC0090D9D7 /* helper.swift */; };
 		A7C997872983B68200A38F2D /* dayConsumptionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C997862983B68200A38F2D /* dayConsumptionModel.swift */; };
+		A7CD3AEE2ABDA1BE00FAFEBF /* foodList.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7CD3AED2ABDA1BE00FAFEBF /* foodList.swift */; };
 		A7CE328929225AF4002D8FB0 /* passwordPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7CE328829225AF4002D8FB0 /* passwordPage.swift */; };
 		A7CF7A632AAC9A5700155D2F /* diacompanion.db in Resources */ = {isa = PBXBuildFile; fileRef = A7CF7A622AAC9A5700155D2F /* diacompanion.db */; };
 		A7D0976A2809FE16000A12E1 /* buttonStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7D097692809FE16000A12E1 /* buttonStyles.swift */; };
 		A7D602B429B5E5250091CBCC /* recipeCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7D602B329B5E5250091CBCC /* recipeCard.swift */; };
 		A7DCBBB327BD8AD4009A3A16 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A7DCBBB227BD8AD4009A3A16 /* Launch Screen.storyboard */; };
-		A7DF49D0291A851B007A9371 /* BarsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7DF49C2291A851A007A9371 /* BarsView.swift */; };
-		A7DF49D1291A851B007A9371 /* AxisView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7DF49C3291A851A007A9371 /* AxisView.swift */; };
-		A7DF49D2291A851B007A9371 /* ChartStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7DF49C4291A851A007A9371 /* ChartStyle.swift */; };
-		A7DF49D3291A851B007A9371 /* RandomAccessCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7DF49C5291A851A007A9371 /* RandomAccessCollection.swift */; };
-		A7DF49D4291A851B007A9371 /* LineChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7DF49C6291A851A007A9371 /* LineChartView.swift */; };
-		A7DF49D5291A851B007A9371 /* LineChartShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7DF49C7291A851A007A9371 /* LineChartShape.swift */; };
-		A7DF49D6291A851B007A9371 /* Previews.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7DF49C8291A851A007A9371 /* Previews.swift */; };
-		A7DF49D7291A851B007A9371 /* BarChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7DF49C9291A851B007A9371 /* BarChartView.swift */; };
-		A7DF49D8291A851B007A9371 /* LegendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7DF49CA291A851B007A9371 /* LegendView.swift */; };
-		A7DF49D9291A851B007A9371 /* StackedHorizontalBarChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7DF49CB291A851B007A9371 /* StackedHorizontalBarChartView.swift */; };
-		A7DF49DA291A851B007A9371 /* ChartGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7DF49CC291A851B007A9371 /* ChartGrid.swift */; };
-		A7DF49DB291A851B007A9371 /* HorizontalBarChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7DF49CD291A851B007A9371 /* HorizontalBarChartView.swift */; };
-		A7DF49DC291A851B007A9371 /* DataPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7DF49CE291A851B007A9371 /* DataPoint.swift */; };
-		A7DF49DD291A851B007A9371 /* LabelsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7DF49CF291A851B007A9371 /* LabelsView.swift */; };
-		A7DF49E0291A85D9007A9371 /* details.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7DF49DF291A85D9007A9371 /* details.swift */; };
 		A7F4486B291EB5AD00A4B379 /* loginPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7F4486A291EB5AD00A4B379 /* loginPage.swift */; };
 		A7F8A597288ED30100C13F36 /* Education.pdf in Resources */ = {isa = PBXBuildFile; fileRef = A7F8A596288ED30100C13F36 /* Education.pdf */; };
 		A7FAD8AD29A7E9A800D96873 /* recipeAsyncList.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7FAD8AC29A7E9A800D96873 /* recipeAsyncList.swift */; };
@@ -142,26 +128,12 @@
 		A7A238012A84F7A200C1E015 /* questionaryManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = questionaryManager.swift; sourceTree = "<group>"; };
 		A7BD994627CA46FC0090D9D7 /* helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = helper.swift; sourceTree = "<group>"; };
 		A7C997862983B68200A38F2D /* dayConsumptionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dayConsumptionModel.swift; sourceTree = "<group>"; };
+		A7CD3AED2ABDA1BE00FAFEBF /* foodList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = foodList.swift; sourceTree = "<group>"; };
 		A7CE328829225AF4002D8FB0 /* passwordPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = passwordPage.swift; sourceTree = "<group>"; };
 		A7CF7A622AAC9A5700155D2F /* diacompanion.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = diacompanion.db; sourceTree = "<group>"; };
 		A7D097692809FE16000A12E1 /* buttonStyles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = buttonStyles.swift; sourceTree = "<group>"; };
 		A7D602B329B5E5250091CBCC /* recipeCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = recipeCard.swift; sourceTree = "<group>"; };
 		A7DCBBB227BD8AD4009A3A16 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
-		A7DF49C2291A851A007A9371 /* BarsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BarsView.swift; sourceTree = "<group>"; };
-		A7DF49C3291A851A007A9371 /* AxisView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AxisView.swift; sourceTree = "<group>"; };
-		A7DF49C4291A851A007A9371 /* ChartStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartStyle.swift; sourceTree = "<group>"; };
-		A7DF49C5291A851A007A9371 /* RandomAccessCollection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandomAccessCollection.swift; sourceTree = "<group>"; };
-		A7DF49C6291A851A007A9371 /* LineChartView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LineChartView.swift; sourceTree = "<group>"; };
-		A7DF49C7291A851A007A9371 /* LineChartShape.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LineChartShape.swift; sourceTree = "<group>"; };
-		A7DF49C8291A851A007A9371 /* Previews.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Previews.swift; sourceTree = "<group>"; };
-		A7DF49C9291A851B007A9371 /* BarChartView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BarChartView.swift; sourceTree = "<group>"; };
-		A7DF49CA291A851B007A9371 /* LegendView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LegendView.swift; sourceTree = "<group>"; };
-		A7DF49CB291A851B007A9371 /* StackedHorizontalBarChartView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StackedHorizontalBarChartView.swift; sourceTree = "<group>"; };
-		A7DF49CC291A851B007A9371 /* ChartGrid.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartGrid.swift; sourceTree = "<group>"; };
-		A7DF49CD291A851B007A9371 /* HorizontalBarChartView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HorizontalBarChartView.swift; sourceTree = "<group>"; };
-		A7DF49CE291A851B007A9371 /* DataPoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataPoint.swift; sourceTree = "<group>"; };
-		A7DF49CF291A851B007A9371 /* LabelsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelsView.swift; sourceTree = "<group>"; };
-		A7DF49DF291A85D9007A9371 /* details.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = details.swift; sourceTree = "<group>"; };
 		A7F4486A291EB5AD00A4B379 /* loginPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = loginPage.swift; sourceTree = "<group>"; };
 		A7F8A596288ED30100C13F36 /* Education.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = Education.pdf; sourceTree = "<group>"; };
 		A7FAD8AC29A7E9A800D96873 /* recipeAsyncList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = recipeAsyncList.swift; sourceTree = "<group>"; };
@@ -298,6 +270,7 @@
 			isa = PBXGroup;
 			children = (
 				AC3C959A26D1B570005B1393 /* enterFood.swift */,
+				A7CD3AED2ABDA1BE00FAFEBF /* foodList.swift */,
 			);
 			path = EnterFood;
 			sourceTree = "<group>";
@@ -338,7 +311,6 @@
 			children = (
 				ACF2F0A926DEA8300066753D /* history.swift */,
 				AC6327012751012C00C25E23 /* historyManager.swift */,
-				A7DF49DF291A85D9007A9371 /* details.swift */,
 			);
 			path = History;
 			sourceTree = "<group>";
@@ -377,7 +349,6 @@
 				A78E381D2813F0680096E2E2 /* extensions.swift */,
 				A7D097692809FE16000A12E1 /* buttonStyles.swift */,
 				A77793642987D18C00DB0737 /* utilities.swift */,
-				A7DF49C1291A84B2007A9371 /* Charts */,
 				A7DF49DE291A8539007A9371 /* RKCalendar */,
 			);
 			path = Extensions;
@@ -393,27 +364,6 @@
 				A7A238012A84F7A200C1E015 /* questionaryManager.swift */,
 			);
 			path = questionary;
-			sourceTree = "<group>";
-		};
-		A7DF49C1291A84B2007A9371 /* Charts */ = {
-			isa = PBXGroup;
-			children = (
-				A7DF49C3291A851A007A9371 /* AxisView.swift */,
-				A7DF49C9291A851B007A9371 /* BarChartView.swift */,
-				A7DF49C2291A851A007A9371 /* BarsView.swift */,
-				A7DF49CC291A851B007A9371 /* ChartGrid.swift */,
-				A7DF49C4291A851A007A9371 /* ChartStyle.swift */,
-				A7DF49CE291A851B007A9371 /* DataPoint.swift */,
-				A7DF49CD291A851B007A9371 /* HorizontalBarChartView.swift */,
-				A7DF49CF291A851B007A9371 /* LabelsView.swift */,
-				A7DF49CA291A851B007A9371 /* LegendView.swift */,
-				A7DF49C7291A851A007A9371 /* LineChartShape.swift */,
-				A7DF49C6291A851A007A9371 /* LineChartView.swift */,
-				A7DF49C8291A851A007A9371 /* Previews.swift */,
-				A7DF49C5291A851A007A9371 /* RandomAccessCollection.swift */,
-				A7DF49CB291A851B007A9371 /* StackedHorizontalBarChartView.swift */,
-			);
-			path = Charts;
 			sourceTree = "<group>";
 		};
 		A7DF49DE291A8539007A9371 /* RKCalendar */ = {
@@ -523,7 +473,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
 				LastSwiftUpdateCheck = 1250;
-				LastUpgradeCheck = 1430;
+				LastUpgradeCheck = 1500;
 				TargetAttributes = {
 					AC26031B2690691E00C4A520 = {
 						CreatedOnToolsVersion = 12.5.1;
@@ -581,7 +531,6 @@
 				ACF4E410272DB126002D2797 /* RKMonth.swift in Sources */,
 				A7CE328929225AF4002D8FB0 /* passwordPage.swift in Sources */,
 				AC37A67B276147AF00558E55 /* excelGenerator.swift in Sources */,
-				A7DF49DB291A851B007A9371 /* HorizontalBarChartView.swift in Sources */,
 				A79A5CB7298A9215007D5170 /* PDFView.swift in Sources */,
 				A73C74F628CF2BF2008D09BF /* recipeInteractionView.swift in Sources */,
 				ACCBA996272B1DA300D785F6 /* RKViewController.swift in Sources */,
@@ -591,28 +540,21 @@
 				A77B7EDD2973EFF600CFEBD5 /* listModel.swift in Sources */,
 				AC7A53F726DBF77B00FE65E7 /* enterAct.swift in Sources */,
 				AC2D32E427359EC50022AFD9 /* diaryManager.swift in Sources */,
-				A7DF49D2291A851B007A9371 /* ChartStyle.swift in Sources */,
 				A77B7EEA2973F01700CFEBD5 /* enterPoint.swift in Sources */,
 				A77B7EE82973F01100CFEBD5 /* searchViewsGroup.swift in Sources */,
-				A7DF49D6291A851B007A9371 /* Previews.swift in Sources */,
-				A7DF49D4291A851B007A9371 /* LineChartView.swift in Sources */,
 				A7D602B429B5E5250091CBCC /* recipeCard.swift in Sources */,
 				A70BCC3A27B9471E00C22703 /* loginManager.swift in Sources */,
 				A7FEDA7429A608C70050778A /* indicator.swift in Sources */,
-				A7DF49D8291A851B007A9371 /* LegendView.swift in Sources */,
 				A7FEDA6E29A6076D0050778A /* BypassProtocol.swift in Sources */,
 				ACD86E8126DE820B0027B8ED /* sugarChange.swift in Sources */,
 				A77B7EE32973EFFC00CFEBD5 /* listOfGroups.swift in Sources */,
 				ACF2F0AA26DEA8300066753D /* history.swift in Sources */,
 				ACCC5C2E2702190B0057CA7C /* pacientManager.swift in Sources */,
 				A73A1F092A813A07007F4299 /* foodPreferences.swift in Sources */,
-				A7DF49DA291A851B007A9371 /* ChartGrid.swift in Sources */,
 				A73A1F0B2A813A07007F4299 /* lifeStyle.swift in Sources */,
-				A7DF49D0291A851B007A9371 /* BarsView.swift in Sources */,
 				A7D0976A2809FE16000A12E1 /* buttonStyles.swift in Sources */,
 				A77B7ED72973EFEA00CFEBD5 /* listRow.swift in Sources */,
 				A7FAD8AD29A7E9A800D96873 /* recipeAsyncList.swift in Sources */,
-				A7DF49D3291A851B007A9371 /* RandomAccessCollection.swift in Sources */,
 				ACF2F0A826DE9A1D0066753D /* inject.swift in Sources */,
 				ACC3798626ECFA7E00E0729E /* massa.swift in Sources */,
 				A77B7EE62973F00400CFEBD5 /* searchByWordList.swift in Sources */,
@@ -624,9 +566,9 @@
 				A7491D85297AA66D005AAA18 /* recipeModel.swift in Sources */,
 				A77B7ED62973EFEA00CFEBD5 /* addGramButton.swift in Sources */,
 				A775CAF8298695B70077979D /* diaryStatblock.swift in Sources */,
-				A7DF49E0291A85D9007A9371 /* details.swift in Sources */,
 				A77B7ED92973EFEA00CFEBD5 /* listHeader.swift in Sources */,
 				ACF4E40F272DB126002D2797 /* RKWeekdayHeader.swift in Sources */,
+				A7CD3AEE2ABDA1BE00FAFEBF /* foodList.swift in Sources */,
 				A7491D87297AF5C6005AAA18 /* pacientCart.swift in Sources */,
 				A78E381E2813F0680096E2E2 /* extensions.swift in Sources */,
 				A7289FB4294F530A00B35BD3 /* aboutApp.swift in Sources */,
@@ -641,14 +583,9 @@
 				A7F4486B291EB5AD00A4B379 /* loginPage.swift in Sources */,
 				AC6327022751012C00C25E23 /* historyManager.swift in Sources */,
 				A77B7EE22973EFFC00CFEBD5 /* inGroupList.swift in Sources */,
-				A7DF49D5291A851B007A9371 /* LineChartShape.swift in Sources */,
 				A74A1CC228B1016C0038C79F /* startPage.swift in Sources */,
-				A7DF49DD291A851B007A9371 /* LabelsView.swift in Sources */,
 				A7FBB23B27FC257D00828432 /* regHelper.swift in Sources */,
-				A7DF49D7291A851B007A9371 /* BarChartView.swift in Sources */,
 				ACF4E411272DB126002D2797 /* RKCell.swift in Sources */,
-				A7DF49DC291A851B007A9371 /* DataPoint.swift in Sources */,
-				A7DF49D1291A851B007A9371 /* AxisView.swift in Sources */,
 				A706DA822843867800473941 /* export.swift in Sources */,
 				A70FC0FB28AA969E00E154DB /* recommendationMesssage.swift in Sources */,
 				A767CC7F2944C0BE0093A979 /* indicatorGroup.swift in Sources */,
@@ -658,7 +595,6 @@
 				A7BD994727CA46FC0090D9D7 /* helper.swift in Sources */,
 				A71CAEF228280F7600C6AC9F /* predictManager.swift in Sources */,
 				AC3C959B26D1B570005B1393 /* enterFood.swift in Sources */,
-				A7DF49D9291A851B007A9371 /* StackedHorizontalBarChartView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -723,6 +659,7 @@
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -790,6 +727,7 @@
 				ENABLE_BITCODE = NO;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;

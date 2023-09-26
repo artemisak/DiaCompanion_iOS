@@ -31,7 +31,11 @@ struct mainMenu: View {
             }
             Section {
                 NavigationLink {
-                    enterFood(enabled: false, sugar: "", date: localDate, ftpreviewIndex: ftype.zavtrak, idForDelete: [], hasChanged: .constant(false))
+                    if #available(iOS 16, *){
+                        enterFood(enabled: false, sugar: "", date: localDate, ftpreviewIndex: ftype.zavtrak, idForDelete: [], hasChanged: .constant(false)).toolbar(.hidden, for: .tabBar)
+                    } else {
+                        enterFood(enabled: false, sugar: "", date: localDate, ftpreviewIndex: ftype.zavtrak, idForDelete: [], hasChanged: .constant(false)).hiddenTabBar()
+                    }
                 } label: {
                     HStack {
                         Image("meal").resizable().scaledToFit().frame(width: 36, height: 36)
@@ -117,7 +121,7 @@ struct mainMenu: View {
             localDate = Date.now
             localDateSTR = dateFormatter.string(from: localDate)
             await consumption.setUpVidget()
-
+            
         }
         .navigationTitle("ДиаКомпаньон")
         .toolbar {
