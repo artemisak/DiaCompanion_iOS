@@ -99,7 +99,7 @@ func checkPV(listOfFood: [foodItem], date: Date) -> Bool {
         let db = try Connection(path)
         
         let food = Table("food")
-        let id = Expression<String>("id")
+        let id = Expression<String>("_id")
         let pv = Expression<Double?>("pv")
         for i in listOfFood {
             for i1 in try db.prepare(food.select(pv).filter(id == "\(i.table_id)")){

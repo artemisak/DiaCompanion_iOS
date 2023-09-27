@@ -226,8 +226,9 @@ class excelManager {
             let sourcePath = Bundle.main.path(forResource: "diacompanion", ofType: "db")!
             _=copyDatabaseIfNeeded(sourcePath: sourcePath)
             let db = try Connection(path)
-            let id_food = Expression<Int>("id_food")
+            
             let foodTable = Table("diary")
+            let id_food = Expression<Int>("id_food")
             let day = Expression<String>("date")
             let time = Expression<String>("time")
             let foodType = Expression<String>("foodType")
@@ -242,7 +243,7 @@ class excelManager {
             dateFormatter1.setLocalizedDateFormatFromTemplate("HH:mm")
             
             let foodInfo = Table("food")
-            let id_info = Expression<Int>("id")
+            let id_info = Expression<Int>("_id")
             let foodN = Expression<String>("name")
             let carbo = Expression<Double?>("carbo")
             let prot = Expression<Double?>("prot")
@@ -550,7 +551,7 @@ class excelManager {
             let sourcePath = Bundle.main.path(forResource: "diacompanion", ofType: "db")!
             _=copyDatabaseIfNeeded(sourcePath: sourcePath)
             let db = try Connection(path)
-            let foodTable = Table("usermac")
+            let userTable = Table("usermac")
             let id = Expression<Int>("id")
             let userName = Expression<String?>("fio")
             let dateOfBirth = Expression<String?>("birthday")
@@ -560,7 +561,7 @@ class excelManager {
             let df = DateFormatter()
             df.dateFormat = "dd.MM.yyyy"
             
-            for i in try db.prepare(foodTable.select(id, userName, dateOfBirth, doc, vesrion)){
+            for i in try db.prepare(userTable.select(id, userName, dateOfBirth, doc, vesrion)){
                 switch i[vesrion] {
                 case 1:
                     fio = "Dia\(i[id]) Пациент: \(i[userName] ?? "Новый пользователь"); Дата рождения: \(i[dateOfBirth] ?? "01.01.1999"); Лечащий врач: \(i[doc] ?? "Попова П.В."); Программа: DiaCompanion iOS Dial v\(Bundle.main.infoDictionary!["CFBundleShortVersionString"]!)"

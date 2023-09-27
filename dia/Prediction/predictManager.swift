@@ -69,6 +69,7 @@ class predictManager {
             let ca = Expression<Double?>("ca")
             let fe = Expression<Double?>("fe")
             let pv = Expression<Double?>("pv")
+            
             let diary = Table("diary")
             let food = Expression<String>("foodName")
             let date = Expression<Date>("dateTime")
@@ -92,7 +93,6 @@ class predictManager {
                 }
             }
             
-            print(nutr)
             var sum_of_nutr = [Double]()
             for i in 0..<nutr[0].count {
                 var column = 0.0
@@ -101,7 +101,6 @@ class predictManager {
                 }
                 sum_of_nutr.append(column)
             }
-            print(sum_of_nutr)
             
             var foodb6h = [String]()
             for i in try db.prepare(diary.filter(picker_date.addingTimeInterval(-60*60*6)...picker_date ~= date).select(food)){

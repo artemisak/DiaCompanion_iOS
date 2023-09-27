@@ -33,7 +33,7 @@ class historyList: ObservableObject {
             let gram = Expression<String>("g")
             
             let foodInfo = Table("food")
-            let food_id = Expression<Int>("id")
+            let food_id = Expression<Int>("_id")
             let prot = Expression<Double>("prot")
             let fat = Expression<Double>("fat")
             let carbo = Expression<Double>("carbo")
