@@ -12,7 +12,7 @@ struct foodList: View {
     @Binding var showEditView: Bool
     @Binding var id0: Int
     var body: some View {
-        ForEach($collection.addedFoodItems, id: \.id) {$i in
+        ForEach((collection.whereToSave == varToSave.addedFoodItems) ? $collection.addedFoodItems : $collection.editedFoodItems, id: \.id) {$i in
             VStack(alignment: .leading) {
                 indicatorGroup(gi: $i.gi, carbo: $i.weightedСarbo, gl: $i.gl)
                 Text("\(i.name) (\(i.gram!, specifier: "%.1f") г.)")

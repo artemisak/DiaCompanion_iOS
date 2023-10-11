@@ -85,7 +85,7 @@ struct activityPreferences: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     ZStack {
-                        NavigationLink(isActive: $nextField, destination: {pacientCart()}, label: {EmptyView()}).buttonStyle(TransparentButton()).hidden()
+                        NavigationLink(isActive: $nextField, destination: {patientCart()}, label: {EmptyView()}).buttonStyle(TransparentButton()).hidden()
                         Button {
                             Task {
                                 await questionaryManager.provider.saveActivityPrefrences(walkBefore: selectedWalkBefore.rawValue, walkAfter: selectedWalkAfter.rawValue, stepBefore: selectedStepBefore.rawValue, stepAfter: selectedStepAfter.rawValue, sportBefore: selectedSportBefore.rawValue, sportAfter: selectedSportAfter.rawValue)

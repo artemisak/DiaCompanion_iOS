@@ -55,7 +55,7 @@ struct enterAct: View {
                         let intT = try convertToInt(txt: t)
                         let dateFormatter = DateFormatter()
                         dateFormatter.dateFormat = "HH:mm dd.MM.yyyy"
-                        pacientManager.provider.addAct(min: intT, rod: actpreviewIndex.rawValue, time: dateFormatter.string(from: date))
+                        patientManager.provider.addAct(min: intT, rod: actpreviewIndex.rawValue, time: dateFormatter.string(from: date))
                         presentationMode.wrappedValue.dismiss()
                     } catch {
                         isCorrect = true

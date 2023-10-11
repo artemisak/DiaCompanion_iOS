@@ -109,7 +109,7 @@ struct enterFood: View {
                 Section(header: Text("Уровень сахара в крови").font(.caption)) {
                     Toggle(isOn: $enabled) {Text("Записать текущий УГК")}
                         .onChange(of: enabled){ _ in
-                            if (!pacientManager.provider.checkBMI() && enabled) {
+                            if (!patientManager.provider.checkBMI() && enabled) {
                                 alertMessage = true
                                 enabled = false
                             }
@@ -270,7 +270,7 @@ struct enterFood: View {
                     gram.append($0.gram!)
                 }
                 let model_input = predictManager.provider.getData(BG0: try convert(txt: sugar), foodtype: ftpreviewIndex, foodN: food, gram: gram, picker_date: date)
-                res = try predictManager.provider.getPredict(meal_type_n: model_input.meal_type_n, gi: model_input.gi, gl: model_input.gl, carbo: model_input.carbo, mds: model_input.mds, kr: model_input.kr, ca: model_input.ca, fe: model_input.fe, carbo_b6h: model_input.carbo_b6h, prot_b6h: model_input.prot_b6h, fat_b6h: model_input.fat_b6h, pv_b12h: model_input.pv_b12h, BG: model_input.BG, BMI: model_input.BMI, HbA1C_V1: model_input.HbA1C_V1, TG_V1: model_input.TG_V1, Hol_V1: model_input.Hol_V1, weight: model_input.weight, age: model_input.age, fasting_glu: model_input.fasting_glu, pregnancy_week: model_input.pregnancy_week)
+                res = try predictManager.provider.getPredict(meal_type_n: model_input.meal_type_n, gi: model_input.gi, gl: model_input.gl, carbo: model_input.carbo, carbo_b6h: model_input.carbo_b6h, prot_b6h: model_input.prot_b6h, fat_b6h: model_input.fat_b6h, BG: model_input.BG, BMI: model_input.BMI, HbA1C_V1: model_input.HbA1C_V1, TG_V1: model_input.TG_V1, Hol_V1: model_input.Hol_V1, fasting_glu: model_input.fasting_glu, pregnancy_week: model_input.pregnancy_week)
                 let checkCarbo = checkCarbo(foodType: ftpreviewIndex.rawValue, listOfFood: workList)
                 recomendationCards = getMessage(highBGPredict: checkBGPredicted(BG1: res), highBGBefore: checkBGBefore(BG0: try convert(txt: sugar)), moderateAmountOfCarbo: checkCarbo.0, tooManyCarbo: checkCarbo.1, unequalGLDistribution: checkUnequalGlDistribution(listOfFood: workList), highGI: checkGI(listOfFood: workList))
                 recCardID = recomendationCards.isEmpty ? UUID() : recomendationCards[0].id

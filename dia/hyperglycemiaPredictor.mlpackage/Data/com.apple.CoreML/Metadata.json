@@ -1,0 +1,10 @@
+{
+  "MLModelVersionStringKey" : "3.0",
+  "MLModelDescriptionKey" : "Glucose prediction model",
+  "MLModelCreatorDefinedKey" : {
+    "com.github.apple.coremltools.version" : "7.0",
+    "com.github.apple.coremltools.source" : "xgboost==1.4.2"
+  },
+  "MLModelAuthorKey" : "Isakov A.O.",
+  "MLModelLicenseKey" : "MIT"
+}

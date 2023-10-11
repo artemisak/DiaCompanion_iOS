@@ -68,7 +68,7 @@ struct inject: View {
                         }
                         let dateFormatter = DateFormatter()
                         dateFormatter.dateFormat = "HH:mm dd.MM.yyyy"
-                        pacientManager.provider.addInject(ed: try convert(txt: t), type: previewIndex.rawValue, priem: previewIndex1.rawValue, time: dateFormatter.string(from: date))
+                        patientManager.provider.addInject(ed: try convert(txt: t), type: previewIndex.rawValue, priem: previewIndex1.rawValue, time: dateFormatter.string(from: date))
                         presentationMode.wrappedValue.dismiss()
                     } catch {
                         isCorrect = true

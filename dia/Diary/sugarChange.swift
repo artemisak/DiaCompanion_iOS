@@ -63,7 +63,7 @@ struct sugarChange: View {
                         } else {
                             bool1 = 0
                         }
-                        pacientManager.provider.addSugarChange(lvl: try convert(txt: t), period: spreviewIndex.rawValue, physical: bool1, time: dateFormatter.string(from: date))
+                        patientManager.provider.addSugarChange(lvl: try convert(txt: t), period: spreviewIndex.rawValue, physical: bool1, time: dateFormatter.string(from: date))
                         self.presentationMode.wrappedValue.dismiss()
                     } catch {
                         isCorrect = true

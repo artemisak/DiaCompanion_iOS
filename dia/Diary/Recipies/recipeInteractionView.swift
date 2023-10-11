@@ -106,7 +106,7 @@ struct recipeInteractionView: View {
                     case .edit:
                         Button {
                             do {
-                                diaryManager.provider.addNewFood(items: try checkIsEmpty(items: collection.recipeFoodItems), newReceitName: try pacientManager.provider.checkName(txt: foodNotation), category: selectedCat.rawValue, isEditing: true, idToDelete: idToDelete, imageURL: imageURL)
+                                diaryManager.provider.addNewFood(items: try checkIsEmpty(items: collection.recipeFoodItems), newReceitName: try patientManager.provider.checkName(txt: foodNotation), category: selectedCat.rawValue, isEditing: true, idToDelete: idToDelete, imageURL: imageURL)
                                 collection.recipeFoodItems = []
                                 presentationMode.wrappedValue.dismiss()
                             }
@@ -119,7 +119,7 @@ struct recipeInteractionView: View {
                     case .add:
                         Button {
                             do {
-                                diaryManager.provider.addNewFood(items: try checkIsEmpty(items: collection.recipeFoodItems), newReceitName: try pacientManager.provider.checkName(txt: foodNotation), category: selectedCat.rawValue, isEditing: false, idToDelete: idToDelete, imageURL: imageURL)
+                                diaryManager.provider.addNewFood(items: try checkIsEmpty(items: collection.recipeFoodItems), newReceitName: try patientManager.provider.checkName(txt: foodNotation), category: selectedCat.rawValue, isEditing: false, idToDelete: idToDelete, imageURL: imageURL)
                                 collection.recipeFoodItems = []
                                 presentationMode.wrappedValue.dismiss()
                             }
@@ -265,7 +265,7 @@ struct recipeInteractionView: View {
                     case .edit:
                         Button {
                             do {
-                                diaryManager.provider.addNewFood(items: try checkIsEmpty(items: collection.recipeFoodItems), newReceitName: try pacientManager.provider.checkName(txt: foodNotation), category: selectedCat.rawValue, isEditing: true, idToDelete: idToDelete, imageURL: imageURL)
+                                diaryManager.provider.addNewFood(items: try checkIsEmpty(items: collection.recipeFoodItems), newReceitName: try patientManager.provider.checkName(txt: foodNotation), category: selectedCat.rawValue, isEditing: true, idToDelete: idToDelete, imageURL: imageURL)
                                 collection.recipeFoodItems = []
                                 presentationMode.wrappedValue.dismiss()
                             }
@@ -278,7 +278,7 @@ struct recipeInteractionView: View {
                     case .add:
                         Button {
                             do {
-                                diaryManager.provider.addNewFood(items: try checkIsEmpty(items: collection.recipeFoodItems), newReceitName: try pacientManager.provider.checkName(txt: foodNotation), category: selectedCat.rawValue, isEditing: false, idToDelete: idToDelete, imageURL: imageURL)
+                                diaryManager.provider.addNewFood(items: try checkIsEmpty(items: collection.recipeFoodItems), newReceitName: try patientManager.provider.checkName(txt: foodNotation), category: selectedCat.rawValue, isEditing: false, idToDelete: idToDelete, imageURL: imageURL)
                                 collection.recipeFoodItems = []
                                 presentationMode.wrappedValue.dismiss()
                             }

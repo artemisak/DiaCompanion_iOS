@@ -1,0 +1,24 @@
+{
+    "fileFormatVersion": "1.0.0",
+    "itemInfoEntries": {
+        "0C399C7B-B7CA-40B4-9D93-53E762A4E589": {
+            "author": "com.apple.CoreML",
+            "description": "CoreML Model Specification",
+            "name": "xgboost_model.mlmodel",
+            "path": "com.apple.CoreML/xgboost_model.mlmodel"
+        },
+        "8164014C-30BB-4128-9C3B-68002D35FE81": {
+            "author": "com.apple.CoreML",
+            "description": "External FeatureDescription Overlay",
+            "name": "FeatureDescriptions.json",
+            "path": "com.apple.CoreML/FeatureDescriptions.json"
+        },
+        "D6400B66-C78F-4E3D-8860-786EC00F2BB1": {
+            "author": "com.apple.CoreML",
+            "description": "External Metadata Overlay",
+            "name": "Metadata.json",
+            "path": "com.apple.CoreML/Metadata.json"
+        }
+    },
+    "rootModelIdentifier": "0C399C7B-B7CA-40B4-9D93-53E762A4E589"
+}

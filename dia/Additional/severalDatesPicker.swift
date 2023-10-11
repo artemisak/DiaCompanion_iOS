@@ -11,7 +11,7 @@ struct severalDatesPicker: View {
             .toolbar {
                 ToolbarItemGroup(placement: .navigationBarTrailing){
                     Button(action: {
-                        pacientManager.provider.addDatesToDB(dates: rkManager3.selectedDates)
+                        patientManager.provider.addDatesToDB(dates: rkManager3.selectedDates)
                         presentationMode.wrappedValue.dismiss()
                     }){
                         Text("Сохранить")
@@ -20,7 +20,7 @@ struct severalDatesPicker: View {
             }
     }
     func startUp() {
-        rkManager3.selectedDates = pacientManager.provider.getDatesFromDB()
+        rkManager3.selectedDates = patientManager.provider.getDatesFromDB()
         rkManager3.colors.weekdayHeaderColor = Color.blue
         rkManager3.colors.monthHeaderColor = Color("listButtonColor")
         rkManager3.colors.textColor = Color.blue

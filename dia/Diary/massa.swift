@@ -36,7 +36,7 @@ struct massa: View {
                         }
                         let dateFormatter = DateFormatter()
                         dateFormatter.dateFormat = "HH:mm dd.MM.yyyy"
-                        pacientManager.provider.addMassa(m: try convert(txt: t), time: dateFormatter.string(from: date))
+                        patientManager.provider.addMassa(m: try convert(txt: t), time: dateFormatter.string(from: date))
                         presentationMode.wrappedValue.dismiss()
                     } catch {
                         isCorrect.toggle()

@@ -88,7 +88,7 @@ struct lifeStyle: View {
                             Text(i.rawValue).tag(i)
                         }
                     }
-                    Picker("До того как узнали о беременности", selection: $selectedSmoke1) {
+                    Picker("До того, как узнали о беременности", selection: $selectedSmoke1) {
                         ForEach(smokeBeforeKnow.allCases){ i in
                             Text(i.rawValue).tag(i)
                         }

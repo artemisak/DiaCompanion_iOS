@@ -87,9 +87,9 @@ class diaryStatblock: ObservableObject {
     }
     
     func formMailSubject(version: Int) -> String {
-        let id = pacientManager.provider.getPreloadID()
-        let fio = pacientManager.provider.getPreloadFIO()
-        let versionName = pacientManager.provider.getVersionName(number: version)
+        let id = patientManager.provider.getPreloadID()
+        let fio = patientManager.provider.getPreloadFIO()
+        let versionName = patientManager.provider.getVersionName(number: version)
         if (bg_bad_ppgr > 1) {
             return "!!\(versionName) \(id) \(fio) - Дневник наблюдения"
         } else if bg_total > 0 && ((bg_high_fasting + bg_high_food) / bg_total > 1/3) {

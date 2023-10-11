@@ -13,10 +13,10 @@ struct settings: View {
             Section(header: Text("Карта пациента").font(.caption)){
                 NavigationLink(destination: {
                     if #available(iOS 16, *){
-                        pacientCart()
+                        patientCart()
                             .toolbar(.hidden, for: .tabBar)
                     } else {
-                        pacientCart().hiddenTabBar()
+                        patientCart().hiddenTabBar()
                     }
                 }) {Text("Данные пациента")}.foregroundColor(Color("listButtonColor"))
                 NavigationLink(destination: {
@@ -65,7 +65,7 @@ struct settings: View {
                         routeManager.version = 1
                         routeManager.tabViewStatment = 1
                         Task {
-                            await pacientManager.provider.deleteAccaunt()
+                            await patientManager.provider.deleteAccaunt()
                         }
                     })
                 })

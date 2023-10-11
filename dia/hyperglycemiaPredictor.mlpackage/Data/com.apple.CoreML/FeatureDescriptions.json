@@ -1,0 +1,57 @@
+{
+  "Outputs" : {
+    "hyperglycemia" : {
+      "MLFeatureShortDescription" : "Hyperglycemia prediction"
+    },
+    "classProbability" : {
+      "MLFeatureShortDescription" : "Hyperglycemia probability score"
+    }
+  },
+  "Inputs" : {
+    "f12" : {
+      "MLFeatureShortDescription" : "Fasting clugose rate"
+    },
+    "f9" : {
+      "MLFeatureShortDescription" : "HbA1C"
+    },
+    "f0" : {
+      "MLFeatureShortDescription" : "Meal type (breakfast, lunch, dinner, snack)"
+    },
+    "f5" : {
+      "MLFeatureShortDescription" : "Prot  before 6 hours"
+    },
+    "f10" : {
+      "MLFeatureShortDescription" : "Triglycerides"
+    },
+    "f1" : {
+      "MLFeatureShortDescription" : "Glycemic idnex"
+    },
+    "f6" : {
+      "MLFeatureShortDescription" : "Fat  before 6 hours"
+    },
+    "f13" : {
+      "MLFeatureShortDescription" : "Gestational age at the time of biochemical tests (f9-f12)"
+    },
+    "f2" : {
+      "MLFeatureShortDescription" : "Glycemic load"
+    },
+    "f11" : {
+      "MLFeatureShortDescription" : "Cholesterol"
+    },
+    "f7" : {
+      "MLFeatureShortDescription" : "Blood gucose rate before meal"
+    },
+    "f3" : {
+      "MLFeatureShortDescription" : "Carbo"
+    },
+    "f8" : {
+      "MLFeatureShortDescription" : "BMI"
+    },
+    "f4" : {
+      "MLFeatureShortDescription" : "Carbo before 6 hours"
+    }
+  },
+  "TrainingInputs" : {
+
+  }
+}

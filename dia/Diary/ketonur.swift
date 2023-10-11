@@ -36,7 +36,7 @@ struct ketonur: View {
                         }
                         let dateFormatter = DateFormatter()
                         dateFormatter.dateFormat = "HH:mm dd.MM.yyyy"
-                        pacientManager.provider.addKetonur(mmol: try convert(txt: t), time: dateFormatter.string(from: date))
+                        patientManager.provider.addKetonur(mmol: try convert(txt: t), time: dateFormatter.string(from: date))
                         presentationMode.wrappedValue.dismiss()
                     } catch {
                         isCorrect.toggle()

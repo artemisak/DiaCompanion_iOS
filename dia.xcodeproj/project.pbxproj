@@ -14,7 +14,6 @@
 		A70BCC3A27B9471E00C22703 /* loginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A70BCC3927B9471E00C22703 /* loginManager.swift */; };
 		A70FC0FB28AA969E00E154DB /* recommendationMesssage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A70FC0FA28AA969E00E154DB /* recommendationMesssage.swift */; };
 		A71CAEF228280F7600C6AC9F /* predictManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71CAEF128280F7600C6AC9F /* predictManager.swift */; };
-		A722F5642AB8A3A0000C8D10 /* xgboost_model.mlpackage in Sources */ = {isa = PBXBuildFile; fileRef = A722F5632AB8A3A0000C8D10 /* xgboost_model.mlpackage */; };
 		A7230C7F27705AED00B68244 /* excelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7230C7E27705AED00B68244 /* excelManager.swift */; };
 		A7289FB4294F530A00B35BD3 /* aboutApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7289FB3294F530A00B35BD3 /* aboutApp.swift */; };
 		A73A1F082A813A07007F4299 /* activityPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = A73A1F042A813A07007F4299 /* activityPreferences.swift */; };
@@ -23,7 +22,7 @@
 		A73A1F0B2A813A07007F4299 /* lifeStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = A73A1F072A813A07007F4299 /* lifeStyle.swift */; };
 		A73C74F628CF2BF2008D09BF /* recipeInteractionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A73C74F528CF2BF2008D09BF /* recipeInteractionView.swift */; };
 		A7491D85297AA66D005AAA18 /* recipeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7491D84297AA66D005AAA18 /* recipeModel.swift */; };
-		A7491D87297AF5C6005AAA18 /* pacientCart.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7491D86297AF5C6005AAA18 /* pacientCart.swift */; };
+		A7491D87297AF5C6005AAA18 /* patientCart.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7491D86297AF5C6005AAA18 /* patientCart.swift */; };
 		A74A1CC228B1016C0038C79F /* startPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74A1CC128B1016C0038C79F /* startPage.swift */; };
 		A760B57D2987E04C00402094 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = A760B57F2987E04C00402094 /* Localizable.strings */; };
 		A760B5822987E05C00402094 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = A760B5842987E05C00402094 /* Localizable.strings */; };
@@ -41,10 +40,14 @@
 		A77B7EE62973F00400CFEBD5 /* searchByWordList.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77B7EE52973F00400CFEBD5 /* searchByWordList.swift */; };
 		A77B7EE82973F01100CFEBD5 /* searchViewsGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77B7EE72973F01100CFEBD5 /* searchViewsGroup.swift */; };
 		A77B7EEA2973F01700CFEBD5 /* enterPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77B7EE92973F01700CFEBD5 /* enterPoint.swift */; };
+		A77ED45A2AC45B3B00D6C4F6 /* ComplexModule in Frameworks */ = {isa = PBXBuildFile; productRef = A77ED4592AC45B3B00D6C4F6 /* ComplexModule */; };
+		A77ED45C2AC45B3B00D6C4F6 /* Numerics in Frameworks */ = {isa = PBXBuildFile; productRef = A77ED45B2AC45B3B00D6C4F6 /* Numerics */; };
+		A77ED45E2AC45B3B00D6C4F6 /* RealModule in Frameworks */ = {isa = PBXBuildFile; productRef = A77ED45D2AC45B3B00D6C4F6 /* RealModule */; };
 		A78E381E2813F0680096E2E2 /* extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A78E381D2813F0680096E2E2 /* extensions.swift */; };
 		A79A5CB3298A4B94007D5170 /* Algorithms in Frameworks */ = {isa = PBXBuildFile; productRef = A79A5CB2298A4B94007D5170 /* Algorithms */; };
 		A79A5CB7298A9215007D5170 /* PDFView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79A5CB6298A9215007D5170 /* PDFView.swift */; };
 		A7A238022A84F7A200C1E015 /* questionaryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A238012A84F7A200C1E015 /* questionaryManager.swift */; };
+		A7A826F52AD2BAD600E35D53 /* hyperglycemiaPredictor.mlpackage in Sources */ = {isa = PBXBuildFile; fileRef = A7A826F42AD2BAD600E35D53 /* hyperglycemiaPredictor.mlpackage */; };
 		A7AF947C29D9F0B400745719 /* libxlsxwriter in Frameworks */ = {isa = PBXBuildFile; productRef = A7AF947B29D9F0B400745719 /* libxlsxwriter */; };
 		A7AF947F29D9F16D00745719 /* SQLite in Frameworks */ = {isa = PBXBuildFile; productRef = A7AF947E29D9F16D00745719 /* SQLite */; };
 		A7BD994727CA46FC0090D9D7 /* helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7BD994627CA46FC0090D9D7 /* helper.swift */; };
@@ -75,7 +78,7 @@
 		AC7A53F726DBF77B00FE65E7 /* enterAct.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC7A53F626DBF77B00FE65E7 /* enterAct.swift */; };
 		ACC3798626ECFA7E00E0729E /* massa.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACC3798526ECFA7E00E0729E /* massa.swift */; };
 		ACCBA996272B1DA300D785F6 /* RKViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACCBA995272B1DA300D785F6 /* RKViewController.swift */; };
-		ACCC5C2E2702190B0057CA7C /* pacientManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACCC5C2D2702190B0057CA7C /* pacientManager.swift */; };
+		ACCC5C2E2702190B0057CA7C /* patientManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACCC5C2D2702190B0057CA7C /* patientManager.swift */; };
 		ACD86E8126DE820B0027B8ED /* sugarChange.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD86E8026DE820B0027B8ED /* sugarChange.swift */; };
 		ACF2F0A826DE9A1D0066753D /* inject.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF2F0A726DE9A1D0066753D /* inject.swift */; };
 		ACF2F0AA26DEA8300066753D /* history.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF2F0A926DEA8300066753D /* history.swift */; };
@@ -95,7 +98,6 @@
 		A70BCC3927B9471E00C22703 /* loginManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = loginManager.swift; sourceTree = "<group>"; };
 		A70FC0FA28AA969E00E154DB /* recommendationMesssage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = recommendationMesssage.swift; sourceTree = "<group>"; };
 		A71CAEF128280F7600C6AC9F /* predictManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = predictManager.swift; sourceTree = "<group>"; };
-		A722F5632AB8A3A0000C8D10 /* xgboost_model.mlpackage */ = {isa = PBXFileReference; lastKnownFileType = folder.mlpackage; path = xgboost_model.mlpackage; sourceTree = "<group>"; };
 		A7230C7E27705AED00B68244 /* excelManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = excelManager.swift; sourceTree = "<group>"; };
 		A7289FB3294F530A00B35BD3 /* aboutApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = aboutApp.swift; sourceTree = "<group>"; };
 		A73A1F042A813A07007F4299 /* activityPreferences.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = activityPreferences.swift; sourceTree = "<group>"; };
@@ -104,7 +106,7 @@
 		A73A1F072A813A07007F4299 /* lifeStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = lifeStyle.swift; sourceTree = "<group>"; };
 		A73C74F528CF2BF2008D09BF /* recipeInteractionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = recipeInteractionView.swift; sourceTree = "<group>"; };
 		A7491D84297AA66D005AAA18 /* recipeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = recipeModel.swift; sourceTree = "<group>"; };
-		A7491D86297AF5C6005AAA18 /* pacientCart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = pacientCart.swift; sourceTree = "<group>"; };
+		A7491D86297AF5C6005AAA18 /* patientCart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = patientCart.swift; sourceTree = "<group>"; };
 		A74A1CC128B1016C0038C79F /* startPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = startPage.swift; sourceTree = "<group>"; };
 		A760B57E2987E04C00402094 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		A760B5832987E05C00402094 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -124,8 +126,8 @@
 		A77B7EE92973F01700CFEBD5 /* enterPoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = enterPoint.swift; sourceTree = "<group>"; };
 		A78E381D2813F0680096E2E2 /* extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = extensions.swift; sourceTree = "<group>"; };
 		A79A5CB6298A9215007D5170 /* PDFView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFView.swift; sourceTree = "<group>"; };
-		A79A9354284D58F300C0A1AE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = /Users/artemisakov/Documents/swiftDia/dia/Info.plist; sourceTree = "<absolute>"; };
 		A7A238012A84F7A200C1E015 /* questionaryManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = questionaryManager.swift; sourceTree = "<group>"; };
+		A7A826F42AD2BAD600E35D53 /* hyperglycemiaPredictor.mlpackage */ = {isa = PBXFileReference; lastKnownFileType = folder.mlpackage; path = hyperglycemiaPredictor.mlpackage; sourceTree = "<group>"; };
 		A7BD994627CA46FC0090D9D7 /* helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = helper.swift; sourceTree = "<group>"; };
 		A7C997862983B68200A38F2D /* dayConsumptionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dayConsumptionModel.swift; sourceTree = "<group>"; };
 		A7CD3AED2ABDA1BE00FAFEBF /* foodList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = foodList.swift; sourceTree = "<group>"; };
@@ -155,7 +157,7 @@
 		AC7A53F626DBF77B00FE65E7 /* enterAct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = enterAct.swift; sourceTree = "<group>"; };
 		ACC3798526ECFA7E00E0729E /* massa.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = massa.swift; sourceTree = "<group>"; };
 		ACCBA995272B1DA300D785F6 /* RKViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RKViewController.swift; sourceTree = "<group>"; };
-		ACCC5C2D2702190B0057CA7C /* pacientManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = pacientManager.swift; sourceTree = "<group>"; };
+		ACCC5C2D2702190B0057CA7C /* patientManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = patientManager.swift; sourceTree = "<group>"; };
 		ACD86E8026DE820B0027B8ED /* sugarChange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = sugarChange.swift; sourceTree = "<group>"; };
 		ACF2F0A726DE9A1D0066753D /* inject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = inject.swift; sourceTree = "<group>"; };
 		ACF2F0A926DEA8300066753D /* history.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = history.swift; sourceTree = "<group>"; };
@@ -174,7 +176,10 @@
 			files = (
 				A7AF947F29D9F16D00745719 /* SQLite in Frameworks */,
 				A79A5CB3298A4B94007D5170 /* Algorithms in Frameworks */,
+				A77ED45E2AC45B3B00D6C4F6 /* RealModule in Frameworks */,
 				A7AF947C29D9F0B400745719 /* libxlsxwriter in Frameworks */,
+				A77ED45A2AC45B3B00D6C4F6 /* ComplexModule in Frameworks */,
+				A77ED45C2AC45B3B00D6C4F6 /* Numerics in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -256,12 +261,12 @@
 			isa = PBXGroup;
 			children = (
 				AC631E0E26CEA90D0033CCFF /* settings.swift */,
-				A7491D86297AF5C6005AAA18 /* pacientCart.swift */,
+				A7491D86297AF5C6005AAA18 /* patientCart.swift */,
 				AC2C506027289C360009E8EE /* severalDatesPicker.swift */,
 				A7BD994627CA46FC0090D9D7 /* helper.swift */,
 				A79A5CB6298A9215007D5170 /* PDFView.swift */,
 				A7289FB3294F530A00B35BD3 /* aboutApp.swift */,
-				ACCC5C2D2702190B0057CA7C /* pacientManager.swift */,
+				ACCC5C2D2702190B0057CA7C /* patientManager.swift */,
 			);
 			path = Additional;
 			sourceTree = "<group>";
@@ -421,12 +426,11 @@
 				A78EA623291D1BA800B2CDD2 /* Additional */,
 				A7F8A596288ED30100C13F36 /* Education.pdf */,
 				A7CF7A622AAC9A5700155D2F /* diacompanion.db */,
-				A722F5632AB8A3A0000C8D10 /* xgboost_model.mlpackage */,
+				A7A826F42AD2BAD600E35D53 /* hyperglycemiaPredictor.mlpackage */,
 				AC2603232690691F00C4A520 /* Assets.xcassets */,
 				A7DCBBB227BD8AD4009A3A16 /* Launch Screen.storyboard */,
 				A760B5842987E05C00402094 /* Localizable.strings */,
 				A760B57F2987E04C00402094 /* Localizable.strings */,
-				A79A9354284D58F300C0A1AE /* Info.plist */,
 				AC2603252690691F00C4A520 /* Preview Content */,
 			);
 			path = dia;
@@ -460,6 +464,9 @@
 				A79A5CB2298A4B94007D5170 /* Algorithms */,
 				A7AF947B29D9F0B400745719 /* libxlsxwriter */,
 				A7AF947E29D9F16D00745719 /* SQLite */,
+				A77ED4592AC45B3B00D6C4F6 /* ComplexModule */,
+				A77ED45B2AC45B3B00D6C4F6 /* Numerics */,
+				A77ED45D2AC45B3B00D6C4F6 /* RealModule */,
 			);
 			productName = dia;
 			productReference = AC26031C2690691E00C4A520 /* dia.app */;
@@ -495,6 +502,7 @@
 				A79A5CB1298A4B94007D5170 /* XCRemoteSwiftPackageReference "swift-algorithms" */,
 				A7AF947A29D9F0B400745719 /* XCRemoteSwiftPackageReference "libxlsxwriter" */,
 				A7AF947D29D9F16D00745719 /* XCRemoteSwiftPackageReference "SQLite.swift" */,
+				A77ED4582AC45B3B00D6C4F6 /* XCRemoteSwiftPackageReference "swift-numerics" */,
 			);
 			productRefGroup = AC26031D2690691E00C4A520 /* Products */;
 			projectDirPath = "";
@@ -549,7 +557,7 @@
 				ACD86E8126DE820B0027B8ED /* sugarChange.swift in Sources */,
 				A77B7EE32973EFFC00CFEBD5 /* listOfGroups.swift in Sources */,
 				ACF2F0AA26DEA8300066753D /* history.swift in Sources */,
-				ACCC5C2E2702190B0057CA7C /* pacientManager.swift in Sources */,
+				ACCC5C2E2702190B0057CA7C /* patientManager.swift in Sources */,
 				A73A1F092A813A07007F4299 /* foodPreferences.swift in Sources */,
 				A73A1F0B2A813A07007F4299 /* lifeStyle.swift in Sources */,
 				A7D0976A2809FE16000A12E1 /* buttonStyles.swift in Sources */,
@@ -563,17 +571,17 @@
 				A7004F3229782C3A008CA708 /* mainMenu.swift in Sources */,
 				A7230C7F27705AED00B68244 /* excelManager.swift in Sources */,
 				A77B7ED82973EFEA00CFEBD5 /* succesNotify.swift in Sources */,
+				A7A826F52AD2BAD600E35D53 /* hyperglycemiaPredictor.mlpackage in Sources */,
 				A7491D85297AA66D005AAA18 /* recipeModel.swift in Sources */,
 				A77B7ED62973EFEA00CFEBD5 /* addGramButton.swift in Sources */,
 				A775CAF8298695B70077979D /* diaryStatblock.swift in Sources */,
 				A77B7ED92973EFEA00CFEBD5 /* listHeader.swift in Sources */,
 				ACF4E40F272DB126002D2797 /* RKWeekdayHeader.swift in Sources */,
 				A7CD3AEE2ABDA1BE00FAFEBF /* foodList.swift in Sources */,
-				A7491D87297AF5C6005AAA18 /* pacientCart.swift in Sources */,
+				A7491D87297AF5C6005AAA18 /* patientCart.swift in Sources */,
 				A78E381E2813F0680096E2E2 /* extensions.swift in Sources */,
 				A7289FB4294F530A00B35BD3 /* aboutApp.swift in Sources */,
 				ACF4E413272DB126002D2797 /* RKDate.swift in Sources */,
-				A722F5642AB8A3A0000C8D10 /* xgboost_model.mlpackage in Sources */,
 				AC2C506127289C360009E8EE /* severalDatesPicker.swift in Sources */,
 				AC2603202690691E00C4A520 /* diaApp.swift in Sources */,
 				A77793652987D18C00DB0737 /* utilities.swift in Sources */,
@@ -770,7 +778,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.1.15;
+				MARKETING_VERSION = 2.1.18;
 				PRODUCT_BUNDLE_IDENTIFIER = app.dia;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -802,7 +810,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.1.15;
+				MARKETING_VERSION = 2.1.18;
 				PRODUCT_BUNDLE_IDENTIFIER = app.dia;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -838,6 +846,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		A77ED4582AC45B3B00D6C4F6 /* XCRemoteSwiftPackageReference "swift-numerics" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-numerics.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.2;
+			};
+		};
 		A79A5CB1298A4B94007D5170 /* XCRemoteSwiftPackageReference "swift-algorithms" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/apple/swift-algorithms.git";
@@ -865,6 +881,21 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		A77ED4592AC45B3B00D6C4F6 /* ComplexModule */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A77ED4582AC45B3B00D6C4F6 /* XCRemoteSwiftPackageReference "swift-numerics" */;
+			productName = ComplexModule;
+		};
+		A77ED45B2AC45B3B00D6C4F6 /* Numerics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A77ED4582AC45B3B00D6C4F6 /* XCRemoteSwiftPackageReference "swift-numerics" */;
+			productName = Numerics;
+		};
+		A77ED45D2AC45B3B00D6C4F6 /* RealModule */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A77ED4582AC45B3B00D6C4F6 /* XCRemoteSwiftPackageReference "swift-numerics" */;
+			productName = RealModule;
+		};
 		A79A5CB2298A4B94007D5170 /* Algorithms */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = A79A5CB1298A4B94007D5170 /* XCRemoteSwiftPackageReference "swift-algorithms" */;

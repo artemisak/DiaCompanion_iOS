@@ -41,12 +41,14 @@ class predictManager {
     
     static let provider = predictManager()
     
-    func getPredict(meal_type_n: Double, gi: Double, gl: Double, carbo: Double, mds: Double, kr: Double, ca: Double, fe: Double, carbo_b6h: Double, prot_b6h: Double, fat_b6h: Double, pv_b12h: Double, BG: Double, BMI: Double, HbA1C_V1: Double, TG_V1: Double, Hol_V1: Double, weight: Double, age: Double, fasting_glu: Double, pregnancy_week: Double) throws -> Double {
-        let model = try xgboost_model(configuration: MLModelConfiguration())
-        guard let output = try? model.prediction(input: xgboost_modelInput(meal_type_n: meal_type_n, gi: gi, gl: gl, carbo: carbo, mds: mds, kr: kr, ca: ca, fe: fe, carbo_b6h: carbo_b6h, prot_b6h: prot_b6h, fat_b6h: fat_b6h, pv_b12h: pv_b12h, BG: BG, BMI: BMI, HbA1C_V1: HbA1C_V1, TG_V1: TG_V1, Hol_V1: Hol_V1, weight: weight, age: age, fasting_glucose: fasting_glu, preg_week: pregnancy_week)) else {
+    func getPredict(meal_type_n: Double, gi: Double, gl: Double, carbo: Double, carbo_b6h: Double, prot_b6h: Double, fat_b6h: Double, BG: Double, BMI: Double, HbA1C_V1: Double, TG_V1: Double, Hol_V1: Double, fasting_glu: Double, pregnancy_week: Double) throws -> Double {
+        print(meal_type_n, gi, gl, carbo, carbo_b6h, prot_b6h, fat_b6h, BG, BMI, HbA1C_V1, TG_V1, Hol_V1, fasting_glu, pregnancy_week)
+        let model = try hyperglycemiaPredictor(configuration: MLModelConfiguration())
+        guard let output = try? model.prediction(input: hyperglycemiaPredictorInput(f0: meal_type_n, f1: gi, f2: gl, f3: carbo, f4: carbo_b6h, f5: prot_b6h, f6: fat_b6h, f7: BG, f8: BMI, f9: HbA1C_V1, f10: TG_V1, f11: Hol_V1, f12: fasting_glu, f13: pregnancy_week)) else {
             fatalError("Failed to make prediction")
         }
         let target = output.classProbability[1]!
+        print(target)
         return target
     }
     
@@ -73,6 +75,7 @@ class predictManager {
             let diary = Table("diary")
             let food = Expression<String>("foodName")
             let date = Expression<Date>("dateTime")
+            let g = Expression<String>("g")
             
             let userT = Table("usermac")
             let w = Expression<Double?>("weight")
@@ -102,43 +105,52 @@ class predictManager {
                 sum_of_nutr.append(column)
             }
             
-            var foodb6h = [String]()
-            for i in try db.prepare(diary.filter(picker_date.addingTimeInterval(-60*60*6)...picker_date ~= date).select(food)){
-                foodb6h.append(i[food])
+            let formatter = DateFormatter()
+            formatter.dateFormat = "HH:mm dd-MM-yyyy"
+            
+            let previousFormat = SQLite.dateFormatter.dateFormat
+            SQLite.dateFormatter = formatter
+            
+            let temps = formatter.string(from: picker_date)
+            let tempd = formatter.date(from: temps)!
+            
+            var foodb6h = [[String]]()
+            for i in try db.prepare(diary.filter((date > tempd.addingTimeInterval(-60*60*6)) & (date < tempd)).select(food, g)){
+                foodb6h.append([i[food], i[g]])
+            }
+
+            var foodb12h = [[String]]()
+            for i in try db.prepare(diary.filter((date > tempd.addingTimeInterval(-60*60*12)) & (date < tempd)).select(food, g)){
+                foodb12h.append([i[food], i[g]])
             }
             
-            var foodb12h = [String]()
-            for i in try db.prepare(diary.filter(picker_date.addingTimeInterval(-60*60*12)...picker_date ~= date).select(food)){
-                foodb12h.append(i[food])
-            }
+            SQLite.dateFormatter.dateFormat = previousFormat
             
             var protb6h: Double = 0.0
-            try foodb6h.forEach{
-                for i in try db.prepare(foodT.where(name == $0).select(prot)){
-                    protb6h += i[prot]
+            try foodb6h.forEach {
+                for i in try db.prepare(foodT.where(name == $0[0]).select(prot)){
+                    protb6h += i[prot] * (Double($0[1]) ?? 100.0) / 100
                 }
             }
-            nutr[0].append(protb6h)
             
             var carbob6h: Double = 0.0
-            try foodb6h.forEach{
-                for i in try db.prepare(foodT.where(name == $0).select(carbo)){
-                    carbob6h += i[carbo]
+            try foodb6h.forEach {
+                for i in try db.prepare(foodT.where(name == $0[0]).select(carbo)){
+                    carbob6h += i[carbo] * (Double($0[1]) ?? 100.0) / 100
                 }
             }
-            nutr[0].append(carbob6h)
             
             var fatb6h: Double = 0.0
             try foodb6h.forEach{
-                for i in try db.prepare(foodT.where(name == $0).select(fat)){
-                    fatb6h += i[fat]
+                for i in try db.prepare(foodT.where(name == $0[0]).select(fat)){
+                    fatb6h += i[fat] * (Double($0[1]) ?? 100.0) / 100
                 }
             }
             
             var pvb12h: Double = 0.0
             try foodb12h.forEach{
-                for i in try db.prepare(foodT.where(name == $0).select(pv)){
-                    pvb12h += i[pv] ?? 0.0
+                for i in try db.prepare(foodT.where(name == $0[0]).select(pv)){
+                    pvb12h += (i[pv] ?? 0.0) * (Double($0[1]) ?? 100.0) / 100
                 }
             }
             
@@ -166,7 +178,7 @@ class predictManager {
                 chol = i[cholesterol] ?? 0.0
                 trigl = i[triglycerides] ?? 0.0
                 glu = i[fasting_glu] ?? 0.0
-                preg_week = i[week] ?? 22.0
+                preg_week = i[week] ?? 0.0
             }
             
             var food_type_n: Double =  0.0
