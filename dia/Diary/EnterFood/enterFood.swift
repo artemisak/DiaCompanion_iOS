@@ -106,7 +106,7 @@ struct enterFood: View {
                 }
             }
             if routeManager.version == 1 {
-                Section(header: Text("Уровень сахара в крови").font(.caption)) {
+                Section(header: Text("Уровень глюкозы в крови").font(.caption)) {
                     Toggle(isOn: $enabled) {Text("Записать текущий УГК")}
                         .onChange(of: enabled){ _ in
                             if (!patientManager.provider.checkBMI() && enabled) {

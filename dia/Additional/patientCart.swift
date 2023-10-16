@@ -42,14 +42,16 @@ struct patientCart: View {
                         }
                     }.pickerStyle(.menu).font(Font.body).padding(.trailing)
                     DatePicker("Начало мониторинга", selection: $viewModel.woman.start_date, displayedComponents: [.date])
-                    Picker("Неделя беременности", selection: $viewModel.woman.week_of_start){
-                        ForEach(1...40, id: \.self) { week in
-                            Text("\(week)")
+                    if (routeManager.version == 1) || (routeManager.version == 2) {
+                        Picker("Неделя беременности", selection: $viewModel.woman.week_of_start){
+                            ForEach(1...40, id: \.self) { week in
+                                Text("\(week)")
+                            }
                         }
-                    }
-                    Picker("День недели беременности", selection: $viewModel.woman.day_of_start){
-                        ForEach(1...7, id: \.self) { day in
-                            Text("\(day)")
+                        Picker("День недели беременности", selection: $viewModel.woman.day_of_start){
+                            ForEach(1...7, id: \.self) { day in
+                                Text("\(day)")
+                            }
                         }
                     }
                 } header: {
@@ -101,14 +103,16 @@ struct patientCart: View {
                         }
                     }.pickerStyle(.menu).font(Font.body).padding(.trailing)
                     DatePicker("Начало мониторинга", selection: $viewModel.woman.start_date, displayedComponents: [.date])
-                    Picker("Неделя беременности", selection: $viewModel.woman.week_of_start) {
-                        ForEach(1...40, id: \.self) { week in
-                            Text("\(week)")
+                    if (routeManager.version == 1) || (routeManager.version == 2) {
+                        Picker("Неделя беременности", selection: $viewModel.woman.week_of_start) {
+                            ForEach(1...40, id: \.self) { week in
+                                Text("\(week)")
+                            }
                         }
-                    }
-                    Picker("День недели беременности", selection: $viewModel.woman.day_of_start){
-                        ForEach(1...7, id: \.self) { day in
-                            Text("\(day)")
+                        Picker("День недели беременности", selection: $viewModel.woman.day_of_start){
+                            ForEach(1...7, id: \.self) { day in
+                                Text("\(day)")
+                            }
                         }
                     }
                 } header: {

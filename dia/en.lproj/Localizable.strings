@@ -12,7 +12,7 @@
 "Завершить" = "Done";
 "Готово" = "Done";
 "Выберите версию" = "Choose version";
-"Версия позволяет вести контроль за приемами пищи, физической активностью и уровнем сахара в крови. В версию внедрена рекомендательная система, помогающая корректировать прием пищи пациенток.\nПредназначен для беременных пациенток, страдающих ГСД" = "This version allows you to monitor food intake, physical activity, and blood sugar levels. The version includes a recommendation system to help adjust the patient's food intake.nnDesigned for pregnant patients with GDM";
+"Версия позволяет вести контроль за приемами пищи, физической активностью и уровнем глюкозы в крови. В версию внедрена рекомендательная система, помогающая корректировать прием пищи пациенток.\nПредназначен для беременных пациенток, страдающих ГСД" = "This version allows you to monitor food intake, physical activity, and blood sugar levels. The version includes a recommendation system to help adjust the patient's food intake.nnDesigned for pregnant patients with GDM";
 "ДиаКомпаньон" = "DiaCompanion";
 "Главная" = "Home";
 "Рецепты" = "Recipes";
@@ -21,7 +21,7 @@
 "Сегодня" = "Today";
 "Разделы дневника" = "Diary sections";
 "Приемы пищи" = "Food Intake";
-"Измерение сахара" = "Sugar Measurement";
+"Измерение глюкозы" = "Sugar Measurement";
 "Введение инсулина" = "Insulin Injection";
 "Физическая активность" = "Physical Activity";
 "Физическая нагрузка" = "Physical activity";
@@ -35,7 +35,7 @@
 "Перекусы" = "Snacks";
 "Дата" = "Date";
 "Время" = "Time";
-"Уровень сахара в крови" = "BG rate";
+"Уровень глюкозы в крови" = "BG rate";
 "Записать текущий УГК" = "Set current BG rate";
 "УГК не определен" = "Insufficient data";
 "УГК превысит норму" = "BG will exceed the target value";
@@ -46,8 +46,8 @@
 "ГИ / ГН / Угл. / Продукт" = "GI / Gl / Carbo / Dish name";
 "Высокий уровень глюкозы до еды. Рекомендовано уменьшить количество углеводов во время перекусов. Если перекусов не было, проконсультируитесь с врачом" = "High glucose levels before meals. It is recommended to reduce carbohydrates during snacks. If no snacks, consult a physician";
 "Уменьшите количество продуктов с высокой гликемической нагрузкой (ГН)" = "Reduce the amount of foods with a high glycemic load (GL)";
-"Сахар" = "Sugar";
-"Уровень сахара в крови, ммоль/л" = "Blood glucose rate, mmol/l";
+"Глюкоза" = "Sugar";
+"Уровень глюкозы в крови, ммоль/л" = "Blood glucose rate, mmol/l";
 "Период" = "Timeframe";
 "Натощак" = "Fasting";
 "После завтрака" = "After breakfast";

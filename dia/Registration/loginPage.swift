@@ -9,10 +9,10 @@ import AVFoundation
 
 struct loginPage: View {
     @State private var login: String = ""
-    @State private var isValidLogin: Bool = true
-    @State private var nextField: Bool = false
+    @State private var pass: String = ""
+    @State private var isValid: Bool = true
     @State private var isLoading: Bool = false
-    @FocusState private var focusedField: Bool
+    @State private var nextField: Bool = false
     @EnvironmentObject var routeManager: Router
     var body: some View {
         VStack(spacing: 20) {
@@ -21,49 +21,77 @@ struct loginPage: View {
                     TextField("", text: $login, prompt: Text("Логин").font(.body))
                         .labelsHidden()
                         .onChange(of: login, perform: {i in
-                            if !isValidLogin {
+                            if !isValid {
                                 withAnimation(.default){
-                                    isValidLogin.toggle()
+                                    isValid.toggle()
                                 }
                             }
                         })
                         .textInputAutocapitalization(.never)
                         .disableAutocorrection(true)
-                        .focused($focusedField)
                 }
                 .padding()
                 .background(RoundedRectangle(cornerRadius: 10)
-                    .stroke(isValidLogin ? Color("buttonStroke") : Color("buttonStrokeAlert"), lineWidth: 1))
-                .onTapGesture {
-                    focusedField = true
-                }
+                    .stroke(isValid ? Color("buttonStroke") : Color("buttonStrokeAlert"), lineWidth: 1))
             }
-            if !isValidLogin {
-                Text("Такого аккаунта не существует")
+            VStack(spacing: 20) {
+                VStack(alignment: .leading, spacing: .zero) {
+                    SecureField("", text: $pass, prompt: Text("Пароль").font(.body))
+                        .labelsHidden()
+                        .onChange(of: pass, perform: {i in
+                            if !isValid {
+                                withAnimation(.default){
+                                    isValid.toggle()
+                                }
+                            }
+                        })
+                        .textInputAutocapitalization(.never)
+                        .disableAutocorrection(true)
+                }
+                .padding()
+                .background(RoundedRectangle(cornerRadius: 10)
+                    .stroke(isValid ? Color.gray.opacity(0.5) : Color.red, lineWidth: 1))
+            }
+            if !isValid {
+                Text("Проверьте правильность введенных данных или повторите попытку позже")
                     .font(.caption)
                     .foregroundColor(Color("buttonStrokeAlert"))
                     .frame(maxWidth: .infinity, alignment: .leading)
             }
-            Button {
-                if login.isEmpty {
-                    withAnimation(.default){
-                        focusedField = true
-                    }
-                } else {
-                    withAnimation(.default){
-                        isValidLogin = routeManager.checkEnteredLogin(login)
-                        if isValidLogin {
-                            focusedField = false
-                            nextField = true
+            Button(action: {
+                if pass.isEmpty || login.isEmpty {
+                    isValid = false
+                }
+                else {
+                    isLoading = true
+                    Task {
+                        await routeManager.authorization(login: login, password: pass) { authorized in
+                            isValid = authorized
+                            Task {
+                                if isValid {
+                                    await routeManager.setLogged()
+                                    DispatchQueue.main.async {
+                                        isLoading = false
+                                        nextField = true
+                                    }
+                                } else {
+                                    DispatchQueue.main.async {
+                                        isLoading = false
+                                        nextField = false
+                                    }
+                                }
+                            }
                         }
                     }
                 }
-            } label: {
-                Text("Далее").font(.body).frame(height: 25)
-            }
+            }, label: {
+                if isLoading {
+                    ProgressView().tint(.white).frame(height: 25)
+                } else {
+                    Text("Войти").font(.body).frame(height: 25)
+                }
+            })
             .buttonStyle(RoundedRectangleButtonStyle())
-            NavigationLink(isActive: $nextField, destination: {passwordPage()}, label: {EmptyView()})
-                .buttonStyle(TransparentButton()).hidden()
             NavigationLink(destination: {
                 regHelper()
             }, label: {
@@ -73,6 +101,8 @@ struct loginPage: View {
                 }
             })
             .buttonStyle(ChangeColorButton())
+            NavigationLink(isActive: $nextField, destination: {versionChoose()}, label: {EmptyView()})
+                .buttonStyle(TransparentButton()).hidden()
         }
         .padding()
         .navigationBarTitleDisplayMode(.inline)
@@ -92,6 +122,7 @@ struct loginPage: View {
                 }
             }
         }
-        .animation(.default, value: focusedField)
+        .animation(.default, value: isLoading)
+        .animation(.default, value: isValid)
     }
 }

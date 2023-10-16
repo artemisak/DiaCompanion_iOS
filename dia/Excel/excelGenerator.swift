@@ -262,7 +262,7 @@ class exportTable {
                 if kk == i {
                     worksheet_write_string(worksheet1, lxw_row_t(r1+3), 2, formater1.string(from: tbl[i].time[i1]), merge_format1)
                     worksheet_write_string(worksheet1, lxw_row_t(r1+3), 68, tbl[i].BG0[i1], merge_format1)
-                    worksheet_write_string(worksheet1, lxw_row_t(r1+3), 69, "\(round(Double(tbl[i].BG1[i1])!*100)/100)", merge_format1)
+                    worksheet_write_string(worksheet1, lxw_row_t(r1+3), 69, "\(round(Double(tbl[i].BG1[i1])!*10000)/100)", merge_format1)
                     worksheet_write_string(worksheet1, lxw_row_t(r1+3), 70, tbl[i].timeStamp[i1], merge_format1)
                 }
                 else {
@@ -544,7 +544,7 @@ class exportTable {
         }
         
         if version != 4 {
-            let worksheet2 = workbook_add_worksheet(workbook, "Уровень сахара и инсулин")
+            let worksheet2 = workbook_add_worksheet(workbook, "Уровень глюкозы и инсулин")
             
             worksheet_set_column(worksheet2, 0, 0, 20, nil);
             worksheet_set_column(worksheet2, 1, 1, 10, nil);
@@ -571,7 +571,7 @@ class exportTable {
             let tbl3 = sugar.1
             
             worksheet_merge_range(worksheet2, 0, 0, 0, 13, userName, nil);
-            worksheet_merge_range(worksheet2, 1, 0, 1, 13, "Измерение сахара", merge_format41);
+            worksheet_merge_range(worksheet2, 1, 0, 1, 13, "Измерение глюкозы", merge_format41);
             if (version == 3 && version == 4){
                 worksheet_write_string(worksheet2, 2, 0, "Неделя бер.", merge_format41);
             }

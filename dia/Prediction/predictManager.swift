@@ -42,13 +42,13 @@ class predictManager {
     static let provider = predictManager()
     
     func getPredict(meal_type_n: Double, gi: Double, gl: Double, carbo: Double, carbo_b6h: Double, prot_b6h: Double, fat_b6h: Double, BG: Double, BMI: Double, HbA1C_V1: Double, TG_V1: Double, Hol_V1: Double, fasting_glu: Double, pregnancy_week: Double) throws -> Double {
-        print(meal_type_n, gi, gl, carbo, carbo_b6h, prot_b6h, fat_b6h, BG, BMI, HbA1C_V1, TG_V1, Hol_V1, fasting_glu, pregnancy_week)
+//        print(meal_type_n, gi, gl, carbo, carbo_b6h, prot_b6h, fat_b6h, BG, BMI, HbA1C_V1, TG_V1, Hol_V1, fasting_glu, pregnancy_week)
         let model = try hyperglycemiaPredictor(configuration: MLModelConfiguration())
         guard let output = try? model.prediction(input: hyperglycemiaPredictorInput(f0: meal_type_n, f1: gi, f2: gl, f3: carbo, f4: carbo_b6h, f5: prot_b6h, f6: fat_b6h, f7: BG, f8: BMI, f9: HbA1C_V1, f10: TG_V1, f11: Hol_V1, f12: fasting_glu, f13: pregnancy_week)) else {
             fatalError("Failed to make prediction")
         }
         let target = output.classProbability[1]!
-        print(target)
+//        print(target)
         return target
     }
     

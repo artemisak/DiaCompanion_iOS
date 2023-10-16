@@ -25,7 +25,6 @@ struct versionChoose: View {
                     GDM = false
                     MS = false
                     PCOS = false
-                    
                 } label: {
                     HStack {
                         Text("ГСД, диета (с прогнозированием)").font(.body).bold()
@@ -35,86 +34,89 @@ struct versionChoose: View {
                 }
                 .listRowBackground(GDM_RCT ? Color("listHeader_alt") : Color("listHeaderDim_alt")).foregroundColor(.white)
                 if GDM_RCT {
-                    Text("Версия позволяет вести контроль за приемами пищи, физической активностью и уровнем сахара в крови. В версию внедрена рекомендательная система, помогающая корректировать прием пищи пациенток.\nПредназначен для беременных пациенток, страдающих ГСД")
+                    Text("Персональный помощник при планировании приема пищи для беременных с гестационным сахарным диабетом. Встроенная в приложение модель прогнозирует вероятность гипергликемии после планируемого приема пищи, и, в случае высокой вероятности гипергликемии, демонстрирует рекомендации для ее предотвращения")
                 }
             }
-            Section {
-                Button {
-                    routeManager.version = 2
-                    withAnimation(.spring()) {
-                        GDM = true
-                    }
-                    GDM_RCT = false
-                    MS = false
-                    PCOS = false
-                    
-                } label: {
-                    HStack {
-                        Text("ГСД, инсулинотерапия").font(.body).bold()
-                        Spacer()
-                        Image(systemName: "chevron.down").rotationEffect(.degrees(GDM ? 0 : -90))
-                    }
-                }
-                .listRowBackground(GDM ? Color("listHeader_alt") : Color("listHeaderDim_alt")).foregroundColor(.white)
-                if GDM {
-                    Text("Версия позволяет вести контроль за приемами    пищи, физической активностью и уровнем сахара в крови.\nПредназначен для беременных пациенток, страдающих ГСД")
-                }
-            }
-            Section {
-                Button {
-                    routeManager.version = 3
-                    withAnimation(.spring()) {
-                        MS = true
-                    }
-                    GDM_RCT = false
-                    GDM = false
-                    PCOS = false
-                } label: {
-                    HStack {
-                        Text("Дневник питания и самоконтроля").font(.body).bold()
-                        Spacer()
-                        Image(systemName: "chevron.down").rotationEffect(.degrees(MS ? 0 : -90))
-                    }
-                }
-                .listRowBackground(MS ? Color("listHeader_alt") : Color("listHeaderDim_alt")).foregroundColor(.white)
-                if MS {
-                    Text("Версия позволяет вести контроль за приемами пищи, физической активностью и уровнем сахара в крови.\nПредназначен для пациентов, страдающих диабетом")
-                }
-            }
-            Section {
-                Button {
-                    routeManager.version = 4
-                    withAnimation(.spring()) {
-                        PCOS = true
-                    }
-                    GDM_RCT = false
-                    GDM = false
-                    MS = false
-                } label: {
-                    HStack {
-                        Text("Дневник питания").font(.body).bold()
-                        Spacer()
-                        Image(systemName: "chevron.down").rotationEffect(.degrees(PCOS ? 0 : -90))
-                    }
-                }
-                .listRowBackground(PCOS ? Color("listHeader_alt") : Color("listHeaderDim_alt")).foregroundColor(.white)
-                if PCOS {
-                    Text("Версия предоставляет функционал для ведения данных о приемах пищи и физической активности.\nПодходит для пациентов, не болеющих диабетом")
-                }
-            } footer: {
-                Text("Сделанный выбор можно изменить позже в настройках")
-                    .font(.caption)
-                    .frame(minWidth: 0, maxWidth: .infinity)
-                    .multilineTextAlignment(.center)
-            }
+//            Section {
+//                Button {
+//                    routeManager.version = 2
+//                    withAnimation(.spring()) {
+//                        GDM = true
+//                    }
+//                    GDM_RCT = false
+//                    MS = false
+//                    PCOS = false
+//                } label: {
+//                    HStack {
+//                        Text("ГСД, инсулинотерапия").font(.body).bold()
+//                        Spacer()
+//                        Image(systemName: "chevron.down").rotationEffect(.degrees(GDM ? 0 : -90))
+//                    }
+//                }
+//                .listRowBackground(GDM ? Color("listHeader_alt") : Color("listHeaderDim_alt")).foregroundColor(.white)
+//                if GDM {
+//                    Text("Версия позволяет вести контроль за приемами    пищи, физической активностью и уровнем глюкозы в крови. Предназначен для беременных пациенток, страдающих ГСД.")
+//                }
+//            }
+//            Section {
+//                Button {
+//                    routeManager.version = 3
+//                    withAnimation(.spring()) {
+//                        MS = true
+//                    }
+//                    GDM_RCT = false
+//                    GDM = false
+//                    PCOS = false
+//                } label: {
+//                    HStack {
+//                        Text("Дневник питания и самоконтроля").font(.body).bold()
+//                        Spacer()
+//                        Image(systemName: "chevron.down").rotationEffect(.degrees(MS ? 0 : -90))
+//                    }
+//                }
+//                .listRowBackground(MS ? Color("listHeader_alt") : Color("listHeaderDim_alt")).foregroundColor(.white)
+//                if MS {
+//                    Text("Версия позволяет вести контроль за приемами пищи, физической активностью и уровнем глюкозы в крови. Предназначен для пациентов, страдающих диабетом.")
+//                }
+//            }
+//            Section {
+//                Button {
+//                    routeManager.version = 4
+//                    withAnimation(.spring()) {
+//                        PCOS = true
+//                    }
+//                    GDM_RCT = false
+//                    GDM = false
+//                    MS = false
+//                } label: {
+//                    HStack {
+//                        Text("Дневник питания").font(.body).bold()
+//                        Spacer()
+//                        Image(systemName: "chevron.down").rotationEffect(.degrees(PCOS ? 0 : -90))
+//                    }
+//                }
+//                .listRowBackground(PCOS ? Color("listHeader_alt") : Color("listHeaderDim_alt")).foregroundColor(.white)
+//                if PCOS {
+//                    Text("Версия предоставляет функционал для ведения данных о приемах пищи и физической активности. Подходит для пациентов, не болеющих диабетом.")
+//                }
+//            } footer: {
+//                Text("Сделанный выбор можно изменить позже в настройках")
+//                    .font(.caption)
+//                    .frame(minWidth: 0, maxWidth: .infinity)
+//                    .multilineTextAlignment(.center)
+//            }
         }
         .ignoresSafeArea(.keyboard)
         .navigationBarTitleDisplayMode(.large)
-        .navigationTitle("Выбор версии")
+        .navigationTitle("Описание")
         .navigationBarBackButtonHidden()
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
-                NavigationLink("Далее", destination: generalQuestions())
+                if (routeManager.version == 1) || (routeManager.version == 2){
+                    NavigationLink("Далее", destination: {generalQuestions()})
+                } else {
+                    NavigationLink("Далее", destination: {patientCart()})
+                }
             }
         }
     }

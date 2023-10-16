@@ -54,7 +54,7 @@ struct mainMenu: View {
                     } label: {
                         HStack {
                             Image("sugar_level").resizable().scaledToFit().frame(width: 36, height: 36)
-                            Text("Измерение сахара")
+                            Text("Измерение глюкозы")
                         }
                         .foregroundColor(Color("listButtonColor"))
                     }

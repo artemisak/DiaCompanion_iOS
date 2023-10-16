@@ -23,7 +23,7 @@ struct sugarChange: View {
     var body: some View {
         List {
             Section(header: Text("Общая информация").font(.caption)){
-                TextField("Уровень сахара в крови, ммоль/л", text: $t)
+                TextField("Уровень глюкозы в крови, ммоль/л", text: $t)
                     .keyboardType(.decimalPad)
                 NavigationLink(destination: sugarPicker(spreviewIndex: $spreviewIndex), label: {
                     HStack {
@@ -84,7 +84,7 @@ struct sugarChange: View {
                 })
             })
         }
-        .navigationTitle("Сахар")
+        .navigationTitle("Глюкоза")
     }
 }
 

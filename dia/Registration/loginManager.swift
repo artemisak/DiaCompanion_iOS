@@ -29,21 +29,91 @@ class Router: ObservableObject {
             print(error)
         }
     }
-        
-    func checkEnteredLogin(_ login: String) -> Bool {
-        if login == "almazov" {
-            return true
-        } else {
-            return false
-        }
-    }
     
-    func checkEnteredPassord(_ password: String) -> Bool {
-        if password == "pass123" {
-            return true
-        } else {
-            return false
+    func authorization(login: String, password: String, complition: @escaping (Bool) -> Void) async {
+
+        var request = URLRequest(url: URL(string: "http://diacompanion.ru/login")!)
+        request.httpMethod = "POST"
+        request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+
+        let parameters = [
+            "username": login,
+            "password": password
+        ]
+
+        let postData = parameters.map { (key, value) in
+            return "\(key)=\(value)"
+        }.joined(separator: "&")
+
+        let postDataEncoded = postData.data(using: .utf8)
+
+        request.httpBody = postDataEncoded
+
+        let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+            if let error = error {
+                print(error)
+                return
+            }
+            
+            guard let httpResponse = response as? HTTPURLResponse else {
+                return
+            }
+            
+            if httpResponse.statusCode == 200 {
+                complition(true)
+                if let data = data {
+                    do {
+                        let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
+                        if let detail = json?["detail"] as? String {
+                            print(detail)
+                        }
+                    } catch {
+                        print(error)
+                    }
+                }
+            } else if httpResponse.statusCode == 400 {
+                complition(false)
+                if let data = data {
+                    do {
+                        let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
+                        if let detail = json?["detail"] as? String {
+                            print(detail)
+                        }
+                    } catch {
+                        print(error)
+                    }
+                }
+            } else if httpResponse.statusCode == 403 {
+                complition(false)
+                if let data = data {
+                    do {
+                        let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
+                        if let detail = json?["detail"] as? String {
+                            print(detail)
+                        }
+                    } catch {
+                        print(error)
+                    }
+                }
+            } else if httpResponse.statusCode == 503 {
+                complition(false)
+                if let data = data {
+                    do {
+                        let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
+                        if let detail = json?["detail"] as? String {
+                            print(detail)
+                        }
+                    } catch {
+                        print(error)
+                    }
+                }
+            } else {
+                complition(false)
+            }
         }
+        
+        task.resume()
+
     }
     
     @MainActor

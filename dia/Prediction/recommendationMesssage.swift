@@ -17,7 +17,7 @@ func getMessage(highBGPredict: Bool, highBGBefore: Bool, moderateAmountOfCarbo: 
     var temp  = [recomendation]()
     if highBGPredict {
         if highBGBefore {
-            temp.append(recomendation(text: "Высокий уровень глюкозы до еды. Рекомендовано уменьшить количество углеводов во время перекусов. Если перекусов не было, проконсультируитесь с врачом."))
+            temp.append(recomendation(text: "Высокий уровень глюкозы до еды. Рекомендовано уменьшить количество углеводов во время перекусов. Возможно, требуется назначение малых доз инсулина. Проконсультируйтесь с врачом"))
         }
         if moderateAmountOfCarbo {
             if (unequalGLDistribution) {

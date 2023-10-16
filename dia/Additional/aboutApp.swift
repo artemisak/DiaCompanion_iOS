@@ -11,7 +11,7 @@ struct aboutApp: View {
     var body: some View {
         List {
             Section {
-                Text("Межплатформенный комплекс программного обеспечения, сочетающий традиционные методы контроля показаний сахара в крови с машинным обучением.")
+                Text("Межплатформенный комплекс программного обеспечения, сочетающий традиционные методы контроля показаний глюкозы в крови с машинным обучением.")
                 Link(destination: URL(string: "https://www.elibrary.ru/item.asp?id=47313305")!){Text("Обоснование медицинского подхода к исследованию")}
                 Link(destination: URL(string: "https://www.elibrary.ru/item.asp?id=49883928")!){Text("Связь кишечной микробиоты с прогнозированием ППГО")}
                 Link(destination: URL(string: "https://www.elibrary.ru/item.asp?id=46602070")!){Text("Разработка базы данных с ГИ")}

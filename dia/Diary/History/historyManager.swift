@@ -59,11 +59,11 @@ class historyList: ObservableObject {
             }
             if !histList.isEmpty {
                 for i in 0...histList.count-1 {
-                    var temp0 = 0.0
-                    var temp1 = 0.0
+                    var temp0 = -0.1
+                    var temp1 = -0.1
                     for i2 in try db.prepare(sugarR.select(BG0,BG1).filter(sdate == histList[i].date[6..<16] && stime == histList[i].date[0..<5])){
                         temp0 = i2[BG0]
-                        temp1 = round(i2[BG1]*100)
+                        temp1 = round(i2[BG1]*10000)/100
                     }
                     for i1 in try db.prepare(diary.select(id, table_id_key, gram, fName).filter(dateTime == histList[i].date && foodType == histList[i].name)){
                         histList[i].bdID.append(i1[id])
@@ -207,7 +207,7 @@ func deleteAndSave(idToDelete: [Int], table: Int, info: [Any]) {
         }
         else if table == 3 {
             t = "sugarChange"
-            type = "Измерение сахара"
+            type = "Измерение глюкозы"
         }
         else if table == 4 {
             t = "ketonur"
