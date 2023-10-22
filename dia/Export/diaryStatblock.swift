@@ -24,7 +24,6 @@ struct foodRow: Identifiable, Hashable {
 }
 
 class diaryStatblock: ObservableObject {
-    static let statBlock = diaryStatblock()
     var sugarRecords = [sugarRow]()
     var foodRecords = [foodRow]()
     var bg_total: Int = 0
@@ -46,14 +45,20 @@ class diaryStatblock: ObservableObject {
             if i.period == "Натощак" && i.lvl > 5.1 {bg_high_fasting += 1}
             else if i.period != " Натощак" && i.lvl > 7.0 {
                 bg_high_food += 1
-                if checkPPGR(dateTime: i.dateTime) {bg_bad_ppgr += 1}
+                if checkPPGR(dateTime: i.dateTime) {
+                    bg_bad_ppgr += 1
+                }
             }
         }
         
         for i in foodRecords {
             all_meals += 1.0
-            if i.meals == "Перекус" {snacks += 1.0}
-            if abs(i.timeStamp.timeIntervalSince(i.dateTime)) < TimeInterval(60*60) {on_time += 1.0}
+            if i.meals == "Перекус" {
+                snacks += 1.0
+            }
+            if abs(i.timeStamp.timeIntervalSince(i.dateTime)) < TimeInterval(60*60) {
+                on_time += 1.0
+            }
         }
         meals_main = (all_meals == 0) ? 0 : round((all_meals - snacks) / all_meals * 100)
         meals_on_time = (all_meals == 0) ? 0 : round(on_time / all_meals * 100)

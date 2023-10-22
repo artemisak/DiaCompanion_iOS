@@ -12,13 +12,6 @@ struct diaApp: App {
                     .environment(\.defaultMinListRowHeight, 55)
                     .scrollDismissesKeyboard(.immediately)
                     .scrollIndicators(.hidden)
-//                    .onAppear {
-//                        do {
-//                            _ = try predictManager.provider.getPredict(meal_type_n: 2, gi: 42.3, gl: 28.4, carbo: 34.0, carbo_b6h: 42.0, prot_b6h: 43.9, fat_b6h: 45.3, BG: 7.5, BMI: 26.026, HbA1C_V1: 5.4, TG_V1: 2.21, Hol_V1: 6.03, fasting_glu: 5.37, pregnancy_week: 25.0)
-//                        } catch {
-//                            print(error)
-//                        }
-//                    }
             } else {
                 startPage()
                     .dynamicTypeSize(.small ... .xLarge)

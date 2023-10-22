@@ -15,10 +15,10 @@ struct recomendation: Identifiable, Hashable {
 
 func getMessage(highBGPredict: Bool, highBGBefore: Bool, moderateAmountOfCarbo: Bool, tooManyCarbo: Bool, unequalGLDistribution: Bool, highGI: Bool) -> [recomendation] {
     var temp  = [recomendation]()
+    if highBGBefore {
+        temp.append(recomendation(text: "Высокий уровень глюкозы до еды. Рекомендовано уменьшить количество углеводов во время перекусов. Возможно, требуется назначение малых доз инсулина. Проконсультируйтесь с врачом"))
+    }
     if highBGPredict {
-        if highBGBefore {
-            temp.append(recomendation(text: "Высокий уровень глюкозы до еды. Рекомендовано уменьшить количество углеводов во время перекусов. Возможно, требуется назначение малых доз инсулина. Проконсультируйтесь с врачом"))
-        }
         if moderateAmountOfCarbo {
             if (unequalGLDistribution) {
                 temp.append(recomendation(text: "Уменьшите количество продуктов с высокой гликемической нагрузкой (ГН)."))
