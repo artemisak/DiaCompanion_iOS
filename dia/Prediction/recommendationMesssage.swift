@@ -16,7 +16,7 @@ struct recomendation: Identifiable, Hashable {
 func getMessage(highBGPredict: Bool, highBGBefore: Bool, moderateAmountOfCarbo: Bool, tooManyCarbo: Bool, unequalGLDistribution: Bool, highGI: Bool) -> [recomendation] {
     var temp  = [recomendation]()
     if highBGBefore {
-        temp.append(recomendation(text: "Высокий уровень глюкозы до еды. Рекомендовано уменьшить количество углеводов во время перекусов. Возможно, требуется назначение малых доз инсулина. Проконсультируйтесь с врачом"))
+        temp.append(recomendation(text: "Высокий уровень глюкозы до еды. Рекомендовано уменьшить количество углеводов во время перекусов. Возможно, требуется назначение малых доз инсулина. Проконсультируйтесь с врачом."))
     }
     if highBGPredict {
         if moderateAmountOfCarbo {
@@ -47,7 +47,7 @@ func checkUnequalGlDistribution(listOfFood: [foodItem]) -> Bool {
 }
 
 func checkBGPredicted(BG1: Double) -> Bool {
-    if BG1 > 0.51 {
+    if BG1 >= 0.4 {
         return true
     } else {
         return false
@@ -77,7 +77,7 @@ func checkCarbo(foodType: String, listOfFood: [foodItem]) -> (Bool, Bool) {
 }
 
 func checkBGBefore(BG0: Double) -> Bool {
-    if BG0 > 7.0 {
+    if BG0 >= 6.7 {
         return true
     } else {
         return false

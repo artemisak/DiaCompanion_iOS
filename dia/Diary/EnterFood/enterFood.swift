@@ -274,7 +274,7 @@ struct enterFood: View {
                 let checkCarbo = checkCarbo(foodType: ftpreviewIndex.rawValue, listOfFood: workList)
                 recomendationCards = getMessage(highBGPredict: checkBGPredicted(BG1: res), highBGBefore: checkBGBefore(BG0: try convert(txt: sugar)), moderateAmountOfCarbo: checkCarbo.0, tooManyCarbo: checkCarbo.1, unequalGLDistribution: checkUnequalGlDistribution(listOfFood: workList), highGI: checkGI(listOfFood: workList))
                 recCardID = recomendationCards.isEmpty ? UUID() : recomendationCards[0].id
-                if res > 0.51 {
+                if !recomendationCards.isEmpty {
                     isVisible = true
                     withAnimation(.none){
                         sugarlvl = "УГК превысит норму"
