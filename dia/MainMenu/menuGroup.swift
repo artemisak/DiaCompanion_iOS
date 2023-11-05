@@ -84,12 +84,3 @@ struct mainGroup: View {
         .environmentObject(collection)
     }
 }
-
-struct mainMenuGroup_Previews: PreviewProvider {
-    static var previews: some View {
-        mainGroup()
-    }
-}
-
-
-

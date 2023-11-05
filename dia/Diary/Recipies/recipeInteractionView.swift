@@ -25,14 +25,14 @@ struct recipeInteractionView: View {
         if #available(iOS 16, *) {
             List {
                 if viewStatement == .add || viewStatement == .edit {
-                    Section(header: Text("Общая информация").font(.caption)){
+                    Section(header: Text("Общая информация").font(.body)){
                         TextField("Название блюда", text: $foodNotation)
                             .autocorrectionDisabled()
                         NavigationLink(destination: categoryPicker(selectedCat: $selectedCat)) {
-                            Text(selectedCat.rawValue)
+                            Text(LocalizedStringKey(selectedCat.rawValue))
                         }
                     }
-                    Section(header: Text("Изображение").font(.caption)) {
+                    Section(header: Text("Изображение").font(.body)) {
                         TextField("Вставьте ссылку (URL)", text: $imageURL)
                             .autocorrectionDisabled()
                     }
@@ -64,13 +64,13 @@ struct recipeInteractionView: View {
                     }
                 } header: {
                     if !collection.recipeFoodItems.isEmpty {
-                        Text("Составляющие рецепта").font(.caption)
+                        Text("Составляющие рецепта").font(.body)
                     }
                 }
             }
             .ignoresSafeArea(.keyboard, edges: .bottom)
             .navigationBarBackButtonHidden()
-            .navigationTitle(getTitle())
+            .navigationTitle(LocalizedStringKey(getTitle()))
             .toolbar(.hidden, for: .tabBar)
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading, content: {
@@ -148,18 +148,18 @@ struct recipeInteractionView: View {
                     })
                 }
             }
-            .sheet(isPresented: $showEditView, content: { addGramButton(gram: String(collection.selectedItem!.gram!).split(separator: ".").joined(separator: ","), editing: true, isShowingSheet: $showEditView, showSuccesNotify: .constant(false)).dynamicTypeSize(.xLarge)})
+            .sheet(isPresented: $showEditView, content: { addGramButton(gram: String(collection.selectedItem!.gram!).split(separator: ".").joined(separator: ","), editing: true, isShowingSheet: $showEditView, showSuccesNotify: .constant(false)).dynamicTypeSize(.medium)})
             .alert(isPresented: $permission) {
-                Alert(title: Text("Статус операции"), message: Text(errorMessage), dismissButton: .default(Text("ОК")))
+                Alert(title: Text(LocalizedStringKey("Статус операции")), message: Text(LocalizedStringKey(errorMessage)), dismissButton: .default(Text(LocalizedStringKey("ОК"))))
             }
-            .alert("Несохраненные изменения", isPresented: $isUnsavedChanges, actions: {
+            .alert(LocalizedStringKey("Несохраненные изменения"), isPresented: $isUnsavedChanges, actions: {
                 Button(role: .destructive, action: {
                     if collection.whereToSave == .recipeFoodItems {
                         collection.recipeFoodItems = []
                     }
                     presentationMode.wrappedValue.dismiss()
-                }, label: {Text("Покинуть")})
-            }, message: {Text("Вы внесли изменения, но не сохранили их. Если вы покините страницу - временные данные будут удалены.")})
+                }, label: {Text(LocalizedStringKey("Покинуть"))})
+            }, message: {Text(LocalizedStringKey("Вы внесли изменения, но не сохранили их. Если вы покините страницу - временные данные будут удалены."))})
             .task {
                 collection.whereToSave = .recipeFoodItems
                 if preinitialized {
@@ -174,14 +174,14 @@ struct recipeInteractionView: View {
         } else {
             List {
                 if viewStatement == .add || viewStatement == .edit {
-                    Section(header: Text("Общая информация").font(.caption)){
+                    Section(header: Text("Общая информация").font(.body)){
                         TextField("Название блюда", text: $foodNotation)
                             .autocorrectionDisabled()
                         NavigationLink(destination: categoryPicker(selectedCat: $selectedCat)) {
                             Text(selectedCat.rawValue)
                         }
                     }
-                    Section(header: Text("Изображение").font(.caption)) {
+                    Section(header: Text("Изображение").font(.body)) {
                         TextField("Вставьте ссылку (URL)", text: $imageURL)
                             .autocorrectionDisabled()
                     }
@@ -223,7 +223,7 @@ struct recipeInteractionView: View {
                     }
                 } header: {
                     if !collection.recipeFoodItems.isEmpty {
-                        Text("Составляющие рецепта").font(.caption)
+                        Text("Составляющие рецепта").font(.body)
                     }
                 }
             }
@@ -299,18 +299,18 @@ struct recipeInteractionView: View {
                     }
                 }
             }
-            .sheet(isPresented: $showEditView, content: { addGramButton(gram: String(collection.selectedItem!.gram!).split(separator: ".").joined(separator: ","), editing: true, isShowingSheet: $showEditView, showSuccesNotify: .constant(false)).dynamicTypeSize(.xLarge)})
+            .sheet(isPresented: $showEditView, content: { addGramButton(gram: String(collection.selectedItem!.gram!).split(separator: ".").joined(separator: ","), editing: true, isShowingSheet: $showEditView, showSuccesNotify: .constant(false)).dynamicTypeSize(.medium)})
             .alert(isPresented: $permission) {
-                Alert(title: Text("Статус операции"), message: Text(errorMessage), dismissButton: .default(Text("ОК")))
+                Alert(title: Text(LocalizedStringKey("Статус операции")), message: Text(LocalizedStringKey(errorMessage)), dismissButton: .default(Text("ОК")))
             }
-            .alert("Несохраненные изменения", isPresented: $isUnsavedChanges, actions: {
+            .alert(LocalizedStringKey("Несохраненные изменения"), isPresented: $isUnsavedChanges, actions: {
                 Button(role: .destructive, action: {
                     if collection.whereToSave == .recipeFoodItems {
                         collection.recipeFoodItems = []
                     }
                     presentationMode.wrappedValue.dismiss()
-                }, label: {Text("Покинуть")})
-            }, message: {Text("Вы внесли изменения, но не сохранили их. Если вы покините страницу - временные данные будут удалены.")})
+                }, label: {Text(LocalizedStringKey("Покинуть"))})
+            }, message: {Text(LocalizedStringKey("Вы внесли изменения, но не сохранили их. Если вы покините страницу - временные данные будут удалены."))})
             .task {
                 collection.whereToSave = .recipeFoodItems
                 if preinitialized {
@@ -349,9 +349,9 @@ struct categoryPicker : View {
     @Binding var selectedCat: foodCategories
     var body: some View {
         List {
-            Picker(selection: $selectedCat, label: Text("Категория продукта").font(.caption)){
+            Picker(selection: $selectedCat, label: Text("Категории продуктов").font(.body)){
                 ForEach(foodCategories.allCases){ obj in
-                    Text(obj.rawValue)
+                    Text(LocalizedStringKey(obj.rawValue))
                 }
             }.pickerStyle(.inline)
         }

@@ -57,49 +57,49 @@ struct lifeStyle: View {
                 Section {
                     Picker("Диабет у родственников", selection: $selectedDiabet) {
                         ForEach(diabet.allCases){ i in
-                            Text(i.rawValue).tag(i)
+                            Text(LocalizedStringKey(i.rawValue)).tag(i)
                         }
                     }
                     Picker("Нарушение толерантности к глюкозе до беременности", selection: $selectedGluTol) {
                         ForEach(gluTol.allCases){ i in
-                            Text(i.rawValue).tag(i)
+                            Text(LocalizedStringKey(i.rawValue)).tag(i)
                         }
                     }
                 } header: {
-                    Text("Гестационный диабет").font(.title3)
+                    Text("Гестационный диабет").font(.body)
                 }
                 Section {
                     Picker("До беременности", selection: $selectedHypertensionBefore) {
                         ForEach(hypertension.allCases){i in
-                            Text(i.rawValue).tag(i)
+                            Text(LocalizedStringKey(i.rawValue)).tag(i)
                         }
                     }
                     Picker("Во время беременности", selection: $selectedHypertensionAfter) {
                         ForEach(hypertension.allCases){i in
-                            Text(i.rawValue).tag(i)
+                            Text(LocalizedStringKey(i.rawValue)).tag(i)
                         }
                     }
                 } header: {
-                    Text("Гипертоническая болезнь").font(.title3)
+                    Text("Гипертоническая болезнь").font(.body)
                 }
                 Section {
                     Picker("За 6 месяцев до беременности", selection: $selectedSmoke0) {
                         ForEach(smokeBeforeSixMonth.allCases){ i in
-                            Text(i.rawValue).tag(i)
+                            Text(LocalizedStringKey(i.rawValue)).tag(i)
                         }
                     }
                     Picker("До того, как узнали о беременности", selection: $selectedSmoke1) {
                         ForEach(smokeBeforeKnow.allCases){ i in
-                            Text(i.rawValue).tag(i)
+                            Text(LocalizedStringKey(i.rawValue)).tag(i)
                         }
                     }
                     Picker("Во время беременности", selection: $selectedSmoke2) {
                         ForEach(smokeInProcces.allCases){ i in
-                            Text(i.rawValue).tag(i)
+                            Text(LocalizedStringKey(i.rawValue)).tag(i)
                         }
                     }
                 } header: {
-                    Text("Курение").font(.title3)
+                    Text("Курение").font(.body)
                 }
             }
             .navigationTitle("Здоровье")
@@ -118,11 +118,5 @@ struct lifeStyle: View {
                     }
                 }
             }
-    }
-}
-
-struct lifeStyle_Previews: PreviewProvider {
-    static var previews: some View {
-        lifeStyle()
     }
 }

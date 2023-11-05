@@ -33,7 +33,7 @@ struct patientCart: View {
                         TextField(value: $viewModel.woman.patientID, formatter: formatter) {EmptyView()}.multilineTextAlignment(.trailing).padding(.trailing)
                     }
                 } header: {
-                    Text("О пациенте")
+                    Text("Общая информация").font(.body)
                 }.disabled(edit)
                 Section {
                     Picker("Врач", selection: $viewModel.woman.selectedDoc) {
@@ -41,7 +41,7 @@ struct patientCart: View {
                             Text(i.rawValue).tag(i)
                         }
                     }.pickerStyle(.menu).font(Font.body).padding(.trailing)
-                    DatePicker("Начало мониторинга", selection: $viewModel.woman.start_date, displayedComponents: [.date])
+                    DatePicker("На мониторинге с", selection: $viewModel.woman.start_date, displayedComponents: [.date])
                     if (routeManager.version == 1) || (routeManager.version == 2) {
                         Picker("Неделя беременности", selection: $viewModel.woman.week_of_start){
                             ForEach(1...40, id: \.self) { week in
@@ -55,10 +55,10 @@ struct patientCart: View {
                         }
                     }
                 } header: {
-                    Text("Мониторинг")
+                    Text("Мониторинг").font(.body)
                 }.disabled(edit)
             }
-            .navigationTitle("Персональная карта")
+            .navigationTitle("О пациенте")
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing, content: {
                     Button {
@@ -94,7 +94,7 @@ struct patientCart: View {
                         TextField(value: $viewModel.woman.patientID, formatter: formatter) {EmptyView()}.multilineTextAlignment(.trailing).padding(.trailing)
                     }
                 } header: {
-                    Text("О пациенте")
+                    Text("О пациенте").font(.body)
                 }
                 Section {
                     Picker("Врач", selection: $viewModel.woman.selectedDoc) {
@@ -102,7 +102,7 @@ struct patientCart: View {
                             Text(i.rawValue).tag(i)
                         }
                     }.pickerStyle(.menu).font(Font.body).padding(.trailing)
-                    DatePicker("Начало мониторинга", selection: $viewModel.woman.start_date, displayedComponents: [.date])
+                    DatePicker("На мониторинге с", selection: $viewModel.woman.start_date, displayedComponents: [.date])
                     if (routeManager.version == 1) || (routeManager.version == 2) {
                         Picker("Неделя беременности", selection: $viewModel.woman.week_of_start) {
                             ForEach(1...40, id: \.self) { week in
@@ -116,10 +116,10 @@ struct patientCart: View {
                         }
                     }
                 } header: {
-                    Text("Мониторинг")
+                    Text("Мониторинг").font(.body)
                 }
             }
-            .navigationTitle("Персональная карта")
+            .navigationTitle("О пациенте")
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing, content: {
                     Button {
@@ -134,11 +134,5 @@ struct patientCart: View {
                 })
             }
         }
-    }
-}
-
-struct patientCart_Previews: PreviewProvider {
-    static var previews: some View {
-        patientCart()
     }
 }

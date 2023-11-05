@@ -87,257 +87,257 @@ struct foodPreferences: View {
                     Section {
                         Picker("До беременности", selection: $fruitsBefore) {
                             ForEach(sixTwelve.allCases) {i in
-                                Text(i.rawValue).tag(i)
+                                Text(LocalizedStringKey(i.rawValue)).tag(i)
                             }
                         }
                         Picker("Во время беременности", selection: $fruitsAfter) {
                             ForEach(sixTwelve.allCases) {i in
-                                Text(i.rawValue).tag(i)
+                                Text(LocalizedStringKey(i.rawValue)).tag(i)
                             }
                         }
                     } header: {
-                        Text("Фркуты").font(.title3)
+                        Text("Фрукты").font(.body)
                     }
                     Section {
                         Picker("До беременности", selection: $bisquitsBefore) {
                             ForEach(twoFour.allCases) {i in
-                                Text(i.rawValue).tag(i)
+                                Text(LocalizedStringKey(i.rawValue)).tag(i)
                             }
                         }
                         Picker("Во время беременности", selection: $bisquitsAfter) {
                             ForEach(twoFour.allCases) {i in
-                                Text(i.rawValue).tag(i)
+                                Text(LocalizedStringKey(i.rawValue)).tag(i)
                             }
                         }
                     } header: {
-                        Text("Пирожные").font(.title3)
+                        Text("Пирожные").font(.body)
                     }
                     Section {
                         Picker("До беременности", selection: $bakingBefore) {
                             ForEach(twoFour.allCases) {i in
-                                Text(i.rawValue).tag(i)
+                                Text(LocalizedStringKey(i.rawValue)).tag(i)
                             }
                         }
                         Picker("Во время беременности", selection: $bakingAfter) {
                             ForEach(twoFour.allCases) {i in
-                                Text(i.rawValue).tag(i)
+                                Text(LocalizedStringKey(i.rawValue)).tag(i)
                             }
                         }
                     } header: {
-                        Text("Выпечка").font(.title3)
+                        Text("Выпечка").font(.body)
                     }
                     
                     Section {
                         Picker("До беременности", selection: $chocolateBefore) {
                             ForEach(twoFour.allCases) {i in
-                                Text(i.rawValue).tag(i)
+                                Text(LocalizedStringKey(i.rawValue)).tag(i)
                             }
                         }
                         Picker("Во время беременности", selection: $chocolateAfter) {
                             ForEach(twoFour.allCases) {i in
-                                Text(i.rawValue).tag(i)
+                                Text(LocalizedStringKey(i.rawValue)).tag(i)
                             }
                         }
                     } header: {
-                        Text("Шоколад").font(.title3)
+                        Text("Шоколад").font(.body)
                     }
                     Section {
                         Picker("До беременности", selection: $milkBefore) {
                             ForEach(threeSix.allCases) {i in
-                                Text(i.rawValue).tag(i)
+                                Text(LocalizedStringKey(i.rawValue)).tag(i)
                             }
                         }
                         Picker("Во время беременности", selection: $milkAfter) {
                             ForEach(threeSix.allCases) {i in
-                                Text(i.rawValue).tag(i)
+                                Text(LocalizedStringKey(i.rawValue)).tag(i)
                             }
                         }
                     } header: {
-                        Text("Обезжиренные молочные продукты").font(.title3)
+                        Text("Обезжиренные молочные продукты").font(.body)
                     }
                     Section {
                         Picker("До беременности", selection: $milkBefore_alt) {
                             ForEach(threeSix.allCases) {i in
-                                Text(i.rawValue).tag(i)
+                                Text(LocalizedStringKey(i.rawValue)).tag(i)
                             }
                         }
                         Picker("Во время беременности", selection: $milkAfter_alt) {
                             ForEach(threeSix.allCases) {i in
-                                Text(i.rawValue).tag(i)
+                                Text(LocalizedStringKey(i.rawValue)).tag(i)
                             }
                         }
                     } header: {
-                        Text("Не обезжиренные молочные продукты").font(.title3)
+                        Text("Не обезжиренные молочные продукты").font(.body)
                     }
                     Section {
                         Picker("До беременности", selection: $legumesBefore) {
                             ForEach(oneTwo.allCases) {i in
-                                Text(i.rawValue).tag(i)
+                                Text(LocalizedStringKey(i.rawValue)).tag(i)
                             }
                         }
                         Picker("Во время беременности", selection: $legumesAfter) {
                             ForEach(oneTwo.allCases) {i in
-                                Text(i.rawValue).tag(i)
+                                Text(LocalizedStringKey(i.rawValue)).tag(i)
                             }
                         }
                     } header: {
-                        Text("Бобовые").font(.title3)
+                        Text("Бобовые").font(.body)
                     }
                     Section {
                         Picker("До беременности", selection: $meatBefore) {
                             ForEach(threeSix.allCases) {i in
-                                Text(i.rawValue).tag(i)
+                                Text(LocalizedStringKey(i.rawValue)).tag(i)
                             }
                         }
                         Picker("Во время беременности", selection: $meatAfter) {
                             ForEach(threeSix.allCases) {i in
-                                Text(i.rawValue).tag(i)
+                                Text(LocalizedStringKey(i.rawValue)).tag(i)
                             }
                         }
                     } header: {
-                        Text("Мясо и мясные изделия").font(.title3)
+                        Text("Мясо и мясные изделия").font(.body)
                     }
                     Section {
                         Picker("До беременности", selection: $driedFruitsBefore) {
                             ForEach(oneThree.allCases) {i in
-                                Text(i.rawValue).tag(i)
+                                Text(LocalizedStringKey(i.rawValue)).tag(i)
                             }
                         }
                         Picker("Во время беременности", selection: $driedFruitsAfter) {
                             ForEach(oneThree.allCases) {i in
-                                Text(i.rawValue).tag(i)
+                                Text(LocalizedStringKey(i.rawValue)).tag(i)
                             }
                         }
                     } header: {
-                        Text("Сухофрукты").font(.title3)
+                        Text("Сухофрукты").font(.body)
                     }
                     Section {
                         Picker("До беременности", selection: $fishBefore) {
                             ForEach(threeSix.allCases) {i in
-                                Text(i.rawValue).tag(i)
+                                Text(LocalizedStringKey(i.rawValue)).tag(i)
                             }
                         }
                         Picker("Во время беременности", selection: $fishAfter) {
                             ForEach(threeSix.allCases) {i in
-                                Text(i.rawValue).tag(i)
+                                Text(LocalizedStringKey(i.rawValue)).tag(i)
                             }
                         }
                     } header: {
-                        Text("Рыба и рыбные изделия").font(.title3)
+                        Text("Рыба и рыбные изделия").font(.body)
                     }
                 }
                 Group {
                     Section {
                         Picker("До беременности", selection: $grainBreadBefore) {
                             ForEach(oneThree.allCases) {i in
-                                Text(i.rawValue).tag(i)
+                                Text(LocalizedStringKey(i.rawValue)).tag(i)
                             }
                         }
                         Picker("Во время беременности", selection: $grainBreadAfter) {
                             ForEach(oneThree.allCases) {i in
-                                Text(i.rawValue).tag(i)
+                                Text(LocalizedStringKey(i.rawValue)).tag(i)
                             }
                         }
                     } header: {
-                        Text("Цельнозреновой хлеб").font(.title3)
+                        Text("Цельнозреновой хлеб").font(.body)
                     }
                     Section {
                         Picker("До беременности", selection: $anyBreadBefore) {
                             ForEach(sixTwelve.allCases) {i in
-                                Text(i.rawValue).tag(i)
+                                Text(LocalizedStringKey(i.rawValue)).tag(i)
                             }
                         }
                         Picker("Во время беременности", selection: $anyBreadAfter) {
                             ForEach(sixTwelve.allCases) {i in
-                                Text(i.rawValue).tag(i)
+                                Text(LocalizedStringKey(i.rawValue)).tag(i)
                             }
                         }
                     } header: {
-                        Text("Любой хлеб").font(.title3)
+                        Text("Любой хлеб").font(.body)
                     }
                     Section {
                         Picker("До беременности", selection: $sauceBefore) {
                             ForEach(twoFour.allCases) {i in
-                                Text(i.rawValue).tag(i)
+                                Text(LocalizedStringKey(i.rawValue)).tag(i)
                             }
                         }
                         Picker("Во время беременности", selection: $sauceAfter) {
                             ForEach(twoFour.allCases) {i in
-                                Text(i.rawValue).tag(i)
+                                Text(LocalizedStringKey(i.rawValue)).tag(i)
                             }
                         }
                     } header: {
-                        Text("Cоусы, майонез").font(.title3)
+                        Text("Cоусы, майонез").font(.body)
                     }
                     Section {
                         Picker("До беременности", selection: $vegetableBefore) {
                             ForEach(sixTwelve.allCases) {i in
-                                Text(i.rawValue).tag(i)
+                                Text(LocalizedStringKey(i.rawValue)).tag(i)
                             }
                         }
                         Picker("Во время беременности", selection: $vegetableAfter) {
                             ForEach(sixTwelve.allCases) {i in
-                                Text(i.rawValue).tag(i)
+                                Text(LocalizedStringKey(i.rawValue)).tag(i)
                             }
                         }
                     } header: {
-                        Text("Овощи, сырые или приготовленные").font(.title3)
+                        Text("Овощи, сырые или приготовленные").font(.body)
                     }
                     Section {
                         Picker("До беременности", selection: $alcoholBefore) {
                             ForEach(oneThree.allCases) {i in
-                                Text(i.rawValue).tag(i)
+                                Text(LocalizedStringKey(i.rawValue)).tag(i)
                             }
                         }
                         Picker("Во время беременности", selection: $alcoholAfter) {
                             ForEach(oneThree.allCases) {i in
-                                Text(i.rawValue).tag(i)
+                                Text(LocalizedStringKey(i.rawValue)).tag(i)
                             }
                         }
                     } header: {
-                        Text("Алкоголь").font(.title3)
+                        Text("Алкоголь").font(.body)
                     }
                     Section {
                         Picker("До беременности", selection: $sweetDrinksBefore) {
                             ForEach(twoFour.allCases) {i in
-                                Text(i.rawValue).tag(i)
+                                Text(LocalizedStringKey(i.rawValue)).tag(i)
                             }
                         }
                         Picker("Во время беременности", selection: $sweetDrinksAfter) {
                             ForEach(twoFour.allCases) {i in
-                                Text(i.rawValue).tag(i)
+                                Text(LocalizedStringKey(i.rawValue)).tag(i)
                             }
                         }
                     } header: {
-                        Text("Сладкие напитки").font(.title3)
+                        Text("Сладкие напитки").font(.body)
                     }
                     Section {
                         Picker("До беременности", selection: $coffeBefore) {
                             ForEach(oneThree.allCases) {i in
-                                Text(i.rawValue).tag(i)
+                                Text(LocalizedStringKey(i.rawValue)).tag(i)
                             }
                         }
                         Picker("Во время беременности", selection: $coffeAfter) {
                             ForEach(oneThree.allCases) {i in
-                                Text(i.rawValue).tag(i)
+                                Text(LocalizedStringKey(i.rawValue)).tag(i)
                             }
                         }
                     } header: {
-                        Text("Кофе").font(.title3)
+                        Text("Кофе").font(.body)
                     }
                     Section {
                         Picker("До беременности", selection: $sausagesBefore) {
                             ForEach(oneThree.allCases) {i in
-                                Text(i.rawValue).tag(i)
+                                Text(LocalizedStringKey(i.rawValue)).tag(i)
                             }
                         }
                         Picker("Во время беременности", selection: $sausagesAfter) {
                             ForEach(oneThree.allCases) {i in
-                                Text(i.rawValue).tag(i)
+                                Text(LocalizedStringKey(i.rawValue)).tag(i)
                             }
                         }
                     } header: {
-                        Text("Сосики, колбаса").font(.title3)
+                        Text("Сосики, колбаса").font(.body)
                     }
                 }
             }
@@ -357,11 +357,5 @@ struct foodPreferences: View {
                     }
                 }
             }
-    }
-}
-
-struct foodPreferences_Previews: PreviewProvider {
-    static var previews: some View {
-        foodPreferences()
     }
 }

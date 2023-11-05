@@ -36,17 +36,3 @@ struct RKViewController: View {
         return rkManager.calendar.date(from: components)!
     }
 }
-
-#if DEBUG
-struct RKViewController_Previews : PreviewProvider {
-    static var previews: some View {
-        Group {
-            RKViewController(isPresented: .constant(false), rkManager: RKManager(calendar: Calendar.current, minimumDate: Date(), maximumDate: Date().addingTimeInterval(60*60*24*365), mode: 0))
-            RKViewController(isPresented: .constant(false), rkManager: RKManager(calendar: Calendar.current, minimumDate: Date(), maximumDate: Date().addingTimeInterval(60*60*24*32), mode: 0))
-                .environment(\.colorScheme, .dark)
-                .environment(\.layoutDirection, .rightToLeft)
-        }
-    }
-}
-#endif
-

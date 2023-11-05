@@ -14,7 +14,7 @@ enum interactorStatement {
 struct recipeAsyncList: View {
     @EnvironmentObject var collection: foodCollections
     @StateObject var allRecipes = recipeModel()
-    let columns = [GridItem(.flexible(), spacing: 0, alignment: .top), GridItem(.flexible(), spacing: 0, alignment: .top)]
+    let columns = [GridItem(.flexible(), spacing: 10, alignment: .top), GridItem(.flexible(), spacing: 10, alignment: .top)]
     var body: some View {
         ZStack {
             Color(UIColor.systemGroupedBackground).ignoresSafeArea()
@@ -28,7 +28,7 @@ struct recipeAsyncList: View {
                                 recipeCard(imageURL: URL(string: i.url), title: i.name)
                             }
                         }
-                    }.padding(.top, 35)
+                    }
                 }
             }
             .background {
@@ -67,12 +67,5 @@ struct recipeAsyncList: View {
             temp.append(recipe(item: row.item_name[i], table_id: row.item_id[i], gram: row.gram[i]))
         }
         return temp
-    }
-}
-
-struct recipeAsyncList_Previews: PreviewProvider {
-    static var previews: some View {
-        recipeAsyncList()
-            .environmentObject(foodCollections())
     }
 }

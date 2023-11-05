@@ -22,7 +22,7 @@ struct sugarChange: View {
     @Binding var hasChanged : Bool
     var body: some View {
         List {
-            Section(header: Text("Общая информация").font(.caption)){
+            Section(header: Text("Общая информация").font(.body)){
                 TextField("Уровень глюкозы в крови, ммоль/л", text: $t)
                     .keyboardType(.decimalPad)
                 NavigationLink(destination: sugarPicker(spreviewIndex: $spreviewIndex), label: {
@@ -72,7 +72,7 @@ struct sugarChange: View {
                     Text("Сохранить")
                 }
                 .alert(isPresented: $isCorrect) {
-                    Alert(title: Text("Статус операции"), message: Text("Введите релевантное \nзначение"), dismissButton: .default(Text("ОК")))
+                    Alert(title: Text("Статус операции"), message: Text(LocalizedStringKey("Введите релевантное значение")), dismissButton: .default(Text("ОК")))
                 }
             })
             ToolbarItemGroup(placement: .keyboard, content: {
@@ -92,7 +92,7 @@ struct sugarPicker: View {
     @Binding var spreviewIndex: selectedvar
     var body: some View {
         List {
-            Picker(selection: $spreviewIndex , label: Text("Период").font(.caption)) {
+            Picker(selection: $spreviewIndex , label: Text("Период").font(.body)) {
                 Text("Натощак").tag(selectedvar.natoshak)
                 Text("После завтрака").tag(selectedvar.zavtrak)
                 Text("После обеда").tag(selectedvar.obed)

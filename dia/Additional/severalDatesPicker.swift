@@ -7,7 +7,7 @@ struct severalDatesPicker: View {
     var body: some View {
         RKViewController(isPresented: self.$multipleIsPresented, rkManager: self.rkManager3)
             .onAppear(perform: startUp)
-            .navigationTitle("Выбрать дни")
+            .navigationTitle("Полные дни")
             .toolbar {
                 ToolbarItemGroup(placement: .navigationBarTrailing){
                     Button(action: {

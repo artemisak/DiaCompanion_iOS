@@ -59,9 +59,3 @@ struct listHeader: View {
         }
     }
 }
-
-struct searchListHeader_Previews: PreviewProvider {
-    static var previews: some View {
-        listHeader()
-    }
-}

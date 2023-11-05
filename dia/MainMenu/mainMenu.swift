@@ -27,14 +27,14 @@ struct mainMenu: View {
                         Text(" - \(localDate.formatted())")
                     }
                     Image(systemName: consumption.sunImage.rawValue)
-                }.font(.caption)
+                }.font(.body)
             }
             Section {
                 NavigationLink {
                     if #available(iOS 16, *){
-                        enterFood(enabled: false, sugar: "", date: localDate, ftpreviewIndex: ftype.zavtrak, idForDelete: [], hasChanged: .constant(false)).toolbar(.hidden, for: .tabBar)
+                        enterFood(sugar: "", date: localDate, ftpreviewIndex: ftype.zavtrak, idForDelete: [], hasChanged: .constant(false)).toolbar(.hidden, for: .tabBar)
                     } else {
-                        enterFood(enabled: false, sugar: "", date: localDate, ftpreviewIndex: ftype.zavtrak, idForDelete: [], hasChanged: .constant(false)).hiddenTabBar()
+                        enterFood(sugar: "", date: localDate, ftpreviewIndex: ftype.zavtrak, idForDelete: [], hasChanged: .constant(false)).hiddenTabBar()
                     }
                 } label: {
                     HStack {
@@ -112,7 +112,7 @@ struct mainMenu: View {
                     .foregroundColor(Color("listButtonColor"))
                 }
             } header: {
-                Text("Разделы дневника").font(.caption)
+                Text("Разделы дневника").font(.body)
             }
         }
         .task {
@@ -168,7 +168,7 @@ struct mainMenu: View {
                 }
             })
         }
-        .alert("Статус операции", isPresented: $emailErrorMessage, actions: {Button(role: .cancel, action: {}, label: {Text("OK")})}, message: {Text(erMessage)})
+        .alert("Статус операции", isPresented: $emailErrorMessage, actions: {Button(role: .cancel, action: {}, label: {Text(LocalizedStringKey("OK"))})}, message: {Text(LocalizedStringKey(erMessage))})
     }
     
     func showShareSheet() async {
@@ -191,13 +191,7 @@ struct mainMenu: View {
             }
         } else {
             emailErrorMessage = true
-            erMessage = "Перейдите в карту пациента (раздел Дополительно), чтобы назначить лечащего врача. В противном случае используйте вариант сохранить на устройстве."
+            erMessage = "Перейдите в раздел о пациенте во  вкладке Дополительно, чтобы назначить лечащего врача. В противном случае используйте вариант сохранить на устройстве."
         }
-    }
-}
-
-struct mainMenu_Previews: PreviewProvider {
-    static var previews: some View {
-        mainMenu()
     }
 }

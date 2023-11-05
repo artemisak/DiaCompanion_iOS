@@ -45,7 +45,7 @@ class dayConsumptionModel : ObservableObject {
     func retriveImage() async -> sunStatment? {
         let timeFormatter = DateFormatter()
         timeFormatter.dateFormat = "HH:mm"
-        let now = timeFormatter.date(from: Date().formatted(date: .omitted, time: .shortened))!
+        let now = timeFormatter.date(from: timeFormatter.string(from: Date()))!
         if (now > timeFormatter.date(from: "00:00")!) && (now < timeFormatter.date(from: "04:00")!) {
             return .moon
         }

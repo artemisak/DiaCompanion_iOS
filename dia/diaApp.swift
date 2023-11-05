@@ -2,19 +2,18 @@ import SwiftUI
 
 @main
 struct diaApp: App {
-    @State private var main_font = DynamicTypeSize.xLarge
     var body: some Scene {
         WindowGroup {
             if #available(iOS 16, *){
                 startPage()
-                    .dynamicTypeSize(.small ... .xLarge)
+                    .dynamicTypeSize(.medium)
                     .accessibilityIgnoresInvertColors(true)
                     .environment(\.defaultMinListRowHeight, 55)
                     .scrollDismissesKeyboard(.immediately)
                     .scrollIndicators(.hidden)
             } else {
                 startPage()
-                    .dynamicTypeSize(.small ... .xLarge)
+                    .dynamicTypeSize(.medium)
                     .accessibilityIgnoresInvertColors(true)
                     .environment(\.defaultMinListRowHeight, 55)
                     .onAppear {

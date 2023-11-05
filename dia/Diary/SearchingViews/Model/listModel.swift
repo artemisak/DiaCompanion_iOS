@@ -258,6 +258,8 @@ class foodCollections: ObservableObject {
             sql += " ORDER BY gi DESC"
         }
         
+        print(sql)
+        
         if sqlite3_prepare_v2(db, sql, -1, &statement, nil) != SQLITE_OK {
             let errmsg = String(cString: sqlite3_errmsg(db)!)
             print("Error preparing select: \(errmsg)")
@@ -288,7 +290,7 @@ class foodCollections: ObservableObject {
                 _gi = sqlite3_column_double(statement, 6)
             }
             var _index = 0
-            if sqlite3_column_type(statement, 7) == 1 {
+            if sqlite3_column_type(statement, 7) == 2 {
                 _index = Int(sqlite3_column_int64(statement, 7))
             }
             

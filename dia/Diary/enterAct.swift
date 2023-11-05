@@ -21,7 +21,7 @@ struct enterAct: View {
     @Binding var hasChanged: Bool
     var body: some View {
         List {
-            Section(header: Text("Общая информация").font(.caption)){
+            Section(header: Text("Общая информация").font(.body)){
                 TextField("Длительность, мин.", text: $t)
                     .keyboardType(.numberPad)
                     .focused($focusedField)
@@ -29,7 +29,7 @@ struct enterAct: View {
                     HStack{
                         Text("Род занятий")
                         Spacer()
-                        Text("\(actpreviewIndex.rawValue)")
+                        Text(LocalizedStringKey(actpreviewIndex.rawValue))
                     }
                 })
                 DatePicker(
@@ -64,7 +64,7 @@ struct enterAct: View {
                     Text("Сохранить")
                 }
                 .alert(isPresented: $isCorrect) {
-                    Alert(title: Text("Статус операции"), message: Text("Введите релевантное \nзначение"), dismissButton: .default(Text("ОК")))
+                    Alert(title: Text("Статус операции"), message: Text(LocalizedStringKey("Введите релевантное значение")), dismissButton: .default(Text("ОК")))
                 }
             }
         }
@@ -86,13 +86,13 @@ struct actPicker: View {
     @Binding var actpreviewIndex: act
     var body: some View {
         Form{
-            Picker(selection: $actpreviewIndex, label: Text("Род занятий").font(.caption)) {
-                Text("Зарядка").tag(act.zar)
-                Text("Сон").tag(act.sleep)
-                Text("Ходьба").tag(act.hod)
-                Text("Спорт").tag(act.sport)
-                Text("Уборка в квартире").tag(act.uborka)
-                Text("Работа в огороде").tag(act.rabota)
+            Picker(selection: $actpreviewIndex, label: Text(LocalizedStringKey("Род занятий")).font(.body)) {
+                Text(LocalizedStringKey("Зарядка")).tag(act.zar)
+                Text(LocalizedStringKey("Сон")).tag(act.sleep)
+                Text(LocalizedStringKey("Ходьба")).tag(act.hod)
+                Text(LocalizedStringKey("Спорт")).tag(act.sport)
+                Text(LocalizedStringKey("Уборка в квартире")).tag(act.uborka)
+                Text(LocalizedStringKey("Работа в огороде")).tag(act.rabota)
             }.pickerStyle(.inline)
         }
     }

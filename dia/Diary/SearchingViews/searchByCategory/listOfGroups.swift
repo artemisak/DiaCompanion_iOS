@@ -18,11 +18,11 @@ struct listOfGroups: View {
                             inGroupList(category: element.category)
                                 .searchable(text: $collection.textToSearch, placement: .navigationBarDrawer(displayMode: .always))
                         }, label: {
-                            Text(element.category)
+                            Text(LocalizedStringKey(element.category))
                         })
                     }
                 } header: {
-                    Text("Категории продуктов")
+                    Text("Категории продуктов").font(.body)
                 }
             }
         } else {
@@ -38,19 +38,13 @@ struct listOfGroups: View {
                                     }
                                 }
                         }, label: {
-                            Text(element.category)
+                            Text(LocalizedStringKey(element.category))
                         })
                     }
                 } header: {
-                    Text("Категории продуктов")
+                    Text("Категории продуктов").font(.body)
                 }
             }
         }
-    }
-}
-
-struct listOfGroups_Previews: PreviewProvider {
-    static var previews: some View {
-        listOfGroups()
     }
 }

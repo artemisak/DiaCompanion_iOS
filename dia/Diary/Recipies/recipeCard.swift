@@ -16,7 +16,7 @@ struct recipeCard: View {
         }, placeholder: {
             LinearGradient(colors: [Color.gray, Color.gray.opacity(0.65)], startPoint: .bottom, endPoint: .top)
         })
-        .frame(width: 175, height: 225)
+        .frame(idealWidth: 175, idealHeight: 225)
         .clipShape(RoundedRectangle(cornerRadius: 10))
         .overlay {
             VStack {

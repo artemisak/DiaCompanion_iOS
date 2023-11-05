@@ -32,7 +32,7 @@ class Router: ObservableObject {
     
     func authorization(login: String, password: String, complition: @escaping (Bool) -> Void) async {
 
-        var request = URLRequest(url: URL(string: "http://diacompanion.ru/login")!)
+        var request = URLRequest(url: URL(string: "https://diacompanion.ru/login")!)
         request.httpMethod = "POST"
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
 

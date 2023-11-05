@@ -41,44 +41,44 @@ struct activityPreferences: View {
                 Section {
                     Picker("До беременности", selection: $selectedWalkBefore) {
                         ForEach(walking.allCases) {i in
-                            Text(i.rawValue).tag(i)
+                            Text(LocalizedStringKey(i.rawValue)).tag(i)
                         }
                     }
                     Picker("Во время беременности", selection: $selectedWalkAfter) {
                         ForEach(walking.allCases) {i in
-                            Text(i.rawValue).tag(i)
+                            Text(LocalizedStringKey(i.rawValue)).tag(i)
                         }
                     }
                 } header: {
-                    Text("Легкая ходьба, в день").font(.title3)
+                    Text("Легкая ходьба, в день").font(.body)
                 }
                 Section {
                     Picker("До беременности", selection: $selectedStepBefore) {
                         ForEach(stepping.allCases) {i in
-                            Text(i.rawValue).tag(i)
+                            Text(LocalizedStringKey(i.rawValue)).tag(i)
                         }
                     }
                     Picker("Во время беременности", selection: $selectedStepAfter) {
                         ForEach(stepping.allCases) {i in
-                            Text(i.rawValue).tag(i)
+                            Text(LocalizedStringKey(i.rawValue)).tag(i)
                         }
                     }
                 } header: {
-                    Text("Степпинг, в день").font(.title3)
+                    Text("Степпинг, в день").font(.body)
                 }
                 Section {
                     Picker("До беременности", selection: $selectedSportBefore) {
                         ForEach(sport.allCases) {i in
-                            Text(i.rawValue).tag(i)
+                            Text(LocalizedStringKey(i.rawValue)).tag(i)
                         }
                     }
                     Picker("Во время беременности", selection: $selectedSportAfter) {
                         ForEach(sport.allCases) {i in
-                            Text(i.rawValue).tag(i)
+                            Text(LocalizedStringKey(i.rawValue)).tag(i)
                         }
                     }
                 } header: {
-                    Text("Спорт, в неделю").font(.title3)
+                    Text("Спорт, в неделю").font(.body)
                 }
             }
             .navigationTitle("Нагрузка")
@@ -98,11 +98,5 @@ struct activityPreferences: View {
                     }
                 }
             }
-    }
-}
-
-struct activityPreferences_Previews: PreviewProvider {
-    static var previews: some View {
-        activityPreferences()
     }
 }

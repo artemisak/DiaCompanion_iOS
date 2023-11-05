@@ -15,7 +15,7 @@ struct fillterPicker: View {
                 listOfValues[listOfValues.firstIndex(where: {$0.id == i.id})!].selected = listOfValues[listOfValues.firstIndex(where: {$0.id == i.id})!].selected ? false : true
             } label: {
                 HStack{
-                    Text(i.name)
+                    Text(LocalizedStringKey(i.name))
                     Spacer()
                     if i.selected {
                         Image(systemName: "checkmark").foregroundColor(.blue)
@@ -37,7 +37,7 @@ struct history: View {
     @StateObject private var hList = historyList()
     @EnvironmentObject var collection: foodCollections
     @State private var fillterDefault = fillterBy.week
-    @State public var deselected = [deselectRow(name: "Измерение глюкозы"), deselectRow(name: "Иньекции инсулина"), deselectRow(name: "Прием пищи"), deselectRow(name: "Физическая нагрузка"), deselectRow(name: "Уровень кетонов в моче"), deselectRow(name: "Измерение массы тела")]
+    @State public var deselected = [deselectRow(name: "Измерение глюкозы"), deselectRow(name: "Иньекции инсулина"), deselectRow(name: "Приемы пищи"), deselectRow(name: "Физическая нагрузка"), deselectRow(name: "Уровень кетонов в моче"), deselectRow(name: "Измерение массы тела")]
     @State private var redirectToEnterFood: Bool = false
     @State private var redirectToEnterAct: Bool = false
     @State private var redirectToEnterInject: Bool = false
@@ -73,9 +73,9 @@ struct history: View {
             VStack(spacing: .zero){
                 NavigationLink(isActive: $redirectToEnterFood, destination: {
                     if #available(iOS 16, *){
-                        enterFood(enabled: enabled, sugar: sugar, date: date, ftpreviewIndex: ftpreviewIndex, idForDelete: idFordelete, hasChanged: $hasChanged)
+                        enterFood(sugar: sugar, date: date, ftpreviewIndex: ftpreviewIndex, idForDelete: idFordelete, hasChanged: $hasChanged)
                     } else {
-                        enterFood(enabled: enabled, sugar: sugar, date: date, ftpreviewIndex: ftpreviewIndex, idForDelete: idFordelete, hasChanged: $hasChanged).hiddenTabBar()
+                        enterFood(sugar: sugar, date: date, ftpreviewIndex: ftpreviewIndex, idForDelete: idFordelete, hasChanged: $hasChanged).hiddenTabBar()
                     }
                 }, label: {EmptyView()}).buttonStyle(TransparentButton()).hidden()
                 NavigationLink(isActive: $redirectToEnterAct, destination: {enterAct(t: actTime, date: actDate, actpreviewIndex: actPreviewIndex, idForDelete: idFordelete, hasChanged: $hasChanged)}, label: {EmptyView()}).buttonStyle(TransparentButton()).hidden()
@@ -85,9 +85,9 @@ struct history: View {
                 NavigationLink(isActive: $redirectToEnterMassa, destination: {massa(t: tMassa, date: dateMassa, idForDelete: idFordelete, hasChanged: $hasChanged)}, label: {EmptyView()}).buttonStyle(TransparentButton()).hidden()
             }
             Picker("Фильтр", selection: $fillterDefault, content: {
-                Text("День").tag(fillterBy.day)
-                Text("Неделя").tag(fillterBy.week)
-                Text("Все записи").tag(fillterBy.all)
+                Text(LocalizedStringKey("День")).tag(fillterBy.day)
+                Text(LocalizedStringKey("Неделя")).tag(fillterBy.week)
+                Text(LocalizedStringKey("Все записи")).tag(fillterBy.all)
             })
             .onChange(of: fillterDefault, perform: {i in
                 let df = DateFormatter()
@@ -275,7 +275,7 @@ struct history: View {
                                 })
                         }.listRowSeparator(.hidden)
                     } header: {
-                        Text(day).font(.caption)
+                        Text(day).font(.body)
                     }
                 }
             }
@@ -399,12 +399,12 @@ struct history: View {
                     Text("\($0)")
                 }
             } header: {
-                Text("Дополнительная информация").font(.caption)
+                Text("Состав приема пищи").font(.body)
             }
             Section {
                 Text(date)
             } header: {
-                Text("Время приема").font(.caption)
+                Text("Время приема").font(.body)
             }
             Section {
                 ForEach(info, id: \.self){foodItem in
@@ -414,7 +414,7 @@ struct history: View {
                     }.padding(.vertical, 7)
                 }
             } header: {
-                Text("Список блюд").font(.caption)
+                Text("Список блюд").font(.body)
             }
         }
         .navigationBarTitleDisplayMode(.large)
@@ -427,17 +427,17 @@ struct history: View {
             Section {
                 Text(info[0][1])
             } header: {
-                Text("Длительность, мин.").font(.caption)
+                Text("Длительность, мин.").font(.body)
             }
             Section {
                 Text(date)
             } header: {
-                Text("Время начала").font(.caption)
+                Text("Время начала").font(.body)
             }
             Section {
-                Text(info[0][0])
+                Text(LocalizedStringKey(info[0][0]))
             } header: {
-                Text("Тип нагрузки").font(.caption)
+                Text("Тип нагрузки").font(.body)
             }
         }
         .navigationTitle("Физическая активность")
@@ -449,22 +449,22 @@ struct history: View {
             Section {
                 Text(info[0][0])
             } header: {
-                Text("Кол-во ед.").font(.caption)
+                Text("Кол-во ед.").font(.body)
             }
             Section {
-                Text(info[0][1])
+                Text(LocalizedStringKey(info[0][1]))
             } header: {
-                Text("Прием пищи").font(.caption)
+                Text("Прием пищи").font(.body)
             }
             Section {
-                Text(info[0][2])
+                Text(LocalizedStringKey(info[0][2]))
             } header: {
-                Text("Тип действия").font(.caption)
+                Text("Тип действия").font(.body)
             }
             Section {
                 Text(date)
             } header: {
-                Text("Время измерения").font(.caption)
+                Text("Время измерения").font(.body)
             }
         }.navigationTitle("Введение инсулина")
     }
@@ -475,17 +475,17 @@ struct history: View {
             Section {
                 Text(info[0][0])
             } header: {
-                Text("Уровень глюкозы в крови ммоль/л").font(.caption)
+                Text("Уровень глюкозы в крови ммоль/л").font(.body)
             }
             Section {
                 Text(date)
             } header: {
-                Text("Время").font(.caption)
+                Text("Время").font(.body)
             }
             Section {
-                Text(info[0][1])
+                Text(LocalizedStringKey(info[0][1]))
             } header: {
-                Text("Период").font(.caption)
+                Text("Период").font(.body)
             }
         }.navigationTitle("Измерение глюкозы")
     }
@@ -496,12 +496,12 @@ struct history: View {
             Section {
                 Text(info[0][0])
             } header: {
-                Text("Общая информация").font(.caption)
+                Text("Общая информация").font(.body)
             }
             Section {
                 Text(date)
             } header: {
-                Text("Время измерения").font(.caption)
+                Text("Время измерения").font(.body)
             }
         }
         .navigationTitle("Уровень кетонов в моче")
@@ -513,12 +513,12 @@ struct history: View {
             Section {
                 Text(info[0][0])
             } header: {
-                Text("Общая информация").font(.caption)
+                Text("Общая информация").font(.body)
             }
             Section {
                 Text(date)
             } header: {
-                Text("Время измерения").font(.caption)
+                Text("Время измерения").font(.body)
             }
         }
         .navigationTitle("Измерение массы тела")
@@ -550,16 +550,16 @@ struct history: View {
             calc[5] = round((calc[5] + Double(info[i][6])!*Double(info[i][4])!)*10)/10
             calc[6] = round((calc[6] + Double(info[i][6])!*Double(info[i][4])!/100)*10)/10
         }
-        res[0] = "Масса: " + "\(round(calc[0]*10)/10)"
-        res[1] = "Белки: " + "\(round(calc[1]*10)/10)"
-        res[2] = "Жиры: " + "\(round(calc[2]*10)/10)"
-        res[3] = "Углеводы: " + "\(round(calc[3]*10)/10)"
-        res[4] = "ККал: " + "\(round(calc[4]*10)/10)"
-        res[5] = "ГИ: " + "\(round((calc[5]/calc[3])*10)/10)"
-        res[6] = "ГН: " + "\(round(calc[6]*10)/10)"
+        res[0] = String(localized: "Масса") + ": \(round(calc[0]*10)/10)"
+        res[1] = String(localized:"Белки") + ": \(round(calc[1]*10)/10)"
+        res[2] = String(localized:"Жиры") + ": \(round(calc[2]*10)/10)"
+        res[3] = String(localized:"Углеводы") + ": \(round(calc[3]*10)/10)"
+        res[4] = String(localized: "ККал") + ": \(round(calc[4]*10)/10)"
+        res[5] = String(localized: "ГИ") + ": \(round((calc[5]/calc[3])*10)/10)"
+        res[6] = String(localized:"ГН") + ": \(round(calc[6]*10)/10)"
         if info.last![8] != "-0.1" && info.last![9] != "-0.1" {
-            res.append("УГК до приема пищи: \(info.last![8])")
-            res.append("Вероятность гипергликемии: \(info.last![9])%")
+            res.append(String(localized: "УГК до приема пищи") + ": \(info.last![8])")
+            res.append(String(localized: "Вероятность гипергликемии") + ": \(info.last![9])%")
         }
         return res
     }

@@ -19,7 +19,7 @@ struct ftPicker: View {
     @Binding var ftpreviewIndex: ftype
     var body: some View {
         List {
-            Picker(selection: $ftpreviewIndex, label: Text("Прием пищи").font(.caption)) {
+            Picker(selection: $ftpreviewIndex, label: Text("Прием пищи").font(.body)) {
                 Text(LocalizedStringKey("Завтрак")).tag(ftype.zavtrak)
                 Text(LocalizedStringKey("Обед")).tag(ftype.obed)
                 Text(LocalizedStringKey("Ужин")).tag(ftype.uzin)
@@ -33,7 +33,6 @@ struct enterFood: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @EnvironmentObject var routeManager: Router
     @EnvironmentObject var collection: foodCollections
-    @State var enabled : Bool
     @State var sugar: String
     @State var date: Date
     @State var ftpreviewIndex: ftype
@@ -57,80 +56,37 @@ struct enterFood: View {
     @State private var isUnsavedChanges: Bool = false
     @State private var recCardID = UUID()
     @State private var recomendationCards = [recomendation]()
+    @State private var showDetails: Bool = false
     @Binding var hasChanged: Bool
     var body: some View {
         List {
+            Section(header: Text("Общая информация").font(.body)){
+                generalFoodInfo(previewIndex: $ftpreviewIndex, date: $date)
+            }
             if routeManager.version == 1 {
                 Section {
-                    Text(sugarlvl)
-                        .bold()
-                        .frame(maxWidth: .infinity)
-                        .foregroundColor(fontColor)
-                        .listRowBackground(recColor)
+                    sugarInput(sugar: $sugar).foregroundColor(scolor)
+                } header: {
                     if isVisible {
-                        VStack {
-                            TabView(selection: $recCardID) {
-                                ForEach(recomendationCards) { row in
-                                    Text(row.text).font(.body).frame(minWidth: 0, maxWidth: .infinity, alignment: .leading).minimumScaleFactor(0.01)
-                                }
-                            }
-                            .frame(height: 100)
-                            .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
-                            if recomendationCards.count > 1{
-                                HStack(spacing: 2) {
-                                    ForEach(recomendationCards) { row in
-                                        Circle()
-                                            .fill(row.id == recCardID ? Color.gray : Color.gray.opacity(0.5))
-                                            .frame(width: 10, height: 10)
-                                    }
-                                }
+                        sugarMessage(message: $sugarlvl, msgColor: $recColor, recomendations: $recomendationCards).onTapGesture {
+                            if !recomendationCards.isEmpty {
+                                showDetails.toggle()
                             }
                         }
+                    } else {
+                        Text("Уровень глюкозы в крови").font(.body)
                     }
-                }.listRowSeparator(.hidden)
-            }
-            Section(header: Text("Общая информация").font(.caption)){
-                NavigationLink(destination: ftPicker(ftpreviewIndex: $ftpreviewIndex), label: {
-                    HStack {
-                        Text("Прием пищи")
-                        Spacer()
-                        Text(LocalizedStringKey(ftpreviewIndex.rawValue))
+                } footer: {
+                    if isVisible {
+                        Text("Введенный УГК до приема пищи").frame(minWidth: .zero, maxWidth: .infinity).font(.caption)
                     }
-                })
-                VStack {
-                    DatePicker(
-                        "Дата",
-                        selection: $date,
-                        displayedComponents: [.date, .hourAndMinute]
-                    )
-                }
-            }
-            if routeManager.version == 1 {
-                Section(header: Text("Уровень глюкозы в крови").font(.caption)) {
-                    Toggle(isOn: $enabled) {Text("Записать текущий УГК")}
-                        .onChange(of: enabled){ _ in
-                            if (!patientManager.provider.checkBMI() && enabled) {
-                                alertMessage = true
-                                enabled = false
-                            }
-                            sugar = ""
-                            sugarlvl = "УГК не определен"
-                        }
-                        .alert(isPresented: $alertMessage) {
-                            Alert(title: Text("Статус операции"), message: Text("Необходимо указать рост и вес \nдо беременности в карте пациента"), dismissButton: .default(Text("ОК")))
-                        }
-                    TextField("5,0 ммоль/л", text: $sugar)
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
-                        .keyboardType(.decimalPad)
-                        .disabled(enabled == false)
-                        .foregroundColor(scolor)
                 }
             }
             if collection.showFoodCollections {
                 Section {
                     foodList(showEditView: $showEditView, id0: $id0)
                 } header: {
-                    Text("Список потребленных продуктов").font(.caption)
+                    Text("Список продуктов").font(.body)
                 } footer: {
                     Text("Смахните влево, чтобы удалить или отредактировать").font(.caption).frame(minWidth: 0, maxWidth: .infinity).multilineTextAlignment(.center)
                 }
@@ -197,7 +153,10 @@ struct enterFood: View {
                 })
             })
         }
-        .sheet(isPresented: $showEditView, content: { addGramButton(gram: String(collection.selectedItem!.gram!).split(separator: ".").joined(separator: ","), editing: true, isShowingSheet: $showEditView, showSuccesNotify: .constant(false))})
+        .sheet(isPresented: $showEditView, content: { addGramButton(gram: String(collection.selectedItem!.gram!).split(separator: ".").joined(separator: ","), editing: true, isShowingSheet: $showEditView, showSuccesNotify: .constant(false)).dynamicTypeSize(.medium)})
+        .sheet(isPresented: $showDetails, content: {
+            recomendationView(recomendations: $recomendationCards).dynamicTypeSize(.medium)
+        })
         .alert("Несохраненные изменения", isPresented: $isUnsavedChanges, actions: {
             Button(role: .destructive, action: {
                 switch collection.whereToSave {
@@ -251,7 +210,6 @@ struct enterFood: View {
                 updatePrediction(workList: collection.editedFoodItems)
             }
         })
-        .animation(.default, value: isVisible)
     }
     func removeRows(i: Int){
         if collection.whereToSave == .addedFoodItems {
@@ -271,33 +229,30 @@ struct enterFood: View {
                 }
                 let model_input = predictManager.provider.getData(BG0: try convert(txt: sugar), foodtype: ftpreviewIndex, foodN: food, gram: gram, picker_date: date)
                 res = try predictManager.provider.getPredict(meal_type_n: model_input.meal_type_n, gi: model_input.gi, gl: model_input.gl, carbo: model_input.carbo, carbo_b6h: model_input.carbo_b6h, prot_b6h: model_input.prot_b6h, fat_b6h: model_input.fat_b6h, BG: model_input.BG, BMI: model_input.BMI, HbA1C_V1: model_input.HbA1C_V1, TG_V1: model_input.TG_V1, Hol_V1: model_input.Hol_V1, fasting_glu: model_input.fasting_glu, pregnancy_week: model_input.pregnancy_week)
-                let checkCarbo = checkCarbo(foodType: ftpreviewIndex.rawValue, listOfFood: workList)
-                recomendationCards = getMessage(highBGPredict: checkBGPredicted(BG1: res), highBGBefore: checkBGBefore(BG0: try convert(txt: sugar)), moderateAmountOfCarbo: checkCarbo.0, tooManyCarbo: checkCarbo.1, unequalGLDistribution: checkUnequalGlDistribution(listOfFood: workList), highGI: checkGI(listOfFood: workList))
+                let checkCarbo = checkCarbo(foodType: ftpreviewIndex.rawValue, listOfFood: workList, date: date)
+                let msg = getMessage(BGPredicted: res, BGBefore: try convert(txt: sugar), moderateAmountOfCarbo: checkCarbo.0, tooManyCarbo: checkCarbo.1, twiceAsMach: checkCarbo.2, unequalGLDistribution: checkUnequalGlDistribution(listOfFood: workList), highGI: checkGI(listOfFood: workList))
+                recomendationCards = msg.0
+                res = msg.2
                 recCardID = recomendationCards.isEmpty ? UUID() : recomendationCards[0].id
-                if !recomendationCards.isEmpty {
-                    isVisible = true
-                    withAnimation(.none){
-                        sugarlvl = "УГК превысит норму"
-                        recColor = Color(red: 255/255, green: 91/255, blue: 36/255)
-                        fontColor = Color.white
+                if msg.1 == "превысит" {
+                    withAnimation(.none) {
+                        isVisible = true
+                        recColor = Color.red
+                        sugarlvl = LocalizedStringKey(msg.1)
                     }
-                } else {
-                    isVisible = false
-                    withAnimation(.none){
-                        sugarlvl = "УГК не превысит норму"
-                        recColor = Color.green.opacity(0.7)
-                        fontColor = Color.white
+                } else if msg.1 == "не превысит" {
+                    withAnimation(.none) {
+                        isVisible = true
+                        sugarlvl = LocalizedStringKey(msg.1)
+                        recColor = Color.green
                     }
                 }
-                scolor = Color("listButtonColor")
             } else {
-                isVisible = false
-                withAnimation(.none){
-                    sugarlvl = "УГК не определен"
-                    recColor = Color("BG_Undefined")
-                    fontColor = Color("BG_Font_Undefined")
+                withAnimation(.none) {
+                    isVisible = false
                 }
             }
+            scolor = Color("listButtonColor")
         }
         catch inputErorrs.decimalError {
             scolor = .red
@@ -312,9 +267,9 @@ struct enterFood: View {
     func saveInDB(workList: [foodItem]){
         permission = diaryManager.provider.checkIfAlreadyEx(selectedDate: date, idForDelete: idForDelete)
         if permission {
-            errorMessage = "Удалите или отредактиируйте уже существующий прием пищи"
+            errorMessage = "Удалите или отредактируйте уже существующий прием пищи"
         }
-        if enabled && !permission {
+        if !permission && (sugarlvl != "Неопределенный результат" || sugarlvl != "Недостаточно данных") {
             do {
                 let _BG0 = try convert(txt: sugar)
                 if !idForDelete.isEmpty {
@@ -334,7 +289,7 @@ struct enterFood: View {
                 errorMessage = "Заполните поля в соотвествии с требованиями"
             }
         }
-        else if !enabled && !permission {
+        else if !permission {
             if !idForDelete.isEmpty {
                 deleteFromBD(idToDelete: idForDelete, table: 0)
                 hasChanged = true

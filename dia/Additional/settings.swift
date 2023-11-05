@@ -10,7 +10,7 @@ struct settings: View {
     @State private var arrowAngle = 0.0
     var body: some View {
         List {
-            Section(header: Text("Карта пациента").font(.caption)){
+            Section(header: Text("Карта пациента").font(.body)){
                 NavigationLink(destination: {
                     if #available(iOS 16, *){
                         patientCart()
@@ -18,14 +18,14 @@ struct settings: View {
                     } else {
                         patientCart().hiddenTabBar()
                     }
-                }) {Text("Данные пациента")}.foregroundColor(Color("listButtonColor"))
+                }) {Text("О пациенте")}.foregroundColor(Color("listButtonColor"))
                 NavigationLink(destination: {
                     if #available(iOS 16, *){
                         severalDatesPicker().toolbar(.hidden, for: .tabBar)
                     } else {
                         severalDatesPicker().hiddenTabBar()
                     }
-                }) {Text("Отметить полные дни")}.foregroundColor(Color("listButtonColor"))
+                }) {Text("Полные дни")}.foregroundColor(Color("listButtonColor"))
                 NavigationLink(destination: {
                     if #available(iOS 16, *){
                         PDFKitView(url: fileUrl).ignoresSafeArea(.all, edges: .bottom).navigationTitle("Обучение").navigationBarTitleDisplayMode(.inline).toolbar(.hidden, for: .tabBar)
@@ -39,7 +39,7 @@ struct settings: View {
                     } else {
                         helper(phelper: $phelper).hiddenTabBar()
                     }
-                }) {Text("Помощь")}.foregroundColor(Color("listButtonColor"))
+                }) {Text("Контакты")}.foregroundColor(Color("listButtonColor"))
                 NavigationLink(destination: {
                     if #available(iOS 16, *){
                         aboutApp().toolbar(.hidden, for: .tabBar)
@@ -48,7 +48,7 @@ struct settings: View {
                     }
                 }){Text("О приложении")}.foregroundColor(Color("listButtonColor"))
             }
-            Section(header: Text("Управление аккаунтом").font(.caption)) {
+            Section(header: Text("Управление аккаунтом").font(.body)) {
                 Button(action: {
                     eraseAccount = true
                 }, label: {

@@ -28,7 +28,7 @@ struct addGramButton: View {
                                 }
                             }
                     } header: {
-                        Text("Информация о продукте").font(.caption)
+                        Text("Информация о продукте").font(.body)
                     }
                 }
                 .toolbar {
@@ -87,8 +87,8 @@ struct addGramButton: View {
                         }
                     })
                 }
-                .navigationTitle(collection.selectedItem!.name)
-                .navigationBarTitleDisplayMode(.large)
+                .navigationTitle(LocalizedStringKey(collection.selectedItem!.name))
+                .navigationBarTitleDisplayMode(.inline)
             }
         } else {
             NavigationView {
@@ -103,7 +103,7 @@ struct addGramButton: View {
                                 }
                             }
                     } header: {
-                        Text("Информация о продукте").font(.caption)
+                        Text("Информация о продукте").font(.body)
                     }
                 }
                 .toolbar {
@@ -162,16 +162,10 @@ struct addGramButton: View {
                         }
                     })
                 }
-                .navigationTitle(collection.selectedItem!.name)
-                .navigationBarTitleDisplayMode(.large)
+                .navigationTitle(LocalizedStringKey(collection.selectedItem!.name))
+                .navigationBarTitleDisplayMode(.inline)
             }.navigationViewStyle(.stack)
             
         }
-    }
-}
-
-struct addButtonView_Previews: PreviewProvider {
-    static var previews: some View {
-        addGramButton(gram: "100,0", editing: false, isShowingSheet: .constant(true), showSuccesNotify: .constant(false))
     }
 }

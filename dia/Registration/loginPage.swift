@@ -96,7 +96,7 @@ struct loginPage: View {
                 regHelper()
             }, label: {
                 HStack{
-                    Text("Регистрация").font(.body)
+                    Text("Как зарегистрироваться").font(.body)
                     Image(systemName: "questionmark.circle")
                 }
             })

@@ -10,7 +10,7 @@ struct ketonur: View {
     @Binding var hasChanged: Bool
     var body: some View {
         List {
-            Section(header: Text("Общая информация").font(.caption)){
+            Section(header: Text("Общая информация").font(.body)){
                 TextField("ммоль/л", text: $t)
                     .focused($focusedField)
                     .keyboardType(.decimalPad)
@@ -25,7 +25,7 @@ struct ketonur: View {
                 }
             }
         }
-        .navigationTitle(Text("Кетонурия"))
+        .navigationTitle(Text("Уровень кетонурии"))
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing){
                 Button(action: {
@@ -46,7 +46,7 @@ struct ketonur: View {
                     Text("Сохранить")
                 }
                 .alert(isPresented: $isCorrect) {
-                    Alert(title: Text("Статус операции"), message: Text("Введите релевантное \nзначение"), dismissButton: .default(Text("ОК")))
+                    Alert(title: Text("Статус операции"), message: Text(LocalizedStringKey("Введите релевантное значение")), dismissButton: .default(Text("ОК")))
                 }
             }
         }

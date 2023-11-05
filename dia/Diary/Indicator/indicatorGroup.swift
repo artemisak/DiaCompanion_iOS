@@ -13,9 +13,9 @@ struct indicatorGroup: View {
     @Binding var gl: Double
     var body: some View {
         HStack(spacing: 10) {
-            indicator(value: $gi, label: "ГИ: ", lowerBound: 20.0, upperBound: 55.0)
-            indicator(value: $gl, label: "ГН: ", lowerBound: 20.0, upperBound: 70.0)
-            indicator(value: $carbo, label: "УГЛ: ", lowerBound: 30.0, upperBound: 60.0)
+            indicator(value: $gi, label: "ГИ:", lowerBound: 20.0, upperBound: 55.0)
+            indicator(value: $gl, label: "ГН:", lowerBound: 20.0, upperBound: 70.0)
+            indicator(value: $carbo, label: "УГЛ:", lowerBound: 30.0, upperBound: 60.0)
         }
     }
 }

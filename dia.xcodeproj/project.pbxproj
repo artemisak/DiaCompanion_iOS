@@ -24,6 +24,10 @@
 		A7491D85297AA66D005AAA18 /* recipeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7491D84297AA66D005AAA18 /* recipeModel.swift */; };
 		A7491D87297AF5C6005AAA18 /* patientCart.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7491D86297AF5C6005AAA18 /* patientCart.swift */; };
 		A74A1CC228B1016C0038C79F /* startPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74A1CC128B1016C0038C79F /* startPage.swift */; };
+		A75CECF12AF40865006D6289 /* recomendationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A75CECF02AF40865006D6289 /* recomendationView.swift */; };
+		A75CECF32AF409ED006D6289 /* sugarMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A75CECF22AF409ED006D6289 /* sugarMessage.swift */; };
+		A75CECF52AF40B45006D6289 /* generalFoodInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = A75CECF42AF40B45006D6289 /* generalFoodInfo.swift */; };
+		A75CECF72AF40BBE006D6289 /* sugarInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = A75CECF62AF40BBE006D6289 /* sugarInput.swift */; };
 		A760B57D2987E04C00402094 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = A760B57F2987E04C00402094 /* Localizable.strings */; };
 		A760B5822987E05C00402094 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = A760B5842987E05C00402094 /* Localizable.strings */; };
 		A767CC7F2944C0BE0093A979 /* indicatorGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = A767CC7E2944C0BE0093A979 /* indicatorGroup.swift */; };
@@ -108,6 +112,10 @@
 		A7491D84297AA66D005AAA18 /* recipeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = recipeModel.swift; sourceTree = "<group>"; };
 		A7491D86297AF5C6005AAA18 /* patientCart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = patientCart.swift; sourceTree = "<group>"; };
 		A74A1CC128B1016C0038C79F /* startPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = startPage.swift; sourceTree = "<group>"; };
+		A75CECF02AF40865006D6289 /* recomendationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = recomendationView.swift; sourceTree = "<group>"; };
+		A75CECF22AF409ED006D6289 /* sugarMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = sugarMessage.swift; sourceTree = "<group>"; };
+		A75CECF42AF40B45006D6289 /* generalFoodInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = generalFoodInfo.swift; sourceTree = "<group>"; };
+		A75CECF62AF40BBE006D6289 /* sugarInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = sugarInput.swift; sourceTree = "<group>"; };
 		A760B57E2987E04C00402094 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		A760B5832987E05C00402094 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		A767CC7E2944C0BE0093A979 /* indicatorGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = indicatorGroup.swift; sourceTree = "<group>"; };
@@ -275,7 +283,11 @@
 			isa = PBXGroup;
 			children = (
 				AC3C959A26D1B570005B1393 /* enterFood.swift */,
+				A75CECF62AF40BBE006D6289 /* sugarInput.swift */,
+				A75CECF22AF409ED006D6289 /* sugarMessage.swift */,
+				A75CECF42AF40B45006D6289 /* generalFoodInfo.swift */,
 				A7CD3AED2ABDA1BE00FAFEBF /* foodList.swift */,
+				A75CECF02AF40865006D6289 /* recomendationView.swift */,
 			);
 			path = EnterFood;
 			sourceTree = "<group>";
@@ -494,7 +506,6 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				ru,
-				Base,
 				en,
 			);
 			mainGroup = AC2603132690691E00C4A520;
@@ -557,6 +568,7 @@
 				ACD86E8126DE820B0027B8ED /* sugarChange.swift in Sources */,
 				A77B7EE32973EFFC00CFEBD5 /* listOfGroups.swift in Sources */,
 				ACF2F0AA26DEA8300066753D /* history.swift in Sources */,
+				A75CECF32AF409ED006D6289 /* sugarMessage.swift in Sources */,
 				ACCC5C2E2702190B0057CA7C /* patientManager.swift in Sources */,
 				A73A1F092A813A07007F4299 /* foodPreferences.swift in Sources */,
 				A73A1F0B2A813A07007F4299 /* lifeStyle.swift in Sources */,
@@ -590,10 +602,12 @@
 				A7A238022A84F7A200C1E015 /* questionaryManager.swift in Sources */,
 				A7F4486B291EB5AD00A4B379 /* loginPage.swift in Sources */,
 				AC6327022751012C00C25E23 /* historyManager.swift in Sources */,
+				A75CECF52AF40B45006D6289 /* generalFoodInfo.swift in Sources */,
 				A77B7EE22973EFFC00CFEBD5 /* inGroupList.swift in Sources */,
 				A74A1CC228B1016C0038C79F /* startPage.swift in Sources */,
 				A7FBB23B27FC257D00828432 /* regHelper.swift in Sources */,
 				ACF4E411272DB126002D2797 /* RKCell.swift in Sources */,
+				A75CECF72AF40BBE006D6289 /* sugarInput.swift in Sources */,
 				A706DA822843867800473941 /* export.swift in Sources */,
 				A70FC0FB28AA969E00E154DB /* recommendationMesssage.swift in Sources */,
 				A767CC7F2944C0BE0093A979 /* indicatorGroup.swift in Sources */,
@@ -601,6 +615,7 @@
 				AC3B847526EBA1F200E98681 /* ketonur.swift in Sources */,
 				A73A1F0A2A813A07007F4299 /* generalQuestions.swift in Sources */,
 				A7BD994727CA46FC0090D9D7 /* helper.swift in Sources */,
+				A75CECF12AF40865006D6289 /* recomendationView.swift in Sources */,
 				A71CAEF228280F7600C6AC9F /* predictManager.swift in Sources */,
 				AC3C959B26D1B570005B1393 /* enterFood.swift in Sources */,
 			);
@@ -766,7 +781,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"dia/Preview Content\"";
 				DEVELOPMENT_TEAM = A73KYTXV9C;
 				ENABLE_PREVIEWS = YES;
@@ -779,7 +794,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.1.20;
+				MARKETING_VERSION = 2.1.22;
 				PRODUCT_BUNDLE_IDENTIFIER = app.dia;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -799,7 +814,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"dia/Preview Content\"";
 				DEVELOPMENT_TEAM = A73KYTXV9C;
 				ENABLE_PREVIEWS = YES;
@@ -812,7 +827,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.1.20;
+				MARKETING_VERSION = 2.1.22;
 				PRODUCT_BUNDLE_IDENTIFIER = app.dia;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";

@@ -31,9 +31,3 @@ struct searchViewsGroup: View {
         })
     }
 }
-
-struct searchingGroup_Previews: PreviewProvider {
-    static var previews: some View {
-        searchViewsGroup()
-    }
-}

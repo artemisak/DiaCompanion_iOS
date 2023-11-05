@@ -13,26 +13,51 @@ struct recomendation: Identifiable, Hashable {
     var text: String
 }
 
-func getMessage(highBGPredict: Bool, highBGBefore: Bool, moderateAmountOfCarbo: Bool, tooManyCarbo: Bool, unequalGLDistribution: Bool, highGI: Bool) -> [recomendation] {
+func getMessage(BGPredicted: Double, BGBefore: Double, moderateAmountOfCarbo: Bool, tooManyCarbo: Bool, twiceAsMach: Bool, unequalGLDistribution: Bool, highGI: Bool) -> ([recomendation], String, Double) {
     var temp  = [recomendation]()
-    if highBGBefore {
+    var msg = ""
+    var correctedBG = BGPredicted
+    
+    if BGBefore >= 6.7 {
         temp.append(recomendation(text: "Высокий уровень глюкозы до еды. Рекомендовано уменьшить количество углеводов во время перекусов. Возможно, требуется назначение малых доз инсулина. Проконсультируйтесь с врачом."))
     }
-    if highBGPredict {
-        if moderateAmountOfCarbo {
+    
+    if twiceAsMach {
+        temp.append(recomendation(text: "Количество углеводов более, чем в два раза, превышает рекомендованное при ГСД. Уменьшите количество углеводсодержащих продуктов."))
+    }
+    
+    if BGPredicted >= 0.4 {
+        if (unequalGLDistribution) {
+            temp.append(recomendation(text: "Уменьшите количество продуктов с высокой гликемической нагрузкой (ГН)."))
+        } else if highGI {
+            temp.append(recomendation(text: "Рекомендуется исключить из рациона или уменьшить количество продуктов с высоким гликемическим индексом (более 55)."))
+        } else if tooManyCarbo {
+            temp.append(recomendation(text: "Уменьшите количество продуктов, содержащих углеводы."))
+        } else {
+            temp.append(recomendation(text: "Вероятно, уровень глюкозы после еды будет высоким, рекомендована прогулка после приема пищи."))
+        }
+        msg = "превысит"
+    } else {
+        if temp.isEmpty {
+            msg = "не превысит"
+        } else if (!temp.isEmpty && moderateAmountOfCarbo) {
             if (unequalGLDistribution) {
                 temp.append(recomendation(text: "Уменьшите количество продуктов с высокой гликемической нагрузкой (ГН)."))
             } else if highGI {
                 temp.append(recomendation(text: "Рекомендуется исключить из рациона или уменьшить количество продуктов с высоким гликемическим индексом (более 55)."))
             } else if tooManyCarbo {
                 temp.append(recomendation(text: "Уменьшите количество продуктов, содержащих углеводы."))
+            } else {
+                temp.append(recomendation(text: "Вероятно, уровень глюкозы после еды будет высоким, рекомендована прогулка после приема пищи."))
             }
-        }
-        if temp.isEmpty {
-            temp.append(recomendation(text: "Вероятно, уровень глюкозы после еды будет высоким, рекомендована прогулка после приема пищи."))
+            msg = "превысит"
+            correctedBG += (1-BGPredicted)*0.5
+        } else {
+            msg = "не превысит"
         }
     }
-    return temp
+    
+    return (temp, msg, correctedBG)
 }
 
 func checkUnequalGlDistribution(listOfFood: [foodItem]) -> Bool {
@@ -46,102 +71,36 @@ func checkUnequalGlDistribution(listOfFood: [foodItem]) -> Bool {
     return false
 }
 
-func checkBGPredicted(BG1: Double) -> Bool {
-    if BG1 >= 0.4 {
-        return true
-    } else {
-        return false
-    }
-}
-
 func checkGI(listOfFood: [foodItem]) -> Bool {
     return listOfFood.contains(where: {$0.gi >= 55})
 }
 
-func checkCarbo(foodType: String, listOfFood: [foodItem]) -> (Bool, Bool) {
+func checkCarbo(foodType: String, listOfFood: [foodItem], date: Date) -> (Bool, Bool, Bool) {
+    let df = DateFormatter()
+    df.dateFormat = "HH:mm"
+    let calendar = Calendar.current
+    let components = calendar.dateComponents([.hour, .minute], from: date)
     let sum = listOfFood.map{$0.carbo}.reduce(0, +)
-    if foodType == "Завтрак" && sum > 15 {
+    if (foodType == "Завтрак" || foodType == "Перекус") && (calendar.date(from: components)! > df.date(from: "05:00")!) && (calendar.date(from: components)! < df.date(from: "11:00")!) && (sum > 15) {
         if sum > 30 {
-            return (true, true)
+            if sum > 90 {
+                return (true, true, true)
+            } else {
+                return (true, true, false)
+            }
         } else {
-            return (true, false)
+            return (true, false, false)
         }
-    } else if foodType != "" && sum > 30 {
+    } else if (foodType == "Обед" || foodType == "Ужин" || foodType == "Перекус") && (calendar.date(from: components)! > df.date(from: "11:00")!) && (sum > 30) {
         if sum > 60 {
-            return (true, true)
+            if sum > 120 {
+                return (true, true, true)
+            } else {
+                return (true, true, false)
+            }
         } else {
-            return (true, false)
+            return (true, false, false)
         }
     }
-    return (false, false)
-}
-
-func checkBGBefore(BG0: Double) -> Bool {
-    if BG0 >= 6.7 {
-        return true
-    } else {
-        return false
-    }
-}
-
-func checkPV(listOfFood: [foodItem], date: Date) -> Bool {
-    var lowPV = false
-    do {
-        var sum = 0.0
-        var sumToday = 0.0
-        var sumYest = 0.0
-        var listOfPV: [Double] = []
-        
-        let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
-        let path = documents + "/diacompanion.db"
-        let sourcePath = Bundle.main.path(forResource: "diacompanion", ofType: "db")!
-        _=copyDatabaseIfNeeded(sourcePath: sourcePath)
-        let db = try Connection(path)
-        
-        let food = Table("food")
-        let id = Expression<String>("_id")
-        let pv = Expression<Double?>("pv")
-        for i in listOfFood {
-            for i1 in try db.prepare(food.select(pv).filter(id == "\(i.table_id)")){
-                listOfPV.append((i1[pv] ?? 0.0)*(i.gram ?? 0.0)/100)
-            }
-        }
-        sum = listOfPV.reduce(0,+)
-        listOfPV.removeAll()
-        
-        let diary = Table("diary")
-        let id_food = Expression<Int>("id_food")
-        let _date = Expression<String>("date")
-        let g = Expression<String>("g")
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd.MM.yyyy"
-        for i in try db.prepare(diary.select(id_food, g).filter(_date == dateFormatter.string(from: date))){
-            for i1 in try db.prepare(food.select(pv).filter(id == "\(i[id_food])")){
-                listOfPV.append((i1[pv] ?? 0.0)*(Double(i[g]) ?? 0.0)/100)
-            }
-        }
-        sumToday = listOfPV.reduce(0,+)
-        listOfPV.removeAll()
-        
-        let yest = date.addingTimeInterval(-60*60*24)
-        for i in try db.prepare(diary.select(id_food, g).filter(_date == dateFormatter.string(from: yest))){
-            for i1 in try db.prepare(food.select(pv).filter(id == "\(i[id_food])")){
-                listOfPV.append((i1[pv] ?? 0.0)*(Double(i[g]) ?? 0.0)/100)
-            }
-        }
-        sumYest = listOfPV.reduce(0,+)
-        listOfPV.removeAll()
-        
-        if sum < 8 {
-            lowPV = true
-        } else if sum + sumToday < 20 {
-            lowPV = true
-        } else if sum + sumYest < 28 {
-            lowPV = true
-        }
-    }
-    catch {
-        print(error)
-    }
-    return lowPV
+    return (false, false, false)
 }

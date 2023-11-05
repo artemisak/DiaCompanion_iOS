@@ -15,12 +15,11 @@ struct listRow: View {
     @State var food_carbo: Double
     @State var food_kkal: Double
     @State var food_gi: Double
-    @State var width: Double
     @Binding var index: Int?
     var body: some View {
-        HStack(alignment: .center) {
-            VStack(alignment: .leading) {
-                HStack {
+        HStack(alignment: .center, spacing: 0) {
+            VStack(alignment: .leading, spacing: 8) {
+                HStack(spacing: 0) {
                     VStack {
                         Image("prot")
                             .resizable()
@@ -29,7 +28,7 @@ struct listRow: View {
                         Text(String(format: "%.1f", food_prot))
                             .bold()
                     }
-                    .frame(maxWidth: 55, alignment: .center)
+                    .frame(maxWidth: 57, alignment: .center)
                     VStack {
                         Image("fat")
                             .resizable()
@@ -38,7 +37,7 @@ struct listRow: View {
                         Text(String(format: "%.1f", food_fat))
                             .bold()
                     }
-                    .frame(maxWidth: 55, alignment: .center)
+                    .frame(maxWidth: 57, alignment: .center)
                     VStack {
                         Image("carbo")
                             .resizable()
@@ -47,7 +46,7 @@ struct listRow: View {
                         Text(String(format: "%.1f", food_carbo))
                             .bold()
                     }
-                    .frame(maxWidth: 55, alignment: .center)
+                    .frame(maxWidth: 57, alignment: .center)
                     VStack {
                         Image("kkal")
                             .resizable()
@@ -56,7 +55,7 @@ struct listRow: View {
                         Text(String(format: "%.1f", food_kkal))
                             .bold()
                     }
-                    .frame(maxWidth: 55, alignment: .center)
+                    .frame(maxWidth: 57, alignment: .center)
                     VStack {
                         Image("gi")
                             .resizable()
@@ -65,22 +64,18 @@ struct listRow: View {
                         Text(String(format: "%.1f", food_gi))
                             .bold()
                     }
-                    .frame(maxWidth: 55, alignment: .center)
+                    .frame(maxWidth: 57, alignment: .center)
                 }
                 Text(food_name)
                     .multilineTextAlignment(.leading)
-                    .frame(maxWidth: width-55, alignment: .leading)
-                    .fixedSize(horizontal: false, vertical: true)
-            }
-            if index!.intToBool {
-                Image(systemName: "pin").rotationEffect(.degrees(45)).foregroundColor(.blue)
-            }
-        }.padding(.vertical, 5)
+            }.padding(.horizontal)
+            Image(systemName: "pin").rotationEffect(.degrees(45)).foregroundColor(.blue).padding(.horizontal).opacity(index!.intToBool ? 1 : 0)
+        }.padding(.vertical, 8)
     }
 }
 
 struct listRow_Previews: PreviewProvider {
     static var previews: some View {
-        listRow(food_name: "Картофель рафинированный, вырезка сердцевины", food_prot: Double.random(in: 10...90), food_fat: Double.random(in: 10...90), food_carbo: Double.random(in: 10...90), food_kkal: Double.random(in: 10...90), food_gi: Double.random(in: 0...1), width: 393.0, index: .constant(1))
+        listRow(food_name: "Картофель рафинированный, вырезка сердцевины", food_prot: Double.random(in: 100...150), food_fat: Double.random(in: 100...150), food_carbo: Double.random(in: 100...150), food_kkal: Double.random(in: 100...150), food_gi: Double.random(in: 100...120), index: .constant(1))
     }
 }

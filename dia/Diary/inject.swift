@@ -10,7 +10,7 @@ enum injects :String, CaseIterable, Identifiable {
 }
 
 enum injectType: String, CaseIterable, Identifiable {
-    case ultra = "Ультракоторкий"
+    case ultra = "Ультракороткий"
     case kor = "Короткий"
     case prolong = "Пролонгированный"
     var id: String { self.rawValue }
@@ -27,14 +27,14 @@ struct inject: View {
     @Binding var hasChanged: Bool
     var body: some View {
         List {
-            Section(header: Text("Общая информация").font(.caption)){
+            Section(header: Text("Общая информация").font(.body)){
                 TextField("Ед.", text: $t)
                     .keyboardType(.decimalPad)
                 NavigationLink(destination: injectTypePicker(previewIndex: $previewIndex), label: {
                     HStack{
                         Text("Тип действия")
                         Spacer()
-                        Text("\(previewIndex.rawValue)")
+                        Text(LocalizedStringKey(previewIndex.rawValue))
                             .foregroundColor(.gray)
                     }
                 })
@@ -42,7 +42,7 @@ struct inject: View {
                     HStack{
                         Text("Прием пищи")
                         Spacer()
-                        Text("\(previewIndex1.rawValue)")
+                        Text(LocalizedStringKey(previewIndex1.rawValue))
                             .foregroundColor(.gray)
                     }
                 })
@@ -77,7 +77,7 @@ struct inject: View {
                     Text("Сохранить")
                 }
                 .alert(isPresented: $isCorrect) {
-                    Alert(title: Text("Статус операции"), message: Text("Введите релевантное \nзначение"), dismissButton: .default(Text("ОК")))
+                    Alert(title: Text("Статус операции"), message: Text(LocalizedStringKey("Введите релевантное значение")), dismissButton: .default(Text("ОК")))
                 }
             }
             ToolbarItemGroup(placement: .keyboard, content: {
@@ -98,10 +98,10 @@ struct injectTypePicker: View {
     @Binding var previewIndex: injectType
     var body: some View {
         List {
-            Picker(selection: $previewIndex, label: Text("Тип действия").font(.caption)) {
-                Text("Ультракороткий").tag(injectType.ultra)
-                Text("Короткий").tag(injectType.kor)
-                Text("Пролонгированный").tag(injectType.prolong)
+            Picker(selection: $previewIndex, label: Text("Тип действия").font(.body)) {
+                Text(LocalizedStringKey("Ультракороткий")).tag(injectType.ultra)
+                Text(LocalizedStringKey("Короткий")).tag(injectType.kor)
+                Text(LocalizedStringKey("Пролонгированный")).tag(injectType.prolong)
             }.pickerStyle(.inline)
         }
     }
@@ -111,19 +111,13 @@ struct injectPicker: View {
     @Binding var previewIndex1: injects
     var body: some View {
         List {
-            Picker(selection: $previewIndex1, label: Text("Прием пищи").font(.caption)) {
-                Text("Натощак").tag(injects.natoshak)
-                Text("Завтрак").tag(injects.zavtrak)
-                Text("Обед").tag(injects.obed)
-                Text("Ужин").tag(injects.uzin)
-                Text("Дополнительно").tag(injects.dop)
+            Picker(selection: $previewIndex1, label: Text("Прием пищи").font(.body)) {
+                Text(LocalizedStringKey("Натощак")).tag(injects.natoshak)
+                Text(LocalizedStringKey("Завтрак")).tag(injects.zavtrak)
+                Text(LocalizedStringKey("Обед")).tag(injects.obed)
+                Text(LocalizedStringKey("Ужин")).tag(injects.uzin)
+                Text(LocalizedStringKey("Дополнительно")).tag(injects.dop)
             }.pickerStyle(.inline)
         }
-    }
-}
-
-struct inject_Previews: PreviewProvider {
-    static var previews: some View {
-        inject(t: "", date: Date.now, previewIndex: .prolong, previewIndex1: .dop, idForDelete: [], hasChanged: .constant(false))
     }
 }

@@ -10,8 +10,8 @@ struct massa: View {
     @Binding var hasChanged: Bool
     var body: some View {
         List {
-            Section(header: Text("Общая информация").font(.caption)){
-                TextField("кг", text: $t)
+            Section(header: Text("Общая информация").font(.body)){
+                TextField("кг.", text: $t)
                     .focused($focusedField)
                     .keyboardType(.decimalPad)
                 DatePicker(
@@ -44,7 +44,7 @@ struct massa: View {
                 }) {
                     Text("Сохранить")
                 }.alert(isPresented: $isCorrect) {
-                    Alert(title: Text("Статус операции"), message: Text("Введите релевантное \nзначение"), dismissButton: .default(Text("ОК")))
+                    Alert(title: Text("Статус операции"), message: Text(LocalizedStringKey("Введите релевантное значение")), dismissButton: .default(Text("ОК")))
                 }
             }
         }
