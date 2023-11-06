@@ -78,10 +78,10 @@ func checkGI(listOfFood: [foodItem]) -> Bool {
 func checkCarbo(foodType: String, listOfFood: [foodItem], date: Date) -> (Bool, Bool, Bool) {
     let df = DateFormatter()
     df.dateFormat = "HH:mm"
-    let calendar = Calendar.current
-    let components = calendar.dateComponents([.hour, .minute], from: date)
-    let sum = listOfFood.map{$0.carbo}.reduce(0, +)
-    if (foodType == "Завтрак" || foodType == "Перекус") && (calendar.date(from: components)! > df.date(from: "05:00")!) && (calendar.date(from: components)! < df.date(from: "11:00")!) && (sum > 15) {
+    let shortendDate = df.date(from: df.string(from: date))!
+    let sum = listOfFood.map{$0.weightedСarbo}.reduce(0, +)
+    
+    if (shortendDate <= df.date(from: "11:00")!) && (sum > 15) {
         if sum > 30 {
             if sum > 90 {
                 return (true, true, true)
@@ -91,7 +91,7 @@ func checkCarbo(foodType: String, listOfFood: [foodItem], date: Date) -> (Bool, 
         } else {
             return (true, false, false)
         }
-    } else if (foodType == "Обед" || foodType == "Ужин" || foodType == "Перекус") && (calendar.date(from: components)! > df.date(from: "11:00")!) && (sum > 30) {
+    } else if (shortendDate > df.date(from: "11:00")!) && (sum > 30) {
         if sum > 60 {
             if sum > 120 {
                 return (true, true, true)
