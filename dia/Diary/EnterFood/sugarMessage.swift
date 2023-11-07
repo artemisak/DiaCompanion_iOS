@@ -32,7 +32,7 @@ struct sugarMessage: View {
                 .scaledToFit()
                 if !recomendations.isEmpty {
                     HStack {
-                        Text("Посмотрите доступные рекомендаций")
+                        Text(LocalizedStringKey("Нажмите, чтобы узнать больше"))
                         Image(systemName: "hand.point.up.left")
                     }
                     .font(.caption)

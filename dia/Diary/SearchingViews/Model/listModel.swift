@@ -258,8 +258,6 @@ class foodCollections: ObservableObject {
             sql += " ORDER BY gi DESC"
         }
         
-        print(sql)
-        
         if sqlite3_prepare_v2(db, sql, -1, &statement, nil) != SQLITE_OK {
             let errmsg = String(cString: sqlite3_errmsg(db)!)
             print("Error preparing select: \(errmsg)")

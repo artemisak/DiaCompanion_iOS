@@ -46,13 +46,13 @@ class dayConsumptionModel : ObservableObject {
         let timeFormatter = DateFormatter()
         timeFormatter.dateFormat = "HH:mm"
         let now = timeFormatter.date(from: timeFormatter.string(from: Date()))!
-        if (now > timeFormatter.date(from: "00:00")!) && (now < timeFormatter.date(from: "04:00")!) {
+        if (now >= timeFormatter.date(from: "21:00")!) || (now <= timeFormatter.date(from: "05:00")!) {
             return .moon
         }
-        else if (now > timeFormatter.date(from: "04:00")!) && (now < timeFormatter.date(from: "07:00")!) {
+        else if (now > timeFormatter.date(from: "05:00")!) && (now < timeFormatter.date(from: "11:00")!) {
             return .sunrise
         }
-        else if (now > timeFormatter.date(from: "07:00")!) && (now < timeFormatter.date(from: "17:00")!) {
+        else if (now > timeFormatter.date(from: "11:00")!) && (now < timeFormatter.date(from: "17:00")!) {
             return .sunMax
         }
         else if (now > timeFormatter.date(from: "17:00")!) && (now < timeFormatter.date(from: "21:00")!) {

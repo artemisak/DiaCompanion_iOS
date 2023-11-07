@@ -41,14 +41,14 @@ struct enterFood: View {
     @State private var showEditView: Bool = false
     @State private var id0: Int = 0
     @State private var isEditing: Bool = false
-    @State private var sugarlvl: LocalizedStringKey = "УГК не определен"
+    @State private var sugarlvl: LocalizedStringKey = ""
     @State private var isHidden: Bool = true
     @State private var isSheetShown: Bool = false
     @State private var scolor = Color("listButtonColor")
     @State private var recColor = Color.gray.opacity(0.2)
     @State private var fontColor = Color.black
     @State private var alertMessage: Bool = false
-    @State private var permission: Bool = false
+    @State private var denied: Bool = false
     @State private var correctness: Bool = false
     @State private var res: Double = 0.0
     @State private var errorMessage: String = ""
@@ -99,18 +99,42 @@ struct enterFood: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing, content: {
                 Button(action: {
-                    if collection.whereToSave == .addedFoodItems {
-                        saveInDB(workList: collection.addedFoodItems)
-                        collection.addedFoodItems = []
-                    } else {
-                        saveInDB(workList: collection.editedFoodItems)
-                        collection.editedFoodItems = []
+                    do {
+                        let BG0 = try convert(txt: sugar)
+                        denied = diaryManager.provider.checkIfAlreadyEx(selectedDate: date, idForDelete: idForDelete)
+                        if denied {
+                            errorMessage = "Удалите или отредактируйте уже существующий прием пищи"
+                        } else {
+                            if collection.whereToSave == .addedFoodItems {
+                                saveInDB(workList: collection.addedFoodItems, bg: BG0)
+                                collection.addedFoodItems = []
+                            } else {
+                                saveInDB(workList: collection.editedFoodItems, bg: BG0)
+                                collection.editedFoodItems = []
+                            }
+                        }
+                    } catch inputErorrs.EmptyError {
+                        denied = diaryManager.provider.checkIfAlreadyEx(selectedDate: date, idForDelete: idForDelete)
+                        if denied {
+                            errorMessage = "Удалите или отредактируйте уже существующий прием пищи"
+                        } else {
+                            if collection.whereToSave == .addedFoodItems {
+                                saveInDB(workList: collection.addedFoodItems, bg: 0.0)
+                                collection.addedFoodItems = []
+                            } else {
+                                saveInDB(workList: collection.editedFoodItems, bg: 0.0)
+                                collection.editedFoodItems = []
+                            }
+                        }
+                    } catch {
+                        denied = true
+                        errorMessage = "Заполните поля в соотвествии с требованиями"
                     }
                 }) {
                     Text("Сохранить")
                 }
-                .alert(isPresented: $permission) {
-                    Alert(title: Text("Статус операции"), message: Text(errorMessage), dismissButton: .default(Text("ОК")))
+                .alert(isPresented: $denied) {
+                    Alert(title: Text("Статус операции"), message: Text(LocalizedStringKey(errorMessage)), dismissButton: .default(Text("ОК")))
                 }
             })
             ToolbarItemGroup(placement: .bottomBar, content: {
@@ -264,32 +288,19 @@ struct enterFood: View {
             scolor = .red
         }
     }
-    func saveInDB(workList: [foodItem]){
-        permission = diaryManager.provider.checkIfAlreadyEx(selectedDate: date, idForDelete: idForDelete)
-        if permission {
-            errorMessage = "Удалите или отредактируйте уже существующий прием пищи"
-        }
-        if !permission && (sugarlvl != "Неопределенный результат" || sugarlvl != "Недостаточно данных") {
-            do {
-                let _BG0 = try convert(txt: sugar)
-                if !idForDelete.isEmpty {
-                    deleteFromBD(idToDelete: idForDelete, table: 0)
-                    hasChanged = true
-                }
-                for i in workList {
-                    diaryManager.provider.SaveToDB(FoodName: i.name, gram: "\(i.gram!)", table_id: "\(i.table_id)", selectedDate: date, selectedType: ftpreviewIndex.rawValue)
-                }
-                diaryManager.provider.addPredictedRecord(selectedDate: date, selectedType: ftpreviewIndex.rawValue, BG0: _BG0, BG1: res)
-                collection.selectedItem = nil
-                self.presentationMode.wrappedValue.dismiss()
+    func saveInDB(workList: [foodItem], bg: Double){
+        if bg != 0.0 {
+            if !idForDelete.isEmpty {
+                deleteFromBD(idToDelete: idForDelete, table: 0)
+                hasChanged = true
             }
-            catch {
-                print(error)
-                permission = true
-                errorMessage = "Заполните поля в соотвествии с требованиями"
+            for i in workList {
+                diaryManager.provider.SaveToDB(FoodName: i.name, gram: "\(i.gram!)", table_id: "\(i.table_id)", selectedDate: date, selectedType: ftpreviewIndex.rawValue)
             }
-        }
-        else if !permission {
+            diaryManager.provider.addPredictedRecord(selectedDate: date, selectedType: ftpreviewIndex.rawValue, BG0: bg, BG1: res)
+            collection.selectedItem = nil
+            self.presentationMode.wrappedValue.dismiss()
+        } else {
             if !idForDelete.isEmpty {
                 deleteFromBD(idToDelete: idForDelete, table: 0)
                 hasChanged = true

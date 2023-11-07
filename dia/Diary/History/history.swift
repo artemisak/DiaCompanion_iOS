@@ -140,7 +140,7 @@ struct history: View {
                                                 sugar = ""
                                                 enabled = false
                                             }
-                                            switch i.name.split(separator: " ")[0] {
+                                            switch i.name[0] {
                                             case "Завтрак":
                                                 ftpreviewIndex = .zavtrak
                                             case "Обед":
@@ -316,12 +316,13 @@ struct history: View {
     }
     
     @ViewBuilder
-    func doRow(first: String, second: String, third: [[String]], typeOfRow: Int) -> some View {
+    func doRow(first: [String], second: String, third: [[String]], typeOfRow: Int) -> some View {
         if (typeOfRow == 0 && deselected[2].selected) {
-            NavigationLink(destination: doFoodInfoPage(info: third, date: second, titleName: first), label: {
+            let name = NSLocalizedString(first[0], comment: "") + " " + String(format: NSLocalizedString("(%@ сост.)", comment: ""), first[1])
+            NavigationLink(destination: doFoodInfoPage(info: third, date: second, titleName: name), label: {
                 HStack {
                     Image("meal").resizable().scaledToFit().frame(width: 36, height: 36)
-                    Text(first)
+                    Text(name)
                     Spacer()
                     HStack(alignment: .center){
                         Text(second[0..<5])
@@ -330,10 +331,11 @@ struct history: View {
             })
         }
         else if (typeOfRow == 1 && deselected[3].selected) {
+            let name = NSLocalizedString(first[0], comment: "") + ", " + String(format: NSLocalizedString("%@ \(first[0] == "Сон" ? "ч." : "мин.")", comment: ""), first[1])
             NavigationLink(destination: doActInfoPage(info: third, date: second), label: {
                 HStack {
                     Image("workoutSleep").resizable().scaledToFit().frame(width: 36, height: 36)
-                    Text(first)
+                    Text(name)
                     Spacer()
                     HStack(alignment: .center){
                         Text(second[0..<5])
@@ -342,10 +344,11 @@ struct history: View {
             })
         }
         else if (typeOfRow == 2 && deselected[1].selected) {
+            let name = String(format: NSLocalizedString("%@ Eд.", comment: ""), first[0]) + " " + NSLocalizedString(first[1], comment: "")
             NavigationLink(destination: doInjectInfoPage(info: third, date: second), label: {
                 HStack {
                     Image("insulin").resizable().scaledToFit().frame(width: 36, height: 36)
-                    Text(first)
+                    Text(name)
                     Spacer()
                     HStack(alignment: .center){
                         Text(second[0..<5])
@@ -354,10 +357,11 @@ struct history: View {
             })
         }
         else if (typeOfRow == 3 && deselected[0].selected) {
+            let name = String(format: NSLocalizedString("%@ ммоль/л", comment: ""), first[0]) + " " + NSLocalizedString(first[1], comment: "")
             NavigationLink(destination: doInjectSugarPage(info: third, date: second), label: {
                 HStack {
                     Image("sugar_level").resizable().scaledToFit().frame(width: 36, height: 36)
-                    Text(first)
+                    Text(name)
                     Spacer()
                     HStack(alignment: .center){
                         Text(second[0..<5])
@@ -366,10 +370,11 @@ struct history: View {
             })
         }
         else if (typeOfRow == 4 && deselected[4].selected) {
+            let name = String(format: NSLocalizedString("%@ ммоль/л", comment: ""), first[0])
             NavigationLink(destination: doKetonurInfoPage(info: third, date: second), label: {
                 HStack {
                     Image("keton").resizable().scaledToFit().frame(width: 36, height: 36)
-                    Text(first)
+                    Text(name)
                     Spacer()
                     HStack(alignment: .center){
                         Text(second[0..<5])
@@ -378,10 +383,11 @@ struct history: View {
             })
         }
         else if (typeOfRow == 5 && deselected[5].selected) {
+            let name = String(format: NSLocalizedString("Вес: %@ кг.", comment: ""), first[0])
             NavigationLink(destination: doMassaInfoPage(info: third, date: second), label: {
                 HStack {
                     Image("weight").resizable().scaledToFit().frame(width: 36, height: 36)
-                    Text(first)
+                    Text(name)
                     Spacer()
                     HStack(alignment: .center){
                         Text(second[0..<5])
@@ -551,12 +557,12 @@ struct history: View {
             calc[6] = round((calc[6] + Double(info[i][6])!*Double(info[i][4])!/100)*10)/10
         }
         res[0] = String(localized: "Масса") + ": \(round(calc[0]*10)/10)"
-        res[1] = String(localized:"Белки") + ": \(round(calc[1]*10)/10)"
-        res[2] = String(localized:"Жиры") + ": \(round(calc[2]*10)/10)"
-        res[3] = String(localized:"Углеводы") + ": \(round(calc[3]*10)/10)"
+        res[1] = String(localized: "Белки") + ": \(round(calc[1]*10)/10)"
+        res[2] = String(localized: "Жиры") + ": \(round(calc[2]*10)/10)"
+        res[3] = String(localized: "Углеводы") + ": \(round(calc[3]*10)/10)"
         res[4] = String(localized: "ККал") + ": \(round(calc[4]*10)/10)"
         res[5] = String(localized: "ГИ") + ": \(round((calc[5]/calc[3])*10)/10)"
-        res[6] = String(localized:"ГН") + ": \(round(calc[6]*10)/10)"
+        res[6] = String(localized: "ГН") + ": \(round(calc[6]*10)/10)"
         if info.last![8] != "-0.1" && info.last![9] != "-0.1" {
             res.append(String(localized: "УГК до приема пищи") + ": \(info.last![8])")
             res.append(String(localized: "Вероятность гипергликемии") + ": \(info.last![9])%")
