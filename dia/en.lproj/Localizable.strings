@@ -346,6 +346,7 @@
 "Список продуктов" = "List of products";
 "Введенный УГК до приема пищи" = "Entered glucose level before meals";
 "Смахните влево, чтобы удалить или отредактировать" = "Swipe to the left to delete or edit";
+"Введите состав приема пищи" = "Enter the meal composition";
 "%@ (%@ сост.)" = "%@ (%@ dishes)";
 "(%@ сост.)" = "(%@ dishes)";
 "%@ мин." = "%@ min.";
