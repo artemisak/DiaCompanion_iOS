@@ -189,6 +189,26 @@ func deleteFromBD(idToDelete: [Int], table: Int) {
     }
 }
 
+func deleteCorespondingRecords(date: Date){
+    do {
+        let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
+        let path = documents + "/diacompanion.db"
+        let sourcePath = Bundle.main.path(forResource: "diacompanion", ofType: "db")!
+        _=copyDatabaseIfNeeded(sourcePath: sourcePath)
+        let db = try Connection(path)
+        let predicted = Table("predicted")
+        let date_field = Expression<String>("date")
+        let time_field = Expression<String>("time")
+        let df_date = DateFormatter()
+        df_date.dateFormat = "dd.MM.yyy"
+        let df_time = DateFormatter()
+        df_time.dateFormat = "HH:mm"
+        try db.run(predicted.filter(date_field == df_date.string(from: date) && time_field == df_time.string(from: date)).delete())
+    } catch {
+        print(error)
+    }
+}
+
 func deleteAndSave(idToDelete: [Int], table: Int, info: [Any]) {
     do {
         var t = ""

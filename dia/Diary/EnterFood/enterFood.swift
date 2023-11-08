@@ -36,6 +36,7 @@ struct enterFood: View {
     @State var sugar: String
     @State var date: Date
     @State var ftpreviewIndex: ftype
+    @State var dateForDelete: Date?
     @State var idForDelete: [Int]
     @State private var multiSelection = Set<UUID>()
     @State private var showEditView: Bool = false
@@ -106,11 +107,21 @@ struct enterFood: View {
                             errorMessage = "Удалите или отредактируйте уже существующий прием пищи"
                         } else {
                             if collection.whereToSave == .addedFoodItems {
-                                saveInDB(workList: collection.addedFoodItems, bg: BG0)
-                                collection.addedFoodItems = []
+                                if collection.addedFoodItems.isEmpty {
+                                    denied = true
+                                    errorMessage = "Введите состав приема пищи"
+                                } else {
+                                    saveInDB(workList: collection.addedFoodItems, bg: BG0)
+                                    collection.addedFoodItems = []
+                                }
                             } else {
-                                saveInDB(workList: collection.editedFoodItems, bg: BG0)
-                                collection.editedFoodItems = []
+                                if collection.editedFoodItems.isEmpty {
+                                    denied = true
+                                    errorMessage = "Введите состав приема пищи"
+                                } else {
+                                    saveInDB(workList: collection.editedFoodItems, bg: BG0)
+                                    collection.editedFoodItems = []
+                                }
                             }
                         }
                     } catch inputErorrs.EmptyError {
@@ -119,11 +130,21 @@ struct enterFood: View {
                             errorMessage = "Удалите или отредактируйте уже существующий прием пищи"
                         } else {
                             if collection.whereToSave == .addedFoodItems {
-                                saveInDB(workList: collection.addedFoodItems, bg: 0.0)
-                                collection.addedFoodItems = []
+                                if collection.addedFoodItems.isEmpty {
+                                    denied = true
+                                    errorMessage = "Введите состав приема пищи"
+                                } else {
+                                    saveInDB(workList: collection.addedFoodItems, bg: 0.0)
+                                    collection.addedFoodItems = []
+                                }
                             } else {
-                                saveInDB(workList: collection.editedFoodItems, bg: 0.0)
-                                collection.editedFoodItems = []
+                                if collection.editedFoodItems.isEmpty {
+                                    denied = true
+                                    errorMessage = "Введите состав приема пищи"
+                                } else {
+                                    saveInDB(workList: collection.editedFoodItems, bg: 0.0)
+                                    collection.editedFoodItems = []
+                                }
                             }
                         }
                     } catch {
@@ -147,13 +168,13 @@ struct enterFood: View {
                 Button {
                     switch collection.whereToSave {
                     case .addedFoodItems:
-                        if collection.addedFoodItems.isEmpty {
+                        if collection.addedFoodItems.isEmpty && sugar.isEmpty {
                             presentationMode.wrappedValue.dismiss()
                         } else {
                             isUnsavedChanges = true
                         }
                     case .editingFoodItems:
-                        if collection.editedFoodItems.isEmpty {
+                        if collection.editedFoodItems.isEmpty && sugar.isEmpty {
                             presentationMode.wrappedValue.dismiss()
                         } else {
                             isUnsavedChanges = true
@@ -290,8 +311,9 @@ struct enterFood: View {
     }
     func saveInDB(workList: [foodItem], bg: Double){
         if bg != 0.0 {
-            if !idForDelete.isEmpty {
+            if !idForDelete.isEmpty && dateForDelete != nil {
                 deleteFromBD(idToDelete: idForDelete, table: 0)
+                deleteCorespondingRecords(date: dateForDelete!)
                 hasChanged = true
             }
             for i in workList {
@@ -301,14 +323,14 @@ struct enterFood: View {
             collection.selectedItem = nil
             self.presentationMode.wrappedValue.dismiss()
         } else {
-            if !idForDelete.isEmpty {
+            if !idForDelete.isEmpty && dateForDelete != nil {
                 deleteFromBD(idToDelete: idForDelete, table: 0)
+                deleteCorespondingRecords(date: dateForDelete!)
                 hasChanged = true
             }
             for i in workList {
                 diaryManager.provider.SaveToDB(FoodName: i.name, gram: "\(i.gram!)", table_id: "\(i.table_id)", selectedDate: date, selectedType: ftpreviewIndex.rawValue)
             }
-            diaryManager.provider.addPredictedRecord(selectedDate: date, selectedType: ftpreviewIndex.rawValue, BG0: 0.0, BG1: 0.0)
             collection.selectedItem = nil
             self.presentationMode.wrappedValue.dismiss()
         }

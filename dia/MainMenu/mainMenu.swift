@@ -32,9 +32,9 @@ struct mainMenu: View {
             Section {
                 NavigationLink {
                     if #available(iOS 16, *){
-                        enterFood(sugar: "", date: localDate, ftpreviewIndex: ftype.zavtrak, idForDelete: [], hasChanged: .constant(false)).toolbar(.hidden, for: .tabBar)
+                        enterFood(sugar: "", date: localDate, ftpreviewIndex: ftype.zavtrak, dateForDelete: nil, idForDelete: [], hasChanged: .constant(false)).toolbar(.hidden, for: .tabBar)
                     } else {
-                        enterFood(sugar: "", date: localDate, ftpreviewIndex: ftype.zavtrak, idForDelete: [], hasChanged: .constant(false)).hiddenTabBar()
+                        enterFood(sugar: "", date: localDate, ftpreviewIndex: ftype.zavtrak, dateForDelete: nil, idForDelete: [], hasChanged: .constant(false)).hiddenTabBar()
                     }
                 } label: {
                     HStack {

@@ -45,8 +45,8 @@ struct history: View {
     @State private var redirectToEnterKetonur: Bool = false
     @State private var redirectToEnterMassa: Bool = false
     @State private var sugar: String = ""
-    @State private var enabled: Bool = false
     @State private var date : Date = Date()
+    @State private var dateForDelete : Date? = nil
     @State private var idFordelete: [Int] = []
     @State private var ftpreviewIndex: ftype = ftype.zavtrak
     @State private var actTime: String = ""
@@ -73,9 +73,9 @@ struct history: View {
             VStack(spacing: .zero){
                 NavigationLink(isActive: $redirectToEnterFood, destination: {
                     if #available(iOS 16, *){
-                        enterFood(sugar: sugar, date: date, ftpreviewIndex: ftpreviewIndex, idForDelete: idFordelete, hasChanged: $hasChanged)
+                        enterFood(sugar: sugar, date: date, ftpreviewIndex: ftpreviewIndex, dateForDelete: dateForDelete, idForDelete: idFordelete, hasChanged: $hasChanged)
                     } else {
-                        enterFood(sugar: sugar, date: date, ftpreviewIndex: ftpreviewIndex, idForDelete: idFordelete, hasChanged: $hasChanged).hiddenTabBar()
+                        enterFood(sugar: sugar, date: date, ftpreviewIndex: ftpreviewIndex, dateForDelete: dateForDelete, idForDelete: idFordelete, hasChanged: $hasChanged).hiddenTabBar()
                     }
                 }, label: {EmptyView()}).buttonStyle(TransparentButton()).hidden()
                 NavigationLink(isActive: $redirectToEnterAct, destination: {enterAct(t: actTime, date: actDate, actpreviewIndex: actPreviewIndex, idForDelete: idFordelete, hasChanged: $hasChanged)}, label: {EmptyView()}).buttonStyle(TransparentButton()).hidden()
@@ -128,17 +128,16 @@ struct history: View {
                                                 idFordelete.append(j)
                                             }
                                             date = convertToDate(d: i.date)
+                                            dateForDelete = convertToDate(d: i.date)
                                             collection.editedFoodItems = []
                                             for (j, k) in zip(i.metaInfo, i.metaInfo.indices) {
                                                 collection.editedFoodItems.append(foodItem(table_id: i.tbID[k], name: j[0], prot: Double(j[2])!, fat: Double(j[3])!, carbo: Double(j[4])!*100/Double(j[1])!, kkal: Double(j[5])!, gi: Double(j[6])!, index: 0, position: Int(k), gram: Double(j[1])!)
                                                 )
                                             }
-                                            if i.metaInfo.last![8] != "0.0" {
+                                            if i.metaInfo.last![8] != "-0.1" {
                                                 sugar = i.metaInfo.last![8]
-                                                enabled = true
                                             } else {
                                                 sugar = ""
-                                                enabled = false
                                             }
                                             switch i.name[0] {
                                             case "Завтрак":
