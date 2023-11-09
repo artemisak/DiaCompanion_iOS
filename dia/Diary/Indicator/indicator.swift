@@ -25,7 +25,7 @@ struct indicator: View, BypassIndicator {
     }
     var body: some View {
         HStack(spacing: 5) {
-            Text(label)
+            Text(LocalizedStringKey(label))
                 .font(.body)
                 .bold()
             Text(String(format: "%.0f", value))

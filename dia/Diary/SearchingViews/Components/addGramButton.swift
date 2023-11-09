@@ -28,7 +28,7 @@ struct addGramButton: View {
                                 }
                             }
                     } header: {
-                        Text("Информация о продукте").font(.body)
+                        Text("Масса продукта в граммах").font(.body)
                     }
                 }
                 .toolbar {

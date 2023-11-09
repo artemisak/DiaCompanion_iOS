@@ -154,15 +154,18 @@ class predictManager {
             
             var weight: Double = 0.0
             var height: Double = 0.0
+            var BMI: Double = 0.0
             var birth: Date = Date.now
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "dd.MM.yyyy"
             for i in try db.prepare(userT.select(w, h, birthday)){
-                weight = i[w] ?? 60.0
-                height = i[h] ?? 165
+                weight = i[w]!
+                height = i[h]!
                 birth = dateFormatter.date(from: i[birthday]!)!
             }
-            let BMI = weight/pow(height/100, 2.0)
+            if weight != 0.0 && height != 0.0 {
+                BMI = weight/pow(height/100, 2.0)
+            }
             let calendar = Calendar.current
             let age = Double(calendar.dateComponents([.year], from: birth, to: Date.now).year!)
             

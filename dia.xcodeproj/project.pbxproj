@@ -58,7 +58,6 @@
 		A7BD994727CA46FC0090D9D7 /* helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7BD994627CA46FC0090D9D7 /* helper.swift */; };
 		A7C997872983B68200A38F2D /* dayConsumptionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C997862983B68200A38F2D /* dayConsumptionModel.swift */; };
 		A7CD3AEE2ABDA1BE00FAFEBF /* foodList.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7CD3AED2ABDA1BE00FAFEBF /* foodList.swift */; };
-		A7CE328929225AF4002D8FB0 /* passwordPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7CE328829225AF4002D8FB0 /* passwordPage.swift */; };
 		A7CF7A632AAC9A5700155D2F /* diacompanion.db in Resources */ = {isa = PBXBuildFile; fileRef = A7CF7A622AAC9A5700155D2F /* diacompanion.db */; };
 		A7D0976A2809FE16000A12E1 /* buttonStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7D097692809FE16000A12E1 /* buttonStyles.swift */; };
 		A7D602B429B5E5250091CBCC /* recipeCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7D602B329B5E5250091CBCC /* recipeCard.swift */; };
@@ -141,7 +140,6 @@
 		A7BD994627CA46FC0090D9D7 /* helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = helper.swift; sourceTree = "<group>"; };
 		A7C997862983B68200A38F2D /* dayConsumptionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dayConsumptionModel.swift; sourceTree = "<group>"; };
 		A7CD3AED2ABDA1BE00FAFEBF /* foodList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = foodList.swift; sourceTree = "<group>"; };
-		A7CE328829225AF4002D8FB0 /* passwordPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = passwordPage.swift; sourceTree = "<group>"; };
 		A7CF7A622AAC9A5700155D2F /* diacompanion.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = diacompanion.db; sourceTree = "<group>"; };
 		A7D097692809FE16000A12E1 /* buttonStyles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = buttonStyles.swift; sourceTree = "<group>"; };
 		A7D602B329B5E5250091CBCC /* recipeCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = recipeCard.swift; sourceTree = "<group>"; };
@@ -317,7 +315,6 @@
 			children = (
 				A79E4F542A7EA862003A16DD /* questionary */,
 				A7F4486A291EB5AD00A4B379 /* loginPage.swift */,
-				A7CE328829225AF4002D8FB0 /* passwordPage.swift */,
 				A77714FF28D71931005C5793 /* versionChoose.swift */,
 				A7FBB23A27FC257D00828432 /* regHelper.swift */,
 				A70BCC3927B9471E00C22703 /* loginManager.swift */,
@@ -551,7 +548,6 @@
 			files = (
 				A7C997872983B68200A38F2D /* dayConsumptionModel.swift in Sources */,
 				ACF4E410272DB126002D2797 /* RKMonth.swift in Sources */,
-				A7CE328929225AF4002D8FB0 /* passwordPage.swift in Sources */,
 				AC37A67B276147AF00558E55 /* excelGenerator.swift in Sources */,
 				A79A5CB7298A9215007D5170 /* PDFView.swift in Sources */,
 				A73C74F628CF2BF2008D09BF /* recipeInteractionView.swift in Sources */,

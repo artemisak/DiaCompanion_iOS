@@ -58,6 +58,7 @@ struct enterFood: View {
     @State private var recCardID = UUID()
     @State private var recomendationCards = [recomendation]()
     @State private var showDetails: Bool = false
+    @State private var inaccuracy: Bool = false
     @Binding var hasChanged: Bool
     var body: some View {
         List {
@@ -202,7 +203,7 @@ struct enterFood: View {
         }
         .sheet(isPresented: $showEditView, content: { addGramButton(gram: String(collection.selectedItem!.gram!).split(separator: ".").joined(separator: ","), editing: true, isShowingSheet: $showEditView, showSuccesNotify: .constant(false)).dynamicTypeSize(.medium)})
         .sheet(isPresented: $showDetails, content: {
-            recomendationView(recomendations: $recomendationCards).dynamicTypeSize(.medium)
+            recomendationView(recomendations: $recomendationCards, caution: $inaccuracy).dynamicTypeSize(.medium)
         })
         .alert("Несохраненные изменения", isPresented: $isUnsavedChanges, actions: {
             Button(role: .destructive, action: {
@@ -274,6 +275,7 @@ struct enterFood: View {
                     gram.append($0.gram!)
                 }
                 let model_input = predictManager.provider.getData(BG0: try convert(txt: sugar), foodtype: ftpreviewIndex, foodN: food, gram: gram, picker_date: date)
+                inaccuracy = (model_input.BMI == 0.0 || model_input.HbA1C_V1 == 0.0 || model_input.TG_V1 == 0.0 || model_input.Hol_V1 == 0.0 || model_input.fasting_glu == 0.0 || model_input.pregnancy_week == 0.0)
                 res = try predictManager.provider.getPredict(meal_type_n: model_input.meal_type_n, gi: model_input.gi, gl: model_input.gl, carbo: model_input.carbo, carbo_b6h: model_input.carbo_b6h, prot_b6h: model_input.prot_b6h, fat_b6h: model_input.fat_b6h, BG: model_input.BG, BMI: model_input.BMI, HbA1C_V1: model_input.HbA1C_V1, TG_V1: model_input.TG_V1, Hol_V1: model_input.Hol_V1, fasting_glu: model_input.fasting_glu, pregnancy_week: model_input.pregnancy_week)
                 let checkCarbo = checkCarbo(foodType: ftpreviewIndex.rawValue, listOfFood: workList, date: date)
                 let msg = getMessage(BGPredicted: res, BGBefore: try convert(txt: sugar), moderateAmountOfCarbo: checkCarbo.0, tooManyCarbo: checkCarbo.1, twiceAsMach: checkCarbo.2, unequalGLDistribution: checkUnequalGlDistribution(listOfFood: workList), highGI: checkGI(listOfFood: workList))

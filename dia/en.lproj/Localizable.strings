@@ -370,3 +370,14 @@
 "Васюкова Е.А." = "Vasyukova E.A.";
 "Пашкова К.В." = "Pashkova K.V.";
 "Без врача" = "Without a doctor";
+"ГИ:" = "GI:";
+"ГН:" = "GL:";
+"УГЛ:" = "Carbs:";
+"Точность прогноза может быть снижена. Внесите необходимые для корректной работы алгоритма данные в разделе о пациенте." = "The accuracy of the prognosis may be reduced. Enter the data required for the algorithm to work correctly in the patient section.";
+"Диетические рекомендации" = "Dietary guidelines";
+"Высокий уровень глюкозы до еды. Рекомендовано уменьшить количество углеводов во время перекусов. Возможно, требуется назначение малых доз инсулина. Проконсультируйтесь с врачом." = "High glucose levels before meals. It is recommended to reduce carbohydrates at snack time. Low-dose insulin may need to be administered. Consult a physician.";
+"Количество углеводов более, чем в два раза, превышает рекомендованное при ГСД. Уменьшите количество углеводсодержащих продуктов." = "The amount of carbohydrates is more than twice the recommended amount for GDM. Reduce the amount of carbohydrate-containing foods.";
+"Уменьшите количество продуктов с высокой гликемической нагрузкой (ГН)." = "Reduce the amount of high glycemic load (GL) foods.";
+"Рекомендуется исключить из рациона или уменьшить количество продуктов с высоким гликемическим индексом (более 55)." = "It is recommended to eliminate or reduce foods with a glycemic index (GI) greater than 55.";
+"Уменьшите количество продуктов, содержащих углеводы." = "Reduce the amount of foods containing carbohydrates.";
+"Вероятно, уровень глюкозы после еды будет высоким, рекомендована прогулка после приема пищи." = "Glucose levels are likely to be high after a meal, a post-meal walk is recommended.";
