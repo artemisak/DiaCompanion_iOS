@@ -31,6 +31,11 @@ struct Person {
     var patientID: Int
     var weight: Double
     var height: Double
+    var hemoglobin: Double
+    var triglic: Double
+    var hl: Double
+    var fbg: Double
+    var preg_week: Double
 }
 
 class patientViewModel: ObservableObject {
@@ -53,6 +58,13 @@ class patientViewModel: ObservableObject {
             let weight = Expression<Double?>("weight")
             let height = Expression<Double?>("height")
             let doctor = Expression<String?>("doc")
+            
+            let questionary = Table("questionary")
+            let hb = Expression<Double?>("HbA1C")
+            let tg = Expression<Double?>("triglycerides")
+            let hl = Expression<Double?>("cholesterol")
+            let gl = Expression<Double?>("glucose")
+            let wk = Expression<Double?>("preg_week")
             
             var patient_id = 1
             var patient_name = ""
@@ -78,11 +90,27 @@ class patientViewModel: ObservableObject {
                     patient_doc = i[doctor]!
                 }
             }
-            self.woman = Person(fio: patient_name, birthday: patient_birthday, selectedDoc: doc(rawValue: patient_doc)!, start_date: patient_start_date, week_of_start: patient_week, day_of_start: patient_day, patientID: patient_id, weight: patient_weight, height: patient_height)
+            
+            var patient_hb = 0.0
+            var patient_tg = 0.0
+            var patient_hl = 0.0
+            var patient_gl = 0.0
+            var patient_wk = 0.0
+            for i in try db.prepare(questionary.select(hb, tg, hl, gl, wk)) {
+                if i[hb] != nil && i[tg] != nil && i[hl] != nil && i[gl] != nil && i[wk] != nil {
+                    patient_hb = i[hb]!
+                    patient_tg = i[tg]!
+                    patient_hl = i[hl]!
+                    patient_gl = i[gl]!
+                    patient_wk = i[wk]!
+                }
+            }
+            
+            self.woman = Person(fio: patient_name, birthday: patient_birthday, selectedDoc: doc(rawValue: patient_doc)!, start_date: patient_start_date, week_of_start: patient_week, day_of_start: patient_day, patientID: patient_id, weight: patient_weight, height: patient_height, hemoglobin: patient_hb, triglic: patient_tg, hl: patient_hl, fbg: patient_gl, preg_week: patient_wk)
             
         } catch {
             print(error)
-            self.woman = Person(fio: "Без указания", birthday: Date().addingTimeInterval(-60*60*24*365*23), selectedDoc: .without, start_date: Date(), week_of_start: 22, day_of_start: 3,  patientID: 1, weight: 60.0, height: 175.0)
+            self.woman = Person(fio: "Без указания", birthday: Date().addingTimeInterval(-60*60*24*365*23), selectedDoc: .without, start_date: Date(), week_of_start: 22, day_of_start: 3,  patientID: 1, weight: 60.0, height: 175.0, hemoglobin: 4.8, triglic: 1.3, hl: 4.5, fbg: 4.3, preg_week: 20)
         }
     }
 }
@@ -91,7 +119,7 @@ class patientManager {
     
     static let provider = patientManager()
     
-    func savePatientCart(name: String, birthDay: Date, doc: String, start_day: Date, week: Int, day: Int, id: Int, height: Double, weight: Double) async {
+    func savePatientCart(name: String, birthDay: Date, doc: String, start_day: Date, week: Int, day: Int, id: Int, height: Double, weight: Double, hb: Double, tg: Double, hl: Double, glu: Double, pgw: Double) async {
         Task {
             addName(pName: name)
             addBirthDate(pDate: birthDay)
@@ -101,6 +129,11 @@ class patientManager {
             addID(pID: id)
             addWeight(pWeight: weight)
             addHeight(pHeight: height)
+            addHB(hb: hb)
+            addTG(tg: tg)
+            addHL(hl: hl)
+            addGLU(glu: glu)
+            addPGW(pgw: pgw)
         }
     }
     
@@ -273,6 +306,116 @@ class patientManager {
             } else {
                 try db.run(users.insert(height <- pHeight))
             }
+        } catch {
+            print(error)
+        }
+    }
+    
+    func addHB(hb: Double){
+        do {
+            let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
+            let path = documents + "/diacompanion.db"
+            let sourcePath = Bundle.main.path(forResource: "diacompanion", ofType: "db")!
+            _=copyDatabaseIfNeeded(sourcePath: sourcePath)
+            let db = try Connection(path)
+            let questionary = Table("questionary")
+            let hb_filed = Expression<Double>("HbA1C")
+            
+            let all = Array(try db.prepare(questionary.select(hb_filed)))
+            if all.count != 0 {
+                try db.run(questionary.update(hb_filed <- hb))
+            } else {
+                try db.run(questionary.insert(hb_filed <- hb))
+            }
+            
+        } catch {
+            print(error)
+        }
+    }
+        
+    func addTG(tg: Double){
+        do {
+            let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
+            let path = documents + "/diacompanion.db"
+            let sourcePath = Bundle.main.path(forResource: "diacompanion", ofType: "db")!
+            _=copyDatabaseIfNeeded(sourcePath: sourcePath)
+            let db = try Connection(path)
+            let questionary = Table("questionary")
+            let tg_filed = Expression<Double>("triglycerides")
+            
+            let all = Array(try db.prepare(questionary.select(tg_filed)))
+            if all.count != 0 {
+                try db.run(questionary.update(tg_filed <- tg))
+            } else {
+                try db.run(questionary.insert(tg_filed <- tg))
+            }
+            
+        } catch {
+            print(error)
+        }
+    }
+    
+    func addHL(hl: Double){
+        do {
+            let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
+            let path = documents + "/diacompanion.db"
+            let sourcePath = Bundle.main.path(forResource: "diacompanion", ofType: "db")!
+            _=copyDatabaseIfNeeded(sourcePath: sourcePath)
+            let db = try Connection(path)
+            let questionary = Table("questionary")
+            let hl_filed = Expression<Double>("cholesterol")
+            
+            let all = Array(try db.prepare(questionary.select(hl_filed)))
+            if all.count != 0 {
+                try db.run(questionary.update(hl_filed <- hl))
+            } else {
+                try db.run(questionary.insert(hl_filed <- hl))
+            }
+            
+        } catch {
+            print(error)
+        }
+    }
+    
+    func addGLU(glu: Double){
+        do {
+            let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
+            let path = documents + "/diacompanion.db"
+            let sourcePath = Bundle.main.path(forResource: "diacompanion", ofType: "db")!
+            _=copyDatabaseIfNeeded(sourcePath: sourcePath)
+            let db = try Connection(path)
+            let questionary = Table("questionary")
+            let glu_filed = Expression<Double>("glucose")
+            
+            let all = Array(try db.prepare(questionary.select(glu_filed)))
+            if all.count != 0 {
+                try db.run(questionary.update(glu_filed <- glu))
+            } else {
+                try db.run(questionary.insert(glu_filed <- glu))
+            }
+            
+        } catch {
+            print(error)
+        }
+    }
+    
+    func addPGW(pgw: Double){
+        do {
+            let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
+            let path = documents + "/diacompanion.db"
+            let sourcePath = Bundle.main.path(forResource: "diacompanion", ofType: "db")!
+            _=copyDatabaseIfNeeded(sourcePath: sourcePath)
+            let db = try Connection(path)
+            let questionary = Table("questionary")
+            let pgw_filed = Expression<Double>("preg_week")
+            
+            let all = Array(try db.prepare(questionary.select(pgw_filed)))
+            if all.count != 0 {
+                try db.run(questionary.update(pgw_filed <- pgw))
+            } else {
+                try db.run(questionary.insert(pgw_filed <- pgw))
+            }
+            
         } catch {
             print(error)
         }

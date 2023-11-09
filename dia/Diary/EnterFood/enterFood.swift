@@ -224,7 +224,6 @@ struct enterFood: View {
                 collection.whereToSave = .editingFoodItems
             }
             if collection.whereToSave == .addedFoodItems {
-                date = Date()
                 updatePrediction(workList: collection.addedFoodItems)
             } else {
                 updatePrediction(workList: collection.editedFoodItems)

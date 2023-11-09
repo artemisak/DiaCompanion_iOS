@@ -211,59 +211,56 @@ struct generalQuestions: View {
             Group {
                 Section {
                     HStack {
-                        TextField("", value: $hemoglobin, formatter: formatter)
+                        TextField("4.8", value: $hemoglobin, formatter: formatter)
                             .keyboardType(.decimalPad)
-                            .labelsHidden()
                         Spacer()
                         bage(txt: "%")
                     }
                 } header: {
-                    Text("Уровень гликированного гемоглобина").font(.body)
+                    Text("Уровень гликированного гемоглобина").font(.body) + Text(" *").font(.body).bold()
                 }
                 Section {
                     HStack {
-                        TextField("", value: $triglic, formatter: formatter)
+                        TextField("1.3", value: $triglic, formatter: formatter)
                             .keyboardType(.decimalPad)
-                            .labelsHidden()
                         Spacer()
                         bage(txt: "ммоль/л")
                     }
                 } header: {
-                    Text("Уровень триглицеридов").font(.body)
+                    Text("Уровень триглицеридов").font(.body) + Text(" *").font(.body).bold()
                 }
                 Section {
                     HStack {
-                        TextField("", value: $hl, formatter: formatter)
+                        TextField("4.5", value: $hl, formatter: formatter)
                             .keyboardType(.decimalPad)
-                            .labelsHidden()
                         Spacer()
                         bage(txt: "ммоль/л")
                     }
                 } header: {
-                    Text("Уровень холестерина").font(.body)
+                    Text("Уровень холестерина").font(.body) + Text(" *").font(.body).bold()
                 }
                 Section {
                     HStack {
-                        TextField("", value: $fbg, formatter: formatter)
+                        TextField("4.3", value: $fbg, formatter: formatter)
                             .keyboardType(.decimalPad)
-                            .labelsHidden()
                         Spacer()
                         bage(txt: "ммоль/л")
                     }
                 } header: {
-                    Text("Уровень глюкозы натощак").font(.body)
+                    Text("Уровень глюкозы натощак").font(.body) + Text(" *").font(.body).bold()
                 }
-            }
-            Section {
-                HStack {
-                    TextField("", value: $preg_week, formatter: formatter)
-                        .keyboardType(.decimalPad)
-                        .labelsHidden()
-                    Spacer()
-                    bage(txt: "неделя")
+                Section {
+                    HStack {
+                        TextField("20", value: $preg_week, formatter: formatter)
+                            .keyboardType(.decimalPad)
+                        Spacer()
+                        bage(txt: "неделя")
+                    }
+                } header: {
+                    Text("Срок на момент сдачи анализов").font(.body) + Text(" *").font(.body).bold()
+                } footer: {
+                    Text("Поля, отмеченные (*), необходимы для работы системы прогнозирования уровня глюкозы в крови").font(.caption).frame(minWidth: 0, maxWidth: .infinity).multilineTextAlignment(.center)
                 }
-            } header: {
-                Text("Срок на момент сдачи анализов").font(.body)
             }
         }
         .animation(.spring(), value: selectedProlactin)

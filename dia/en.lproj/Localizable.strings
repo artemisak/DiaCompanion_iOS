@@ -77,6 +77,7 @@
 "Уровень холестерина" = "Cholesterol level";
 "Уровень глюкозы натощак" = "Fasting glucose level";
 "Срок на момент сдачи анализов" = "Gestational age at the time of testing";
+"Поля, отмеченные (*), необходимы для работы системы прогнозирования уровня глюкозы в крови" = "Fields marked (*) are required for the blood glucose prediction system to work";
 "Другие анализы" = "Other analysis";
 "Метрики" = "Metrics";
 "Диабет у родственников" = "Relatives with diabetes";
@@ -320,6 +321,7 @@
 "Граммы" = "Grams";
 "День" = "Day";
 "Неделя" = "Week";
+"неделя" = "week";
 "в неделю" = "per week";
 "Все записи" = "All entries";
 "Фильтр" = "Filter";

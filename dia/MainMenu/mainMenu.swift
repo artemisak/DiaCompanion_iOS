@@ -16,6 +16,7 @@ struct mainMenu: View {
     @State private var email: [String] = [""]
     @State private var erMessage: String = ""
     @State private var emailErrorMessage: Bool = false
+    let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     var body: some View {
         List {
             Section {
@@ -27,7 +28,11 @@ struct mainMenu: View {
                         Text(" - \(localDate.formatted())")
                     }
                     Image(systemName: consumption.sunImage.rawValue)
-                }.font(.body)
+                }
+                .font(.body)
+                .onReceive(timer) { input in
+                    localDate = Date()
+                }
             }
             Section {
                 NavigationLink {
@@ -122,6 +127,9 @@ struct mainMenu: View {
             localDateSTR = dateFormatter.string(from: localDate)
             await consumption.setUpVidget()
             
+        }
+        .onDisappear {
+            timer.upstream.connect().cancel()
         }
         .navigationTitle("ДиаКомпаньон")
         .toolbar {
