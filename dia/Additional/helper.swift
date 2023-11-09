@@ -15,7 +15,7 @@ struct helper: View {
                 }
             } header: {
                 Text("Исследовательская лаборатория").font(.body)
-
+                
             }
         }
         .navigationTitle("Контакты")

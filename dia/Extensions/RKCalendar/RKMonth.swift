@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct RKMonth: View {
-
+    
     @Binding var isPresented: Bool
     
     @ObservedObject var rkManager: RKManager
@@ -43,8 +43,8 @@ struct RKMonth: View {
                                         isToday: self.isToday(date: column),
                                         isSelected: self.isSpecialDate(date: column),
                                         isBetweenStartAndEnd: self.isBetweenStartAndEnd(date: column)),
-                                        cellWidth: self.cellWidth)
-                                        .onTapGesture { self.dateTapped(date: column) }
+                                           cellWidth: self.cellWidth)
+                                    .onTapGesture { self.dateTapped(date: column) }
                                 } else {
                                     Text("").frame(width: self.cellWidth, height: self.cellWidth).frame(minWidth: 0, maxWidth: .infinity)
                                 }
@@ -55,10 +55,10 @@ struct RKMonth: View {
             }
         }.background(rkManager.colors.monthBackColor)
     }
-
-     func isThisMonth(date: Date) -> Bool {
-         return self.rkManager.calendar.isDate(date, equalTo: firstOfMonthForOffset(), toGranularity: .month)
-     }
+    
+    func isThisMonth(date: Date) -> Bool {
+        return self.rkManager.calendar.isDate(date, equalTo: firstOfMonthForOffset(), toGranularity: .month)
+    }
     
     func dateTapped(date: Date) {
         if self.isEnabled(date: date) {
@@ -97,7 +97,7 @@ struct RKMonth: View {
             }
         }
     }
-     
+    
     func monthArray() -> [[Date]] {
         var rowArray = [[Date]]()
         for row in 0 ..< (numberOfDays(offset: monthOffset) / 7) {
@@ -168,18 +168,18 @@ struct RKMonth: View {
     func isToday(date: Date) -> Bool {
         return RKFormatAndCompareDate(date: date, referenceDate: Date())
     }
-     
+    
     func isSpecialDate(date: Date) -> Bool {
         return isSelectedDate(date: date) ||
-            isStartDate(date: date) ||
-            isEndDate(date: date) ||
-            isOneOfSelectedDates(date: date)
+        isStartDate(date: date) ||
+        isEndDate(date: date) ||
+        isOneOfSelectedDates(date: date)
     }
     
     func isOneOfSelectedDates(date: Date) -> Bool {
         return self.rkManager.selectedDatesContains(date: date)
     }
-
+    
     func isSelectedDate(date: Date) -> Bool {
         if rkManager.selectedDate == nil {
             return false

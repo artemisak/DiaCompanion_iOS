@@ -121,6 +121,14 @@ struct loginPage: View {
                         .zIndex(1)
                 }
             }
+            ToolbarItemGroup(placement: .keyboard, content: {
+                Spacer()
+                Button(action: {
+                    UIApplication.shared.dismissedKeyboard()
+                }, label: {
+                    Text("Готово")
+                })
+            })
         }
         .animation(.default, value: isLoading)
         .animation(.default, value: isValid)

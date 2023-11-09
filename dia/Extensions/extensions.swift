@@ -81,7 +81,7 @@ extension UIView {
         return subs
     }
 }
-    
+
 
 struct TabBarModifier {
     static func showTabBar() {
@@ -120,7 +120,7 @@ extension View {
     func showTabBar() -> some View {
         return self.modifier(ShowTabBar())
     }
-
+    
     func hiddenTabBar() -> some View {
         return self.modifier(HiddenTabBar())
     }

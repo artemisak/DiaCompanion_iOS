@@ -147,11 +147,11 @@ struct patientCart: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing, content: {
                     Button {
-                            Task {
-                                await patientManager.provider.savePatientCart(name: viewModel.woman.fio, birthDay: viewModel.woman.birthday, doc: viewModel.woman.selectedDoc.rawValue, start_day: viewModel.woman.start_date, week: viewModel.woman.week_of_start, day: viewModel.woman.day_of_start, id: viewModel.woman.patientID, height: viewModel.woman.height, weight: viewModel.woman.weight)
-                                await routeManager.setChoosed()
-                            }
-                            routeManager.animateTransition = true
+                        Task {
+                            await patientManager.provider.savePatientCart(name: viewModel.woman.fio, birthDay: viewModel.woman.birthday, doc: viewModel.woman.selectedDoc.rawValue, start_day: viewModel.woman.start_date, week: viewModel.woman.week_of_start, day: viewModel.woman.day_of_start, id: viewModel.woman.patientID, height: viewModel.woman.height, weight: viewModel.woman.weight)
+                            await routeManager.setChoosed()
+                        }
+                        routeManager.animateTransition = true
                     } label: {
                         Text("Завершить")
                     }

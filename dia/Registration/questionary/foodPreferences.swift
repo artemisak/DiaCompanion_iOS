@@ -81,283 +81,291 @@ struct foodPreferences: View {
     @State private var sausagesBefore: oneThree = oneThree.underOne
     @State private var sausagesAfter: oneThree = oneThree.oneToThree
     var body: some View {
-            Form {
-                Group {
-                    Text("Укажите частоту потребления продуктов") + Text(" ") + Text("в неделю").underline().bold()
-                }.font(.title2).listRowBackground(Spacer()).listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
-                Group {
-                    Section {
-                        Picker("До беременности", selection: $fruitsBefore) {
-                            ForEach(sixTwelve.allCases) {i in
-                                Text(LocalizedStringKey(i.rawValue)).tag(i)
-                            }
+        Form {
+            Group {
+                Text("Укажите частоту потребления продуктов") + Text(" ") + Text("в неделю").underline().bold()
+            }.font(.title2).listRowBackground(Spacer()).listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
+            Group {
+                Section {
+                    Picker("До беременности", selection: $fruitsBefore) {
+                        ForEach(sixTwelve.allCases) {i in
+                            Text(LocalizedStringKey(i.rawValue)).tag(i)
                         }
-                        Picker("Во время беременности", selection: $fruitsAfter) {
-                            ForEach(sixTwelve.allCases) {i in
-                                Text(LocalizedStringKey(i.rawValue)).tag(i)
-                            }
-                        }
-                    } header: {
-                        Text("Фрукты").font(.body)
                     }
-                    Section {
-                        Picker("До беременности", selection: $bisquitsBefore) {
-                            ForEach(twoFour.allCases) {i in
-                                Text(LocalizedStringKey(i.rawValue)).tag(i)
-                            }
+                    Picker("Во время беременности", selection: $fruitsAfter) {
+                        ForEach(sixTwelve.allCases) {i in
+                            Text(LocalizedStringKey(i.rawValue)).tag(i)
                         }
-                        Picker("Во время беременности", selection: $bisquitsAfter) {
-                            ForEach(twoFour.allCases) {i in
-                                Text(LocalizedStringKey(i.rawValue)).tag(i)
-                            }
-                        }
-                    } header: {
-                        Text("Пирожные").font(.body)
                     }
-                    Section {
-                        Picker("До беременности", selection: $bakingBefore) {
-                            ForEach(twoFour.allCases) {i in
-                                Text(LocalizedStringKey(i.rawValue)).tag(i)
-                            }
-                        }
-                        Picker("Во время беременности", selection: $bakingAfter) {
-                            ForEach(twoFour.allCases) {i in
-                                Text(LocalizedStringKey(i.rawValue)).tag(i)
-                            }
-                        }
-                    } header: {
-                        Text("Выпечка").font(.body)
-                    }
-                    
-                    Section {
-                        Picker("До беременности", selection: $chocolateBefore) {
-                            ForEach(twoFour.allCases) {i in
-                                Text(LocalizedStringKey(i.rawValue)).tag(i)
-                            }
-                        }
-                        Picker("Во время беременности", selection: $chocolateAfter) {
-                            ForEach(twoFour.allCases) {i in
-                                Text(LocalizedStringKey(i.rawValue)).tag(i)
-                            }
-                        }
-                    } header: {
-                        Text("Шоколад").font(.body)
-                    }
-                    Section {
-                        Picker("До беременности", selection: $milkBefore) {
-                            ForEach(threeSix.allCases) {i in
-                                Text(LocalizedStringKey(i.rawValue)).tag(i)
-                            }
-                        }
-                        Picker("Во время беременности", selection: $milkAfter) {
-                            ForEach(threeSix.allCases) {i in
-                                Text(LocalizedStringKey(i.rawValue)).tag(i)
-                            }
-                        }
-                    } header: {
-                        Text("Обезжиренные молочные продукты").font(.body)
-                    }
-                    Section {
-                        Picker("До беременности", selection: $milkBefore_alt) {
-                            ForEach(threeSix.allCases) {i in
-                                Text(LocalizedStringKey(i.rawValue)).tag(i)
-                            }
-                        }
-                        Picker("Во время беременности", selection: $milkAfter_alt) {
-                            ForEach(threeSix.allCases) {i in
-                                Text(LocalizedStringKey(i.rawValue)).tag(i)
-                            }
-                        }
-                    } header: {
-                        Text("Не обезжиренные молочные продукты").font(.body)
-                    }
-                    Section {
-                        Picker("До беременности", selection: $legumesBefore) {
-                            ForEach(oneTwo.allCases) {i in
-                                Text(LocalizedStringKey(i.rawValue)).tag(i)
-                            }
-                        }
-                        Picker("Во время беременности", selection: $legumesAfter) {
-                            ForEach(oneTwo.allCases) {i in
-                                Text(LocalizedStringKey(i.rawValue)).tag(i)
-                            }
-                        }
-                    } header: {
-                        Text("Бобовые").font(.body)
-                    }
-                    Section {
-                        Picker("До беременности", selection: $meatBefore) {
-                            ForEach(threeSix.allCases) {i in
-                                Text(LocalizedStringKey(i.rawValue)).tag(i)
-                            }
-                        }
-                        Picker("Во время беременности", selection: $meatAfter) {
-                            ForEach(threeSix.allCases) {i in
-                                Text(LocalizedStringKey(i.rawValue)).tag(i)
-                            }
-                        }
-                    } header: {
-                        Text("Мясо и мясные изделия").font(.body)
-                    }
-                    Section {
-                        Picker("До беременности", selection: $driedFruitsBefore) {
-                            ForEach(oneThree.allCases) {i in
-                                Text(LocalizedStringKey(i.rawValue)).tag(i)
-                            }
-                        }
-                        Picker("Во время беременности", selection: $driedFruitsAfter) {
-                            ForEach(oneThree.allCases) {i in
-                                Text(LocalizedStringKey(i.rawValue)).tag(i)
-                            }
-                        }
-                    } header: {
-                        Text("Сухофрукты").font(.body)
-                    }
-                    Section {
-                        Picker("До беременности", selection: $fishBefore) {
-                            ForEach(threeSix.allCases) {i in
-                                Text(LocalizedStringKey(i.rawValue)).tag(i)
-                            }
-                        }
-                        Picker("Во время беременности", selection: $fishAfter) {
-                            ForEach(threeSix.allCases) {i in
-                                Text(LocalizedStringKey(i.rawValue)).tag(i)
-                            }
-                        }
-                    } header: {
-                        Text("Рыба и рыбные изделия").font(.body)
-                    }
+                } header: {
+                    Text("Фрукты").font(.body)
                 }
-                Group {
-                    Section {
-                        Picker("До беременности", selection: $grainBreadBefore) {
-                            ForEach(oneThree.allCases) {i in
-                                Text(LocalizedStringKey(i.rawValue)).tag(i)
-                            }
+                Section {
+                    Picker("До беременности", selection: $bisquitsBefore) {
+                        ForEach(twoFour.allCases) {i in
+                            Text(LocalizedStringKey(i.rawValue)).tag(i)
                         }
-                        Picker("Во время беременности", selection: $grainBreadAfter) {
-                            ForEach(oneThree.allCases) {i in
-                                Text(LocalizedStringKey(i.rawValue)).tag(i)
-                            }
-                        }
-                    } header: {
-                        Text("Цельнозреновой хлеб").font(.body)
                     }
-                    Section {
-                        Picker("До беременности", selection: $anyBreadBefore) {
-                            ForEach(sixTwelve.allCases) {i in
-                                Text(LocalizedStringKey(i.rawValue)).tag(i)
-                            }
+                    Picker("Во время беременности", selection: $bisquitsAfter) {
+                        ForEach(twoFour.allCases) {i in
+                            Text(LocalizedStringKey(i.rawValue)).tag(i)
                         }
-                        Picker("Во время беременности", selection: $anyBreadAfter) {
-                            ForEach(sixTwelve.allCases) {i in
-                                Text(LocalizedStringKey(i.rawValue)).tag(i)
-                            }
-                        }
-                    } header: {
-                        Text("Любой хлеб").font(.body)
                     }
-                    Section {
-                        Picker("До беременности", selection: $sauceBefore) {
-                            ForEach(twoFour.allCases) {i in
-                                Text(LocalizedStringKey(i.rawValue)).tag(i)
-                            }
+                } header: {
+                    Text("Пирожные").font(.body)
+                }
+                Section {
+                    Picker("До беременности", selection: $bakingBefore) {
+                        ForEach(twoFour.allCases) {i in
+                            Text(LocalizedStringKey(i.rawValue)).tag(i)
                         }
-                        Picker("Во время беременности", selection: $sauceAfter) {
-                            ForEach(twoFour.allCases) {i in
-                                Text(LocalizedStringKey(i.rawValue)).tag(i)
-                            }
-                        }
-                    } header: {
-                        Text("Cоусы, майонез").font(.body)
                     }
-                    Section {
-                        Picker("До беременности", selection: $vegetableBefore) {
-                            ForEach(sixTwelve.allCases) {i in
-                                Text(LocalizedStringKey(i.rawValue)).tag(i)
-                            }
+                    Picker("Во время беременности", selection: $bakingAfter) {
+                        ForEach(twoFour.allCases) {i in
+                            Text(LocalizedStringKey(i.rawValue)).tag(i)
                         }
-                        Picker("Во время беременности", selection: $vegetableAfter) {
-                            ForEach(sixTwelve.allCases) {i in
-                                Text(LocalizedStringKey(i.rawValue)).tag(i)
-                            }
-                        }
-                    } header: {
-                        Text("Овощи, сырые или приготовленные").font(.body)
                     }
-                    Section {
-                        Picker("До беременности", selection: $alcoholBefore) {
-                            ForEach(oneThree.allCases) {i in
-                                Text(LocalizedStringKey(i.rawValue)).tag(i)
-                            }
+                } header: {
+                    Text("Выпечка").font(.body)
+                }
+                
+                Section {
+                    Picker("До беременности", selection: $chocolateBefore) {
+                        ForEach(twoFour.allCases) {i in
+                            Text(LocalizedStringKey(i.rawValue)).tag(i)
                         }
-                        Picker("Во время беременности", selection: $alcoholAfter) {
-                            ForEach(oneThree.allCases) {i in
-                                Text(LocalizedStringKey(i.rawValue)).tag(i)
-                            }
-                        }
-                    } header: {
-                        Text("Алкоголь").font(.body)
                     }
-                    Section {
-                        Picker("До беременности", selection: $sweetDrinksBefore) {
-                            ForEach(twoFour.allCases) {i in
-                                Text(LocalizedStringKey(i.rawValue)).tag(i)
-                            }
+                    Picker("Во время беременности", selection: $chocolateAfter) {
+                        ForEach(twoFour.allCases) {i in
+                            Text(LocalizedStringKey(i.rawValue)).tag(i)
                         }
-                        Picker("Во время беременности", selection: $sweetDrinksAfter) {
-                            ForEach(twoFour.allCases) {i in
-                                Text(LocalizedStringKey(i.rawValue)).tag(i)
-                            }
-                        }
-                    } header: {
-                        Text("Сладкие напитки").font(.body)
                     }
-                    Section {
-                        Picker("До беременности", selection: $coffeBefore) {
-                            ForEach(oneThree.allCases) {i in
-                                Text(LocalizedStringKey(i.rawValue)).tag(i)
-                            }
+                } header: {
+                    Text("Шоколад").font(.body)
+                }
+                Section {
+                    Picker("До беременности", selection: $milkBefore) {
+                        ForEach(threeSix.allCases) {i in
+                            Text(LocalizedStringKey(i.rawValue)).tag(i)
                         }
-                        Picker("Во время беременности", selection: $coffeAfter) {
-                            ForEach(oneThree.allCases) {i in
-                                Text(LocalizedStringKey(i.rawValue)).tag(i)
-                            }
-                        }
-                    } header: {
-                        Text("Кофе").font(.body)
                     }
-                    Section {
-                        Picker("До беременности", selection: $sausagesBefore) {
-                            ForEach(oneThree.allCases) {i in
-                                Text(LocalizedStringKey(i.rawValue)).tag(i)
-                            }
+                    Picker("Во время беременности", selection: $milkAfter) {
+                        ForEach(threeSix.allCases) {i in
+                            Text(LocalizedStringKey(i.rawValue)).tag(i)
                         }
-                        Picker("Во время беременности", selection: $sausagesAfter) {
-                            ForEach(oneThree.allCases) {i in
-                                Text(LocalizedStringKey(i.rawValue)).tag(i)
-                            }
+                    }
+                } header: {
+                    Text("Обезжиренные молочные продукты").font(.body)
+                }
+                Section {
+                    Picker("До беременности", selection: $milkBefore_alt) {
+                        ForEach(threeSix.allCases) {i in
+                            Text(LocalizedStringKey(i.rawValue)).tag(i)
                         }
-                    } header: {
-                        Text("Сосики, колбаса").font(.body)
+                    }
+                    Picker("Во время беременности", selection: $milkAfter_alt) {
+                        ForEach(threeSix.allCases) {i in
+                            Text(LocalizedStringKey(i.rawValue)).tag(i)
+                        }
+                    }
+                } header: {
+                    Text("Не обезжиренные молочные продукты").font(.body)
+                }
+                Section {
+                    Picker("До беременности", selection: $legumesBefore) {
+                        ForEach(oneTwo.allCases) {i in
+                            Text(LocalizedStringKey(i.rawValue)).tag(i)
+                        }
+                    }
+                    Picker("Во время беременности", selection: $legumesAfter) {
+                        ForEach(oneTwo.allCases) {i in
+                            Text(LocalizedStringKey(i.rawValue)).tag(i)
+                        }
+                    }
+                } header: {
+                    Text("Бобовые").font(.body)
+                }
+                Section {
+                    Picker("До беременности", selection: $meatBefore) {
+                        ForEach(threeSix.allCases) {i in
+                            Text(LocalizedStringKey(i.rawValue)).tag(i)
+                        }
+                    }
+                    Picker("Во время беременности", selection: $meatAfter) {
+                        ForEach(threeSix.allCases) {i in
+                            Text(LocalizedStringKey(i.rawValue)).tag(i)
+                        }
+                    }
+                } header: {
+                    Text("Мясо и мясные изделия").font(.body)
+                }
+                Section {
+                    Picker("До беременности", selection: $driedFruitsBefore) {
+                        ForEach(oneThree.allCases) {i in
+                            Text(LocalizedStringKey(i.rawValue)).tag(i)
+                        }
+                    }
+                    Picker("Во время беременности", selection: $driedFruitsAfter) {
+                        ForEach(oneThree.allCases) {i in
+                            Text(LocalizedStringKey(i.rawValue)).tag(i)
+                        }
+                    }
+                } header: {
+                    Text("Сухофрукты").font(.body)
+                }
+                Section {
+                    Picker("До беременности", selection: $fishBefore) {
+                        ForEach(threeSix.allCases) {i in
+                            Text(LocalizedStringKey(i.rawValue)).tag(i)
+                        }
+                    }
+                    Picker("Во время беременности", selection: $fishAfter) {
+                        ForEach(threeSix.allCases) {i in
+                            Text(LocalizedStringKey(i.rawValue)).tag(i)
+                        }
+                    }
+                } header: {
+                    Text("Рыба и рыбные изделия").font(.body)
+                }
+            }
+            Group {
+                Section {
+                    Picker("До беременности", selection: $grainBreadBefore) {
+                        ForEach(oneThree.allCases) {i in
+                            Text(LocalizedStringKey(i.rawValue)).tag(i)
+                        }
+                    }
+                    Picker("Во время беременности", selection: $grainBreadAfter) {
+                        ForEach(oneThree.allCases) {i in
+                            Text(LocalizedStringKey(i.rawValue)).tag(i)
+                        }
+                    }
+                } header: {
+                    Text("Цельнозреновой хлеб").font(.body)
+                }
+                Section {
+                    Picker("До беременности", selection: $anyBreadBefore) {
+                        ForEach(sixTwelve.allCases) {i in
+                            Text(LocalizedStringKey(i.rawValue)).tag(i)
+                        }
+                    }
+                    Picker("Во время беременности", selection: $anyBreadAfter) {
+                        ForEach(sixTwelve.allCases) {i in
+                            Text(LocalizedStringKey(i.rawValue)).tag(i)
+                        }
+                    }
+                } header: {
+                    Text("Любой хлеб").font(.body)
+                }
+                Section {
+                    Picker("До беременности", selection: $sauceBefore) {
+                        ForEach(twoFour.allCases) {i in
+                            Text(LocalizedStringKey(i.rawValue)).tag(i)
+                        }
+                    }
+                    Picker("Во время беременности", selection: $sauceAfter) {
+                        ForEach(twoFour.allCases) {i in
+                            Text(LocalizedStringKey(i.rawValue)).tag(i)
+                        }
+                    }
+                } header: {
+                    Text("Cоусы, майонез").font(.body)
+                }
+                Section {
+                    Picker("До беременности", selection: $vegetableBefore) {
+                        ForEach(sixTwelve.allCases) {i in
+                            Text(LocalizedStringKey(i.rawValue)).tag(i)
+                        }
+                    }
+                    Picker("Во время беременности", selection: $vegetableAfter) {
+                        ForEach(sixTwelve.allCases) {i in
+                            Text(LocalizedStringKey(i.rawValue)).tag(i)
+                        }
+                    }
+                } header: {
+                    Text("Овощи, сырые или приготовленные").font(.body)
+                }
+                Section {
+                    Picker("До беременности", selection: $alcoholBefore) {
+                        ForEach(oneThree.allCases) {i in
+                            Text(LocalizedStringKey(i.rawValue)).tag(i)
+                        }
+                    }
+                    Picker("Во время беременности", selection: $alcoholAfter) {
+                        ForEach(oneThree.allCases) {i in
+                            Text(LocalizedStringKey(i.rawValue)).tag(i)
+                        }
+                    }
+                } header: {
+                    Text("Алкоголь").font(.body)
+                }
+                Section {
+                    Picker("До беременности", selection: $sweetDrinksBefore) {
+                        ForEach(twoFour.allCases) {i in
+                            Text(LocalizedStringKey(i.rawValue)).tag(i)
+                        }
+                    }
+                    Picker("Во время беременности", selection: $sweetDrinksAfter) {
+                        ForEach(twoFour.allCases) {i in
+                            Text(LocalizedStringKey(i.rawValue)).tag(i)
+                        }
+                    }
+                } header: {
+                    Text("Сладкие напитки").font(.body)
+                }
+                Section {
+                    Picker("До беременности", selection: $coffeBefore) {
+                        ForEach(oneThree.allCases) {i in
+                            Text(LocalizedStringKey(i.rawValue)).tag(i)
+                        }
+                    }
+                    Picker("Во время беременности", selection: $coffeAfter) {
+                        ForEach(oneThree.allCases) {i in
+                            Text(LocalizedStringKey(i.rawValue)).tag(i)
+                        }
+                    }
+                } header: {
+                    Text("Кофе").font(.body)
+                }
+                Section {
+                    Picker("До беременности", selection: $sausagesBefore) {
+                        ForEach(oneThree.allCases) {i in
+                            Text(LocalizedStringKey(i.rawValue)).tag(i)
+                        }
+                    }
+                    Picker("Во время беременности", selection: $sausagesAfter) {
+                        ForEach(oneThree.allCases) {i in
+                            Text(LocalizedStringKey(i.rawValue)).tag(i)
+                        }
+                    }
+                } header: {
+                    Text("Сосики, колбаса").font(.body)
+                }
+            }
+        }
+        .navigationTitle("Предпочтения")
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                ZStack {
+                    NavigationLink(isActive: $nextField, destination: {activityPreferences()}, label: {EmptyView()}).buttonStyle(TransparentButton()).hidden()
+                    Button {
+                        Task {
+                            await questionaryManager.provider.saveFoodPrefrences(fruits_before: fruitsBefore.rawValue, fruits_after: fruitsAfter.rawValue, bisquits_before: bisquitsBefore.rawValue, bisquits_after: bisquitsAfter.rawValue, baking_before: bakingBefore.rawValue, baking_after: bakingAfter.rawValue, chocolate_before: chocolateBefore.rawValue, chocolate_after: chocolateAfter.rawValue, milk_before: milkBefore.rawValue, milk_after: milkAfter.rawValue, milk_before_alt: milkBefore_alt.rawValue, milk_after_alt: milkAfter_alt.rawValue, legumes_before: legumesBefore.rawValue, legumes_after: legumesAfter.rawValue, meat_before: meatBefore.rawValue, meat_after: meatAfter.rawValue, dried_fruits_before: driedFruitsBefore.rawValue, dried_fruits_after: driedFruitsAfter.rawValue, fish_before: fishBefore.rawValue, fish_after: fishAfter.rawValue, grain_bread_before: grainBreadBefore.rawValue, grain_bread_after: grainBreadAfter.rawValue, any_bread_before: anyBreadBefore.rawValue, any_bread_after: anyBreadAfter.rawValue, sauce_before: sauceBefore.rawValue, sauce_after: sauceAfter.rawValue, vegetable_before: vegetableBefore.rawValue, vegetable_after: vegetableAfter.rawValue, alcohol_before: alcoholBefore.rawValue, alcohol_after: alcoholAfter.rawValue, sweet_drinks_before: sweetDrinksBefore.rawValue, sweet_drinks_after: sweetDrinksAfter.rawValue, coffe_before: coffeBefore.rawValue, coffe_after: coffeAfter.rawValue, sausages_before: sausagesBefore.rawValue, sausages_after: sausagesAfter.rawValue)
+                            nextField = true
+                        }
+                    } label: {
+                        Text("Далее")
                     }
                 }
             }
-            .navigationTitle("Предпочтения")
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    ZStack {
-                        NavigationLink(isActive: $nextField, destination: {activityPreferences()}, label: {EmptyView()}).buttonStyle(TransparentButton()).hidden()
-                        Button {
-                            Task {
-                                await questionaryManager.provider.saveFoodPrefrences(fruits_before: fruitsBefore.rawValue, fruits_after: fruitsAfter.rawValue, bisquits_before: bisquitsBefore.rawValue, bisquits_after: bisquitsAfter.rawValue, baking_before: bakingBefore.rawValue, baking_after: bakingAfter.rawValue, chocolate_before: chocolateBefore.rawValue, chocolate_after: chocolateAfter.rawValue, milk_before: milkBefore.rawValue, milk_after: milkAfter.rawValue, milk_before_alt: milkBefore_alt.rawValue, milk_after_alt: milkAfter_alt.rawValue, legumes_before: legumesBefore.rawValue, legumes_after: legumesAfter.rawValue, meat_before: meatBefore.rawValue, meat_after: meatAfter.rawValue, dried_fruits_before: driedFruitsBefore.rawValue, dried_fruits_after: driedFruitsAfter.rawValue, fish_before: fishBefore.rawValue, fish_after: fishAfter.rawValue, grain_bread_before: grainBreadBefore.rawValue, grain_bread_after: grainBreadAfter.rawValue, any_bread_before: anyBreadBefore.rawValue, any_bread_after: anyBreadAfter.rawValue, sauce_before: sauceBefore.rawValue, sauce_after: sauceAfter.rawValue, vegetable_before: vegetableBefore.rawValue, vegetable_after: vegetableAfter.rawValue, alcohol_before: alcoholBefore.rawValue, alcohol_after: alcoholAfter.rawValue, sweet_drinks_before: sweetDrinksBefore.rawValue, sweet_drinks_after: sweetDrinksAfter.rawValue, coffe_before: coffeBefore.rawValue, coffe_after: coffeAfter.rawValue, sausages_before: sausagesBefore.rawValue, sausages_after: sausagesAfter.rawValue)
-                                nextField = true
-                            }
-                        } label: {
-                            Text("Далее")
-                        }
-                    }
-                }
-            }
+            ToolbarItemGroup(placement: .keyboard, content: {
+                Spacer()
+                Button(action: {
+                    UIApplication.shared.dismissedKeyboard()
+                }, label: {
+                    Text("Готово")
+                })
+            })
+        }
     }
 }

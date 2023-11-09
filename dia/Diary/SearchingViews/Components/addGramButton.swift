@@ -38,9 +38,9 @@ struct addGramButton: View {
                                 switch collection.whereToSave {
                                 case .addedFoodItems:
                                     if !editing {
-                                    collection.selectedItem!.gram = try convert(txt: gram)
-                                    collection.addedFoodItems.append(collection.selectedItem!)
-                                    isShowingSheet.toggle()
+                                        collection.selectedItem!.gram = try convert(txt: gram)
+                                        collection.addedFoodItems.append(collection.selectedItem!)
+                                        isShowingSheet.toggle()
                                         DispatchQueue.main.asyncAfter(deadline: .now()+0.3, execute: {
                                             withAnimation {
                                                 showSuccesNotify = true
@@ -52,9 +52,9 @@ struct addGramButton: View {
                                     }
                                 case .editingFoodItems:
                                     if !editing {
-                                    collection.selectedItem!.gram = try convert(txt: gram)
-                                    collection.editedFoodItems.append(collection.selectedItem!)
-                                    isShowingSheet.toggle()
+                                        collection.selectedItem!.gram = try convert(txt: gram)
+                                        collection.editedFoodItems.append(collection.selectedItem!)
+                                        isShowingSheet.toggle()
                                         DispatchQueue.main.asyncAfter(deadline: .now()+0.3, execute: {
                                             withAnimation {
                                                 showSuccesNotify = true
@@ -66,9 +66,9 @@ struct addGramButton: View {
                                     }
                                 case .recipeFoodItems:
                                     if !editing {
-                                    collection.selectedItem!.gram = try convert(txt: gram)
-                                    collection.recipeFoodItems.append(collection.selectedItem!)
-                                    isShowingSheet.toggle()
+                                        collection.selectedItem!.gram = try convert(txt: gram)
+                                        collection.recipeFoodItems.append(collection.selectedItem!)
+                                        isShowingSheet.toggle()
                                         DispatchQueue.main.asyncAfter(deadline: .now()+0.3, execute: {
                                             withAnimation {
                                                 showSuccesNotify = true
@@ -113,9 +113,9 @@ struct addGramButton: View {
                                 switch collection.whereToSave {
                                 case .addedFoodItems:
                                     if !editing {
-                                    collection.selectedItem!.gram = try convert(txt: gram)
-                                    collection.addedFoodItems.append(collection.selectedItem!)
-                                    isShowingSheet.toggle()
+                                        collection.selectedItem!.gram = try convert(txt: gram)
+                                        collection.addedFoodItems.append(collection.selectedItem!)
+                                        isShowingSheet.toggle()
                                         DispatchQueue.main.asyncAfter(deadline: .now()+0.3, execute: {
                                             withAnimation {
                                                 showSuccesNotify = true
@@ -127,9 +127,9 @@ struct addGramButton: View {
                                     }
                                 case .editingFoodItems:
                                     if !editing {
-                                    collection.selectedItem!.gram = try convert(txt: gram)
-                                    collection.editedFoodItems.append(collection.selectedItem!)
-                                    isShowingSheet.toggle()
+                                        collection.selectedItem!.gram = try convert(txt: gram)
+                                        collection.editedFoodItems.append(collection.selectedItem!)
+                                        isShowingSheet.toggle()
                                         DispatchQueue.main.asyncAfter(deadline: .now()+0.3, execute: {
                                             withAnimation {
                                                 showSuccesNotify = true
@@ -141,9 +141,9 @@ struct addGramButton: View {
                                     }
                                 case .recipeFoodItems:
                                     if !editing {
-                                    collection.selectedItem!.gram = try convert(txt: gram)
-                                    collection.recipeFoodItems.append(collection.selectedItem!)
-                                    isShowingSheet.toggle()
+                                        collection.selectedItem!.gram = try convert(txt: gram)
+                                        collection.recipeFoodItems.append(collection.selectedItem!)
+                                        isShowingSheet.toggle()
                                         DispatchQueue.main.asyncAfter(deadline: .now()+0.3, execute: {
                                             withAnimation {
                                                 showSuccesNotify = true

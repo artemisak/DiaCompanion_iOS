@@ -102,7 +102,7 @@ class diaryStatblock: ObservableObject {
         }
         return "\(versionName) \(id) \(fio) - Дневник наблюдения"
     }
-        
+    
     func getFoodRecords() -> [foodRow] {
         let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
         let path = documents + "/diacompanion.db"

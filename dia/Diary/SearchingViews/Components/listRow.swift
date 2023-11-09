@@ -19,57 +19,52 @@ struct listRow: View {
     var body: some View {
         HStack(alignment: .center, spacing: 0) {
             VStack(alignment: .leading, spacing: 8) {
-                HStack(spacing: 0) {
+                HStack(spacing: 3) {
                     VStack {
                         Image("prot")
                             .resizable()
                             .scaledToFit()
                             .frame(width: 25, height: 25)
                         Text(String(format: "%.1f", food_prot))
-                            .bold()
-                    }
-                    .frame(maxWidth: 57, alignment: .center)
+                            .bold().font(.callout)
+                    }.frame(maxWidth: 75, alignment: .center)
                     VStack {
                         Image("fat")
                             .resizable()
                             .scaledToFit()
                             .frame(width: 25, height: 25)
                         Text(String(format: "%.1f", food_fat))
-                            .bold()
-                    }
-                    .frame(maxWidth: 57, alignment: .center)
+                            .bold().font(.callout)
+                    }.frame(maxWidth: 75, alignment: .center)
                     VStack {
                         Image("carbo")
                             .resizable()
                             .scaledToFit()
                             .frame(width: 25, height: 25)
                         Text(String(format: "%.1f", food_carbo))
-                            .bold()
-                    }
-                    .frame(maxWidth: 57, alignment: .center)
+                            .bold().font(.callout)
+                    }.frame(maxWidth: 75, alignment: .center)
                     VStack {
                         Image("kkal")
                             .resizable()
                             .scaledToFit()
                             .frame(width: 25, height: 25)
                         Text(String(format: "%.1f", food_kkal))
-                            .bold()
-                    }
-                    .frame(maxWidth: 57, alignment: .center)
+                            .bold().font(.callout)
+                    }.frame(maxWidth: 75, alignment: .center)
                     VStack {
                         Image("gi")
                             .resizable()
                             .scaledToFit()
                             .frame(width: 25, height: 25)
                         Text(String(format: "%.1f", food_gi))
-                            .bold()
-                    }
-                    .frame(maxWidth: 57, alignment: .center)
+                            .bold().font(.callout)
+                    }.frame(maxWidth: 75, alignment: .center)
                 }
                 Text(food_name)
-                    .multilineTextAlignment(.leading)
-            }.padding(.horizontal)
-            Image(systemName: "pin").rotationEffect(.degrees(45)).foregroundColor(.blue).padding(.horizontal).opacity(index!.intToBool ? 1 : 0)
+                    .multilineTextAlignment(.leading).font(.body)
+            }
+            Image(systemName: "pin").padding(.horizontal).rotationEffect(.degrees(45)).foregroundColor(.blue).opacity(index!.intToBool ? 1 : 0)
         }.padding(.vertical, 8)
     }
 }

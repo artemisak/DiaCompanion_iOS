@@ -110,7 +110,7 @@ class diaryManager {
             print(error)
         }
     }
-        
+    
     func addNewFood(items: [foodItem], newReceitName: String, category: String, isEditing: Bool, idToDelete: Int?, imageURL: String?) {
         do {
             let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!

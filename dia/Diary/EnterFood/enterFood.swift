@@ -79,9 +79,9 @@ struct enterFood: View {
                     }
                 } footer: {
                     if isVisible {
-                        Text("Введенный УГК до приема пищи").frame(minWidth: .zero, maxWidth: .infinity).font(.caption)
+                        Text("Введенный УГК до приема пищи").frame(minWidth: .zero, maxWidth: .infinity).multilineTextAlignment(.center).font(.caption)
                     } else {
-                        Text("Введите значение для получения диетических рекомедаций").frame(minWidth: .zero, maxWidth: .infinity).font(.caption)
+                        Text("Введите значение для получения диетических рекомендаций").frame(minWidth: .zero, maxWidth: .infinity).multilineTextAlignment(.center).font(.caption)
                     }
                 }
             }

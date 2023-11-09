@@ -41,7 +41,7 @@ struct ketonur: View {
                     } catch {
                         isCorrect.toggle()
                     }
-
+                    
                 }) {
                     Text("Сохранить")
                 }

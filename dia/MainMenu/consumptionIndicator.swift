@@ -14,48 +14,42 @@ struct consumptionIndicator: View {
     @Binding var food_kkal: Double
     @Binding var nowDate: String
     var body: some View {
-        VStack(alignment: .center, spacing: 10) {
-            HStack {
+        VStack(alignment: .leading, spacing: 8) {
+            HStack(spacing: 3) {
                 VStack {
                     Image("prot")
                         .resizable()
                         .scaledToFit()
                         .frame(width: 25, height: 25)
                     Text(String(format: "%.1f", food_prot))
-                        .bold()
-                }
-                .frame(maxWidth: 75, alignment: .center)
+                        .bold().font(.callout)
+                }.frame(maxWidth: 75, alignment: .center)
                 VStack {
                     Image("fat")
                         .resizable()
                         .scaledToFit()
                         .frame(width: 25, height: 25)
                     Text(String(format: "%.1f", food_fat))
-                        .bold()
-                }
-                .frame(maxWidth: 75, alignment: .center)
+                        .bold().font(.callout)
+                }.frame(maxWidth: 75, alignment: .center)
                 VStack {
                     Image("carbo")
                         .resizable()
                         .scaledToFit()
                         .frame(width: 25, height: 25)
                     Text(String(format: "%.1f", food_carbo))
-                        .bold()
-                }
-                .frame(maxWidth: 75, alignment: .center)
+                        .bold().font(.callout)
+                }.frame(maxWidth: 75, alignment: .center)
                 VStack {
                     Image("kkal")
                         .resizable()
                         .scaledToFit()
                         .frame(width: 25, height: 25)
                     Text(String(format: "%.1f", food_kkal))
-                        .bold()
-                }
-                .frame(maxWidth: 75, alignment: .center)
+                        .bold().font(.callout)
+                }.frame(maxWidth: 75, alignment: .center)
             }
         }
-        .frame(maxWidth: .infinity)
-        .padding(.vertical, 5)
     }
 }
 

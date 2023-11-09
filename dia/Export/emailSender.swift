@@ -14,7 +14,7 @@ class emailSender: NSObject, MFMailComposeViewControllerDelegate {
     
     private override init() {
     }
-
+    
     func sendEmail(subject:String, body:String, to: [String], xlsxFile: Data) throws {
         guard MFMailComposeViewController.canSendMail() else {
             throw emailErorrs.mailApp
@@ -33,7 +33,7 @@ class emailSender: NSObject, MFMailComposeViewControllerDelegate {
         sender.addAttachmentData(xlsxFile, mimeType: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName: "Dial\(findPacientname()![0][0]+" "+findPacientname()![0][1]+" "+dateFormatter.string(from: date)).xlsx")
         UIApplication.shared.currentUIWindow()?.rootViewController?.present(sender, animated: true, completion: nil)
     }
-
+    
     func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
         controller.dismiss(animated: true, completion: nil)
     }

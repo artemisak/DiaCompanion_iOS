@@ -37,74 +37,74 @@ struct versionChoose: View {
                     Text("Рекомендательная система DiaCompanion Pro предназначена для прогнозирования постпрандиального гликемического ответа беременных женщин с гестационным сахарным диабетом на основе данных о питании и формирования рекомендаций для предотвращения гипергликемии.")
                 }
             }
-//            Section {
-//                Button {
-//                    routeManager.version = 2
-//                    withAnimation(.spring()) {
-//                        GDM = true
-//                    }
-//                    GDM_RCT = false
-//                    MS = false
-//                    PCOS = false
-//                } label: {
-//                    HStack {
-//                        Text("ГСД, инсулинотерапия").font(.body).bold()
-//                        Spacer()
-//                        Image(systemName: "chevron.down").rotationEffect(.degrees(GDM ? 0 : -90))
-//                    }
-//                }
-//                .listRowBackground(GDM ? Color("listHeader_alt") : Color("listHeaderDim_alt")).foregroundColor(.white)
-//                if GDM {
-//                    Text("Версия позволяет вести контроль за приемами пищи, физической активностью и уровнем глюкозы в крови. Предназначен для беременных пациенток, страдающих ГСД.")
-//                }
-//            }
-//            Section {
-//                Button {
-//                    routeManager.version = 3
-//                    withAnimation(.spring()) {
-//                        MS = true
-//                    }
-//                    GDM_RCT = false
-//                    GDM = false
-//                    PCOS = false
-//                } label: {
-//                    HStack {
-//                        Text("Дневник питания и самоконтроля").font(.body).bold()
-//                        Spacer()
-//                        Image(systemName: "chevron.down").rotationEffect(.degrees(MS ? 0 : -90))
-//                    }
-//                }
-//                .listRowBackground(MS ? Color("listHeader_alt") : Color("listHeaderDim_alt")).foregroundColor(.white)
-//                if MS {
-//                    Text("Версия позволяет вести контроль за приемами пищи, физической активностью и уровнем глюкозы в крови. Предназначен для пациентов, страдающих диабетом.")
-//                }
-//            }
-//            Section {
-//                Button {
-//                    routeManager.version = 4
-//                    withAnimation(.spring()) {
-//                        PCOS = true
-//                    }
-//                    GDM_RCT = false
-//                    GDM = false
-//                    MS = false
-//                } label: {
-//                    HStack {
-//                        Text("Дневник питания").font(.body).bold()
-//                        Spacer()
-//                        Image(systemName: "chevron.down").rotationEffect(.degrees(PCOS ? 0 : -90))
-//                    }
-//                }
-//                .listRowBackground(PCOS ? Color("listHeader_alt") : Color("listHeaderDim_alt")).foregroundColor(.white)
-//                if PCOS {
-//                    Text("Версия предоставляет функционал для ведения данных о приемах пищи и физической активности. Подходит для пациентов, не болеющих диабетом.")
-//                }
-//            } footer: {
-//                Text("Сделанный выбор можно изменить позже в настройках")
-//                    .font(.caption)
-//                    .frame(minWidth: 0, maxWidth: .infinity)
-//                    .multilineTextAlignment(.center)
-//            }
+            //            Section {
+            //                Button {
+            //                    routeManager.version = 2
+            //                    withAnimation(.spring()) {
+            //                        GDM = true
+            //                    }
+            //                    GDM_RCT = false
+            //                    MS = false
+            //                    PCOS = false
+            //                } label: {
+            //                    HStack {
+            //                        Text("ГСД, инсулинотерапия").font(.body).bold()
+            //                        Spacer()
+            //                        Image(systemName: "chevron.down").rotationEffect(.degrees(GDM ? 0 : -90))
+            //                    }
+            //                }
+            //                .listRowBackground(GDM ? Color("listHeader_alt") : Color("listHeaderDim_alt")).foregroundColor(.white)
+            //                if GDM {
+            //                    Text("Версия позволяет вести контроль за приемами пищи, физической активностью и уровнем глюкозы в крови. Предназначен для беременных пациенток, страдающих ГСД.")
+            //                }
+            //            }
+            //            Section {
+            //                Button {
+            //                    routeManager.version = 3
+            //                    withAnimation(.spring()) {
+            //                        MS = true
+            //                    }
+            //                    GDM_RCT = false
+            //                    GDM = false
+            //                    PCOS = false
+            //                } label: {
+            //                    HStack {
+            //                        Text("Дневник питания и самоконтроля").font(.body).bold()
+            //                        Spacer()
+            //                        Image(systemName: "chevron.down").rotationEffect(.degrees(MS ? 0 : -90))
+            //                    }
+            //                }
+            //                .listRowBackground(MS ? Color("listHeader_alt") : Color("listHeaderDim_alt")).foregroundColor(.white)
+            //                if MS {
+            //                    Text("Версия позволяет вести контроль за приемами пищи, физической активностью и уровнем глюкозы в крови. Предназначен для пациентов, страдающих диабетом.")
+            //                }
+            //            }
+            //            Section {
+            //                Button {
+            //                    routeManager.version = 4
+            //                    withAnimation(.spring()) {
+            //                        PCOS = true
+            //                    }
+            //                    GDM_RCT = false
+            //                    GDM = false
+            //                    MS = false
+            //                } label: {
+            //                    HStack {
+            //                        Text("Дневник питания").font(.body).bold()
+            //                        Spacer()
+            //                        Image(systemName: "chevron.down").rotationEffect(.degrees(PCOS ? 0 : -90))
+            //                    }
+            //                }
+            //                .listRowBackground(PCOS ? Color("listHeader_alt") : Color("listHeaderDim_alt")).foregroundColor(.white)
+            //                if PCOS {
+            //                    Text("Версия предоставляет функционал для ведения данных о приемах пищи и физической активности. Подходит для пациентов, не болеющих диабетом.")
+            //                }
+            //            } footer: {
+            //                Text("Сделанный выбор можно изменить позже в настройках")
+            //                    .font(.caption)
+            //                    .frame(minWidth: 0, maxWidth: .infinity)
+            //                    .multilineTextAlignment(.center)
+            //            }
         }
         .ignoresSafeArea(.keyboard)
         .navigationBarTitleDisplayMode(.large)

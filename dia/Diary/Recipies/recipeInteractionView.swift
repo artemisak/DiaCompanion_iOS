@@ -335,13 +335,13 @@ struct recipeInteractionView: View {
     }
     func getTitle() -> String {
         switch viewStatement {
-            case .view:
-                return "\(foodNotation)"
-            case .edit:
-                return "Изменить рецепт"
-            case .add:
-                return "Создать рецепт"
-            }
+        case .view:
+            return "\(foodNotation)"
+        case .edit:
+            return "Изменить рецепт"
+        case .add:
+            return "Создать рецепт"
+        }
     }
 }
 

@@ -92,16 +92,16 @@ class patientManager {
     static let provider = patientManager()
     
     func savePatientCart(name: String, birthDay: Date, doc: String, start_day: Date, week: Int, day: Int, id: Int, height: Double, weight: Double) async {
-           Task {
-                addName(pName: name)
-                addBirthDate(pDate: birthDay)
-                addDoc(pDoc: doc)
-                addWeekDay(pWeek: week, pDay: day)
-                addStartDate(pStartDate: start_day)
-                addID(pID: id)
-                addWeight(pWeight: weight)
-                addHeight(pHeight: height)
-            }
+        Task {
+            addName(pName: name)
+            addBirthDate(pDate: birthDay)
+            addDoc(pDoc: doc)
+            addWeekDay(pWeek: week, pDay: day)
+            addStartDate(pStartDate: start_day)
+            addID(pID: id)
+            addWeight(pWeight: weight)
+            addHeight(pHeight: height)
+        }
     }
     
     func addName(pName: String){

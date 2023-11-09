@@ -31,24 +31,24 @@ class Router: ObservableObject {
     }
     
     func authorization(login: String, password: String, complition: @escaping (Bool) -> Void) async {
-
+        
         var request = URLRequest(url: URL(string: "https://diacompanion.ru/login")!)
         request.httpMethod = "POST"
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
-
+        
         let parameters = [
             "username": login,
             "password": password
         ]
-
+        
         let postData = parameters.map { (key, value) in
             return "\(key)=\(value)"
         }.joined(separator: "&")
-
+        
         let postDataEncoded = postData.data(using: .utf8)
-
+        
         request.httpBody = postDataEncoded
-
+        
         let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
             if let error = error {
                 print(error)
@@ -113,7 +113,7 @@ class Router: ObservableObject {
         }
         
         task.resume()
-
+        
     }
     
     @MainActor

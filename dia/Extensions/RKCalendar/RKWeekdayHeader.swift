@@ -11,7 +11,7 @@ import SwiftUI
 struct RKWeekdayHeader : View {
     
     var rkManager: RKManager
-     
+    
     var body: some View {
         HStack(alignment: .center) {
             ForEach(self.getWeekdayHeaders(calendar: self.rkManager.calendar), id: \.self) { weekday in

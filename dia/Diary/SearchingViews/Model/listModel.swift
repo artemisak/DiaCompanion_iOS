@@ -95,7 +95,7 @@ struct foodItem: Identifiable, Hashable {
             }
             return self.carbo*self.gram!/100
         } set {
-
+            
         }
     }
     var gl: Double {
@@ -105,7 +105,7 @@ struct foodItem: Identifiable, Hashable {
             }
             return self.carbo*(self.gram!/100)*self.gi/100
         } set {
-
+            
         }
     }
 }
@@ -122,7 +122,7 @@ class foodCollections: ObservableObject {
     @Published var listOfPinnedFood = [foodItem]()
     @Published var listOfFoodInGroups = [foodItem]()
     @Published var listOfPinnedFoodInGroups = [foodItem]()
-
+    
     @Published var selectedItem: foodItem?
     @Published var whereToSave: varToSave = .addedFoodItems
     @Published var addedFoodItems = [foodItem]()
@@ -140,7 +140,7 @@ class foodCollections: ObservableObject {
     private var _resultsOfSearch = [foodItem]()
     private var _position: Int = 0
     private var _lastVisibleIndex: Int = 0
-        
+    
     func resetConfigurationValues() {
         textToSearch = ""
         groupToSearch = ""
@@ -195,7 +195,7 @@ class foodCollections: ObservableObject {
         
         listOfGroups = temp
     }
- 
+    
     func fillList() async -> ([foodItem],[foodItem]) {
         _lastVisibleIndex = 0
         _position = 0
@@ -308,10 +308,10 @@ class foodCollections: ObservableObject {
         db = nil
         
         _resultsOfSearch = temp
-
+        
         let tempSlice0 = temp.filter({$0.index == 0})
         let tempSlice1 = temp.filter({$0.index == 1})
-
+        
         return (tempSlice0,tempSlice1)
     }
     
@@ -512,5 +512,5 @@ class foodCollections: ObservableObject {
         }
         db = nil
     }
-        
+    
 }

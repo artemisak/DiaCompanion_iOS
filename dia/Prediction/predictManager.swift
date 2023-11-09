@@ -86,7 +86,7 @@ class predictManager {
             let triglycerides = Expression<Double?>("triglycerides")
             let fasting_glu = Expression<Double?>("glucose")
             let week = Expression<Double?>("preg_week")
-
+            
             var nutr = [[Double]]()
             try zip(foodN,gram).forEach {
                 for i in try db.prepare(foodT.where(name == $0).select(gi,carbo,mds,kr,ca,fe)) {
@@ -116,7 +116,7 @@ class predictManager {
             for i in try db.prepare(diary.filter((date > tempd.addingTimeInterval(-60*60*6)) & (date < tempd)).select(food, g)){
                 foodb6h.append([i[food], i[g]])
             }
-
+            
             var foodb12h = [[String]]()
             for i in try db.prepare(diary.filter((date > tempd.addingTimeInterval(-60*60*12)) & (date < tempd)).select(food, g)){
                 foodb12h.append([i[food], i[g]])
@@ -165,7 +165,7 @@ class predictManager {
             let BMI = weight/pow(height/100, 2.0)
             let calendar = Calendar.current
             let age = Double(calendar.dateComponents([.year], from: birth, to: Date.now).year!)
-
+            
             var hem: Double = 0.0
             var chol: Double = 0.0
             var trigl: Double = 0.0

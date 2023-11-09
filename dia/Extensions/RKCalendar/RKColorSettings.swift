@@ -10,7 +10,7 @@ import Combine
 import SwiftUI
 
 class RKColorSettings : ObservableObject {
-
+    
     // foreground colors
     @Published var textColor: Color = Color.primary
     @Published var todayColor: Color = Color.white
@@ -29,5 +29,5 @@ class RKColorSettings : ObservableObject {
     // headers background colors
     @Published var weekdayHeaderBackColor: Color = Color.clear
     @Published var monthBackColor: Color = Color.clear
-
+    
 }

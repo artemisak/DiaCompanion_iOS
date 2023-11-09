@@ -10,6 +10,6 @@ import SwiftUI
 struct bage: View {
     var txt: String
     var body: some View {
-        Text(LocalizedStringKey(txt)).padding(.vertical, 8).padding(.horizontal, 12).background(content: {RoundedRectangle(cornerRadius: 8).fill(Color("Sep"))})
+        Text(LocalizedStringKey(txt)).frame(minWidth: 50).padding(.vertical, 8).padding(.horizontal, 12).background(content: {RoundedRectangle(cornerRadius: 8).fill(Color("Sep"))})
     }
 }

@@ -67,7 +67,7 @@ class dayConsumptionModel : ObservableObject {
         let path = documents + "/diacompanion.db"
         let sourcePath = Bundle.main.path(forResource: "diacompanion", ofType: "db")!
         _=copyDatabaseIfNeeded(sourcePath: sourcePath)
-
+        
         var db: OpaquePointer?
         guard sqlite3_open(path, &db) == SQLITE_OK else {
             print("Error opening database")
@@ -75,16 +75,16 @@ class dayConsumptionModel : ObservableObject {
             db = nil
             return nil
         }
-
+        
         var statement: OpaquePointer?
         
         let sql = "SELECT sum(prot*g/100), sum(fat*g/100), sum(carbo*g/100), sum(ec*g/100) FROM food INNER JOIN (SELECT id_food, g FROM diary WHERE date = '\(date)') as tb1 ON food._id = tb1.id_food"
-
+        
         if sqlite3_prepare_v2(db, sql, -1, &statement, nil) != SQLITE_OK {
             let errmsg = String(cString: sqlite3_errmsg(db)!)
             print("Error preparing select: \(errmsg)")
         }
-
+        
         var prt = 0.0
         var ft = 0.0
         var crb = 0.0
@@ -104,13 +104,13 @@ class dayConsumptionModel : ObservableObject {
                 kkl = sqlite3_column_double(statement, 3)
             }
         }
-
+        
         if sqlite3_finalize(statement) != SQLITE_OK {
             let errmsg = String(cString: sqlite3_errmsg(db)!)
             print("Error finalizing prepared statement: \(errmsg)")
         }
         statement = nil
-
+        
         if sqlite3_close(db) != SQLITE_OK {
             print("Error closing database")
         }

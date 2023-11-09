@@ -37,66 +37,74 @@ struct activityPreferences: View {
     @State private var selectedSportBefore: sport = sport.between2to3
     @State private var selectedSportAfter: sport = sport.under2
     var body: some View {
-            Form {
-                Section {
-                    Picker("До беременности", selection: $selectedWalkBefore) {
-                        ForEach(walking.allCases) {i in
-                            Text(LocalizedStringKey(i.rawValue)).tag(i)
-                        }
+        Form {
+            Section {
+                Picker("До беременности", selection: $selectedWalkBefore) {
+                    ForEach(walking.allCases) {i in
+                        Text(LocalizedStringKey(i.rawValue)).tag(i)
                     }
-                    Picker("Во время беременности", selection: $selectedWalkAfter) {
-                        ForEach(walking.allCases) {i in
-                            Text(LocalizedStringKey(i.rawValue)).tag(i)
-                        }
-                    }
-                } header: {
-                    Text("Легкая ходьба, в день").font(.body)
                 }
-                Section {
-                    Picker("До беременности", selection: $selectedStepBefore) {
-                        ForEach(stepping.allCases) {i in
-                            Text(LocalizedStringKey(i.rawValue)).tag(i)
-                        }
+                Picker("Во время беременности", selection: $selectedWalkAfter) {
+                    ForEach(walking.allCases) {i in
+                        Text(LocalizedStringKey(i.rawValue)).tag(i)
                     }
-                    Picker("Во время беременности", selection: $selectedStepAfter) {
-                        ForEach(stepping.allCases) {i in
-                            Text(LocalizedStringKey(i.rawValue)).tag(i)
-                        }
-                    }
-                } header: {
-                    Text("Степпинг, в день").font(.body)
                 }
-                Section {
-                    Picker("До беременности", selection: $selectedSportBefore) {
-                        ForEach(sport.allCases) {i in
-                            Text(LocalizedStringKey(i.rawValue)).tag(i)
-                        }
+            } header: {
+                Text("Легкая ходьба, в день").font(.body)
+            }
+            Section {
+                Picker("До беременности", selection: $selectedStepBefore) {
+                    ForEach(stepping.allCases) {i in
+                        Text(LocalizedStringKey(i.rawValue)).tag(i)
                     }
-                    Picker("Во время беременности", selection: $selectedSportAfter) {
-                        ForEach(sport.allCases) {i in
-                            Text(LocalizedStringKey(i.rawValue)).tag(i)
-                        }
+                }
+                Picker("Во время беременности", selection: $selectedStepAfter) {
+                    ForEach(stepping.allCases) {i in
+                        Text(LocalizedStringKey(i.rawValue)).tag(i)
                     }
-                } header: {
-                    Text("Спорт, в неделю").font(.body)
+                }
+            } header: {
+                Text("Степпинг, в день").font(.body)
+            }
+            Section {
+                Picker("До беременности", selection: $selectedSportBefore) {
+                    ForEach(sport.allCases) {i in
+                        Text(LocalizedStringKey(i.rawValue)).tag(i)
+                    }
+                }
+                Picker("Во время беременности", selection: $selectedSportAfter) {
+                    ForEach(sport.allCases) {i in
+                        Text(LocalizedStringKey(i.rawValue)).tag(i)
+                    }
+                }
+            } header: {
+                Text("Спорт, в неделю").font(.body)
+            }
+        }
+        .navigationTitle("Нагрузка")
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                ZStack {
+                    NavigationLink(isActive: $nextField, destination: {patientCart()}, label: {EmptyView()}).buttonStyle(TransparentButton()).hidden()
+                    Button {
+                        Task {
+                            await questionaryManager.provider.saveActivityPrefrences(walkBefore: selectedWalkBefore.rawValue, walkAfter: selectedWalkAfter.rawValue, stepBefore: selectedStepBefore.rawValue, stepAfter: selectedStepAfter.rawValue, sportBefore: selectedSportBefore.rawValue, sportAfter: selectedSportAfter.rawValue)
+                            nextField = true
+                        }
+                    } label: {
+                        Text("Далее")
+                    }
+                    
                 }
             }
-            .navigationTitle("Нагрузка")
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    ZStack {
-                        NavigationLink(isActive: $nextField, destination: {patientCart()}, label: {EmptyView()}).buttonStyle(TransparentButton()).hidden()
-                        Button {
-                            Task {
-                                await questionaryManager.provider.saveActivityPrefrences(walkBefore: selectedWalkBefore.rawValue, walkAfter: selectedWalkAfter.rawValue, stepBefore: selectedStepBefore.rawValue, stepAfter: selectedStepAfter.rawValue, sportBefore: selectedSportBefore.rawValue, sportAfter: selectedSportAfter.rawValue)
-                                nextField = true
-                            }
-                        } label: {
-                            Text("Далее")
-                        }
-
-                    }
-                }
-            }
+            ToolbarItemGroup(placement: .keyboard, content: {
+                Spacer()
+                Button(action: {
+                    UIApplication.shared.dismissedKeyboard()
+                }, label: {
+                    Text("Готово")
+                })
+            })
+        }
     }
 }

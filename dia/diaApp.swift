@@ -20,7 +20,7 @@ struct diaApp: App {
                         UIScrollView.appearance().keyboardDismissMode = .onDrag
                         UITableView.appearance().showsVerticalScrollIndicator = false
                     }
-                    
+                
             }
         }
     }
