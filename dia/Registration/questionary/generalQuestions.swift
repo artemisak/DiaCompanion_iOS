@@ -116,108 +116,154 @@ struct generalQuestions: View {
     }()
     var body: some View {
             Form {
-                Section {
-                    Picker("Беременность по счету", selection: $selectedPregNum) {
-                        ForEach(pregNum.allCases) {i in
-                            Text(LocalizedStringKey(i.rawValue)).tag(i)
+                Group {
+                    Section {
+                        Picker("Беременность по счету", selection: $selectedPregNum) {
+                            ForEach(pregNum.allCases) {i in
+                                Text(LocalizedStringKey(i.rawValue)).tag(i)
+                            }
                         }
-                    }
-                    Picker("Количество родов", selection: $selectedBirthCount) {
-                        ForEach(birthCount.allCases) {i in
-                            Text(LocalizedStringKey(i.rawValue)).tag(i)
+                        Picker("Количество родов", selection: $selectedBirthCount) {
+                            ForEach(birthCount.allCases) {i in
+                                Text(LocalizedStringKey(i.rawValue)).tag(i)
+                            }
                         }
-                    }
-                    Picker("Применение комбинированных оральных контрацептивов", selection: $selectedOralContr) {
-                        ForEach(oralContr.allCases) {i in
-                            Text(LocalizedStringKey(i.rawValue)).tag(i)
+                        Picker("Применение комбинированных оральных контрацептивов", selection: $selectedOralContr) {
+                            ForEach(oralContr.allCases) {i in
+                                Text(LocalizedStringKey(i.rawValue)).tag(i)
+                            }
                         }
+                    } header: {
+                        Text("Беременность").font(.body)
                     }
-                } header: {
-                    Text("Беременность").font(.body)
-                }
-                Section {
-                    Picker("Брали ли у вас пролактин", selection: $selectedProlactin) {
-                        ForEach(prolactin.allCases) { i in
-                            Text(LocalizedStringKey(i.rawValue)).tag(i)
-                        }
-                    }
-                    if selectedProlactin == prolactin.yes {
-                        Picker("Было зафиксировано повышение", selection: $selectedHeightenedProlactin) {
+                    Section {
+                        Picker("Брали ли у вас пролактин", selection: $selectedProlactin) {
                             ForEach(prolactin.allCases) { i in
                                 Text(LocalizedStringKey(i.rawValue)).tag(i)
                             }
                         }
-                        Picker("Назначен препарат", selection: $selectedDrags) {
-                            ForEach(drags.allCases) { i in
+                        if selectedProlactin == prolactin.yes {
+                            Picker("Было зафиксировано повышение", selection: $selectedHeightenedProlactin) {
+                                ForEach(prolactin.allCases) { i in
+                                    Text(LocalizedStringKey(i.rawValue)).tag(i)
+                                }
+                            }
+                            Picker("Назначен препарат", selection: $selectedDrags) {
+                                ForEach(drags.allCases) { i in
+                                    Text(LocalizedStringKey(i.rawValue)).tag(i)
+                                }
+                            }
+                            if selectedDrags == drags.other {
+                                TextField("Перечислите препараты", text: $otherDrags)
+                            }
+                        }
+                    } header: {
+                        Text("Пролактин").font(.body)
+                    }
+                    Section {
+                        Picker("Прием вит. D до беременности", selection: $selectedVitaminD) {
+                            ForEach(vitamin_d.allCases) { i in
                                 Text(LocalizedStringKey(i.rawValue)).tag(i)
                             }
                         }
-                        if selectedDrags == drags.other {
-                            TextField("Перечислите препараты", text: $otherDrags)
+                        if selectedVitaminD == vitamin_d.yes {
+                            TextField("Перечислите препараты", text: $vitaminDragsBefore)
                         }
+                        Picker("Прием вит. D во время беременности", selection: $selectedVitaminDosage) {
+                            ForEach(vitamin_d_dosage.allCases) {i in
+                                Text(LocalizedStringKey(i.rawValue)).tag(i)
+                            }
+                        }
+                        if selectedVitaminDosage != vitamin_d_dosage.no {
+                            TextField("Перечислите препараты", text: $vitaminDragsAfter)
+                        }
+                        Picker("Отпуск в жарких странах", selection: $selectedWeekendAtSouth) {
+                            ForEach(weekendAtSouth.allCases) { i in
+                                Text(LocalizedStringKey(i.rawValue)).tag(i)
+                            }
+                        }
+                        if selectedWeekendAtSouth == weekendAtSouth.yes {
+                            Picker("Первый триместр", selection: $selectedFirstTrimester){
+                                ForEach(weekendAtSouth.allCases) { i in
+                                    Text(LocalizedStringKey(i.rawValue)).tag(i)
+                                }
+                            }
+                            Picker("Второй триместр", selection: $selectedSecondTrimester){
+                                ForEach(weekendAtSouth.allCases) { i in
+                                    Text(LocalizedStringKey(i.rawValue)).tag(i)
+                                }
+                            }
+                            Picker("Третий триместр", selection: $selectedThirdTrimester){
+                                ForEach(weekendAtSouth.allCases) { i in
+                                    Text(LocalizedStringKey(i.rawValue)).tag(i)
+                                }
+                            }
+                        }
+                        Picker("Солярий", selection: $selectedSolarium){
+                            ForEach(solarium.allCases) { i in
+                                Text(LocalizedStringKey(i.rawValue)).tag(i)
+                            }
+                        }
+                    } header: {
+                        Text("Витамин D").font(.body)
                     }
-                } header: {
-                    Text("Пролактин").font(.body)
+                }
+                Group {
+                    Section {
+                        HStack {
+                            TextField("", value: $hemoglobin, formatter: formatter)
+                                .keyboardType(.decimalPad)
+                                .labelsHidden()
+                            Spacer()
+                            bage(txt: " % ")
+                        }
+                    } header: {
+                        Text("Уровень гликированного гемоглобина").font(.body)
+                    }
+                    Section {
+                        HStack {
+                            TextField("", value: $triglic, formatter: formatter)
+                                .keyboardType(.decimalPad)
+                                .labelsHidden()
+                            Spacer()
+                            bage(txt: "ммоль/л")
+                        }
+                    } header: {
+                        Text("Уровень триглицеридов").font(.body)
+                    }
+                    Section {
+                        HStack {
+                            TextField("", value: $hl, formatter: formatter)
+                                .keyboardType(.decimalPad)
+                                .labelsHidden()
+                            Spacer()
+                            bage(txt: "ммоль/л")
+                        }
+                    } header: {
+                        Text("Уровень холестерина").font(.body)
+                    }
+                    Section {
+                        HStack {
+                            TextField("", value: $fbg, formatter: formatter)
+                                .keyboardType(.decimalPad)
+                                .labelsHidden()
+                            Spacer()
+                            bage(txt: "ммоль/л")
+                        }
+                    } header: {
+                        Text("Уровень глюкозы натощак").font(.body)
+                    }
                 }
                 Section {
-                    Picker("Прием вит. D до беременности", selection: $selectedVitaminD) {
-                        ForEach(vitamin_d.allCases) { i in
-                            Text(LocalizedStringKey(i.rawValue)).tag(i)
-                        }
-                    }
-                    if selectedVitaminD == vitamin_d.yes {
-                        TextField("Перечислите препараты", text: $vitaminDragsBefore)
-                    }
-                    Picker("Прием вит. D во время беременности", selection: $selectedVitaminDosage) {
-                        ForEach(vitamin_d_dosage.allCases) {i in
-                            Text(LocalizedStringKey(i.rawValue)).tag(i)
-                        }
-                    }
-                    if selectedVitaminDosage != vitamin_d_dosage.no {
-                        TextField("Перечислите препараты", text: $vitaminDragsAfter)
-                    }
-                    Picker("Отпуск в жарких странах", selection: $selectedWeekendAtSouth) {
-                        ForEach(weekendAtSouth.allCases) { i in
-                            Text(LocalizedStringKey(i.rawValue)).tag(i)
-                        }
-                    }
-                    if selectedWeekendAtSouth == weekendAtSouth.yes {
-                        Picker("Первый триместр", selection: $selectedFirstTrimester){
-                            ForEach(weekendAtSouth.allCases) { i in
-                                Text(LocalizedStringKey(i.rawValue)).tag(i)
-                            }
-                        }
-                        Picker("Второй триместр", selection: $selectedSecondTrimester){
-                            ForEach(weekendAtSouth.allCases) { i in
-                                Text(LocalizedStringKey(i.rawValue)).tag(i)
-                            }
-                        }
-                        Picker("Третий триместр", selection: $selectedThirdTrimester){
-                            ForEach(weekendAtSouth.allCases) { i in
-                                Text(LocalizedStringKey(i.rawValue)).tag(i)
-                            }
-                        }
-                    }
-                    Picker("Солярий", selection: $selectedSolarium){
-                        ForEach(solarium.allCases) { i in
-                            Text(LocalizedStringKey(i.rawValue)).tag(i)
-                        }
+                    HStack {
+                        TextField("", value: $preg_week, formatter: formatter)
+                            .keyboardType(.decimalPad)
+                            .labelsHidden()
+                        Spacer()
+                        bage(txt: "Неделя")
                     }
                 } header: {
-                    Text("Витамин D").font(.body)
-                }
-                Section {
-                    TextField("Уровень гликированного гемоглобина", value: $hemoglobin, formatter: formatter)
-                        .keyboardType(.decimalPad)
-                    TextField("Уровень триглицеридов", value: $triglic, formatter: formatter)
-                        .keyboardType(.decimalPad)
-                    TextField("Уровень холестерина", value: $hl, formatter: formatter)
-                        .keyboardType(.decimalPad)
-                    TextField("Уровень глюкозы натощак", value: $fbg, formatter: formatter)
-                        .keyboardType(.decimalPad)
-                    TextField("Срок на момент сдачи анализов", value: $preg_week, formatter: formatter).keyboardType(.decimalPad)
-                } header: {
-                    Text("Другие анализы").font(.body)
+                    Text("Срок на момент сдачи анализов").font(.body)
                 }
             }
             .animation(.spring(), value: selectedProlactin)

@@ -56,7 +56,7 @@ class patientViewModel: ObservableObject {
             
             var patient_id = 1
             var patient_name = ""
-            var patient_birthday = Date()
+            var patient_birthday = Date().addingTimeInterval(-60*60*24*365*25)
             let formatter = DateFormatter()
             formatter.dateFormat = "dd.MM.yyyy"
             var patient_start_date = Date()
@@ -64,7 +64,7 @@ class patientViewModel: ObservableObject {
             var patient_day = 3
             var patient_weight = 0.0
             var patient_height = 0.0
-            var patient_doc = "Попова П.В."
+            var patient_doc = "Без врача"
             for i in try db.prepare(users.select(id, name, birthday, week, day, weight, height, doctor, start_date)) {
                 if i[id] != nil && i[name] != nil && i[birthday] != nil && i[week] != nil  && i[day] != nil  && i[weight] != nil  && i[height] != nil && i[doctor] != nil && i[start_date] != nil {
                     patient_id = i[id]!
@@ -82,7 +82,7 @@ class patientViewModel: ObservableObject {
             
         } catch {
             print(error)
-            self.woman = Person(fio: "Без указания", birthday: Date().addingTimeInterval(-60*60*24*365*23), selectedDoc: .Anopova, start_date: Date(), week_of_start: 22, day_of_start: 3,  patientID: 1, weight: 60.0, height: 175.0)
+            self.woman = Person(fio: "Без указания", birthday: Date().addingTimeInterval(-60*60*24*365*23), selectedDoc: .without, start_date: Date(), week_of_start: 22, day_of_start: 3,  patientID: 1, weight: 60.0, height: 175.0)
         }
     }
 }

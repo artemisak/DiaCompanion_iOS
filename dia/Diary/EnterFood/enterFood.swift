@@ -80,6 +80,8 @@ struct enterFood: View {
                 } footer: {
                     if isVisible {
                         Text("Введенный УГК до приема пищи").frame(minWidth: .zero, maxWidth: .infinity).font(.caption)
+                    } else {
+                        Text("Введите значение для получения диетических рекомедаций").frame(minWidth: .zero, maxWidth: .infinity).font(.caption)
                     }
                 }
             }

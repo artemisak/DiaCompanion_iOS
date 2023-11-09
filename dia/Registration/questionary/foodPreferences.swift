@@ -82,7 +82,9 @@ struct foodPreferences: View {
     @State private var sausagesAfter: oneThree = oneThree.oneToThree
     var body: some View {
             Form {
-                Text("Укажите частоту потребления продуктов в неделю").font(.title2).listRowBackground(Spacer()).listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
+                Group {
+                    Text("Укажите частоту потребления продуктов") + Text(" ") + Text("в неделю").underline().bold()
+                }.font(.title2).listRowBackground(Spacer()).listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
                 Group {
                     Section {
                         Picker("До беременности", selection: $fruitsBefore) {

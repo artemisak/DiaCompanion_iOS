@@ -14,49 +14,61 @@ struct patientCart: View {
     var body: some View {
         if (routeManager.isLoggedIn && routeManager.isChoosed) {
             Form {
-                Section {
-                    HStack {
-                        Text("ФИО").font(Font.body)
-                        TextField(text: $viewModel.woman.fio) {EmptyView()}.multilineTextAlignment(.trailing).padding(.trailing)
+                Group {
+                    Section {
+                        TextField("Полное имя", text: $viewModel.woman.fio)
+                        DatePicker("Дата рождения", selection: $viewModel.woman.birthday, displayedComponents: [.date]).font(Font.body)
+                    } header: {
+                        Text("Общая информация").font(.body)
                     }
-                    HStack {
-                        Text("Вес, кг.").font(Font.body)
-                        TextField(value: $viewModel.woman.weight, formatter: formatter) {EmptyView()}.multilineTextAlignment(.trailing).padding(.trailing)
-                    }
-                    HStack {
-                        Text("Рост, см.").font(Font.body)
-                        TextField(value: $viewModel.woman.height, formatter: formatter) {EmptyView()}.multilineTextAlignment(.trailing).padding(.trailing)
-                    }
-                    DatePicker("Дата рождения", selection: $viewModel.woman.birthday, displayedComponents: [.date]).font(Font.body)
-                    HStack {
-                        Text("ID пациента").font(Font.body)
-                        TextField(value: $viewModel.woman.patientID, formatter: formatter) {EmptyView()}.multilineTextAlignment(.trailing).padding(.trailing)
-                    }
-                } header: {
-                    Text("Общая информация").font(.body)
-                }.disabled(edit)
-                Section {
-                    Picker("Врач", selection: $viewModel.woman.selectedDoc) {
-                        ForEach(doc.allCases) { i in
-                            Text(i.rawValue).tag(i)
+                    Section {
+                        HStack {
+                            TextField("", value: $viewModel.woman.weight, formatter: formatter).labelsHidden()
+                            Spacer()
+                            bage(txt: "кг.")
                         }
-                    }.pickerStyle(.menu).font(Font.body).padding(.trailing)
-                    DatePicker("На мониторинге с", selection: $viewModel.woman.start_date, displayedComponents: [.date])
-                    if (routeManager.version == 1) || (routeManager.version == 2) {
-                        Picker("Неделя беременности", selection: $viewModel.woman.week_of_start){
-                            ForEach(1...40, id: \.self) { week in
-                                Text("\(week)")
+                    } header: {
+                        Text("Вес до беременности").font(.body)
+                    }
+                    Section {
+                        HStack {
+                            TextField("", value: $viewModel.woman.height, formatter: formatter).labelsHidden()
+                            Spacer()
+                            bage(txt: "см.")
+                        }
+                    } header: {
+                        Text("Рост").font(.body)
+                    }
+                    Section {
+                        TextField("", value: $viewModel.woman.patientID, formatter: formatter).labelsHidden()
+                    } header: {
+                        Text("ID пациента").font(.body)
+                    }
+                }.disabled(edit)
+                Group {
+                    Section {
+                        Picker("Врач", selection: $viewModel.woman.selectedDoc) {
+                            ForEach(doc.allCases) { i in
+                                Text(LocalizedStringKey(i.rawValue)).tag(i)
+                            }
+                        }.pickerStyle(.menu).font(Font.body).padding(.trailing)
+                        DatePicker("На мониторинге с", selection: $viewModel.woman.start_date, displayedComponents: [.date])
+                        if (routeManager.version == 1) || (routeManager.version == 2) {
+                            Picker("Неделя беременности на дату начала мониторинга", selection: $viewModel.woman.week_of_start){
+                                ForEach(1...40, id: \.self) { week in
+                                    Text("\(week)")
+                                }
+                            }
+                            Picker("День недели беременности", selection: $viewModel.woman.day_of_start){
+                                ForEach(1...7, id: \.self) { day in
+                                    Text("\(day)")
+                                }
                             }
                         }
-                        Picker("День недели беременности", selection: $viewModel.woman.day_of_start){
-                            ForEach(1...7, id: \.self) { day in
-                                Text("\(day)")
-                            }
-                        }
-                    }
-                } header: {
-                    Text("Мониторинг").font(.body)
-                }.disabled(edit)
+                    } header: {
+                        Text("Мониторинг").font(.body)
+                    }.disabled(edit)
+                }
             }
             .navigationTitle("О пациенте")
             .toolbar {
@@ -75,48 +87,60 @@ struct patientCart: View {
             }
         } else {
             Form {
-                Section {
-                    HStack {
-                        Text("ФИО").font(Font.body)
-                        TextField(text: $viewModel.woman.fio) {EmptyView()}.multilineTextAlignment(.trailing).padding(.trailing)
+                Group {
+                    Section {
+                        TextField("Полное имя", text: $viewModel.woman.fio)
+                        DatePicker("Дата рождения", selection: $viewModel.woman.birthday, displayedComponents: [.date]).font(Font.body)
+                    } header: {
+                        Text("Общая информация").font(.body)
                     }
-                    HStack {
-                        Text("Вес, кг.").font(Font.body)
-                        TextField(value: $viewModel.woman.weight, formatter: formatter) {EmptyView()}.multilineTextAlignment(.trailing).padding(.trailing)
+                    Section {
+                        HStack {
+                            TextField("", value: $viewModel.woman.weight, formatter: formatter).labelsHidden()
+                            Spacer()
+                            bage(txt: "кг.")
+                        }
+                    } header: {
+                        Text("Вес до беременности").font(.body)
                     }
-                    HStack {
-                        Text("Рост, см.").font(Font.body)
-                        TextField(value: $viewModel.woman.height, formatter: formatter) {EmptyView()}.multilineTextAlignment(.trailing).padding(.trailing)
+                    Section {
+                        HStack {
+                            TextField("", value: $viewModel.woman.height, formatter: formatter).labelsHidden()
+                            Spacer()
+                            bage(txt: "см.")
+                        }
+                    } header: {
+                        Text("Рост").font(.body)
                     }
-                    DatePicker("Дата рождения", selection: $viewModel.woman.birthday, displayedComponents: [.date]).font(Font.body)
-                    HStack {
-                        Text("ID пациента").font(Font.body)
-                        TextField(value: $viewModel.woman.patientID, formatter: formatter) {EmptyView()}.multilineTextAlignment(.trailing).padding(.trailing)
+                    Section {
+                        TextField("", value: $viewModel.woman.patientID, formatter: formatter).labelsHidden()
+                    } header: {
+                        Text("ID пациента").font(.body)
                     }
-                } header: {
-                    Text("О пациенте").font(.body)
                 }
-                Section {
-                    Picker("Врач", selection: $viewModel.woman.selectedDoc) {
-                        ForEach(doc.allCases) { i in
-                            Text(i.rawValue).tag(i)
-                        }
-                    }.pickerStyle(.menu).font(Font.body).padding(.trailing)
-                    DatePicker("На мониторинге с", selection: $viewModel.woman.start_date, displayedComponents: [.date])
-                    if (routeManager.version == 1) || (routeManager.version == 2) {
-                        Picker("Неделя беременности", selection: $viewModel.woman.week_of_start) {
-                            ForEach(1...40, id: \.self) { week in
-                                Text("\(week)")
+                Group {
+                    Section {
+                        Picker("Врач", selection: $viewModel.woman.selectedDoc) {
+                            ForEach(doc.allCases) { i in
+                                Text(LocalizedStringKey(i.rawValue)).tag(i)
+                            }
+                        }.pickerStyle(.menu).font(Font.body).padding(.trailing)
+                        DatePicker("На мониторинге с", selection: $viewModel.woman.start_date, displayedComponents: [.date])
+                        if (routeManager.version == 1) || (routeManager.version == 2) {
+                            Picker("Неделя беременности на дату начала мониторинга", selection: $viewModel.woman.week_of_start){
+                                ForEach(1...40, id: \.self) { week in
+                                    Text("\(week)")
+                                }
+                            }
+                            Picker("День недели беременности", selection: $viewModel.woman.day_of_start){
+                                ForEach(1...7, id: \.self) { day in
+                                    Text("\(day)")
+                                }
                             }
                         }
-                        Picker("День недели беременности", selection: $viewModel.woman.day_of_start){
-                            ForEach(1...7, id: \.self) { day in
-                                Text("\(day)")
-                            }
-                        }
+                    } header: {
+                        Text("Мониторинг").font(.body)
                     }
-                } header: {
-                    Text("Мониторинг").font(.body)
                 }
             }
             .navigationTitle("О пациенте")

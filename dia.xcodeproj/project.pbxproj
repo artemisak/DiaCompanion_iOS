@@ -52,6 +52,7 @@
 		A79A5CB7298A9215007D5170 /* PDFView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79A5CB6298A9215007D5170 /* PDFView.swift */; };
 		A7A238022A84F7A200C1E015 /* questionaryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A238012A84F7A200C1E015 /* questionaryManager.swift */; };
 		A7A826F52AD2BAD600E35D53 /* hyperglycemiaPredictor.mlpackage in Sources */ = {isa = PBXBuildFile; fileRef = A7A826F42AD2BAD600E35D53 /* hyperglycemiaPredictor.mlpackage */; };
+		A7A93F9A2AFCF196002E0CF7 /* bage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A93F992AFCF196002E0CF7 /* bage.swift */; };
 		A7AF947C29D9F0B400745719 /* libxlsxwriter in Frameworks */ = {isa = PBXBuildFile; productRef = A7AF947B29D9F0B400745719 /* libxlsxwriter */; };
 		A7AF947F29D9F16D00745719 /* SQLite in Frameworks */ = {isa = PBXBuildFile; productRef = A7AF947E29D9F16D00745719 /* SQLite */; };
 		A7BD994727CA46FC0090D9D7 /* helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7BD994627CA46FC0090D9D7 /* helper.swift */; };
@@ -136,6 +137,7 @@
 		A79A5CB6298A9215007D5170 /* PDFView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFView.swift; sourceTree = "<group>"; };
 		A7A238012A84F7A200C1E015 /* questionaryManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = questionaryManager.swift; sourceTree = "<group>"; };
 		A7A826F42AD2BAD600E35D53 /* hyperglycemiaPredictor.mlpackage */ = {isa = PBXFileReference; lastKnownFileType = folder.mlpackage; path = hyperglycemiaPredictor.mlpackage; sourceTree = "<group>"; };
+		A7A93F992AFCF196002E0CF7 /* bage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bage.swift; sourceTree = "<group>"; };
 		A7BD994627CA46FC0090D9D7 /* helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = helper.swift; sourceTree = "<group>"; };
 		A7C997862983B68200A38F2D /* dayConsumptionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dayConsumptionModel.swift; sourceTree = "<group>"; };
 		A7CD3AED2ABDA1BE00FAFEBF /* foodList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = foodList.swift; sourceTree = "<group>"; };
@@ -365,6 +367,7 @@
 			children = (
 				A78E381D2813F0680096E2E2 /* extensions.swift */,
 				A7D097692809FE16000A12E1 /* buttonStyles.swift */,
+				A7A93F992AFCF196002E0CF7 /* bage.swift */,
 				A77793642987D18C00DB0737 /* utilities.swift */,
 				A7DF49DE291A8539007A9371 /* RKCalendar */,
 			);
@@ -571,6 +574,7 @@
 				A75CECF32AF409ED006D6289 /* sugarMessage.swift in Sources */,
 				ACCC5C2E2702190B0057CA7C /* patientManager.swift in Sources */,
 				A73A1F092A813A07007F4299 /* foodPreferences.swift in Sources */,
+				A7A93F9A2AFCF196002E0CF7 /* bage.swift in Sources */,
 				A73A1F0B2A813A07007F4299 /* lifeStyle.swift in Sources */,
 				A7D0976A2809FE16000A12E1 /* buttonStyles.swift in Sources */,
 				A77B7ED72973EFEA00CFEBD5 /* listRow.swift in Sources */,
