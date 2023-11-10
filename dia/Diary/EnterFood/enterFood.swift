@@ -278,7 +278,7 @@ struct enterFood: View {
                 inaccuracy = (model_input.BMI == 0.0 || model_input.HbA1C_V1 == 0.0 || model_input.TG_V1 == 0.0 || model_input.Hol_V1 == 0.0 || model_input.fasting_glu == 0.0 || model_input.pregnancy_week == 0.0)
                 res = try predictManager.provider.getPredict(meal_type_n: model_input.meal_type_n, gi: model_input.gi, gl: model_input.gl, carbo: model_input.carbo, carbo_b6h: model_input.carbo_b6h, prot_b6h: model_input.prot_b6h, fat_b6h: model_input.fat_b6h, BG: model_input.BG, BMI: model_input.BMI, HbA1C_V1: model_input.HbA1C_V1, TG_V1: model_input.TG_V1, Hol_V1: model_input.Hol_V1, fasting_glu: model_input.fasting_glu, pregnancy_week: model_input.pregnancy_week)
                 let checkCarbo = checkCarbo(foodType: ftpreviewIndex.rawValue, listOfFood: workList, date: date)
-                let msg = getMessage(BGPredicted: res, BGBefore: try convert(txt: sugar), moderateAmountOfCarbo: checkCarbo.0, tooManyCarbo: checkCarbo.1, twiceAsMach: checkCarbo.2, unequalGLDistribution: checkUnequalGlDistribution(listOfFood: workList), highGI: checkGI(listOfFood: workList))
+                let msg = getMessage(BGPredicted: res, BGBefore: try convert(txt: sugar), carboAbove15: checkCarbo.0, moderateAmountOfCarbo: checkCarbo.1, tooManyCarbo: checkCarbo.2, twiceAsMach: checkCarbo.3, unequalGLDistribution: checkUnequalGlDistribution(listOfFood: workList), highGI: checkGI(listOfFood: workList))
                 recomendationCards = msg.0
                 res = msg.2
                 recCardID = recomendationCards.isEmpty ? UUID() : recomendationCards[0].id
