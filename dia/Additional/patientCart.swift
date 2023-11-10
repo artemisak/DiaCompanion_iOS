@@ -232,7 +232,7 @@ struct patientCart: View {
                 ToolbarItem(placement: .navigationBarTrailing, content: {
                     Button {
                         Task {
-                            await patientManager.provider.savePatientCart(name: viewModel.woman.fio, birthDay: viewModel.woman.birthday, doc: viewModel.woman.selectedDoc.rawValue, start_day: viewModel.woman.start_date, week: viewModel.woman.week_of_start, day: viewModel.woman.day_of_start, id: viewModel.woman.patientID, height: viewModel.woman.height, weight: viewModel.woman.weight, hb: 0.0, tg: 0.0, hl: 0.0, glu: 0.0, pgw: 0.0)
+                            await patientManager.provider.savePatientCart(name: viewModel.woman.fio, birthDay: viewModel.woman.birthday, doc: viewModel.woman.selectedDoc.rawValue, start_day: viewModel.woman.start_date, week: viewModel.woman.week_of_start, day: viewModel.woman.day_of_start, id: viewModel.woman.patientID, height: viewModel.woman.height, weight: viewModel.woman.weight, hb: viewModel.woman.hemoglobin, tg: viewModel.woman.triglic, hl: viewModel.woman.hl, glu: viewModel.woman.fbg, pgw: viewModel.woman.preg_week)
                             await routeManager.setChoosed()
                         }
                         routeManager.animateTransition = true

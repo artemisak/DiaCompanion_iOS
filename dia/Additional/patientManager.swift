@@ -78,16 +78,32 @@ class patientViewModel: ObservableObject {
             var patient_height = 0.0
             var patient_doc = "Без врача"
             for i in try db.prepare(users.select(id, name, birthday, week, day, weight, height, doctor, start_date)) {
-                if i[id] != nil && i[name] != nil && i[birthday] != nil && i[week] != nil  && i[day] != nil  && i[weight] != nil  && i[height] != nil && i[doctor] != nil && i[start_date] != nil {
+                if i[id] != nil {
                     patient_id = i[id]!
+                }
+                if i[name] != nil {
                     patient_name = i[name]!
+                }
+                if i[birthday] != nil {
                     patient_birthday = formatter.date(from: i[birthday]!)!
-                    patient_start_date = formatter.date(from: i[start_date]!)!
+                }
+                if i[week] != nil {
                     patient_week = i[week]!
+                }
+                if i[day] != nil {
                     patient_day = i[day]!
+                }
+                if i[weight] != nil {
                     patient_weight = i[weight]!
+                }
+                if i[height] != nil {
                     patient_height = i[height]!
+                }
+                if i[doctor] != nil {
                     patient_doc = i[doctor]!
+                }
+                if i[start_date] != nil {
+                    patient_start_date = formatter.date(from: i[start_date]!)!
                 }
             }
             
@@ -97,11 +113,19 @@ class patientViewModel: ObservableObject {
             var patient_gl = 0.0
             var patient_wk = 0.0
             for i in try db.prepare(questionary.select(hb, tg, hl, gl, wk)) {
-                if i[hb] != nil && i[tg] != nil && i[hl] != nil && i[gl] != nil && i[wk] != nil {
+                if i[hb] != nil {
                     patient_hb = i[hb]!
+                }
+                if i[tg] != nil {
                     patient_tg = i[tg]!
+                }
+                if i[hl] != nil {
                     patient_hl = i[hl]!
+                }
+                if i[gl] != nil {
                     patient_gl = i[gl]!
+                }
+                if i[wk] != nil {
                     patient_wk = i[wk]!
                 }
             }
