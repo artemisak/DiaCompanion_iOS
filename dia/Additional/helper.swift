@@ -17,6 +17,12 @@ struct helper: View {
                 Text("Исследовательская лаборатория").font(.body)
                 
             }
+            Section {
+                Text("При возникновении проблем в работе приложения обращайтесь по электронной почте regmed@almazovcentre.ru.")
+            } header: {
+                Text("По вопросам работы приложения").font(.body)
+            }
+            
         }
         .navigationTitle("Контакты")
     }

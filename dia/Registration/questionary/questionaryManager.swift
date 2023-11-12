@@ -12,7 +12,7 @@ class questionaryManager {
     
     static let provider = questionaryManager()
     
-    func saveGeneralQuestion(pregnancy_n: String, delivery_n: String, contraceptive: String, prolactin_test: String, heightened_prolactin: String, prolactin_drug_prescribed: String, prolactin_drug: String, vitamin_d_before: String, vitamin_d_before_drug: String, vitamin_d_after: String, vitamin_d_after_drug: String, weekendAtSouth: String, weekendAtSouth_firstTrimester: String, weekendAtSouth_secondTrimester: String, weekendAtSouth_thirdTrimester: String, solarium: String, HbA1C: String, triglycerides: String, cholesterol: String, glucose: String, preg_week: String) async {
+    func saveGeneralQuestion(pregnancy_n: String, delivery_n: String, contraceptive: String, prolactin_test: String, heightened_prolactin: String, prolactin_drug_prescribed: String, prolactin_drug: String, vitamin_d_before: String, vitamin_d_before_drug: String, vitamin_d_after: String, vitamin_d_after_drug: String, weekendAtSouth: String, weekendAtSouth_firstTrimester: String, weekendAtSouth_secondTrimester: String, weekendAtSouth_thirdTrimester: String, solarium: String, HbA1C: Double?, triglycerides: Double?, cholesterol: Double?, glucose: Double?, preg_week: Double?) async {
         do {
             let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
             let path = documents + "/diacompanion.db"
@@ -36,17 +36,17 @@ class questionaryManager {
             let fweekendAtSouth_secondTrimester = Expression<String>("weekendAtSouth_secondTrimester")
             let fweekendAtSouth_thirdTrimester = Expression<String>("weekendAtSouth_thirdTrimester")
             let fsolarium = Expression<String>("solarium")
-            let fHbA1C = Expression<Double>("HbA1C")
-            let ftriglycerides = Expression<Double>("triglycerides")
-            let fcholesterol = Expression<Double>("cholesterol")
-            let fglucose = Expression<Double>("glucose")
-            let fweek = Expression<Double>("preg_week")
+            let fHbA1C = Expression<Double?>("HbA1C")
+            let ftriglycerides = Expression<Double?>("triglycerides")
+            let fcholesterol = Expression<Double?>("cholesterol")
+            let fglucose = Expression<Double?>("glucose")
+            let fweek = Expression<Double?>("preg_week")
             let all = Array(try db.prepare(questionaryT))
             if all.count != 0 {
-                let update = questionaryT.update(fpregnancy_n <- pregnancy_n, fdelivery_n <- delivery_n, fcontraceptive <- contraceptive, fprolactin_test <- prolactin_test, fheightened_prolactin <- heightened_prolactin, fprolactin_drug_prescribed <- prolactin_drug_prescribed, fprolactin_drug <- prolactin_drug, fvitamin_d_before <- vitamin_d_before, fvitamin_d_before_drug <- vitamin_d_before_drug, fvitamin_d_after <- vitamin_d_after, fvitamin_d_after_drug <- vitamin_d_after_drug, fweekendAtSouth <- weekendAtSouth, fweekendAtSouth_firstTrimester <- weekendAtSouth_firstTrimester, fweekendAtSouth_secondTrimester <- weekendAtSouth_secondTrimester, fweekendAtSouth_thirdTrimester <- weekendAtSouth_thirdTrimester, fsolarium <- solarium , fHbA1C <- Double(HbA1C) ?? 0.0, ftriglycerides <- Double(triglycerides) ?? 0.0, fcholesterol <- Double(cholesterol) ?? 0.0, fglucose <- Double(glucose) ?? 0.0, fweek <- Double(preg_week) ?? 0.0)
+                let update = questionaryT.update(fpregnancy_n <- pregnancy_n, fdelivery_n <- delivery_n, fcontraceptive <- contraceptive, fprolactin_test <- prolactin_test, fheightened_prolactin <- heightened_prolactin, fprolactin_drug_prescribed <- prolactin_drug_prescribed, fprolactin_drug <- prolactin_drug, fvitamin_d_before <- vitamin_d_before, fvitamin_d_before_drug <- vitamin_d_before_drug, fvitamin_d_after <- vitamin_d_after, fvitamin_d_after_drug <- vitamin_d_after_drug, fweekendAtSouth <- weekendAtSouth, fweekendAtSouth_firstTrimester <- weekendAtSouth_firstTrimester, fweekendAtSouth_secondTrimester <- weekendAtSouth_secondTrimester, fweekendAtSouth_thirdTrimester <- weekendAtSouth_thirdTrimester, fsolarium <- solarium , fHbA1C <- HbA1C, ftriglycerides <- triglycerides, fcholesterol <- cholesterol, fglucose <- glucose, fweek <- preg_week)
                 try db.run(update)
             } else {
-                let insert = questionaryT.insert(fpregnancy_n <- pregnancy_n, fdelivery_n <- delivery_n, fcontraceptive <- contraceptive, fprolactin_test <- prolactin_test, fheightened_prolactin <- heightened_prolactin, fprolactin_drug_prescribed <- prolactin_drug_prescribed, fprolactin_drug <- prolactin_drug, fvitamin_d_before <- vitamin_d_before, fvitamin_d_before_drug <- vitamin_d_before_drug, fvitamin_d_after <- vitamin_d_after, fvitamin_d_after_drug <- vitamin_d_after_drug, fweekendAtSouth <- weekendAtSouth, fweekendAtSouth_firstTrimester <- weekendAtSouth_firstTrimester, fweekendAtSouth_secondTrimester <- weekendAtSouth_secondTrimester, fweekendAtSouth_thirdTrimester <- weekendAtSouth_thirdTrimester, fsolarium <- solarium , fHbA1C <- Double(HbA1C) ?? 0.0, ftriglycerides <- Double(triglycerides) ?? 0.0, fcholesterol <- Double(cholesterol) ?? 0.0, fglucose <- Double(glucose) ?? 0.0, fweek <- Double(preg_week) ?? 0.0)
+                let insert = questionaryT.insert(fpregnancy_n <- pregnancy_n, fdelivery_n <- delivery_n, fcontraceptive <- contraceptive, fprolactin_test <- prolactin_test, fheightened_prolactin <- heightened_prolactin, fprolactin_drug_prescribed <- prolactin_drug_prescribed, fprolactin_drug <- prolactin_drug, fvitamin_d_before <- vitamin_d_before, fvitamin_d_before_drug <- vitamin_d_before_drug, fvitamin_d_after <- vitamin_d_after, fvitamin_d_after_drug <- vitamin_d_after_drug, fweekendAtSouth <- weekendAtSouth, fweekendAtSouth_firstTrimester <- weekendAtSouth_firstTrimester, fweekendAtSouth_secondTrimester <- weekendAtSouth_secondTrimester, fweekendAtSouth_thirdTrimester <- weekendAtSouth_thirdTrimester, fsolarium <- solarium , fHbA1C <- HbA1C, ftriglycerides <- triglycerides, fcholesterol <- cholesterol, fglucose <- glucose, fweek <- preg_week)
                 try db.run(insert)
             }
         } catch {

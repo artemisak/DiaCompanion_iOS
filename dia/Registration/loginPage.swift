@@ -69,7 +69,7 @@ struct loginPage: View {
                             isValid = authorized
                             Task {
                                 if isValid {
-                                    await routeManager.setLogged()
+                                    routeManager.setLogged()
                                     DispatchQueue.main.async {
                                         isLoading = false
                                         nextField = true

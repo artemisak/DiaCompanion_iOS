@@ -159,8 +159,8 @@ class predictManager {
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "dd.MM.yyyy"
             for i in try db.prepare(userT.select(w, h, birthday)){
-                weight = i[w]!
-                height = i[h]!
+                weight = i[w] ?? 0.0
+                height = i[h] ?? 0.0
                 birth = dateFormatter.date(from: i[birthday]!)!
             }
             if weight != 0.0 && height != 0.0 {

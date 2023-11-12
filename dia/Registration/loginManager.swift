@@ -116,45 +116,39 @@ class Router: ObservableObject {
         
     }
     
-    @MainActor
-    func setLogged() async {
-        Task {
-            do {
-                let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
-                let path = documents + "/diacompanion.db"
-                let sourcePath = Bundle.main.path(forResource: "diacompanion", ofType: "db")!
-                _=copyDatabaseIfNeeded(sourcePath: sourcePath)
-                let db = try Connection(path)
-                let tb = Table("usermac")
-                let log = Expression<Int>("loggedin")
-                try db.run(tb.update(log <- 1))
-                self.isLoggedIn = true
-            }
-            catch {
-                print(error)
-            }
+    func setLogged() {
+        do {
+            let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
+            let path = documents + "/diacompanion.db"
+            let sourcePath = Bundle.main.path(forResource: "diacompanion", ofType: "db")!
+            _=copyDatabaseIfNeeded(sourcePath: sourcePath)
+            let db = try Connection(path)
+            let tb = Table("usermac")
+            let log = Expression<Int>("loggedin")
+            try db.run(tb.update(log <- 1))
+            self.isLoggedIn = true
+        }
+        catch {
+            print(error)
         }
     }
     
-    @MainActor
-    func setChoosed() async {
-        Task {
-            do {
-                let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
-                let path = documents + "/diacompanion.db"
-                let sourcePath = Bundle.main.path(forResource: "diacompanion", ofType: "db")!
-                _=copyDatabaseIfNeeded(sourcePath: sourcePath)
-                let db = try Connection(path)
-                let tb = Table("usermac")
-                let choosed = Expression<Int>("versionChoosed")
-                let version = Expression<Int>("version")
-                try db.run(tb.update(choosed <- 1))
-                try db.run(tb.update(version <- self.version))
-                self.isChoosed = true
-            }
-            catch {
-                print(error)
-            }
+    func setChoosed(){
+        do {
+            let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
+            let path = documents + "/diacompanion.db"
+            let sourcePath = Bundle.main.path(forResource: "diacompanion", ofType: "db")!
+            _=copyDatabaseIfNeeded(sourcePath: sourcePath)
+            let db = try Connection(path)
+            let tb = Table("usermac")
+            let choosed = Expression<Int>("versionChoosed")
+            let version = Expression<Int>("version")
+            try db.run(tb.update(choosed <- 1))
+            try db.run(tb.update(version <- self.version))
+            self.isChoosed = true
+        }
+        catch {
+            print(error)
         }
     }
 }

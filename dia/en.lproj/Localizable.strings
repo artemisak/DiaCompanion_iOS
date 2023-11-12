@@ -244,7 +244,7 @@
 "Хлебобулочные изделия" = "Bakery products";
 "Холодные блюда" = "Cold dishes";
 "Ягоды, варенье" = "Berries, jam";
-"ДиаКомпаньон" = "DiaCompanion";
+"ДиаКомпаньон Про" = "DiaCompanion Pro";
 "Главная" = "Home";
 "Рецепты" = "Recipes";
 "Настройки" = "Settings";
@@ -381,3 +381,5 @@
 "Рекомендуется исключить из рациона или уменьшить количество продуктов с высоким гликемическим индексом (более 55)." = "It is recommended to eliminate or reduce foods with a glycemic index (GI) greater than 55.";
 "Уменьшите количество продуктов, содержащих углеводы." = "Reduce the amount of foods containing carbohydrates.";
 "Вероятно, уровень глюкозы после еды будет высоким, рекомендована прогулка после приема пищи." = "Glucose levels are likely to be high after a meal, a post-meal walk is recommended.";
+"При возникновении проблем в работе приложения обращайтесь по электронной почте regmed@almazovcentre.ru." = "If you have any problems with the application, please contact regmed@almazovcentre.ru.";
+"По вопросам работы приложения" = "For questions about the application";

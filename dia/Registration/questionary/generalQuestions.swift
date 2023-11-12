@@ -102,18 +102,11 @@ struct generalQuestions: View {
     @State private var selectedSecondTrimester: weekendAtSouth = weekendAtSouth.no
     @State private var selectedThirdTrimester: weekendAtSouth = weekendAtSouth.no
     @State private var selectedSolarium: solarium = solarium.no
-    @State private var hemoglobin = 0.0
-    @State private var triglic = 0.0
-    @State private var hl = 0.0
-    @State private var fbg = 0.0
-    @State private var preg_week = 0.0
-    let formatter: NumberFormatter = {
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .decimal
-        formatter.maximumFractionDigits = 2
-        formatter.zeroSymbol = ""
-        return formatter
-    }()
+    @State private var hemoglobin: Double? = nil
+    @State private var triglic: Double? = nil
+    @State private var hl: Double? = nil
+    @State private var fbg: Double? = nil
+    @State private var preg_week: Double? = nil
     var body: some View {
         Form {
             Group {
@@ -211,7 +204,7 @@ struct generalQuestions: View {
             Group {
                 Section {
                     HStack {
-                        TextField("4.8", value: $hemoglobin, formatter: formatter)
+                        TextField("4.8", value: $hemoglobin, format: .number)
                             .keyboardType(.decimalPad)
                         Spacer()
                         bage(txt: "%")
@@ -221,7 +214,7 @@ struct generalQuestions: View {
                 }
                 Section {
                     HStack {
-                        TextField("1.3", value: $triglic, formatter: formatter)
+                        TextField("1.3", value: $triglic, format: .number)
                             .keyboardType(.decimalPad)
                         Spacer()
                         bage(txt: "ммоль/л")
@@ -231,7 +224,7 @@ struct generalQuestions: View {
                 }
                 Section {
                     HStack {
-                        TextField("4.5", value: $hl, formatter: formatter)
+                        TextField("4.5", value: $hl, format: .number)
                             .keyboardType(.decimalPad)
                         Spacer()
                         bage(txt: "ммоль/л")
@@ -241,7 +234,7 @@ struct generalQuestions: View {
                 }
                 Section {
                     HStack {
-                        TextField("4.3", value: $fbg, formatter: formatter)
+                        TextField("4.3", value: $fbg, format: .number)
                             .keyboardType(.decimalPad)
                         Spacer()
                         bage(txt: "ммоль/л")
@@ -251,7 +244,7 @@ struct generalQuestions: View {
                 }
                 Section {
                     HStack {
-                        TextField("20", value: $preg_week, formatter: formatter)
+                        TextField("20", value: $preg_week, format: .number)
                             .keyboardType(.decimalPad)
                         Spacer()
                         bage(txt: "неделя")
@@ -276,7 +269,7 @@ struct generalQuestions: View {
                     NavigationLink(isActive: $nextField, destination: {lifeStyle()}, label: {EmptyView()}).buttonStyle(TransparentButton()).hidden()
                     Button {
                         Task {
-                            await questionaryManager.provider.saveGeneralQuestion(pregnancy_n: selectedPregNum.rawValue, delivery_n: selectedBirthCount.rawValue, contraceptive: selectedOralContr.rawValue, prolactin_test: selectedProlactin.rawValue, heightened_prolactin: selectedHeightenedProlactin.rawValue, prolactin_drug_prescribed: selectedDrags.rawValue, prolactin_drug: otherDrags, vitamin_d_before: selectedVitaminD.rawValue, vitamin_d_before_drug: vitaminDragsBefore, vitamin_d_after: selectedVitaminDosage.rawValue, vitamin_d_after_drug: vitaminDragsAfter, weekendAtSouth: selectedWeekendAtSouth.rawValue, weekendAtSouth_firstTrimester: selectedFirstTrimester.rawValue, weekendAtSouth_secondTrimester: selectedSecondTrimester.rawValue, weekendAtSouth_thirdTrimester: selectedThirdTrimester.rawValue, solarium: selectedSolarium.rawValue, HbA1C: String(hemoglobin), triglycerides: String(triglic), cholesterol: String(hl), glucose: String(fbg), preg_week: String(preg_week))
+                            await questionaryManager.provider.saveGeneralQuestion(pregnancy_n: selectedPregNum.rawValue, delivery_n: selectedBirthCount.rawValue, contraceptive: selectedOralContr.rawValue, prolactin_test: selectedProlactin.rawValue, heightened_prolactin: selectedHeightenedProlactin.rawValue, prolactin_drug_prescribed: selectedDrags.rawValue, prolactin_drug: otherDrags, vitamin_d_before: selectedVitaminD.rawValue, vitamin_d_before_drug: vitaminDragsBefore, vitamin_d_after: selectedVitaminDosage.rawValue, vitamin_d_after_drug: vitaminDragsAfter, weekendAtSouth: selectedWeekendAtSouth.rawValue, weekendAtSouth_firstTrimester: selectedFirstTrimester.rawValue, weekendAtSouth_secondTrimester: selectedSecondTrimester.rawValue, weekendAtSouth_thirdTrimester: selectedThirdTrimester.rawValue, solarium: selectedSolarium.rawValue, HbA1C: hemoglobin, triglycerides: triglic, cholesterol: hl, glucose: fbg, preg_week: preg_week)
                             nextField = true
                         }
                     } label: {

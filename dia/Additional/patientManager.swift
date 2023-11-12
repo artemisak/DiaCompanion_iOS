@@ -29,13 +29,13 @@ struct Person {
     var week_of_start: Int
     var day_of_start: Int
     var patientID: Int
-    var weight: Double
-    var height: Double
-    var hemoglobin: Double
-    var triglic: Double
-    var hl: Double
-    var fbg: Double
-    var preg_week: Double
+    var weight: Double?
+    var height: Double?
+    var hemoglobin: Double?
+    var triglic: Double?
+    var hl: Double?
+    var fbg: Double?
+    var preg_week: Double?
 }
 
 class patientViewModel: ObservableObject {
@@ -74,8 +74,8 @@ class patientViewModel: ObservableObject {
             var patient_start_date = Date()
             var patient_week = 22
             var patient_day = 3
-            var patient_weight = 0.0
-            var patient_height = 0.0
+            var patient_weight: Double? = nil
+            var patient_height: Double? = nil
             var patient_doc = "Без врача"
             for i in try db.prepare(users.select(id, name, birthday, week, day, weight, height, doctor, start_date)) {
                 if i[id] != nil {
@@ -93,12 +93,8 @@ class patientViewModel: ObservableObject {
                 if i[day] != nil {
                     patient_day = i[day]!
                 }
-                if i[weight] != nil {
-                    patient_weight = i[weight]!
-                }
-                if i[height] != nil {
-                    patient_height = i[height]!
-                }
+                patient_weight = i[weight]
+                patient_height = i[height]
                 if i[doctor] != nil {
                     patient_doc = i[doctor]!
                 }
@@ -107,27 +103,17 @@ class patientViewModel: ObservableObject {
                 }
             }
             
-            var patient_hb = 0.0
-            var patient_tg = 0.0
-            var patient_hl = 0.0
-            var patient_gl = 0.0
-            var patient_wk = 0.0
+            var patient_hb: Double? = nil
+            var patient_tg: Double? = nil
+            var patient_hl: Double? = nil
+            var patient_gl: Double? = nil
+            var patient_wk: Double? = nil
             for i in try db.prepare(questionary.select(hb, tg, hl, gl, wk)) {
-                if i[hb] != nil {
-                    patient_hb = i[hb]!
-                }
-                if i[tg] != nil {
-                    patient_tg = i[tg]!
-                }
-                if i[hl] != nil {
-                    patient_hl = i[hl]!
-                }
-                if i[gl] != nil {
-                    patient_gl = i[gl]!
-                }
-                if i[wk] != nil {
-                    patient_wk = i[wk]!
-                }
+                patient_hb = i[hb]
+                patient_tg = i[tg]
+                patient_hl = i[hl]
+                patient_gl = i[gl]
+                patient_wk = i[wk]
             }
             
             self.woman = Person(fio: patient_name, birthday: patient_birthday, selectedDoc: doc(rawValue: patient_doc)!, start_date: patient_start_date, week_of_start: patient_week, day_of_start: patient_day, patientID: patient_id, weight: patient_weight, height: patient_height, hemoglobin: patient_hb, triglic: patient_tg, hl: patient_hl, fbg: patient_gl, preg_week: patient_wk)
@@ -143,22 +129,20 @@ class patientManager {
     
     static let provider = patientManager()
     
-    func savePatientCart(name: String, birthDay: Date, doc: String, start_day: Date, week: Int, day: Int, id: Int, height: Double, weight: Double, hb: Double, tg: Double, hl: Double, glu: Double, pgw: Double) async {
-        Task {
-            addName(pName: name)
-            addBirthDate(pDate: birthDay)
-            addDoc(pDoc: doc)
-            addWeekDay(pWeek: week, pDay: day)
-            addStartDate(pStartDate: start_day)
-            addID(pID: id)
-            addWeight(pWeight: weight)
-            addHeight(pHeight: height)
-            addHB(hb: hb)
-            addTG(tg: tg)
-            addHL(hl: hl)
-            addGLU(glu: glu)
-            addPGW(pgw: pgw)
-        }
+    func savePatientCart(name: String, birthDay: Date, doc: String, start_day: Date, week: Int, day: Int, id: Int, height: Double?, weight: Double?, hb: Double?, tg: Double?, hl: Double?, glu: Double?, pgw: Double?) {
+        addName(pName: name)
+        addBirthDate(pDate: birthDay)
+        addDoc(pDoc: doc)
+        addWeekDay(pWeek: week, pDay: day)
+        addStartDate(pStartDate: start_day)
+        addID(pID: id)
+        addWeight(pWeight: weight)
+        addHeight(pHeight: height)
+        addHB(hb: hb)
+        addTG(tg: tg)
+        addHL(hl: hl)
+        addGLU(glu: glu)
+        addPGW(pgw: pgw)
     }
     
     func addName(pName: String){
@@ -293,7 +277,7 @@ class patientManager {
         }
     }
     
-    func addWeight(pWeight: Double){
+    func addWeight(pWeight: Double?){
         do {
             let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
             let path = documents + "/diacompanion.db"
@@ -301,7 +285,7 @@ class patientManager {
             _=copyDatabaseIfNeeded(sourcePath: sourcePath)
             let db = try Connection(path)
             let users = Table("usermac")
-            let weight = Expression<Double>("weight")
+            let weight = Expression<Double?>("weight")
             let id = Expression<Int>("id")
             let all = Array(try db.prepare(users.select(id)))
             if all.count != 0 {
@@ -314,7 +298,7 @@ class patientManager {
         }
     }
     
-    func addHeight(pHeight: Double){
+    func addHeight(pHeight: Double?){
         do {
             let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
             let path = documents + "/diacompanion.db"
@@ -322,7 +306,7 @@ class patientManager {
             _=copyDatabaseIfNeeded(sourcePath: sourcePath)
             let db = try Connection(path)
             let users = Table("usermac")
-            let height = Expression<Double>("height")
+            let height = Expression<Double?>("height")
             let id = Expression<Int>("id")
             let all = Array(try db.prepare(users.select(id)))
             if all.count != 0 {
@@ -335,7 +319,7 @@ class patientManager {
         }
     }
     
-    func addHB(hb: Double){
+    func addHB(hb: Double?){
         do {
             let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
             let path = documents + "/diacompanion.db"
@@ -343,7 +327,7 @@ class patientManager {
             _=copyDatabaseIfNeeded(sourcePath: sourcePath)
             let db = try Connection(path)
             let questionary = Table("questionary")
-            let hb_filed = Expression<Double>("HbA1C")
+            let hb_filed = Expression<Double?>("HbA1C")
             
             let all = Array(try db.prepare(questionary.select(hb_filed)))
             if all.count != 0 {
@@ -357,7 +341,7 @@ class patientManager {
         }
     }
         
-    func addTG(tg: Double){
+    func addTG(tg: Double?){
         do {
             let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
             let path = documents + "/diacompanion.db"
@@ -365,7 +349,7 @@ class patientManager {
             _=copyDatabaseIfNeeded(sourcePath: sourcePath)
             let db = try Connection(path)
             let questionary = Table("questionary")
-            let tg_filed = Expression<Double>("triglycerides")
+            let tg_filed = Expression<Double?>("triglycerides")
             
             let all = Array(try db.prepare(questionary.select(tg_filed)))
             if all.count != 0 {
@@ -379,7 +363,7 @@ class patientManager {
         }
     }
     
-    func addHL(hl: Double){
+    func addHL(hl: Double?){
         do {
             let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
             let path = documents + "/diacompanion.db"
@@ -387,7 +371,7 @@ class patientManager {
             _=copyDatabaseIfNeeded(sourcePath: sourcePath)
             let db = try Connection(path)
             let questionary = Table("questionary")
-            let hl_filed = Expression<Double>("cholesterol")
+            let hl_filed = Expression<Double?>("cholesterol")
             
             let all = Array(try db.prepare(questionary.select(hl_filed)))
             if all.count != 0 {
@@ -401,7 +385,7 @@ class patientManager {
         }
     }
     
-    func addGLU(glu: Double){
+    func addGLU(glu: Double?){
         do {
             let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
             let path = documents + "/diacompanion.db"
@@ -409,7 +393,7 @@ class patientManager {
             _=copyDatabaseIfNeeded(sourcePath: sourcePath)
             let db = try Connection(path)
             let questionary = Table("questionary")
-            let glu_filed = Expression<Double>("glucose")
+            let glu_filed = Expression<Double?>("glucose")
             
             let all = Array(try db.prepare(questionary.select(glu_filed)))
             if all.count != 0 {
@@ -423,7 +407,7 @@ class patientManager {
         }
     }
     
-    func addPGW(pgw: Double){
+    func addPGW(pgw: Double?){
         do {
             let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
             let path = documents + "/diacompanion.db"
@@ -431,7 +415,7 @@ class patientManager {
             _=copyDatabaseIfNeeded(sourcePath: sourcePath)
             let db = try Connection(path)
             let questionary = Table("questionary")
-            let pgw_filed = Expression<Double>("preg_week")
+            let pgw_filed = Expression<Double?>("preg_week")
             
             let all = Array(try db.prepare(questionary.select(pgw_filed)))
             if all.count != 0 {

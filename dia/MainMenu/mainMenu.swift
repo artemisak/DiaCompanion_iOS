@@ -131,7 +131,7 @@ struct mainMenu: View {
         .onDisappear {
             timer.upstream.connect().cancel()
         }
-        .navigationTitle("ДиаКомпаньон")
+        .navigationTitle("ДиаКомпаньон Про")
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
                 NavigationLink {

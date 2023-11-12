@@ -1017,10 +1017,10 @@ class excelManager {
             let fweekendAtSouth_secondTrimester = Expression<String>("weekendAtSouth_secondTrimester")
             let fweekendAtSouth_thirdTrimester = Expression<String>("weekendAtSouth_thirdTrimester")
             let fsolarium = Expression<String>("solarium")
-            let fHbA1C = Expression<Double>("HbA1C")
-            let ftriglycerides = Expression<Double>("triglycerides")
-            let fcholesterol = Expression<Double>("cholesterol")
-            let fglucose = Expression<Double>("glucose")
+            let fHbA1C = Expression<Double?>("HbA1C")
+            let ftriglycerides = Expression<Double?>("triglycerides")
+            let fcholesterol = Expression<Double?>("cholesterol")
+            let fglucose = Expression<Double?>("glucose")
             let ffamily_diabetes = Expression<String>("family_diabetes")
             let fimpaired_glucose_tolerance = Expression<String>("impaired_glucose_tolerance")
             let fhypertension_before = Expression<String>("hypertension_before")
@@ -1071,7 +1071,7 @@ class excelManager {
             let fsport_before = Expression<String>("sport_before")
             let fsport_after = Expression<String>("sport_after")
             for i in try db.prepare(questionaryT) {
-                answers.append(contentsOf: [i[fpregnancy_n], i[fdelivery_n], i[fcontraceptive], i[fprolactin_test], i[fheightened_prolactin], i[fprolactin_drug_prescribed], i[fprolactin_drug], i[fvitamin_d_before], i[fvitamin_d_before_drug], i[fvitamin_d_after], i[fvitamin_d_after_drug], i[fweekendAtSouth], i[fweekendAtSouth_firstTrimester], i[fweekendAtSouth_secondTrimester], i[fweekendAtSouth_thirdTrimester], i[fsolarium], String(i[fHbA1C]), String(i[ftriglycerides]), String(i[fcholesterol]), String(i[fglucose]), i[ffamily_diabetes], i[fimpaired_glucose_tolerance], i[fhypertension_before], i[fhypertension_after], i[fsmoking_before6month], i[fsmoking_before_known], i[fsmoking_after], i[ffruits_before], i[ffruits_after], i[fbisquits_before], i[fbisquits_after], i[fbaking_before], i[fbaking_after], i[fchocolate_before], i[fchocolate_after], i[fmilk_before], i[fmilk_after], i[fmilk_before_alt], i[fmilk_after_alt], i[flegumes_before], i[flegumes_after], i[fmeat_before], i[fmeat_after], i[fdried_fruits_before], i[fdried_fruits_after], i[ffish_before], i[ffish_after], i[fgrain_bread_before], i[fgrain_bread_after], i[fany_bread_before], i[fany_bread_after], i[fsauce_before], i[fsauce_after], i[fvegetable_before], i[fvegetable_after], i[falcohol_before], i[falcohol_after], i[fsweet_drinks_before], i[fsweet_drinks_after], i[fcoffe_before], i[fcoffe_after], i[fsausages_before], i[fsausages_after], i[fwalk_before], i[fwalk_after], i[fstep_before], i[fstep_after], i[fsport_before], i[fsport_after]])
+                answers.append(contentsOf: [i[fpregnancy_n], i[fdelivery_n], i[fcontraceptive], i[fprolactin_test], i[fheightened_prolactin], i[fprolactin_drug_prescribed], i[fprolactin_drug], i[fvitamin_d_before], i[fvitamin_d_before_drug], i[fvitamin_d_after], i[fvitamin_d_after_drug], i[fweekendAtSouth], i[fweekendAtSouth_firstTrimester], i[fweekendAtSouth_secondTrimester], i[fweekendAtSouth_thirdTrimester], i[fsolarium], (i[fHbA1C] == nil ? "" : String(i[fHbA1C]!)), (i[ftriglycerides] == nil ? "" : String(i[ftriglycerides]!)), (i[fcholesterol] == nil ? "" : String(i[fcholesterol]!)), (i[fglucose] == nil ? "" : String(i[fglucose]!)), i[ffamily_diabetes], i[fimpaired_glucose_tolerance], i[fhypertension_before], i[fhypertension_after], i[fsmoking_before6month], i[fsmoking_before_known], i[fsmoking_after], i[ffruits_before], i[ffruits_after], i[fbisquits_before], i[fbisquits_after], i[fbaking_before], i[fbaking_after], i[fchocolate_before], i[fchocolate_after], i[fmilk_before], i[fmilk_after], i[fmilk_before_alt], i[fmilk_after_alt], i[flegumes_before], i[flegumes_after], i[fmeat_before], i[fmeat_after], i[fdried_fruits_before], i[fdried_fruits_after], i[ffish_before], i[ffish_after], i[fgrain_bread_before], i[fgrain_bread_after], i[fany_bread_before], i[fany_bread_after], i[fsauce_before], i[fsauce_after], i[fvegetable_before], i[fvegetable_after], i[falcohol_before], i[falcohol_after], i[fsweet_drinks_before], i[fsweet_drinks_after], i[fcoffe_before], i[fcoffe_after], i[fsausages_before], i[fsausages_after], i[fwalk_before], i[fwalk_after], i[fstep_before], i[fstep_after], i[fsport_before], i[fsport_after]])
             }
         } catch {
             print(error)

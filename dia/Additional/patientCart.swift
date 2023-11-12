@@ -4,13 +4,6 @@ struct patientCart: View {
     @EnvironmentObject var routeManager: Router
     @State private var edit: Bool = true
     @ObservedObject var viewModel = patientViewModel()
-    let formatter: NumberFormatter = {
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .decimal
-        formatter.maximumFractionDigits = 1
-        formatter.zeroSymbol = ""
-        return formatter
-    }()
     var gdm12: Bool {
         return ((routeManager.version == 1) || (routeManager.version == 2))
     }
@@ -31,7 +24,7 @@ struct patientCart: View {
                 Group {
                     Section {
                         HStack {
-                            TextField("62.5", value: $viewModel.woman.weight, formatter: formatter).keyboardType(.decimalPad)
+                            TextField("62.5", value: $viewModel.woman.weight, format: .number).keyboardType(.decimalPad)
                             Spacer()
                             bage(txt: "кг.")
                         }
@@ -44,7 +37,7 @@ struct patientCart: View {
                     }
                     Section {
                         HStack {
-                            TextField("175", value: $viewModel.woman.height, formatter: formatter).keyboardType(.decimalPad)
+                            TextField("175", value: $viewModel.woman.height, format: .number).keyboardType(.decimalPad)
                             Spacer()
                             bage(txt: "см.")
                         }
@@ -58,7 +51,7 @@ struct patientCart: View {
                     if gdm12 {
                         Section {
                             HStack {
-                                TextField("4.8", value: $viewModel.woman.hemoglobin, formatter: formatter)
+                                TextField("4.8", value: $viewModel.woman.hemoglobin, format: .number)
                                     .keyboardType(.decimalPad)
                                 Spacer()
                                 bage(txt: "%")
@@ -68,7 +61,7 @@ struct patientCart: View {
                         }
                         Section {
                             HStack {
-                                TextField("1.3", value: $viewModel.woman.triglic, formatter: formatter)
+                                TextField("1.3", value: $viewModel.woman.triglic, format: .number)
                                     .keyboardType(.decimalPad)
                                 Spacer()
                                 bage(txt: "ммоль/л")
@@ -78,7 +71,7 @@ struct patientCart: View {
                         }
                         Section {
                             HStack {
-                                TextField("4.5", value: $viewModel.woman.hl, formatter: formatter)
+                                TextField("4.5", value: $viewModel.woman.hl, format: .number)
                                     .keyboardType(.decimalPad)
                                 Spacer()
                                 bage(txt: "ммоль/л")
@@ -88,7 +81,7 @@ struct patientCart: View {
                         }
                         Section {
                             HStack {
-                                TextField("4.3", value: $viewModel.woman.fbg, formatter: formatter)
+                                TextField("4.3", value: $viewModel.woman.fbg, format: .number)
                                     .keyboardType(.decimalPad)
                                 Spacer()
                                 bage(txt: "ммоль/л")
@@ -98,7 +91,7 @@ struct patientCart: View {
                         }
                         Section {
                             HStack {
-                                TextField("20", value: $viewModel.woman.preg_week, formatter: formatter)
+                                TextField("20", value: $viewModel.woman.preg_week, format: .number)
                                     .keyboardType(.decimalPad)
                                 Spacer()
                                 bage(txt: "неделя")
@@ -143,9 +136,7 @@ struct patientCart: View {
                     Button {
                         edit.toggle()
                         if edit {
-                            Task {
-                                await patientManager.provider.savePatientCart(name: viewModel.woman.fio, birthDay: viewModel.woman.birthday, doc: viewModel.woman.selectedDoc.rawValue, start_day: viewModel.woman.start_date, week: viewModel.woman.week_of_start, day: viewModel.woman.day_of_start, id: viewModel.woman.patientID, height: viewModel.woman.height, weight: viewModel.woman.weight, hb: viewModel.woman.hemoglobin, tg: viewModel.woman.triglic, hl: viewModel.woman.hl, glu: viewModel.woman.fbg, pgw: viewModel.woman.preg_week)
-                            }
+                                patientManager.provider.savePatientCart(name: viewModel.woman.fio, birthDay: viewModel.woman.birthday, doc: viewModel.woman.selectedDoc.rawValue, start_day: viewModel.woman.start_date, week: viewModel.woman.week_of_start, day: viewModel.woman.day_of_start, id: viewModel.woman.patientID, height: viewModel.woman.height, weight: viewModel.woman.weight, hb: viewModel.woman.hemoglobin, tg: viewModel.woman.triglic, hl: viewModel.woman.hl, glu: viewModel.woman.fbg, pgw: viewModel.woman.preg_week)
                         }
                     } label: {
                         Text(edit ? "Изменить" : "Сохранить")
@@ -173,7 +164,7 @@ struct patientCart: View {
                 Group {
                     Section {
                         HStack {
-                            TextField("62.5", value: $viewModel.woman.weight, formatter: formatter).keyboardType(.decimalPad)
+                            TextField("62.5", value: $viewModel.woman.weight, format: .number).keyboardType(.decimalPad)
                             Spacer()
                             bage(txt: "кг.")
                         }
@@ -186,7 +177,7 @@ struct patientCart: View {
                     }
                     Section {
                         HStack {
-                            TextField("175", value: $viewModel.woman.height, formatter: formatter).keyboardType(.decimalPad)
+                            TextField("175", value: $viewModel.woman.height, format: .number).keyboardType(.decimalPad)
                             Spacer()
                             bage(txt: "см.")
                         }
@@ -231,10 +222,8 @@ struct patientCart: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing, content: {
                     Button {
-                        Task {
-                            await patientManager.provider.savePatientCart(name: viewModel.woman.fio, birthDay: viewModel.woman.birthday, doc: viewModel.woman.selectedDoc.rawValue, start_day: viewModel.woman.start_date, week: viewModel.woman.week_of_start, day: viewModel.woman.day_of_start, id: viewModel.woman.patientID, height: viewModel.woman.height, weight: viewModel.woman.weight, hb: viewModel.woman.hemoglobin, tg: viewModel.woman.triglic, hl: viewModel.woman.hl, glu: viewModel.woman.fbg, pgw: viewModel.woman.preg_week)
-                            await routeManager.setChoosed()
-                        }
+                        patientManager.provider.savePatientCart(name: viewModel.woman.fio, birthDay: viewModel.woman.birthday, doc: viewModel.woman.selectedDoc.rawValue, start_day: viewModel.woman.start_date, week: viewModel.woman.week_of_start, day: viewModel.woman.day_of_start, id: viewModel.woman.patientID, height: viewModel.woman.height, weight: viewModel.woman.weight, hb: viewModel.woman.hemoglobin, tg: viewModel.woman.triglic, hl: viewModel.woman.hl, glu: viewModel.woman.fbg, pgw: viewModel.woman.preg_week)
+                        routeManager.setChoosed()
                         routeManager.animateTransition = true
                     } label: {
                         Text("Завершить")
