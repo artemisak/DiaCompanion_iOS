@@ -240,7 +240,7 @@ func deleteAndSave(idToDelete: [Int], table: Int, info: [Any]) {
         
         let day = (info[0] as? String)![6..<16]
         let time = (info[0] as? String)![0..<6]
-        let name = (info[1] as? String)!
+        let name = (info[1] as? [String])![0]
         
         let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
         let path = documents + "/diacompanion.db"

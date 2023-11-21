@@ -262,13 +262,13 @@ class exportTable {
                 if kk == i {
                     worksheet_write_string(worksheet1, lxw_row_t(r1+3), 2, formater1.string(from: tbl[i].time[i1]), merge_format1)
                     worksheet_write_string(worksheet1, lxw_row_t(r1+3), 68, tbl[i].BG0[i1], merge_format1)
-                    worksheet_write_string(worksheet1, lxw_row_t(r1+3), 69, "\(round(Double(tbl[i].BG1[i1])!*10000)/100)", merge_format1)
+                    worksheet_write_string(worksheet1, lxw_row_t(r1+3), 69, (tbl[i].BG1[i1].isEmpty ? "" : "\(round(Double(tbl[i].BG1[i1])! * 10000)/100)"), merge_format1)
                     worksheet_write_string(worksheet1, lxw_row_t(r1+3), 70, tbl[i].timeStamp[i1], merge_format1)
                 }
                 else {
                     worksheet_write_string(worksheet1, lxw_row_t(r1+3), 2, formater1.string(from: tbl[i].time[i1]), merge_format_alt1)
                     worksheet_write_string(worksheet1, lxw_row_t(r1+3), 68, tbl[i].BG0[i1], merge_format_alt1)
-                    worksheet_write_string(worksheet1, lxw_row_t(r1+3), 69, "\(round(Double(tbl[i].BG1[i1])!*100)/100)", merge_format_alt1)
+                    worksheet_write_string(worksheet1, lxw_row_t(r1+3), 69, (tbl[i].BG1[i1].isEmpty ? "" : "\(round(Double(tbl[i].BG1[i1])! * 10000)/100)"), merge_format_alt1)
                     worksheet_write_string(worksheet1, lxw_row_t(r1+3), 70, tbl[i].timeStamp[i1], merge_format_alt1)
                 }
                 worksheet_merge_range(worksheet1, lxw_row_t(r1+3), 3, lxw_row_t(r1+listOfIndex1[rr]-1+3), 3, nil, merge_f);
