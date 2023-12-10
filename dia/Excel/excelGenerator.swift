@@ -290,7 +290,7 @@ class exportTable {
                     worksheet_write_string(worksheet1, lxw_row_t(r+3), 9, Array(tbl[i].ec.joined())[j], merge_format)
                     worksheet_write_string(worksheet1, lxw_row_t(r+3), 10, Array(tbl[i].pv.joined())[j], merge_format)
                     worksheet_write_string(worksheet1, lxw_row_t(r+3), 11, Array(tbl[i].gi.joined())[j], merge_format)
-                    worksheet_write_string(worksheet1, lxw_row_t(r+3), 12, "\(round((Double(Array(tbl[i].carbo.joined())[j])!*Double(Array(tbl[i].g.joined())[j])!/100)*Double(Array(tbl[i].gi.joined())[j])!)/100)", merge_format)
+                    worksheet_write_string(worksheet1, lxw_row_t(r+3), 12, "\(round(Double(Array(tbl[i].carbo.joined())[j])!*Double(Array(tbl[i].gi.joined())[j])!)/100)", merge_format)
                     worksheet_write_string(worksheet1, lxw_row_t(r+3), 13, nil, nil)
                     worksheet_write_string(worksheet1, lxw_row_t(r+3), 14, Array(tbl[i].water.joined())[j], merge_format)
                     worksheet_write_string(worksheet1, lxw_row_t(r+3), 15, Array(tbl[i].nzhk.joined())[j], merge_format)
@@ -345,7 +345,7 @@ class exportTable {
                     worksheet_write_string(worksheet1, lxw_row_t(r+3), 64, Array(tbl[i].proc_prot.joined())[j], merge_format)
                     worksheet_write_string(worksheet1, lxw_row_t(r+3), 65, nil, nil)
                     worksheet_write_string(worksheet1, lxw_row_t(r+3), 66, Array(tbl[i].carbo.joined())[j], merge_format)
-                    worksheet_write_string(worksheet1, lxw_row_t(r+3), 67, "\(round((Double(Array(tbl[i].carbo.joined())[j])!*Double(Array(tbl[i].g.joined())[j])!/100)*Double(Array(tbl[i].gi.joined())[j])!)/100)", merge_format)
+                    worksheet_write_string(worksheet1, lxw_row_t(r+3), 67, "\(round(Double(Array(tbl[i].carbo.joined())[j])!*Double(Array(tbl[i].gi.joined())[j])!)/100)", merge_format)
                 } else {
                     worksheet_write_string(worksheet1, lxw_row_t(r+3), 4, Array(tbl[i].food.joined())[j], merge_format_alt)
                     worksheet_write_string(worksheet1, lxw_row_t(r+3), 5, Array(tbl[i].g.joined())[j], merge_format_alt)
@@ -355,7 +355,7 @@ class exportTable {
                     worksheet_write_string(worksheet1, lxw_row_t(r+3), 9, Array(tbl[i].ec.joined())[j], merge_format_alt)
                     worksheet_write_string(worksheet1, lxw_row_t(r+3), 10, Array(tbl[i].pv.joined())[j], merge_format_alt)
                     worksheet_write_string(worksheet1, lxw_row_t(r+3), 11, Array(tbl[i].gi.joined())[j], merge_format_alt)
-                    worksheet_write_string(worksheet1, lxw_row_t(r+3), 12, "\(round((Double(Array(tbl[i].carbo.joined())[j])!*Double(Array(tbl[i].g.joined())[j])!/100)*Double(Array(tbl[i].gi.joined())[j])!)/100)", merge_format_alt)
+                    worksheet_write_string(worksheet1, lxw_row_t(r+3), 12, "\(round(Double(Array(tbl[i].carbo.joined())[j])!*Double(Array(tbl[i].gi.joined())[j])!)/100)", merge_format_alt)
                     worksheet_write_string(worksheet1, lxw_row_t(r+3), 13, nil, nil)
                     worksheet_write_string(worksheet1, lxw_row_t(r+3), 14, Array(tbl[i].water.joined())[j], merge_format_alt)
                     worksheet_write_string(worksheet1, lxw_row_t(r+3), 15, Array(tbl[i].nzhk.joined())[j], merge_format_alt)
@@ -410,7 +410,7 @@ class exportTable {
                     worksheet_write_string(worksheet1, lxw_row_t(r+3), 64, Array(tbl[i].proc_prot.joined())[j], merge_format_alt)
                     worksheet_write_string(worksheet1, lxw_row_t(r+3), 65, nil, nil)
                     worksheet_write_string(worksheet1, lxw_row_t(r+3), 66, Array(tbl[i].carbo.joined())[j], merge_format_alt)
-                    worksheet_write_string(worksheet1, lxw_row_t(r+3), 67, "\(round((Double(Array(tbl[i].carbo.joined())[j])!*Double(Array(tbl[i].g.joined())[j])!/100)*Double(Array(tbl[i].gi.joined())[j])!)/100)", merge_format_alt)
+                    worksheet_write_string(worksheet1, lxw_row_t(r+3), 67, "\(round(Double(Array(tbl[i].carbo.joined())[j])!*Double(Array(tbl[i].gi.joined())[j])!)/100)", merge_format_alt)
                 }
                 r += 1
             }
@@ -1042,8 +1042,7 @@ class exportTable {
     
     func computeGL(gi: [Double], carbo: [Double]) -> Double {
         let sumGIC = zip(gi,carbo).map(*).reduce(0,+)
-        let sumC = carbo.reduce(0,+)
-        return round((sumGIC/sumC)*100)/100
+        return round(sumGIC)/100
     }
 }
 

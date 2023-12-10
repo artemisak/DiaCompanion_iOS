@@ -70,6 +70,11 @@ struct aboutApp: View {
             } header: {
                 Text("Информация о производителе").font(.body)
             }
+            Section {
+                Text("")
+            } header: {
+                Text("Регистрационное удостоверение").font(.body)
+            }
         }
         .navigationTitle("О приложении")
     }
